@@ -1,7 +1,7 @@
 --Create Database
-CREATE DATABASE AntiBlogDB
+CREATE DATABASE AntiBlog
 
-USE AntiBlogDB
+USE AntiBlog
 
 CREATE TABLE [Role]
 (
@@ -31,8 +31,8 @@ CREATE TABLE [BlogSubscribers]
     UserId INT NOT NULL,
     BlogId INT NOT NULL,
     PRIMARY KEY (UserId, BlogId),
-    FOREIGN KEY (UserId) REFERENCES [User] (Id),
-    FOREIGN KEY (BlogId) REFERENCES [Blog] (Id),
+    FOREIGN KEY (UserId) REFERENCES [User] (Id) ON DELETE CASCADE,
+    FOREIGN KEY (BlogId) REFERENCES [Blog] (Id) ON DELETE CASCADE,
 )
 
 CREATE TABLE [Post]
