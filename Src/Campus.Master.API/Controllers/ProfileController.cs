@@ -59,7 +59,7 @@ namespace Campus.Master.API.Controllers
         ///     “LastName”: “...”
         /// }
         /// </summary>
-        [HttpPost("/create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateProfile(ProfileRegistrationModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Profile @{model.Login}");
@@ -67,11 +67,13 @@ namespace Campus.Master.API.Controllers
             // TODO: Put business logic here
             await Task.CompletedTask;
             
-            return Ok(new StateTransfer
+            var state = new StateTransfer
             {
                 Message = "{JWT-TOKEN}",
                 Payload = "/profile"
-            });
+            };
+
+            return Created(state.Payload, state);
         }
 
         /// <summary>
@@ -83,7 +85,7 @@ namespace Campus.Master.API.Controllers
         ///     “Password”: “...”
         /// }
         /// </summary>
-        [HttpPost("/auth")]
+        [HttpPost("auth")]
         public async Task<IActionResult> AuthenticateProfile(AuthenticationModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Authenticate Profile @{model.Login}");
@@ -140,7 +142,7 @@ namespace Campus.Master.API.Controllers
             
             return Ok(new StateTransfer
             {
-                Message = "Profile data is deleted now!",
+                Message = "Profile is deleted now!",
                 Payload = "/"
             });
         }
