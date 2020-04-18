@@ -10,7 +10,6 @@ using Campus.Master.API.Models;
 
 namespace Campus.Master.API.Controllers
 {
-    // TODO: Implement authorization, implement CSRF protection
     [ApiController]
     [Route("api/[controller]")]
     public class ProfileController : ControllerBase
