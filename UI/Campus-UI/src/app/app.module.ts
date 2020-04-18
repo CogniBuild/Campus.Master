@@ -1,9 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SingInComponent } from './sing-in/sing-in.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {SingInComponent} from './sing-in/sing-in.component';
+import {SignInService} from './shared/services/sign-in.service';
+
 
 @NgModule({
   declarations: [
@@ -12,9 +15,12 @@ import { SingInComponent } from './sing-in/sing-in.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [SignInService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
