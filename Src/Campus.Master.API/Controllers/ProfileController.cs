@@ -25,7 +25,6 @@ namespace Campus.Master.API.Controllers
         /// <summary>
         /// GET api/profile
         /// Authentication: Bearer {token}
-        /// X-CSRF-TOKEN: {csrf-token}
         /// Content-Type: application/json
         /// </summary>
         [HttpGet]
@@ -103,7 +102,6 @@ namespace Campus.Master.API.Controllers
         /// <summary>
         /// PUT api/profile
         /// Authentication: Bearer {token}
-        /// X-CSRF-TOKEN: {csrf-token}
         /// Content-Type: application/json
         /// 
         /// {
@@ -129,7 +127,6 @@ namespace Campus.Master.API.Controllers
         /// <summary>
         /// DELETE api/profile
         /// Authentication: Bearer {token}
-        /// X-CSRF-TOKEN: {csrf-token}
         /// Content-Type: application/json
         /// </summary>
         [HttpDelete]
