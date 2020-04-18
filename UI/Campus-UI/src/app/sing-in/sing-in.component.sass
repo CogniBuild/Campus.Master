@@ -1,1 +1,170 @@
 @import "src/styles/styles"
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap')
+
+.sign-in-background
+  background-color: #E5E5E5
+  +sm
+    background-color: #FFFFFF
+
+.container
+  height: 100vh
+  max-width: 1440px
+  margin: 0 auto
+
+.sign-in-wrap
+  font-family: 'FuturaLT'
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.sign-in
+  display: flex
+  align-items: center
+  background-color: #FFFFFF
+  border-radius: 30px
+
+  &__form
+    width: 575px
+    +xl
+      width: 450px
+    +lg
+      width: 400px
+    +md
+      width: 300px
+      padding: 40px
+    +sm
+      width: 100vw
+      padding: 0
+
+  &__img
+    max-width: 350px
+    height: 550px
+    position: relative
+    +xl
+      height: 420px
+    +md
+      display: none
+
+  &__text
+    position: absolute
+    font-size: 50px
+    color: #FFFFFF
+    font-family: Gilroy-Black-Italic
+    bottom: 45px
+    left: 45px
+    width: 205px
+    +xl
+      width: 180px
+      font-size: 44px
+
+  &__img img
+    display: block
+    border-radius: 30px 0 0 30px
+    width: 100%
+    height: 100%
+    object-fit: none
+    object-position: 14% 8%
+    +xl
+      object-position: 14% 13%
+
+  &__title
+    margin-bottom: 25px
+    text-align: center
+    font-size: 30px
+    color: #393853
+
+    &_br
+      display: none
+      +ms
+        display: block
+
+    span
+      color: #7E57C2
+
+    +xl
+      font-size: 28px
+    +lg
+      font-size: 28px
+    +md
+      font-size: 30px
+    +sm
+      font-size: 36px
+    +ms
+      text-align: left
+      padding: 0 24px
+
+
+  &__btn
+    font-size: 16px
+    color: #ffffff
+    background-color: #7E57C2
+    border: none
+    padding: 6px 66px
+    border-radius: 8px
+    display: block
+    margin: 0 auto
+    cursor: pointer
+    outline: none
+
+  &__createAcc
+    text-align: center
+    display: block
+    text-decoration: none
+    font-size: 16px
+    margin-top: 15px
+
+form
+  display: flex
+  flex-direction: column
+
+.form-control
+  margin: 0 auto
+  +ms
+    margin: 0 24px
+
+  input
+    width: 327px
+    border: none
+    border-radius: 8px
+    background-color: #F0F0FB
+    padding: 10px 10px 10px 33px
+    font-size: 14px
+    outline: none
+    +xl
+      width: 250px
+    +lg
+      width: 200px
+    +ms
+      width: calc(100% - 44px)
+
+  .email::before
+    content: ''
+    background-image: url("/assets/img/sign-in/email.png")
+    width: 18px
+    height: 18px
+    position: absolute
+    background-size: contain
+    transform: translate(11px, 8px)
+
+  .password
+    content: ''
+    background-image: url("/assets/img/sign-in/password.png")
+    width: 18px
+    height: 18px
+    position: absolute
+    background-size: contain
+    transform: translate(11px, 8px)
+
+
+.forgot-pass
+  display: block
+  margin-top: 15px
+  text-align: center
+  margin-bottom: 33px
+  font-size: 12px
+  color: #7E57C2
+  +ms
+    text-align: end
+    font-size: 14px
+
