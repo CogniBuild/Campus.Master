@@ -82,13 +82,13 @@ namespace Campus.Master.API.Controllers
         /// Content-Type: application/json
         ///
         /// {
-        /// “Name”: “...”,
-        /// “Color”: “...”,
-        /// “Status”: “...”
+        ///     “Name”: “...”,
+        ///     “Color”: “...”,
+        ///     “Status”: “...”
         /// }
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> CreateProject(ProjectDataModel model)
+        public async Task<IActionResult> CreateProject(ProjectContentModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Project");
             
@@ -117,7 +117,7 @@ namespace Campus.Master.API.Controllers
         /// }
         /// </summary>
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditProject(int id, [FromBody] ProjectDataModel model)
+        public async Task<IActionResult> EditProject(int id, [FromBody] ProjectContentModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Project #{id}");
             
@@ -203,7 +203,6 @@ namespace Campus.Master.API.Controllers
             
             // TODO: Put business logic here
             await Task.CompletedTask;
-            var newTaskId = 1;
 
             var state = new StateTransfer
             {
@@ -213,7 +212,5 @@ namespace Campus.Master.API.Controllers
 
             return Created(state.Payload, state);
         }
-        
-        
     }
 }
