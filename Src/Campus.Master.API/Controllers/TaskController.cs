@@ -66,14 +66,12 @@ namespace Campus.Master.API.Controllers
             
             // TODO: Put business logic here
             await Task.CompletedTask;
-            
-            var status = new StateTransfer
+
+            return Ok(new StateTransfer
             {
                 Message = "Task fields are updated now!",
                 Payload = ""
-            };
-            
-            return Ok(status);
+            });
         }
 
         /// <summary>
