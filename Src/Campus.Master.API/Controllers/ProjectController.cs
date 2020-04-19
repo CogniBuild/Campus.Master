@@ -99,7 +99,7 @@ namespace Campus.Master.API.Controllers
             var status = new StateTransfer
             {
                 Message = $"'{model.Name}' project is created!",
-                Payload = $"/project/{idOfNewProject}"
+                Payload = $"api/project/{idOfNewProject}"
             };
             
             return Created(status.Payload, status);
@@ -126,8 +126,8 @@ namespace Campus.Master.API.Controllers
 
             return Ok(new StateTransfer
             {
-                Message = "Project fields are updated now!",
-                Payload = ""
+                Message = $"Project fields are updated now!",
+                Payload = $"api/project/{id}"
             });
         }
 
@@ -147,7 +147,7 @@ namespace Campus.Master.API.Controllers
             return Ok(new StateTransfer
             {
                 Message = "Project is deleted now!",
-                Payload = ""
+                Payload = "/"
             });
         }
         

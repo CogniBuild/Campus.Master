@@ -55,6 +55,30 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
+        /// GET api/task/{id}
+        /// Authentication: Bearer {token}
+        /// Content-Type: application/json
+        /// </summary>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTaskById(int id)
+        {
+            _logger.LogInformation($"[{DateTime.Now} INFO] Get Task By Id #{id}");
+            
+            // TODO: Put business logic here
+            
+            var result = await Task.Run(() => new TaskModel {
+                Id = 1,
+                Description = "Description",
+                Priority = "Priority",
+                Tag = "Tag",
+                Deadline = "00-00-0000"
+            });
+            
+            return Ok(result);
+        }
+        
+
+        /// <summary>
         /// PUT api/task/{id}
         /// Authentication: Bearer {token}
         /// Content-Type: application/json
@@ -70,7 +94,7 @@ namespace Campus.Master.API.Controllers
             return Ok(new StateTransfer
             {
                 Message = "Task fields are updated now!",
-                Payload = ""
+                Payload = $"api/task/{id}"
             });
         }
 
@@ -90,7 +114,7 @@ namespace Campus.Master.API.Controllers
             return Ok(new StateTransfer
             {
                 Message = "Task is deleted now!",
-                Payload = ""
+                Payload = "/"
             });
         }
     }

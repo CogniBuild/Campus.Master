@@ -68,7 +68,7 @@ namespace Campus.Master.API.Controllers
             var state = new StateTransfer
             {
                 Message = "{JWT-TOKEN}",
-                Payload = "/profile"
+                Payload = "api/profile"
             };
 
             return Created(state.Payload, state);
@@ -94,7 +94,7 @@ namespace Campus.Master.API.Controllers
             return Ok(new StateTransfer
             {
                 Message = "{JWT-TOKEN}",
-                Payload = "/profile"
+                Payload = "api/profile"
             });
         }
 
@@ -119,7 +119,7 @@ namespace Campus.Master.API.Controllers
             return Ok(new StateTransfer
             {
                 Message = "Profile data is updated now!",
-                Payload = ""
+                Payload = "api/profile"
             });
         }
 
