@@ -8,5 +8,10 @@
       <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\static" />
+      <Folder Include="wwwroot\swagger" />
+    </ItemGroup>
+
 
 </Project>
