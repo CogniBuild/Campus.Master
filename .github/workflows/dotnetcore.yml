@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore Src/Campus.Master.API/Campus.Master.API.sln
     - name: Build
       run: dotnet build Src/Campus.Master.API/Campus.Master.API.sln --configuration Release --no-restore
     - name: Test
