@@ -1,0 +1,204 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Campus application by CogniBuild team. Act! Learn! Upgrade!",
+        "version": "1.0",
+        "title": "CogniBuild Campus"
+    },
+    "host": "github.com",
+    "basePath": "/swagger/v1.2",
+    "tags": [
+        {
+            "name": "CogniBuild",
+            "description": "Project source on Github",
+            "externalDocs": {
+                "description": "Source",
+                "url": "https://github.com/CogniBuild"
+            }
+        }
+    ],
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "paths": {},
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "definitions": {
+        "StateTransfer": {
+            "type": "object",
+            "properties": {
+                "Message": {
+                    "type": "string"
+                },
+                "Payload": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "State Transfer"
+            }
+        },
+        "TaskContentModel": {
+            "type": "object",
+            "properties": {
+                "Description": {
+                    "type": "string"
+                },
+                "Priority": {
+                    "type": "string"
+                },
+                "Tag": {
+                    "type": "string"
+                },
+                "Deadline": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "Task Content Model"
+            }
+        },
+        "TaskModel": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "Description": {
+                    "type": "string"
+                },
+                "Priority": {
+                    "type": "string"
+                },
+                "Tag": {
+                    "type": "string"
+                },
+                "Deadline": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "Task Model"
+            }
+        },
+        "ProjectContentModel": {
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "type": "string"
+                },
+                "Color": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "Project Content Model"
+            }
+        },
+        "ProjectModel": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "Color": {
+                    "type": "string"
+                },
+                "Status": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "Project Model"
+            }
+        },
+        "AuthenticationModel": {
+            "type": "object",
+            "properties": {
+                "Login": {
+                    "type": "string"
+                },
+                "Password": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "Authentication Model"
+            }
+        },
+        "ProfileEditingModel": {
+            "type": "object",
+            "properties": {
+                "FirstName": {
+                    "type": "string"
+                },
+                "LastName": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "Profile Editing Model"
+            }
+        },
+        "ProfileRegistrationModel": {
+            "type": "object",
+            "properties": {
+                "Login": {
+                    "type": "string"
+                },
+                "Password": {
+                    "type": "string"
+                },
+                "ConfirmPassword": {
+                    "type": "string"
+                },
+                "Email": {
+                    "type": "string"
+                },
+                "FirstName": {
+                    "type": "string"
+                },
+                "LastName": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "Profile Editing Model"
+            }
+        },
+        "ProfileViewModel": {
+            "type": "object",
+            "properties": {
+                "Login": {
+                    "type": "string"
+                },
+                "Email": {
+                    "type": "string"
+                },
+                "FirstName": {
+                    "type": "string"
+                },
+                "LastName": {
+                    "type": "string"
+                }
+            },
+            "xml": {
+                "name": "Profile View Model"
+            }
+        }
+    }
+}
