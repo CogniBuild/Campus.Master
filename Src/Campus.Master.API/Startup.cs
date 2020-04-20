@@ -47,7 +47,7 @@ namespace Campus.Master.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", ApiTitle);
+                    c.SwaggerEndpoint(Configuration["Swagger:StaticRoute"], ApiTitle);
                 });
             }
             else
