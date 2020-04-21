@@ -9,8 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\static" />
-      <Folder Include="wwwroot\swagger" />
+      <Folder Include="wwwroot" />
     </ItemGroup>
 
 
