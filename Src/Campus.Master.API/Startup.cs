@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,11 +31,24 @@ namespace Campus.Master.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
+            
             services.AddControllers();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(ApiVersion, new OpenApiInfo { Title = ApiTitle, Version = ApiVersion });
+                
+                c.AddSecurityDefinition("Bearer",
+                    new OpenApiSecurityScheme { In = ParameterLocation.Header,
+                        Description = "Please enter into field the word 'Bearer' following by space and JWT", 
+                        Name = "Authorization", Type = SecuritySchemeType.ApiKey });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    { new OpenApiSecurityScheme {Name = "Bearer"}, Enumerable.Empty<string>().ToList() },
+                });
+                
+                c.IncludeXmlComments(xmlDocPath);
             });
         }
 
