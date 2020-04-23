@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 using Campus.Master.API.Models.Project;
@@ -12,6 +13,7 @@ using Campus.Master.API.Models;
 namespace Campus.Master.API.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class ProjectController : ControllerBase
     {
@@ -21,13 +23,30 @@ namespace Campus.Master.API.Controllers
         {
             _logger = logger;
         }
-
+        
         /// <summary>
-        /// GET api/project?page={number}&items={number}
-        /// Authentication: Bearer {token}
-        /// Content-Type: application/json
+        /// Fetch stored projects.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     GET /api/project?page={number} items={number}
+        ///     Authentication: Bearer {token}
+        ///     Content-Type: application/json
+        /// 
+        /// </remarks>
+        /// <param name="page">Page number.</param>
+        /// <param name="items">Number of projects per single page (has value limit in settings).</param>
+        /// <returns>Set of user's projects.</returns>
+        /// <response code="200">Projects are successfully fetched.</response>
+        /// <response code="204">User has no stored projects.</response>
+        /// <response code="400">Query fields are invalid.</response>
+        /// <response code="401">User is unauthorized.</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> FetchProjects([FromQuery] int page, [FromQuery] int items)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Fetch Projects: Page={page}, Items={items}");
@@ -54,11 +73,27 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// GET api/project/{id}
-        /// Authentication: Bearer {token}
-        /// Content-Type: application/json
+        /// Get project by ID.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     GET /api/project/{id}
+        ///     Authentication: Bearer {token}
+        ///     Content-Type: application/json
+        /// 
+        /// </remarks>
+        /// <param name="id">Integer representation for project ID.</param>
+        /// <returns>Project information.</returns>
+        /// <response code="200">Project with given ID exists.</response>
+        /// <response code="400">ID field is invalid.</response>
+        /// <response code="401">User is unauthorized.</response>
+        /// <response code="404">Project with given ID doesn't exist.</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProjectById(int id)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Project By Id #{id}");
@@ -77,17 +112,32 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// POST api/project
-        /// Authentication: Bearer {token}
-        /// Content-Type: application/json
-        ///
-        /// {
-        ///     “Name”: “...”,
-        ///     “Color”: “...”,
-        ///     “Status”: “...”
-        /// }
+        /// Create project.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     POST /api/project
+        ///     Authentication: Bearer {token}
+        ///     Content-Type: application/json
+        ///
+        ///     {
+        ///         “Name”: “...”,
+        ///         “Color”: “...”,
+        ///         “Status”: “...”
+        ///     }
+        /// 
+        /// </remarks>
+        /// <param name="model">Project creation form data.</param>
+        /// <returns>State transfer model.</returns>
+        /// <response code="201">New project created.</response>
+        /// <response code="400">Form data is invalid.</response>
+        /// <response code="401">User is unauthorized.</response>
         [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> CreateProject(ProjectContentModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Project");
@@ -106,17 +156,34 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// PUT api/project/{id}
-        /// Authentication: Bearer {token}
-        /// Content-Type: application/json
-        /// 
-        /// {
-        ///     “Name”: “...”,
-        ///     “Color”: “...”,
-        ///     “Status”: “...”
-        /// }
+        /// Edit project.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     PUT /api/project/{id}
+        ///     Authentication: Bearer {token}
+        ///     Content-Type: application/json
+        ///
+        ///     {
+        ///         “Name”: “...”,
+        ///         “Color”: “...”,
+        ///         “Status”: “...”
+        ///     }
+        /// 
+        /// </remarks>
+        /// <param name="id">Integer representation for project ID.</param>
+        /// <param name="model">Project editing form data.</param>
+        /// <returns>State transfer model.</returns>
+        /// <response code="200">Project fields are updated.</response>
+        /// <response code="400">Edit project form data is invalid.</response>
+        /// <response code="401">User is unauthorized.</response>
+        /// <response code="404">Project wasn't found.</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EditProject(int id, [FromBody] ProjectContentModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Project #{id}");
@@ -132,11 +199,25 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// DELETE api/project/{id}
-        /// Authentication: Bearer {token}
-        /// Content-Type: application/json
+        /// Delete project.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     DELETE /api/project/{id}
+        ///     Authentication: Bearer {token}
+        ///     Content-Type: application/json
+        ///
+        /// </remarks>
+        /// <param name="id">Integer representation for project ID.</param>
+        /// <returns>State transfer model.</returns>
+        /// <response code="200">Project is deleted.</response>
+        /// <response code="401">User is unauthorized.</response>
+        /// <response code="404">Project wasn't found.</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteProject(int id)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile #{id}");
@@ -152,11 +233,31 @@ namespace Campus.Master.API.Controllers
         }
         
         /// <summary>
-        /// GET api/project/{id}/task?limit={number}&offset={number}
-        /// Authentication: Bearer {token}
-        /// Content-Type: application/json
+        /// Get tasks related to the project.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     GET /api/project/{id}/task?limit={number} offset={number}
+        ///     Authentication: Bearer {token}
+        ///     Content-Type: application/json
+        ///
+        /// </remarks>
+        /// <param name="id">Integer representation for project ID.</param>
+        /// <param name="limit">Number of tasks per single query (has value limit in settings).</param>
+        /// <param name="offset">Number of tasks to skip from the beginning.</param>
+        /// <returns>Set of tasks related to the project with ID.</returns>
+        /// <response code="200">Tasks are successfully fetched.</response>
+        /// <response code="204">Project has no related tasks.</response>
+        /// <response code="400">Query fields are invalid.</response>
+        /// <response code="401">User is unauthorized.</response>
+        /// <response code="404">Project wasn't found.</response>
         [HttpGet("{id}/task")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetTasksRelatedToTheProject(int id, [FromQuery] int limit, [FromQuery] int offset)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Tasks Related To The Project #{id}");
@@ -185,18 +286,35 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// POST api/project/{id}/task
-        /// Authentication: Bearer {token}
-        /// Content-Type: application/json
-        ///
-        /// {
-        ///     “Description”: “...”,
-        ///     “Priority”: “...”,
-        ///     “Tag”: “...”,
-        ///     “Deadline”: “...”
-        /// }
+        /// Attach task to the project.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     POST /api/project/{id}/task
+        ///     Authentication: Bearer {token}
+        ///     Content-Type: application/json
+        ///
+        ///     {
+        ///         “Description”: “...”,
+        ///         “Priority”: “...”,
+        ///         “Tag”: “...”,
+        ///         “Deadline”: “...”
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="id">Integer representation for project ID.</param>
+        /// <param name="model">Task creation form data.</param>
+        /// <returns>State transfer model.</returns>
+        /// <response code="201">New task created.</response>
+        /// <response code="400">Form data is invalid.</response>
+        /// <response code="401">User is unauthorized.</response>
+        /// <response code="404">Project wasn't found.</response>
         [HttpPost("{id}/task")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AttachTaskToTheProject(int id, [FromBody] TaskContentModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Attach Task To The Project #{id}");

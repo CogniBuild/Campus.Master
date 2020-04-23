@@ -23,6 +23,10 @@ namespace Campus.Master.API
                     logging.ClearProviders();
                     logging.AddConsole();
                 })
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseWebRoot("wwwroot");
+                });
     }
 }

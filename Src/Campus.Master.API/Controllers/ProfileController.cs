@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 using Campus.Master.API.Models.Profile;
 using Campus.Master.API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Campus.Master.API.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class ProfileController : ControllerBase
     {
@@ -22,11 +25,22 @@ namespace Campus.Master.API.Controllers
         }
         
         /// <summary>
-        /// GET api/profile
-        /// Authentication: Bearer {token}
-        /// Content-Type: application/json
+        /// Get profile information.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     GET /api/Profile
+        ///     Authentication: Bearer {token}
+        ///     Content-Type: application/json
+        /// 
+        /// </remarks>
+        /// <returns>General profile information.</returns>
+        /// <response code="200">User exists and is authorized.</response>
+        /// <response code="401">User is unauthorized.</response>  
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetProfileInformation()
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Profile Information");
@@ -45,19 +59,33 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// POST api/profile/create
-        /// Content-Type: application/json
-        /// 
-        /// {
-        ///     “Login”: “...”,
-        ///     “Password”: “...”,
-        ///     “ConfirmPassword”: “...”,
-        ///     “Email”: “...”,
-        ///     “FirstName”: “...”,
-        ///     “LastName”: “...”
-        /// }
+        /// Create profile.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     POST /api/profile/create
+        ///     Content-Type: application/json
+        /// 
+        ///     {
+        ///         “Login”: “...”,
+        ///         “Password”: “...”,
+        ///         “ConfirmPassword”: “...”,
+        ///         “Email”: “...”,
+        ///         “FirstName”: “...”,
+        ///         “LastName”: “...”
+        ///     }
+        /// 
+        /// </remarks>
+        /// <param name="model">Register form data.</param>
+        /// <returns>JWT token.</returns>
+        /// <response code="201">New profile created.</response>
+        /// <response code="400">Form data is invalid.</response>
+        [AllowAnonymous] 
         [HttpPost("create")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateProfile(ProfileRegistrationModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Profile @{model.Login}");
@@ -75,15 +103,29 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// POST api/profile/auth
-        /// Content-Type: application/json
-        /// 
-        /// {
-        ///     “Login”: “...”,
-        ///     “Password”: “...”
-        /// }
+        /// Authenticate profile.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     POST /api/profile/auth
+        ///     Content-Type: application/json
+        /// 
+        ///     {
+        ///         “Login”: “...”,
+        ///         “Password”: “...”
+        ///     }
+        /// 
+        /// </remarks>
+        /// <param name="model">Log in form data.</param>
+        /// <returns>JWT token.</returns>
+        /// <response code="200">New profile created.</response>
+        /// <response code="400">Form data is invalid.</response>
+        [AllowAnonymous]
         [HttpPost("auth")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AuthenticateProfile(AuthenticationModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Authenticate Profile @{model.Login}");
@@ -99,16 +141,31 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// PUT api/profile
-        /// Authentication: Bearer {token}
-        /// Content-Type: application/json
-        /// 
-        /// {
-        ///     “FirstName”: “...”,
-        ///     “LastName”: “...”
-        /// }
+        /// Edit profile.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     PUT /api/profile
+        ///     Authentication: Bearer {token}
+        ///     Content-Type: application/json
+        /// 
+        ///     {
+        ///         “FirstName”: “...”,
+        ///         “LastName”: “...”
+        ///     }
+        /// 
+        /// </remarks>
+        /// <param name="model">Edit profile form data.</param>
+        /// <returns>State transfer model.</returns>
+        /// <response code="200">Profile data is updated.</response>
+        /// <response code="400">Edit profile form data is invalid.</response>
+        /// <response code="401">User is unauthorized.</response>
         [HttpPut]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> EditProfile(ProfileEditingModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Profile");
@@ -124,11 +181,23 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// DELETE api/profile
-        /// Authentication: Bearer {token}
-        /// Content-Type: application/json
+        /// Delete profile.
         /// </summary>
+        /// <remarks>
+        /// Request
+        /// 
+        ///     DELETE /api/profile
+        ///     Authentication: Bearer {token}
+        ///     Content-Type: application/json
+        /// 
+        /// </remarks>
+        /// <returns>State transfer model.</returns>
+        /// <response code="200">Profile is deleted.</response>
+        /// <response code="401">User is unauthorized.</response>  
         [HttpDelete]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> DeleteProfile()
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile");
