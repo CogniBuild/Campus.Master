@@ -238,14 +238,14 @@ namespace Campus.Master.API.Controllers
         /// <remarks>
         /// Request
         /// 
-        ///     GET /api/project/{id}/task?limit={number} offset={number}
+        ///     GET /api/project/{id}/task?page={number} items={number}
         ///     Authentication: Bearer {token}
         ///     Content-Type: application/json
         ///
         /// </remarks>
         /// <param name="id">Integer representation for project ID.</param>
-        /// <param name="limit">Number of tasks per single query (has value limit in settings).</param>
-        /// <param name="offset">Number of tasks to skip from the beginning.</param>
+        /// <param name="page">Number of tasks to skip from the beginning.</param>
+        /// <param name="items">Number of tasks per single query (has value limit in settings).</param>
         /// <returns>Set of tasks related to the project with ID.</returns>
         /// <response code="200">Tasks are successfully fetched.</response>
         /// <response code="204">Project has no related tasks.</response>
@@ -258,7 +258,7 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetTasksRelatedToTheProject(int id, [FromQuery] int limit, [FromQuery] int offset)
+        public async Task<IActionResult> GetTasksRelatedToTheProject(int id, [FromQuery] int page, [FromQuery] int items)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Tasks Related To The Project #{id}");
             
