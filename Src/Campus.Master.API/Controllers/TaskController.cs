@@ -42,12 +42,14 @@ namespace Campus.Master.API.Controllers
         /// <response code="204">User has no stored tasks.</response>
         /// <response code="400">Query fields are invalid.</response>
         /// <response code="401">User is unauthorized.</response>
+        /// <response code="403">Requested count of items exceeded the limit.</response>
         [HttpGet]
         [TypeFilter(typeof(QueryItemsLimiter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> FetchTasks([FromQuery] int page, [FromQuery] int items, [FromQuery] string filterBy)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Fetch Tasks: Page={page}, Items={items}, FilterBy={filterBy}");
