@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Filters" />
       <Folder Include="wwwroot" />
     </ItemGroup>
 
