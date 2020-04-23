@@ -22,7 +22,7 @@ namespace Campus.Master.API.Filters
         
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var limiterValue = Convert.ToInt32(_configuration["Endpoints:FetchedItemsCountLimit"]);
+            var limiterValue = Convert.ToInt32(_configuration["Endpoints:QueryItemsLimit"]);
             var requestedItemsValue = Convert.ToInt32(context.HttpContext.Request.Query[TargetQueryParameter]);
 
             if (requestedItemsValue > limiterValue)
