@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -11,13 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Campus.Master.API.Filters
 {
-    public class FetchedItemsCountLimiterAttribute : Attribute, IAsyncActionFilter
+    public class QueryItemsLimiter : Attribute, IAsyncActionFilter
     {
         private readonly IConfiguration _configuration;
         private const string TargetQueryParameter = "items";
         private const string FailureResponseMessage = "Requested count of items exceeded the limit!";
 
-        public FetchedItemsCountLimiterAttribute(IConfiguration configuration)
+        public QueryItemsLimiter(IConfiguration configuration)
         {
             _configuration = configuration;
         }

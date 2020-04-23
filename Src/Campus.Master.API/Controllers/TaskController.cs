@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 
 using Campus.Master.API.Models.Task;
 using Campus.Master.API.Models;
+using Campus.Master.API.Filters;
 
 namespace Campus.Master.API.Controllers
 {
@@ -42,6 +43,7 @@ namespace Campus.Master.API.Controllers
         /// <response code="400">Query fields are invalid.</response>
         /// <response code="401">User is unauthorized.</response>
         [HttpGet]
+        [TypeFilter(typeof(QueryItemsLimiter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
