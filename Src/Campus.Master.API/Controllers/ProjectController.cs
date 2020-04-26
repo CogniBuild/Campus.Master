@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Campus.Master.API.Models.Project;
 using Campus.Master.API.Models.Task;
 using Campus.Master.API.Models;
+using Campus.Master.API.Filters;
 
 namespace Campus.Master.API.Controllers
 {
@@ -42,11 +43,14 @@ namespace Campus.Master.API.Controllers
         /// <response code="204">User has no stored projects.</response>
         /// <response code="400">Query fields are invalid.</response>
         /// <response code="401">User is unauthorized.</response>
+        /// <response code="403">Requested count of items exceeded the limit.</response>
         [HttpGet]
+        [TypeFilter(typeof(QueryItemsLimiter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> FetchProjects([FromQuery] int page, [FromQuery] int items)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Fetch Projects: Page={page}, Items={items}");
@@ -238,27 +242,30 @@ namespace Campus.Master.API.Controllers
         /// <remarks>
         /// Request
         /// 
-        ///     GET /api/project/{id}/task?limit={number} offset={number}
+        ///     GET /api/project/{id}/task?page={number} items={number}
         ///     Authentication: Bearer {token}
         ///     Content-Type: application/json
         ///
         /// </remarks>
         /// <param name="id">Integer representation for project ID.</param>
-        /// <param name="limit">Number of tasks per single query (has value limit in settings).</param>
-        /// <param name="offset">Number of tasks to skip from the beginning.</param>
+        /// <param name="page">Number of tasks to skip from the beginning.</param>
+        /// <param name="items">Number of tasks per single query (has value limit in settings).</param>
         /// <returns>Set of tasks related to the project with ID.</returns>
         /// <response code="200">Tasks are successfully fetched.</response>
         /// <response code="204">Project has no related tasks.</response>
         /// <response code="400">Query fields are invalid.</response>
         /// <response code="401">User is unauthorized.</response>
+        /// <response code="403">Requested count of items exceeded the limit.</response>
         /// <response code="404">Project wasn't found.</response>
         [HttpGet("{id}/task")]
+        [TypeFilter(typeof(QueryItemsLimiter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetTasksRelatedToTheProject(int id, [FromQuery] int limit, [FromQuery] int offset)
+        public async Task<IActionResult> GetTasksRelatedToTheProject(int id, [FromQuery] int page, [FromQuery] int items)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Tasks Related To The Project #{id}");
             
