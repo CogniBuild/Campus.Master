@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Dapper.2.0.35\lib\net461\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -39,6 +43,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AppUserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Campus.Domain.Core\Campus.Domain.Core.csproj">
+      <Project>{1d9581f6-8a3d-43f7-9d5d-ad6f310d8be8}</Project>
+      <Name>Campus.Domain.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Campus.Domain.Interfaces\Campus.Domain.Interfaces.csproj">
+      <Project>{39f992fa-33a8-4a1a-b988-b4d99cf9b9f2}</Project>
+      <Name>Campus.Domain.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,7 +2,7 @@
 
 namespace Campus.Domain.Core.Models
 {
-    public class Task
+    public class UserTask
     {
         public int Id { get; set; }
 

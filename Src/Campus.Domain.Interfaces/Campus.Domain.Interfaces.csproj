@@ -42,6 +42,12 @@
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Campus.Domain.Core\Campus.Domain.Core.csproj">
+      <Project>{1d9581f6-8a3d-43f7-9d5d-ad6f310d8be8}</Project>
+      <Name>Campus.Domain.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.

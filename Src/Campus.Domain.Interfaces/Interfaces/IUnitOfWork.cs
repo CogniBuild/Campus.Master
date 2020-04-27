@@ -1,7 +1,9 @@
-﻿namespace GamersParadise.Domain.Interfaces.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace GamersParadise.Domain.Interfaces.Interfaces
 {
-    public class IUnitOfWork
+    public interface IUnitOfWork
     {
-        
+        Task CommitAsync();
     }
 }
