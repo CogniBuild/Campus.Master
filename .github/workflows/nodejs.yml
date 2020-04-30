@@ -24,13 +24,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Checkout to UI
-      run: cd UI/Campus-UI
     - name: Install Packages
-      run: npm install
+      run: npm install --prefix UI/Campus-UI
     - name: Lint UI
-      run: npm run lint:ci
+      run: npm run lint:ci --prefix UI/Campus-UI
     - name: Build UI
-      run: npm run build:ci
+      run: npm run build:ci --prefix UI/Campus-UI
     - name: Test UI
-      run: npm run test:ui
+      run: npm run test:ui --prefix UI/Campus-UI
