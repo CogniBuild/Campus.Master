@@ -31,4 +31,4 @@ jobs:
     - name: Build UI
       run: npm run build:ci --prefix UI/Campus-UI
     - name: Test UI
-      run: npm run test:ui --prefix UI/Campus-UI
+      run: npm run test:ci --prefix UI/Campus-UI
