@@ -9,3 +9,13 @@
 
 ![Documentation](https://img.shields.io/github/workflow/status/CogniBuild/Campus.Master/.NET%20Core?label=.NET%20Core)
 ![Documentation](https://img.shields.io/github/workflow/status/CogniBuild/Campus.Master/Angular?label=Angular)
+
+## Technologies stack
+
++ ASP.NET Core
+
++ Dapper
+
++ Angular
+
++ MS SQL Server
