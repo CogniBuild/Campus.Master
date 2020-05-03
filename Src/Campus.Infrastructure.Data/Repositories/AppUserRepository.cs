@@ -1,6 +1,4 @@
-﻿using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
 using Dapper;
@@ -10,11 +8,11 @@ namespace Campus.Infrastructure.Data.Repositories
 {
     public class AppUserRepository : IAppUserRepository
     {
-        IDbConnection db;
+        IUnitOfWork unitOfWork;
 
-        public AppUserRepository(string connectionString)
+        public AppUserRepository(IUnitOfWork unitOfWork)
         {
-            this.db = new SqlConnection(connectionString);
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<int> CreateAppUserAsync(AppUser appUser)
@@ -24,7 +22,7 @@ namespace Campus.Infrastructure.Data.Repositories
                 + "VALUES (@Name, @Surname, @Email, @Login, @PasswordHash, @RegistrationDate, @RoleId)"
                 + "SELECT(CAST(SCOPE_IDENTITY() AS INT))";
 
-            var ids = await db.QueryAsync<int>(sql, appUser);
+            var ids = await unitOfWork.Connection.QueryAsync<int>(sql, appUser);
             return ids.SingleOrDefault();
         }
 
@@ -32,7 +30,7 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             const string sql = "SELECT * FROM AppUser WHERE Id = @Id";
 
-            var appUser = await db.QueryAsync<AppUser>(sql, id);
+            var appUser = await unitOfWork.Connection.QueryAsync<AppUser>(sql, id);
             return appUser.SingleOrDefault();
         }
 
@@ -40,7 +38,7 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             const string sql = "DELETE FROM AppUser WHERE Id = @Id";
 
-            return await db.ExecuteAsync(sql, new {id});
+            return await unitOfWork.Connection.ExecuteAsync(sql, new {id});
         }
 
         public async Task<int> UpdateAppUserAsync(AppUser appUser)
@@ -56,7 +54,7 @@ namespace Campus.Infrastructure.Data.Repositories
                 "    RoleId           = @RoleId " +
                 "WHERE Id = @Id";
 
-            return await db.ExecuteAsync(sql, appUser);
+            return await unitOfWork.Connection.ExecuteAsync(sql, appUser);
         }
     }
 }

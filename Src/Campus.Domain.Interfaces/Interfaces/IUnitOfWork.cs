@@ -1,9 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Data;
 
 namespace GamersParadise.Domain.Interfaces.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
-        Task CommitAsync();
+        IDbConnection Connection { get; }
+        IDbTransaction Transaction { get; }
+        void Begin();
+        void Commit();
+        void Rollback();
     }
 }
