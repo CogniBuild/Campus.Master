@@ -37,10 +37,8 @@ namespace Campus.Infrastructure.Data.Repositories
         public void Dispose()
         {
             if (_transaction != null)
-            {
                 _transaction.Dispose();
-            }
-            _transaction.Dispose();
+            _transaction = null;
         }
     }
 }

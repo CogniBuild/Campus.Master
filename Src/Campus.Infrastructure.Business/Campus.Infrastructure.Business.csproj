@@ -39,6 +39,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ProfileService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Campus.Domain.Core\Campus.Domain.Core.csproj">
+      <Project>{1d9581f6-8a3d-43f7-9d5d-ad6f310d8be8}</Project>
+      <Name>Campus.Domain.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Campus.Domain.Interfaces\Campus.Domain.Interfaces.csproj">
+      <Project>{39f992fa-33a8-4a1a-b988-b4d99cf9b9f2}</Project>
+      <Name>Campus.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Campus.Services.Interfaces\Campus.Services.Interfaces.csproj">
+      <Project>{108cf216-0fbc-4630-9645-e61aa21238ea}</Project>
+      <Name>Campus.Services.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
