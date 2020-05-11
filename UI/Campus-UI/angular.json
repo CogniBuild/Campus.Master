@@ -128,7 +128,5 @@
     }
   },
   "defaultProject": "Campus-UI",
-  "cli": {
-    "analytics": "7115b5bd-1e51-4d45-b1d3-cedbec17b6db"
-  }
+  "cli": {}
 }
