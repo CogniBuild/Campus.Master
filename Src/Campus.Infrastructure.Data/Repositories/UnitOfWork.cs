@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using GamersParadise.Domain.Interfaces.Interfaces;
+using Campus.Domain.Interfaces.Interfaces;
 
 namespace Campus.Infrastructure.Data.Repositories
 {
@@ -7,6 +7,7 @@ namespace Campus.Infrastructure.Data.Repositories
     {
         public UnitOfWork(IDbConnection connection)
         {
+            connection.Open();
             _connection = connection;
         }
 
@@ -37,7 +38,10 @@ namespace Campus.Infrastructure.Data.Repositories
         public void Dispose()
         {
             if (_transaction != null)
+            {
                 _transaction.Dispose();
+                _connection.Close();
+            }
             _transaction = null;
         }
     }

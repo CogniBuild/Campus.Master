@@ -1,9 +1,10 @@
-﻿using Campus.Infrastructure.Business.DTO;
+﻿using System.Threading.Tasks;
+using Campus.Infrastructure.Business.DTO;
 
 namespace Campus.Services.Interfaces.Interfaces
 {
     public interface IProfileService
     {
-        void CreateAppUserProfile(ProfileRegistrationModelDto registrationDTO);
+        Task CreateAppUserProfile(ProfileRegistrationModelDto registrationDTO);
     }
 }

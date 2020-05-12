@@ -93,7 +93,7 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Profile @{model.Login}");
 
-            _profileService.CreateAppUserProfile(new ProfileRegistrationModelDto
+            await _profileService.CreateAppUserProfile(new ProfileRegistrationModelDto
             {
                 Login = model.Login,
                 Password = model.Password,
@@ -102,10 +102,7 @@ namespace Campus.Master.API.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName
             });
-
-            // TODO: Put business logic here
-            await Task.CompletedTask;
-
+            
             var state = new StateTransfer
             {
                 Message = "{JWT-TOKEN}",

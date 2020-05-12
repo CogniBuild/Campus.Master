@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
 
-namespace GamersParadise.Domain.Interfaces.Interfaces
+namespace Campus.Domain.Interfaces.Interfaces
 {
     public interface IAppUserRepository
     {

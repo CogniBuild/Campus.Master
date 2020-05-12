@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace GamersParadise.Domain.Interfaces.Interfaces
+namespace Campus.Domain.Interfaces.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {

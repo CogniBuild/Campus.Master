@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Campus.Domain.Interfaces.Interfaces;
 using Campus.Infrastructure.Business.Services;
 using Campus.Infrastructure.Data.Repositories;
 using Campus.Services.Interfaces.Interfaces;
-using GamersParadise.Domain.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -56,15 +57,11 @@ namespace Campus.Master.API
                 c.IncludeXmlComments(xmlDocPath);
             });
 
-            services.AddTransient<IProfileService, ProfileService>();
-
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;Database=CampusDb;Integrated Security=True";
-            IDbConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-            
-            services.AddSingleton(connection);
+            services.AddScoped<IDbConnection>(c => new SqlConnection(Configuration["ConnectionStrings:Default"]));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAppUserRepository, AppUserRepository>();
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            
+            services.AddScoped<IProfileService, ProfileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

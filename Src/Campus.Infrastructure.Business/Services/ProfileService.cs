@@ -1,9 +1,9 @@
 using System;
-using System.Globalization;
+using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
+using Campus.Domain.Interfaces.Interfaces;
 using Campus.Infrastructure.Business.DTO;
 using Campus.Services.Interfaces.Interfaces;
-using GamersParadise.Domain.Interfaces.Interfaces;
 
 namespace Campus.Infrastructure.Business.Services
 {
@@ -18,21 +18,29 @@ namespace Campus.Infrastructure.Business.Services
             _appUserRepository = appUserRepository;
         }
 
-        public void CreateAppUserProfile(ProfileRegistrationModelDto registrationDTO)
+        public async Task CreateAppUserProfile(ProfileRegistrationModelDto registrationDto)
         {
             _unitOfWork.Begin();
-            
-            _appUserRepository.CreateAppUserAsync(new AppUser
+
+            try
             {
-                Name = registrationDTO.FirstName,
-                Surname = registrationDTO.LastName,
-                Email = registrationDTO.Email,
-                Login = registrationDTO.Login,
-                PasswordHash = registrationDTO.Password,
-                RegistrationDate = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-            });
-            
-            _unitOfWork.Commit();
+               await _appUserRepository.CreateAppUserAsync(new AppUser
+                {
+                    Name = registrationDto.FirstName,
+                    Surname = registrationDto.LastName,
+                    Email = registrationDto.Email,
+                    Login = registrationDto.Login,
+                    PasswordHash = registrationDto.Password,
+                    RegistrationDate = DateTime.Now.ToString("d"),
+                });
+
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
         }
     }
 }
