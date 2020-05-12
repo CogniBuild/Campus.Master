@@ -6,12 +6,14 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {SingInComponent} from './sing-in/sing-in.component';
 import {SignInService} from './shared/services/sign-in.service';
+import { RegistrationComponent } from './registration/registration.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SingInComponent
+    SingInComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
