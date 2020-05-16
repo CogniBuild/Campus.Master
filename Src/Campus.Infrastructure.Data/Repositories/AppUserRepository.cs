@@ -29,7 +29,7 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             const string sql = "SELECT * FROM AppUser WHERE Id = @Id";
 
-            var appUser = await unitOfWork.Connection.QueryAsync<AppUser>(sql, id);
+            var appUser = await unitOfWork.Connection.QueryAsync<AppUser>(sql, new {id}, unitOfWork.Transaction);
             return appUser.SingleOrDefault();
         }
 
@@ -37,7 +37,7 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             const string sql = "DELETE FROM AppUser WHERE Id = @Id";
 
-            return await unitOfWork.Connection.ExecuteAsync(sql, new {id});
+            return await unitOfWork.Connection.ExecuteAsync(sql, new {id}, unitOfWork.Transaction);
         }
 
         public async Task<int> UpdateAppUserAsync(AppUser appUser)
@@ -45,15 +45,10 @@ namespace Campus.Infrastructure.Data.Repositories
             const string sql =
                 "UPDATE AppUser " +
                 "SET Name             = @Name," +
-                "    Surname          = @Surname," +
-                "    Email            = @Email," +
-                "    Login            = @Login," +
-                "    PasswordHash     = @PasswordHash," +
-                "    RegistrationDate = @RegistrationDate," +
-                "    RoleId           = @RoleId " +
+                "    Surname          = @Surname " +
                 "WHERE Id = @Id";
 
-            return await unitOfWork.Connection.ExecuteAsync(sql, appUser);
+            return await unitOfWork.Connection.ExecuteAsync(sql, appUser, unitOfWork.Transaction);
         }
     }
 }

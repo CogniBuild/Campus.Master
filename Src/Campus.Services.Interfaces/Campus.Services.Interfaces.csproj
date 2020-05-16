@@ -38,7 +38,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\ProfileEditingModelDto.cs" />
     <Compile Include="DTO\ProfileRegistrationModelDto.cs" />
+    <Compile Include="DTO\ProfileViewModelDto.cs" />
     <Compile Include="Interfaces\IProfileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

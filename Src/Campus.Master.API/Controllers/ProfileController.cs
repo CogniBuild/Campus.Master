@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Campus.Infrastructure.Business.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -48,15 +46,17 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Profile Information");
 
-            // TODO: Put business logic here
+            int id = 1;
 
-            var result = await Task.Run(() => new ProfileViewModel
+            var profileById = await _profileService.GetAppUserProfileByIdAsync(id);
+
+            var result = new ProfileViewModel
             {
-                Login = "Login",
-                Email = "Email",
-                FirstName = "FirstName",
-                LastName = "LastName"
-            });
+                Login = profileById.Login,
+                Email = profileById.Email,
+                FirstName = profileById.FirstName,
+                LastName = profileById.LastName
+            };
 
             return Ok(result);
         }
@@ -93,7 +93,7 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Profile @{model.Login}");
 
-            await _profileService.CreateAppUserProfile(new ProfileRegistrationModelDto
+            await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
             {
                 Login = model.Login,
                 Password = model.Password,
@@ -102,7 +102,7 @@ namespace Campus.Master.API.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName
             });
-            
+
             var state = new StateTransfer
             {
                 Message = "{JWT-TOKEN}",
@@ -180,8 +180,14 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Profile");
 
-            // TODO: Put business logic here
-            await Task.CompletedTask;
+            int id = 1;
+
+            await _profileService.EditAppUserProfileByIdAsync(id, new ProfileEditingModelDto
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            });
+
 
             return Ok(new StateTransfer
             {
@@ -212,12 +218,13 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile");
 
-            // TODO: Put business logic here
-            await Task.CompletedTask;
+            int id = 1;
+
+            await _profileService.DeleteAppUserProfileByIdAsync(id);
 
             return Ok(new StateTransfer
             {
-                Message = "Profile is deleted now!",
+                Message = $"Profile is deleted now!",
                 Payload = "/"
             });
         }

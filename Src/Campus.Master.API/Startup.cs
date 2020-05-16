@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -56,7 +55,7 @@ namespace Campus.Master.API
 
                 c.IncludeXmlComments(xmlDocPath);
             });
-
+            
             services.AddScoped<IDbConnection>(c => new SqlConnection(Configuration["ConnectionStrings:Default"]));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAppUserRepository, AppUserRepository>();
