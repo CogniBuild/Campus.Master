@@ -45,21 +45,26 @@ namespace Campus.Infrastructure.Business.Services
 
         public async Task<ProfileViewModelDto> GetAppUserProfileByIdAsync(int id)
         {
+            var appUser = await _appUserRepository.GetAppUserByIdAsync(id);
+
+            return new ProfileViewModelDto
+            {
+                Login = appUser.Login,
+                Email = appUser.Email,
+                FirstName = appUser.Name,
+                LastName = appUser.Surname
+            };
+        }
+
+        public async Task DeleteAppUserProfileByIdAsync(int id)
+        {
             _unitOfWork.Begin();
 
             try
             {
-                var appUser = await _appUserRepository.GetAppUserByIdAsync(id);
+                await _appUserRepository.DeleteAppUserByIdAsync(id);
 
                 _unitOfWork.Commit();
-
-                return new ProfileViewModelDto
-                {
-                    Login = appUser.Login,
-                    Email = appUser.Email,
-                    FirstName = appUser.Name,
-                    LastName = appUser.Surname
-                };
             }
             catch (Exception)
             {
@@ -68,19 +73,26 @@ namespace Campus.Infrastructure.Business.Services
             }
         }
 
-        public async Task<int> DeleteAppUserProfileByIdAsync(int id)
+        public async Task EditAppUserProfileByIdAsync(int id, ProfileEditingModelDto editingDto)
         {
-            return await _appUserRepository.DeleteAppUserByIdAsync(id);
-        }
+            _unitOfWork.Begin();
 
-        public async Task<int> EditAppUserProfileByIdAsync(int id, ProfileEditingModelDto editingDto)
-        {
-            return await _appUserRepository.UpdateAppUserAsync(new AppUser()
+            try
             {
-                Id = id,
-                Name = editingDto.FirstName,
-                Surname = editingDto.LastName
-            });
+                await _appUserRepository.UpdateAppUserAsync(new AppUser()
+                {
+                    Id = id,
+                    Name = editingDto.FirstName,
+                    Surname = editingDto.LastName
+                });
+
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
         }
     }
 }

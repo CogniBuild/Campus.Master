@@ -29,7 +29,7 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             const string sql = "SELECT * FROM AppUser WHERE Id = @Id";
 
-            var appUser = await unitOfWork.Connection.QueryAsync<AppUser>(sql, new {id}, unitOfWork.Transaction);
+            var appUser = await unitOfWork.Connection.QueryAsync<AppUser>(sql, new {id});
             return appUser.SingleOrDefault();
         }
 
