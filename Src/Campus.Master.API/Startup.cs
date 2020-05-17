@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Campus.Domain.Interfaces.Interfaces;
 using Campus.Infrastructure.Business.Services;
+using Campus.Infrastructure.Data.Dependencies;
 using Campus.Infrastructure.Data.Repositories;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -55,12 +56,9 @@ namespace Campus.Master.API
 
                 c.IncludeXmlComments(xmlDocPath);
             });
-            
-            services.AddScoped<IDbConnection>(c => new SqlConnection(Configuration["ConnectionStrings:Default"]));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IAppUserRepository, AppUserRepository>();
-            
-            services.AddScoped<IProfileService, ProfileService>();
+
+            services.AddDataProvides(Configuration["ConnectionStrings:Default"]);
+            services.AddBusinessProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
