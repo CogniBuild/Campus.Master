@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
-using Dapper;
 using Campus.Domain.Interfaces.Interfaces;
+using Dapper;
 
 namespace Campus.Infrastructure.Data.Repositories
 {

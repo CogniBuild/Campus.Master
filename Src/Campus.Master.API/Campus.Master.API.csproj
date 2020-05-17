@@ -21,6 +21,4 @@
       <ProjectReference Include="..\Campus.Infrastructure.Data\Campus.Infrastructure.Data.csproj" />
       <ProjectReference Include="..\Campus.Services.Interfaces\Campus.Services.Interfaces.csproj" />
     </ItemGroup>
-
-
 </Project>
