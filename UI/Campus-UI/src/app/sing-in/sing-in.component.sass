@@ -1,48 +1,37 @@
 @import "src/styles/styles"
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap')
 
-.sign-in-background
-  background-color: #E5E5E5
-  +sm
-    background-color: #FFFFFF
-
 .container
+  font-family: 'FuturaLT', serif
   height: 100vh
   max-width: 1440px
   margin: 0 auto
-
-.sign-in-wrap
-  font-family: 'FuturaLT'
-  position: absolute
-  top: 50%
-  left: 50%
-  transform: translate(-50%, -50%)
 
 .sign-in
   display: flex
   align-items: center
   background-color: #FFFFFF
   border-radius: 30px
+  box-shadow: -10px 15px 70px rgba(0, 0, 0, 0.1)
+  +sm
+    box-shadow: none
 
   &__form
-    width: 575px
-    +xl
-      width: 450px
-    +lg
-      width: 400px
+    min-width: 480px
+    padding: 0 50px
+    box-sizing: border-box
     +md
-      width: 300px
-      padding: 40px
+      padding: 50px
     +sm
+      min-width: auto
       width: 100vw
       padding: 0
 
   &__img
-    max-width: 350px
-    height: 550px
+    max-width: 365px
     position: relative
-    +xl
-      height: 420px
+    min-width: 390px
+    height: 600px
     +md
       display: none
 
@@ -50,13 +39,10 @@
     position: absolute
     font-size: 50px
     color: #FFFFFF
-    font-family: Gilroy-Black-Italic
+    font-family: 'Gilroy-Black-Italic', serif
     bottom: 45px
     left: 45px
     width: 205px
-    +xl
-      width: 180px
-      font-size: 44px
 
   &__img img
     display: block
@@ -64,9 +50,7 @@
     width: 100%
     height: 100%
     object-fit: none
-    object-position: 14% 8%
-    +xl
-      object-position: 14% 13%
+    object-position: 14% 5%
 
   &__title
     margin-bottom: 25px
@@ -76,23 +60,16 @@
 
     &_br
       display: none
-      +ms
+      +sm
         display: block
 
     span
       color: #7E57C2
 
-    +xl
-      font-size: 28px
-    +lg
-      font-size: 28px
-    +md
-      font-size: 30px
     +sm
       font-size: 36px
-    +ms
       text-align: left
-      padding: 0 24px
+      padding: 0 16px
 
 
   &__btn
@@ -122,13 +99,13 @@ form
   flex-direction: column
 
 .form-control
-  margin: 0 auto
   position: relative
-  +ms
-    margin: 0 24px
+  +sm
+    margin: 0 16px
 
   input
-    width: 327px
+    width: 100%
+    box-sizing: border-box
     border: none
     border-radius: 8px
     background-color: #F0F0FB
@@ -136,23 +113,17 @@ form
     font-size: 14px
     outline: none
     margin-bottom: 30px
-    +xl
-      width: 250px
-    +lg
-      width: 200px
-    +ms
-      width: calc(100% - 44px)
 
   .email::before
     content: ''
-    background-image: url("/assets/img/sign-in/email.png")
+    background-image: url('/assets/img/sign-in/email.png')
     width: 18px
     height: 18px
     position: absolute
     background-size: contain
     transform: translate(11px, 8px)
 
-  .password
+  .password::before
     content: ''
     background-image: url("/assets/img/sign-in/password.png")
     width: 18px
@@ -182,7 +153,7 @@ form
   margin-bottom: 20px
   font-size: 12px
   color: #7E57C2
-  +ms
+  +sm
     text-align: end
     font-size: 14px
 

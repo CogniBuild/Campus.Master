@@ -1,23 +1,36 @@
+.wrap-center
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.align-center
+  align-items: center
+
 =xl
-  +r(1565)
+  +resize(1565)
     @content
 
 =lg
-  +r(1259)
+  +resize(1259)
     @content
 
 =md
-  +r(1080)
+  +resize(1080)
     @content
 
 =sm
-  +r(767)
+  +resize(767)
     @content
 
 =xs
-  +r(599)
+  +resize(599)
     @content
 
 =ms
-  +r(429)
+  +resize(429)
+    @content
+
+=ss
+  +resize(329)
     @content
