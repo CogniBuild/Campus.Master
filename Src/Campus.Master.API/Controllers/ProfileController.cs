@@ -1,13 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Campus.Infrastructure.Business.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-
 using Campus.Master.API.Models.Profile;
 using Campus.Master.API.Models;
+using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Campus.Master.API.Controllers
@@ -17,13 +16,15 @@ namespace Campus.Master.API.Controllers
     [Route("api/[controller]")]
     public class ProfileController : ControllerBase
     {
+        private readonly IProfileService _profileService;
         private readonly ILogger _logger;
 
-        public ProfileController(ILogger<ProfileController> logger)
+        public ProfileController(IProfileService profileService, ILogger<ProfileController> logger)
         {
+            _profileService = profileService;
             _logger = logger;
         }
-        
+
         /// <summary>
         /// Get profile information.
         /// </summary>
@@ -44,17 +45,19 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> GetProfileInformation()
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Profile Information");
-            
-            // TODO: Put business logic here
-            
-            var result = await Task.Run(() => new ProfileViewModel
+
+            int id = 1;
+
+            var profileById = await _profileService.GetAppUserProfileByIdAsync(id);
+
+            var result = new ProfileViewModel
             {
-                Login = "Login",
-                Email = "Email",
-                FirstName = "FirstName",
-                LastName = "LastName"
-            });
-            
+                Login = profileById.Login,
+                Email = profileById.Email,
+                FirstName = profileById.FirstName,
+                LastName = profileById.LastName
+            };
+
             return Ok(result);
         }
 
@@ -81,7 +84,7 @@ namespace Campus.Master.API.Controllers
         /// <returns>JWT token.</returns>
         /// <response code="201">New profile created.</response>
         /// <response code="400">Form data is invalid.</response>
-        [AllowAnonymous] 
+        [AllowAnonymous]
         [HttpPost("create")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -89,10 +92,17 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> CreateProfile(ProfileRegistrationModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Profile @{model.Login}");
-            
-            // TODO: Put business logic here
-            await Task.CompletedTask;
-            
+
+            await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
+            {
+                Login = model.Login,
+                Password = model.Password,
+                ConfirmPassword = model.ConfirmPassword,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            });
+
             var state = new StateTransfer
             {
                 Message = "{JWT-TOKEN}",
@@ -129,10 +139,10 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> AuthenticateProfile(AuthenticationModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Authenticate Profile @{model.Login}");
-            
+
             // TODO: Put business logic here
             await Task.CompletedTask;
-            
+
             return Ok(new StateTransfer
             {
                 Message = "{JWT-TOKEN}",
@@ -169,10 +179,16 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> EditProfile(ProfileEditingModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Profile");
-            
-            // TODO: Put business logic here
-            await Task.CompletedTask;
-            
+
+            int id = 1;
+
+            await _profileService.EditAppUserProfileByIdAsync(id, new ProfileEditingModelDto
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            });
+
+
             return Ok(new StateTransfer
             {
                 Message = "Profile data is updated now!",
@@ -201,13 +217,14 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> DeleteProfile()
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile");
-            
-            // TODO: Put business logic here
-            await Task.CompletedTask;
-            
+
+            int id = 1;
+
+            await _profileService.DeleteAppUserProfileByIdAsync(id);
+
             return Ok(new StateTransfer
             {
-                Message = "Profile is deleted now!",
+                Message = $"Profile is deleted now!",
                 Payload = "/"
             });
         }

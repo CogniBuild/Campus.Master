@@ -1,17 +1,19 @@
 using System;
-using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
+using Campus.Domain.Interfaces.Interfaces;
+using Campus.Infrastructure.Business.Services;
+using Campus.Infrastructure.Data.Dependencies;
+using Campus.Infrastructure.Data.Repositories;
+using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Campus.Master.API
@@ -31,25 +33,32 @@ namespace Campus.Master.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
-            
+            string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
+
             services.AddControllers();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc(ApiVersion, new OpenApiInfo { Title = ApiTitle, Version = ApiVersion });
-                
+                c.SwaggerDoc(ApiVersion, new OpenApiInfo {Title = ApiTitle, Version = ApiVersion});
+
                 c.AddSecurityDefinition("Bearer",
-                    new OpenApiSecurityScheme { In = ParameterLocation.Header,
-                        Description = "Please enter into field the word 'Bearer' following by space and JWT", 
-                        Name = "Authorization", Type = SecuritySchemeType.ApiKey });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                    { new OpenApiSecurityScheme {Name = "Bearer"}, Enumerable.Empty<string>().ToList() },
+                    new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "Please enter into field the word 'Bearer' following by space and JWT",
+                        Name = "Authorization", Type = SecuritySchemeType.ApiKey
+                    });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {new OpenApiSecurityScheme {Name = "Bearer"}, Enumerable.Empty<string>().ToList()},
                 });
-                
+
                 c.IncludeXmlComments(xmlDocPath);
             });
+
+            services.AddDataProvides(Configuration["ConnectionStrings:Default"]);
+            services.AddBusinessProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,12 +67,10 @@ namespace Campus.Master.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors(builder => builder.WithOrigins(Configuration["DevUI:ProxyUrl"]).AllowAnyHeader().AllowAnyMethod());
+                app.UseCors(builder =>
+                    builder.WithOrigins(Configuration["DevUI:ProxyUrl"]).AllowAnyHeader().AllowAnyMethod());
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint(Configuration["Swagger:StaticRoute"], ApiTitle);
-                });
+                app.UseSwaggerUI(c => { c.SwaggerEndpoint(Configuration["Swagger:StaticRoute"], ApiTitle); });
             }
             else
             {

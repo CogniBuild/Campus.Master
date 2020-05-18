@@ -8,11 +8,17 @@
 
     <ItemGroup>
       <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.2" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="wwwroot" />
     </ItemGroup>
 
-
+    <ItemGroup>
+      <ProjectReference Include="..\Campus.Domain.Interfaces\Campus.Domain.Interfaces.csproj" />
+      <ProjectReference Include="..\Campus.Infrastructure.Business\Campus.Infrastructure.Business.csproj" />
+      <ProjectReference Include="..\Campus.Infrastructure.Data\Campus.Infrastructure.Data.csproj" />
+      <ProjectReference Include="..\Campus.Services.Interfaces\Campus.Services.Interfaces.csproj" />
+    </ItemGroup>
 </Project>
