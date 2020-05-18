@@ -37,18 +37,11 @@
                 Password must contains {{form.get('password').errors.minlength.requiredLength}} characters
               </small>
             </div>
-<<<<<<< Updated upstream
-            <button type="submit" class="sign-in__btn" [disabled]="form.invalid||!form.touched">Sign in</button>
-          </form>
-          <a href="#" class="sign-in__createAcc">Create Account</a>
-        </div>
-=======
             <span class="forgot-pass"><a href="#">Forgot your password ?</a></span>
           </div>
           <button type="submit" class="sign-in__btn" [disabled]="form.invalid">Sign in</button>
         </form>
         <a [routerLink]="['/registration']" class="sign-in__createAcc">Create Account</a>
->>>>>>> Stashed changes
       </div>
     </div>
   </div>
