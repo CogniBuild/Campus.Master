@@ -47,7 +47,7 @@ export class RegistrationPageComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    const RegisterUser: RegisterUser = {
+    const registerUser: RegisterUser = {
       firstName: this.registerForm.value.first_name,
       lastName: this.registerForm.value.last_name,
       email: this.registerForm.value.email,
@@ -55,7 +55,7 @@ export class RegistrationPageComponent implements OnInit {
       confirmPassword: this.registerForm.value.confirmPassword,
       gender: this.registerForm.value.gender
     };
-    console.log(RegisterUser);
+    console.log(registerUser);
     // this.auth.login(user).subscribe(() => {
     //   this.form.reset();
     //   this.router.navigate([]);
