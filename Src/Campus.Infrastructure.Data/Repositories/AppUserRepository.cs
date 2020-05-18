@@ -18,8 +18,8 @@ namespace Campus.Infrastructure.Data.Repositories
         public async Task<int> CreateAppUserAsync(AppUser appUser)
         {
             const string sql =
-                "INSERT INTO AppUser (Name, Surname, Email, Login, PasswordHash, RegistrationDate, RoleId)"
-                + "VALUES (@Name, @Surname, @Email, @Login, @PasswordHash, @RegistrationDate, 2)";
+                "INSERT INTO AppUser (Name, Surname, Email, Login, PasswordHash, PasswordSalt, RegistrationDate, RoleId)"
+                + "VALUES (@Name, @Surname, @Email, @Login, @PasswordHash, @PasswordSalt, @RegistrationDate, 2)";
 
             int affectedRows = await unitOfWork.Connection.ExecuteAsync(sql, appUser, unitOfWork.Transaction);
             return affectedRows;

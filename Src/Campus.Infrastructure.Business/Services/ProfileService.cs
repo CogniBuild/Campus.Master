@@ -30,7 +30,8 @@ namespace Campus.Infrastructure.Business.Services
                     Surname = registrationDto.LastName,
                     Email = registrationDto.Email,
                     Login = registrationDto.Login,
-                    PasswordHash = registrationDto.Password,
+                    PasswordHash = new byte[] { },
+                    PasswordSalt = new byte[] { },
                     RegistrationDate = DateTime.Now.ToString("d"),
                 });
 
