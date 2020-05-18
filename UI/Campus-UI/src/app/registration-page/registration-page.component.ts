@@ -11,7 +11,7 @@ import {ConfirmPasswordValidator} from '../shared/confirmed.validator';
 export class RegistrationPageComponent implements OnInit {
 
   registerForm: FormGroup;
-  submitted: boolean = false;
+  submitted = false;
 
   // private auth: SignInService, private router: Router - add to constructor
   constructor(private fb: FormBuilder) {
