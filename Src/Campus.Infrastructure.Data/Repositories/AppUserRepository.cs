@@ -17,9 +17,11 @@ namespace Campus.Infrastructure.Data.Repositories
 
         public async Task<int> CreateAppUserAsync(AppUser appUser)
         {
-            const string sql =
-                "INSERT INTO AppUser (Name, Surname, Email, Login, PasswordHash, PasswordSalt, RegistrationDate, RoleId)"
-                + "VALUES (@Name, @Surname, @Email, @Login, @PasswordHash, @PasswordSalt, @RegistrationDate, 2)";
+            const string sql = @"INSERT INTO AppUser 
+                                 (Name, Surname, Email, Login, 
+                                 PasswordHash, PasswordSalt, RegistrationDate, RoleId) 
+                                 VALUES (@Name, @Surname, @Email, @Login, 
+                                 @PasswordHash, @PasswordSalt, @RegistrationDate, 2)";
 
             int affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql, appUser, _unitOfWork.Transaction);
             return affectedRows;
@@ -42,11 +44,10 @@ namespace Campus.Infrastructure.Data.Repositories
 
         public async Task<int> UpdateAppUserAsync(AppUser appUser)
         {
-            const string sql =
-                "UPDATE AppUser " +
-                "SET Name             = @Name," +
-                "    Surname          = @Surname " +
-                "WHERE Id = @Id";
+            const string sql = @"UPDATE AppUser 
+                                 SET Name = @Name,
+                                 Surname = @Surname 
+                                 WHERE Id = @Id";
 
             return await _unitOfWork.Connection.ExecuteAsync(sql, appUser, _unitOfWork.Transaction);
         }
