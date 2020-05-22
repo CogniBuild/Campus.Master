@@ -24,8 +24,7 @@ namespace Campus.Master.API
 
         private const string ApiTitle = "Campus.Master Development mode API";
         private const string ApiVersion = "v1.2";
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
             string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -55,8 +54,7 @@ namespace Campus.Master.API
             services.AddSqlStorage(Configuration["ConnectionStrings:Default"]);
             services.AddServices();
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
