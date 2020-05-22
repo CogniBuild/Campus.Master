@@ -107,27 +107,52 @@ namespace Campus.Master.API.Controllers
             {
                 return BadRequest(new StateTransfer
                 {
-                    Message = "Password fields doesn't match!",
+                    Message = "Registration form is invalid!",
                     Payload = "api/profile/create"
                 });
             }
 
-            await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
+            try
             {
-                Login = model.Login,
-                Password = model.Password,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName
-            });
+                await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
+                {
+                    Login = model.Login,
+                    Password = model.Password,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                });
 
-            var state = new StateTransfer
+                var claims = await _profileService.VerifyAppUserProfile(new ProfileAuthenticationDto
+                {
+                    Login = model.Login,
+                    Password = model.Password
+                });
+
+                var state = new StateTransfer
+                {
+                    Message = BuildToken(new ProfileClaimsModel
+                    {
+                        ProfileId = claims.ProfileId,
+                        RoleId = claims.RoleId
+                    }),
+                    Payload = "api/profile"
+                };
+
+                return Created(state.Payload, state);
+            }
+            catch (ApplicationException)
             {
-                Message = "{JWT-TOKEN}",
-                Payload = "api/profile"
-            };
-
-            return Created(state.Payload, state);
+                return BadRequest(new StateTransfer
+                {
+                    Message = "User already exists!",
+                    Payload = "api/profile/create"
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         /// <summary>
@@ -158,14 +183,35 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Authenticate Profile @{model.Login}");
 
-            // TODO: Put business logic here
-            await Task.CompletedTask;
-
-            return Ok(new StateTransfer
+            try
             {
-                Message = "{JWT-TOKEN}",
-                Payload = "api/profile"
-            });
+                var claims = await _profileService.VerifyAppUserProfile(new ProfileAuthenticationDto
+                {
+                    Login = model.Login,
+                    Password = model.Password
+                });
+
+                return Ok(new StateTransfer
+                {
+                    Message = BuildToken(new ProfileClaimsModel { 
+                        ProfileId = claims.ProfileId, 
+                        RoleId = claims.RoleId 
+                    }),
+                    Payload = "api/profile"
+                });
+            }
+            catch (ApplicationException)
+            {
+                return BadRequest(new StateTransfer
+                {
+                    Message = "Wrong username or password!",
+                    Payload = "api/profile/auth"
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         /// <summary>
@@ -255,7 +301,7 @@ namespace Campus.Master.API.Controllers
             };
 
             var encryptingSecret = Encoding.UTF8.GetBytes(_configuration
-                .GetSection("AppSettings:Token").Value);
+                .GetSection("Security:EndpointEncryptionSecret").Value);
             var key = new SymmetricSecurityKey(encryptingSecret);
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var descriptor = new SecurityTokenDescriptor {

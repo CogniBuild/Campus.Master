@@ -47,20 +47,40 @@ namespace Campus.Infrastructure.Business.Services
             catch (Exception)
             {
                 _unitOfWork.Rollback();
-                throw;
+                throw new ApplicationException("User already exists in database!");
             }
         }
 
         public async Task<ProfileViewModelDto> GetAppUserProfileByIdAsync(int id)
         {
             var appUser = await _appUserRepository.GetAppUserByIdAsync(id);
-
+            
+            if (appUser == null)
+                throw new ApplicationException("User with this ID doesn't exist");
+            
             return new ProfileViewModelDto
             {
                 Login = appUser.Login,
                 Email = appUser.Email,
                 FirstName = appUser.Name,
                 LastName = appUser.Surname
+            };
+        }
+
+        public async Task<ProfileClaimsDto> VerifyAppUserProfile(ProfileAuthenticationDto model)
+        {
+            var appUser = await _appUserRepository.GetAppUserByLoginAsync(model.Login);
+            
+            if (appUser == null)
+                throw new ApplicationException("User with this login doesn't exist");
+
+            if (!_authenticationService.VerifyPassword(model.Password, appUser.PasswordHash, appUser.PasswordSalt))
+                throw new ApplicationException("Failed to verify password!");
+            
+            return new ProfileClaimsDto
+            {
+                ProfileId = appUser.Id,
+                RoleId = appUser.RoleId
             };
         }
 

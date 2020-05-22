@@ -31,7 +31,19 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             const string sql = "SELECT * FROM AppUser WHERE Id = @Id";
 
-            var appUser = await _unitOfWork.Connection.QueryAsync<AppUser>(sql, new {id});
+            var appUser = await _unitOfWork
+                .Connection
+                .QueryAsync<AppUser>(sql, new { Id = id });
+            return appUser.SingleOrDefault();
+        }
+
+        public async Task<AppUser> GetAppUserByLoginAsync(string login)
+        {
+            const string sql = "SELECT * FROM AppUser WHERE Login = @Login";
+
+            var appUser = await _unitOfWork
+                .Connection
+                .QueryAsync<AppUser>(sql, new { Login = login });
             return appUser.SingleOrDefault();
         }
 

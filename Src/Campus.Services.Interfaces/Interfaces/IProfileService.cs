@@ -8,6 +8,7 @@ namespace Campus.Services.Interfaces.Interfaces
     {
         Task CreateAppUserProfileAsync(ProfileRegistrationModelDto registrationDto);
         Task<ProfileViewModelDto> GetAppUserProfileByIdAsync(int id);
+        Task<ProfileClaimsDto> VerifyAppUserProfile(ProfileAuthenticationDto model);
         Task DeleteAppUserProfileByIdAsync(int id);
         Task EditAppUserProfileByIdAsync(int id, ProfileEditingModelDto editingDto);
     }

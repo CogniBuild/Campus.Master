@@ -1,4 +1,4 @@
-namespace Campus.Infrastructure.Business.DTO
+namespace Campus.Services.Interfaces.DTO
 {
     public class ProfileViewModelDto
     {
