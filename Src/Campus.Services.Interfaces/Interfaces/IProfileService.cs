@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Campus.Infrastructure.Business.DTO;
+using Campus.Services.Interfaces.DTO;
 
 namespace Campus.Services.Interfaces.Interfaces
 {

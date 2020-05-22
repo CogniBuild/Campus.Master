@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Campus.Master.API.Models.Profile;
 using Campus.Master.API.Models;
+using Campus.Services.Interfaces.DTO;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
@@ -93,23 +94,33 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Profile @{model.Login}");
 
-            await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
+            if (model.Password != model.ConfirmPassword)
             {
-                Login = model.Login,
-                Password = model.Password,
-                ConfirmPassword = model.ConfirmPassword,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName
-            });
-
-            var state = new StateTransfer
+                return BadRequest(new StateTransfer
+                {
+                    Message = "Password fields doesn't match!",
+                    Payload = "api/profile/create"
+                });
+            }
+            else
             {
-                Message = "{JWT-TOKEN}",
-                Payload = "api/profile"
-            };
+                await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
+                {
+                    Login = model.Login,
+                    Password = model.Password,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                });
 
-            return Created(state.Payload, state);
+                var state = new StateTransfer
+                {
+                    Message = "{JWT-TOKEN}",
+                    Payload = "api/profile"
+                };
+
+                return Created(state.Payload, state);
+            }
         }
 
         /// <summary>
