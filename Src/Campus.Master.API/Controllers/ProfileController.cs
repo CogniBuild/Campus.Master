@@ -1,5 +1,8 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 using Campus.Infrastructure.Business.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +12,8 @@ using Campus.Master.API.Models;
 using Campus.Services.Interfaces.DTO;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
 
 namespace Campus.Master.API.Controllers
 {
@@ -19,10 +24,14 @@ namespace Campus.Master.API.Controllers
     {
         private readonly IProfileService _profileService;
         private readonly ILogger _logger;
+        private readonly IConfiguration _configuration;
 
-        public ProfileController(IProfileService profileService, ILogger<ProfileController> logger)
+        public ProfileController(IProfileService profileService,
+                                 IConfiguration configuration,
+                                 ILogger<ProfileController> logger)
         {
             _profileService = profileService;
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -102,25 +111,23 @@ namespace Campus.Master.API.Controllers
                     Payload = "api/profile/create"
                 });
             }
-            else
+
+            await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
             {
-                await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
-                {
-                    Login = model.Login,
-                    Password = model.Password,
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName
-                });
+                Login = model.Login,
+                Password = model.Password,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            });
 
-                var state = new StateTransfer
-                {
-                    Message = "{JWT-TOKEN}",
-                    Payload = "api/profile"
-                };
+            var state = new StateTransfer
+            {
+                Message = "{JWT-TOKEN}",
+                Payload = "api/profile"
+            };
 
-                return Created(state.Payload, state);
-            }
+            return Created(state.Payload, state);
         }
 
         /// <summary>
@@ -238,6 +245,29 @@ namespace Campus.Master.API.Controllers
                 Message = $"Profile is deleted now!",
                 Payload = "/"
             });
+        }
+
+        private string BuildToken(ProfileClaimsModel model)
+        {
+            var claims = new[] {
+                new Claim(ClaimTypes.NameIdentifier, model.ProfileId.ToString()),
+                new Claim(ClaimTypes.Role, model.RoleId.ToString())
+            };
+
+            var encryptingSecret = Encoding.UTF8.GetBytes(_configuration
+                .GetSection("AppSettings:Token").Value);
+            var key = new SymmetricSecurityKey(encryptingSecret);
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var descriptor = new SecurityTokenDescriptor {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddHours(6),
+                SigningCredentials = credentials
+            };
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.CreateToken(descriptor);
+            
+            return handler.WriteToken(token);
         }
     }
 }
