@@ -51,7 +51,7 @@ namespace Campus.Master.API
                 c.IncludeXmlComments(xmlDocPath);
             });
 
-            services.AddSqlStorage(Configuration["ConnectionStrings:Default"]);
+            services.AddPostgreSqlStorage(Configuration["ConnectionStrings:Default"]);
             services.AddServices();
         }
         
