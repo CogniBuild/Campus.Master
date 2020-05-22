@@ -8,11 +8,11 @@ namespace Campus.Infrastructure.Data.Repositories
 {
     public class AppUserRepository : IAppUserRepository
     {
-        readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public AppUserRepository(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> CreateAppUserAsync(AppUser appUser)
@@ -21,7 +21,7 @@ namespace Campus.Infrastructure.Data.Repositories
                 "INSERT INTO AppUser (Name, Surname, Email, Login, PasswordHash, PasswordSalt, RegistrationDate, RoleId)"
                 + "VALUES (@Name, @Surname, @Email, @Login, @PasswordHash, @PasswordSalt, @RegistrationDate, 2)";
 
-            int affectedRows = await unitOfWork.Connection.ExecuteAsync(sql, appUser, unitOfWork.Transaction);
+            int affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql, appUser, _unitOfWork.Transaction);
             return affectedRows;
         }
 
@@ -29,7 +29,7 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             const string sql = "SELECT * FROM AppUser WHERE Id = @Id";
 
-            var appUser = await unitOfWork.Connection.QueryAsync<AppUser>(sql, new {id});
+            var appUser = await _unitOfWork.Connection.QueryAsync<AppUser>(sql, new {id});
             return appUser.SingleOrDefault();
         }
 
@@ -37,7 +37,7 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             const string sql = "DELETE FROM AppUser WHERE Id = @Id";
 
-            return await unitOfWork.Connection.ExecuteAsync(sql, new {id}, unitOfWork.Transaction);
+            return await _unitOfWork.Connection.ExecuteAsync(sql, new {id}, _unitOfWork.Transaction);
         }
 
         public async Task<int> UpdateAppUserAsync(AppUser appUser)
@@ -48,7 +48,7 @@ namespace Campus.Infrastructure.Data.Repositories
                 "    Surname          = @Surname " +
                 "WHERE Id = @Id";
 
-            return await unitOfWork.Connection.ExecuteAsync(sql, appUser, unitOfWork.Transaction);
+            return await _unitOfWork.Connection.ExecuteAsync(sql, appUser, _unitOfWork.Transaction);
         }
     }
 }
