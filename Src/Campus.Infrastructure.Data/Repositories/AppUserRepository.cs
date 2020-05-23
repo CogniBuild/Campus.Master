@@ -8,20 +8,22 @@ namespace Campus.Infrastructure.Data.Repositories
 {
     public class AppUserRepository : IAppUserRepository
     {
-        readonly IUnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public AppUserRepository(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> CreateAppUserAsync(AppUser appUser)
         {
-            const string sql =
-                "INSERT INTO AppUser (Name, Surname, Email, Login, PasswordHash, PasswordSalt, RegistrationDate, RoleId)"
-                + "VALUES (@Name, @Surname, @Email, @Login, @PasswordHash, @PasswordSalt, @RegistrationDate, 2)";
+            const string sql = @"INSERT INTO AppUser 
+                                 (Name, Surname, Email, Login, 
+                                 PasswordHash, PasswordSalt, RegistrationDate, RoleId) 
+                                 VALUES (@Name, @Surname, @Email, @Login, 
+                                 @PasswordHash, @PasswordSalt, @RegistrationDate, 2)";
 
-            int affectedRows = await unitOfWork.Connection.ExecuteAsync(sql, appUser, unitOfWork.Transaction);
+            int affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql, appUser, _unitOfWork.Transaction);
             return affectedRows;
         }
 
@@ -29,7 +31,19 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             const string sql = "SELECT * FROM AppUser WHERE Id = @Id";
 
-            var appUser = await unitOfWork.Connection.QueryAsync<AppUser>(sql, new {id});
+            var appUser = await _unitOfWork
+                .Connection
+                .QueryAsync<AppUser>(sql, new { Id = id });
+            return appUser.SingleOrDefault();
+        }
+
+        public async Task<AppUser> GetAppUserByLoginAsync(string login)
+        {
+            const string sql = "SELECT * FROM AppUser WHERE Login = @Login";
+
+            var appUser = await _unitOfWork
+                .Connection
+                .QueryAsync<AppUser>(sql, new { Login = login });
             return appUser.SingleOrDefault();
         }
 
@@ -37,18 +51,17 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             const string sql = "DELETE FROM AppUser WHERE Id = @Id";
 
-            return await unitOfWork.Connection.ExecuteAsync(sql, new {id}, unitOfWork.Transaction);
+            return await _unitOfWork.Connection.ExecuteAsync(sql, new {id}, _unitOfWork.Transaction);
         }
 
         public async Task<int> UpdateAppUserAsync(AppUser appUser)
         {
-            const string sql =
-                "UPDATE AppUser " +
-                "SET Name             = @Name," +
-                "    Surname          = @Surname " +
-                "WHERE Id = @Id";
+            const string sql = @"UPDATE AppUser 
+                                 SET Name = @Name,
+                                 Surname = @Surname 
+                                 WHERE Id = @Id";
 
-            return await unitOfWork.Connection.ExecuteAsync(sql, appUser, unitOfWork.Transaction);
+            return await _unitOfWork.Connection.ExecuteAsync(sql, appUser, _unitOfWork.Transaction);
         }
     }
 }

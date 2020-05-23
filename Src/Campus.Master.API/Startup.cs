@@ -1,20 +1,18 @@
 using System;
-using System.Data;
-using System.Data.SqlClient;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Text;
 using System.Reflection;
-using Campus.Domain.Interfaces.Interfaces;
-using Campus.Infrastructure.Business.Services;
 using Campus.Infrastructure.Data.Dependencies;
-using Campus.Infrastructure.Data.Repositories;
-using Campus.Services.Interfaces.Interfaces;
+using Campus.Infrastructure.Business.Dependencies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Campus.Master.API
 {
@@ -29,8 +27,7 @@ namespace Campus.Master.API
 
         private const string ApiTitle = "Campus.Master Development mode API";
         private const string ApiVersion = "v1.2";
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
             string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -47,21 +44,48 @@ namespace Campus.Master.API
                     {
                         In = ParameterLocation.Header,
                         Description = "Please enter into field the word 'Bearer' following by space and JWT",
-                        Name = "Authorization", Type = SecuritySchemeType.ApiKey
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "Bearer"
                     });
+                
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                    {new OpenApiSecurityScheme {Name = "Bearer"}, Enumerable.Empty<string>().ToList()},
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+                        }, 
+                        new List<string>()
+                    },
                 });
 
                 c.IncludeXmlComments(xmlDocPath);
             });
+            
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(bearer => {
+                    bearer.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                            Configuration.GetSection("Security:EndpointEncryptionSecret").Value)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
 
-            services.AddDataProvides(Configuration["ConnectionStrings:Default"]);
-            services.AddBusinessProviders();
+            services.AddSqlServerStorage(Configuration["ConnectionStrings:Default"]);
+            services.AddServices();
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -78,6 +102,7 @@ namespace Campus.Master.API
             }
 
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

@@ -1,27 +1,39 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using Campus.Infrastructure.Business.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Campus.Master.API.Models.Profile;
 using Campus.Master.API.Models;
+using Campus.Services.Interfaces.DTO;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
 
 namespace Campus.Master.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class ProfileController : ControllerBase
     {
         private readonly IProfileService _profileService;
         private readonly ILogger _logger;
+        private readonly IConfiguration _configuration;
 
-        public ProfileController(IProfileService profileService, ILogger<ProfileController> logger)
+        public ProfileController(IProfileService profileService,
+                                 IConfiguration configuration,
+                                 ILogger<ProfileController> logger)
         {
             _profileService = profileService;
+            _configuration = configuration;
             _logger = logger;
         }
 
@@ -31,7 +43,7 @@ namespace Campus.Master.API.Controllers
         /// <remarks>
         /// Request
         /// 
-        ///     GET /api/Profile
+        ///     GET /api/profile
         ///     Authentication: Bearer {token}
         ///     Content-Type: application/json
         /// 
@@ -46,8 +58,17 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Profile Information");
 
-            int id = 1;
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
 
+            if (claimedId == null)
+                return BadRequest(new StateTransfer
+                {
+                    Message = "Failed to parse claims!",
+                    Payload = "api/profile"
+                });
+            
+            var id = Convert.ToInt32(claimedId);
             var profileById = await _profileService.GetAppUserProfileByIdAsync(id);
 
             var result = new ProfileViewModel
@@ -93,23 +114,56 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Profile @{model.Login}");
 
-            await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
+            if (model.Password != model.ConfirmPassword)
             {
-                Login = model.Login,
-                Password = model.Password,
-                ConfirmPassword = model.ConfirmPassword,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName
-            });
+                return BadRequest(new StateTransfer
+                {
+                    Message = "Registration form is invalid!",
+                    Payload = "api/profile/create"
+                });
+            }
 
-            var state = new StateTransfer
+            try
             {
-                Message = "{JWT-TOKEN}",
-                Payload = "api/profile"
-            };
+                await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
+                {
+                    Login = model.Login,
+                    Password = model.Password,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                });
 
-            return Created(state.Payload, state);
+                var claims = await _profileService.VerifyAppUserProfile(new ProfileAuthenticationDto
+                {
+                    Login = model.Login,
+                    Password = model.Password
+                });
+
+                var state = new StateTransfer
+                {
+                    Message = BuildToken(new ProfileClaimsModel
+                    {
+                        ProfileId = claims.ProfileId,
+                        RoleId = claims.RoleId
+                    }),
+                    Payload = "api/profile"
+                };
+
+                return Created(state.Payload, state);
+            }
+            catch (ApplicationException)
+            {
+                return BadRequest(new StateTransfer
+                {
+                    Message = "User already exists!",
+                    Payload = "api/profile/create"
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         /// <summary>
@@ -140,14 +194,35 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Authenticate Profile @{model.Login}");
 
-            // TODO: Put business logic here
-            await Task.CompletedTask;
-
-            return Ok(new StateTransfer
+            try
             {
-                Message = "{JWT-TOKEN}",
-                Payload = "api/profile"
-            });
+                var claims = await _profileService.VerifyAppUserProfile(new ProfileAuthenticationDto
+                {
+                    Login = model.Login,
+                    Password = model.Password
+                });
+
+                return Ok(new StateTransfer
+                {
+                    Message = BuildToken(new ProfileClaimsModel { 
+                        ProfileId = claims.ProfileId, 
+                        RoleId = claims.RoleId 
+                    }),
+                    Payload = "api/profile"
+                });
+            }
+            catch (ApplicationException)
+            {
+                return BadRequest(new StateTransfer
+                {
+                    Message = "Wrong username or password!",
+                    Payload = "api/profile/auth"
+                });
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         /// <summary>
@@ -180,8 +255,17 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Profile");
 
-            int id = 1;
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
 
+            if (claimedId == null)
+                return BadRequest(new StateTransfer
+                {
+                    Message = "Failed to parse claims!",
+                    Payload = "api/profile"
+                });
+            
+            var id = Convert.ToInt32(claimedId);
             await _profileService.EditAppUserProfileByIdAsync(id, new ProfileEditingModelDto
             {
                 FirstName = model.FirstName,
@@ -218,8 +302,17 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile");
 
-            int id = 1;
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
 
+            if (claimedId == null)
+                return BadRequest(new StateTransfer
+                {
+                    Message = "Failed to parse claims!",
+                    Payload = "api/profile"
+                });
+            
+            var id = Convert.ToInt32(claimedId);
             await _profileService.DeleteAppUserProfileByIdAsync(id);
 
             return Ok(new StateTransfer
@@ -227,6 +320,29 @@ namespace Campus.Master.API.Controllers
                 Message = $"Profile is deleted now!",
                 Payload = "/"
             });
+        }
+
+        private string BuildToken(ProfileClaimsModel model)
+        {
+            var claims = new[] {
+                new Claim(ClaimTypes.NameIdentifier, model.ProfileId.ToString()),
+                new Claim(ClaimTypes.Role, model.RoleId.ToString())
+            };
+
+            var encryptingSecret = Encoding.UTF8.GetBytes(_configuration
+                .GetSection("Security:EndpointEncryptionSecret").Value);
+            var key = new SymmetricSecurityKey(encryptingSecret);
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var descriptor = new SecurityTokenDescriptor {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddHours(6),
+                SigningCredentials = credentials
+            };
+
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.CreateToken(descriptor);
+            
+            return handler.WriteToken(token);
         }
     }
 }
