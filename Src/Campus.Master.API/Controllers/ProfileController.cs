@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using Campus.Infrastructure.Business.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 namespace Campus.Master.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class ProfileController : ControllerBase
