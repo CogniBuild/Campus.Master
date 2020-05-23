@@ -43,7 +43,7 @@ namespace Campus.Master.API.Controllers
         /// <remarks>
         /// Request
         /// 
-        ///     GET /api/Profile
+        ///     GET /api/profile
         ///     Authentication: Bearer {token}
         ///     Content-Type: application/json
         /// 
@@ -58,8 +58,17 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Profile Information");
 
-            int id = 1;
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
 
+            if (claimedId == null)
+                return BadRequest(new StateTransfer
+                {
+                    Message = "Failed to parse claims!",
+                    Payload = "api/profile"
+                });
+            
+            var id = Convert.ToInt32(claimedId);
             var profileById = await _profileService.GetAppUserProfileByIdAsync(id);
 
             var result = new ProfileViewModel
@@ -246,8 +255,17 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Profile");
 
-            int id = 1;
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
 
+            if (claimedId == null)
+                return BadRequest(new StateTransfer
+                {
+                    Message = "Failed to parse claims!",
+                    Payload = "api/profile"
+                });
+            
+            var id = Convert.ToInt32(claimedId);
             await _profileService.EditAppUserProfileByIdAsync(id, new ProfileEditingModelDto
             {
                 FirstName = model.FirstName,
@@ -284,8 +302,17 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile");
 
-            int id = 1;
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
 
+            if (claimedId == null)
+                return BadRequest(new StateTransfer
+                {
+                    Message = "Failed to parse claims!",
+                    Payload = "api/profile"
+                });
+            
+            var id = Convert.ToInt32(claimedId);
             await _profileService.DeleteAppUserProfileByIdAsync(id);
 
             return Ok(new StateTransfer
