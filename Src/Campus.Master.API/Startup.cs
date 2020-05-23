@@ -82,7 +82,7 @@ namespace Campus.Master.API
                     };
                 });
 
-            services.AddPostgreSqlStorage(Configuration["ConnectionStrings:Default"]);
+            services.AddSqlServerStorage(Configuration["ConnectionStrings:Default"]);
             services.AddServices();
         }
         
