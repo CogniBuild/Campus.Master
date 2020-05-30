@@ -33,7 +33,7 @@ namespace Campus.Infrastructure.Data.Repositories
 
             var appUser = await _unitOfWork
                 .Connection
-                .QueryAsync<AppUser>(sql, new { Id = id });
+                .QueryAsync<AppUser>(sql, new {Id = id});
             return appUser.SingleOrDefault();
         }
 
@@ -43,7 +43,7 @@ namespace Campus.Infrastructure.Data.Repositories
 
             var appUser = await _unitOfWork
                 .Connection
-                .QueryAsync<AppUser>(sql, new { Login = login });
+                .QueryAsync<AppUser>(sql, new {Login = login});
             return appUser.SingleOrDefault();
         }
 

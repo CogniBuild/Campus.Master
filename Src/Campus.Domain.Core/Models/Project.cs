@@ -7,6 +7,8 @@
         public string Name { get; set; }
 
         public string Color { get; set; }
+        
+        public bool StatusId { get; set; }
 
         public int UserId { get; set; }
     }
