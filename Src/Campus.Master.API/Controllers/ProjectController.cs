@@ -10,10 +10,12 @@ using Campus.Master.API.Models.Project;
 using Campus.Master.API.Models.Task;
 using Campus.Master.API.Models;
 using Campus.Master.API.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Campus.Master.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class ProjectController : ControllerBase
@@ -63,13 +65,13 @@ namespace Campus.Master.API.Controllers
                     Id = 1,
                     Name = "Name",
                     Color = "Color",
-                    Status = "Status"
+                    Status = 1
                 },
                 new ProjectModel {
                     Id = 2,
                     Name = "Name",
                     Color = "Color",
-                    Status = "Status"
+                    Status = 1
                 }
             });
             
@@ -109,7 +111,7 @@ namespace Campus.Master.API.Controllers
                 Id = 1,
                 Name = "Name",
                 Color = "Color",
-                Status = "Status"
+                Status = 1
             });
             
             return Ok(result);

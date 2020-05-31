@@ -1,6 +1,6 @@
-namespace Campus.Master.API.Models.Project
+namespace Campus.Services.Interfaces.DTO.Project
 {
-    public class ProjectModel
+    public class ProjectModelDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
