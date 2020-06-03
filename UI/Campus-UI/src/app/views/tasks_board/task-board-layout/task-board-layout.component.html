@@ -1,0 +1,19 @@
+<div class="taskBoard_wrap">
+  <div class="taskBoard">
+    <app-stat
+      [totalTasksInCategory]="totalTasksCountInCategory"
+      [completeTasksInCategory]="completedCountInCategory"
+      [uncompleteTasksInCategory]="uncompletedCountInCategory"
+      (addTask)="onAddTask($event)"></app-stat>
+    <app-task
+      (deleteTask)="onDeleteTask($event)"
+      (updateTask)="onUpdateTask($event)"
+      [task]="tasks"
+    ></app-task>
+  </div>
+  <div>
+    <app-project-tasks (filterByTitle)="onSearchTasks($event)"></app-project-tasks>
+  </div>
+</div>
+<app-footer></app-footer>
+<!--(updateTask)="onUpdatedTask($event)"-->

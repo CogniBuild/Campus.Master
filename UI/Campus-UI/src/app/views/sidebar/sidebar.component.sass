@@ -1,0 +1,93 @@
+@import "src/styles/styles"
+
+.sidebar
+  display: flex
+  flex-direction: column
+  //justify-content: space-between
+  align-items: center
+  min-width: 223px
+  height: 100vh
+  min-height: 100%
+  border-radius: 0 36px 0 0
+  background-color: #FFFFFF
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.04), 0 16px 24px rgba(0, 0, 0, 0.06)
+  +sm
+    display: none
+
+  &__logo
+    margin-top: 30px
+    height: calc(30vh - 30px)
+
+  &__btn
+    height: 60vh
+
+  &__logo img
+    display: block
+    width: 163px
+
+  &__btn &__item:last-child
+    margin-bottom: 0
+
+  &__item
+    position: relative
+    font-size: 16px
+    font-weight: bold
+    color: #606060
+    display: flex
+    align-items: center
+    box-sizing: border-box
+    padding: 13px 20px
+    cursor: pointer
+    transition: all .2s ease
+    outline: none
+
+
+  &__item:hover
+    color: #7E57C2
+    background: rgba(196, 196, 196, 0.3)
+    border-radius: 49px
+
+  &__item:before
+    content: url("/assets/img/user/dashboard_inactive.svg")
+    margin-right: 7px
+    width: 28px
+    height: 28px
+
+  &_dashboard:before
+    content: url("/assets/img/user/dashboard_inactive.svg")
+
+  &_dashboard:hover:before
+    content: url("/assets/img/user/dashboard_active.svg")
+
+  &_taskList:before
+    content: url("/assets/img/user/task_list_inactive.svg")
+
+  &_taskList:hover:before
+    content: url("/assets/img/user/task_list_active.svg")
+
+  &_notebooks:before
+    content: url("/assets/img/user/notebooks_inactive.svg")
+
+  &_notebooks:hover:before
+    content: url("/assets/img/user/notebooks_active.svg")
+
+  &_settings
+    margin-bottom: 10px
+
+  &_settings:before
+    content: url("/assets/img/user/settings_inactive.svg")
+
+  &_settings:hover:before
+    content: url("/assets/img/user/settings_active.svg")
+
+
+.example-container
+  width: 400px
+  height: 200px
+  margin: 12px
+  border: 1px solid #555
+
+
+
+
+

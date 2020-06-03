@@ -1,0 +1,23 @@
+@import "src/styles/styles"
+
+.taskBoard
+  min-width: 670px
+  background: #FFFFFF
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.04), 0 16px 24px rgba(0, 0, 0, 0.06)
+  border-radius: 30px
+  padding: 23px
+  +sm
+    min-width: auto
+
+.taskBoard_wrap
+  display: flex
+  justify-content: space-around
+  max-width: 1170px
+  height: 100%
+  margin: 0 auto
+  +sm
+    flex-direction: column-reverse
+
+
+:host(app-task-board-layout)
+  width: 100%
