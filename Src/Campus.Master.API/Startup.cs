@@ -100,7 +100,9 @@ namespace Campus.Master.API
             {
                 app.UseHttpsRedirection();
             }
-
+            
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
