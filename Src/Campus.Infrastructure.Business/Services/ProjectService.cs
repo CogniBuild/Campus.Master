@@ -39,6 +39,8 @@ namespace Campus.Infrastructure.Business.Services
                   Status = project.StatusId
               });    
             }
+
+            return projectModels;
         }
     }
 }
