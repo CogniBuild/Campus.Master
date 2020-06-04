@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {Task} from 'src/app/model/Task';
+import {Task} from 'src/app/model/task';
 import {DataHandlerService} from '../../../shared/services/data-handler.service';
 import {SortDateService} from '../../../shared/services/sort-date.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';

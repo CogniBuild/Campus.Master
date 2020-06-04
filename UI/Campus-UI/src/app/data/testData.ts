@@ -1,5 +1,5 @@
-import {Priority} from '../model/Priority';
-import {Task} from '../model/Task';
+import {Priority} from '../model/priority';
+import {Task} from '../model/task';
 import {Category} from '../model/category';
 import {Status} from '../model/status';
 

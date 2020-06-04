@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, OnChanges, EventEmitter, Output} from '@angular/core';
 import {SortDateService} from '../../../shared/services/sort-date.service';
 import {DataHandlerService} from '../../../shared/services/data-handler.service';
-import {Task} from 'src/app/model/Task';
+import {Task} from 'src/app/model/task';
 import {MatDialog} from '@angular/material/dialog';
 import {EditTaskDialogComponent} from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
 import {Category} from '../../../model/category';

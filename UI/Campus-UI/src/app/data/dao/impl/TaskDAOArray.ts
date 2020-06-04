@@ -1,7 +1,7 @@
 import {Category} from '../../../model/category';
 import {Observable, of} from 'rxjs';
 import {TaskDAO} from '../interface/TaskDAO';
-import {Task} from 'src/app/model/Task';
+import {Task} from 'src/app/model/task';
 import {TestData} from '../../testData';
 import {Priority} from '../../../model/priority';
 
