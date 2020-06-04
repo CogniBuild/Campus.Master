@@ -1,0 +1,40 @@
+<div class="task_wrap">
+  <div class="task" *ngFor="let task of tasks"
+       [ngClass]="task.priority === null ? 'Low': (task.priority.title)">
+    <div class="task_right-content" (click)="openEditTaskDialog(task)">
+      <div class=" task__name">
+        <span class="task_title">{{task.title}}</span>
+      </div>
+      <div class="task__date">
+        <span class="date">{{task.date | date}}</span>
+      </div>
+      <div class="task__user">
+        <div class="users">
+          <img src="/assets/img/user/user.svg" alt="User">
+        </div>
+      </div>
+    </div>
+    <div class="task_left-content">
+      <div class="task__settings">
+        <img src="/assets/img/user/edit%20task.svg" alt="Edit task" (click)="openEditTaskDialog(task)">
+        <img src="/assets/img/user/delete%20task.svg" alt="Delete task" (click)="openDeleteDialog(task)">
+      </div>
+
+      <div class="status">
+
+        <button *ngIf="task.status === null; else elseBlock"
+                [ngClass]="{'Active': task.status === null}">Active
+        </button>
+
+        <ng-template #elseBlock>
+          <button [ngClass]="task.status.title">{{task.status.title}}</button>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="(tasks.length === 0)">Tasks are missing.</div>
+
+</div>
+

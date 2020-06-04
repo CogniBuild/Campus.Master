@@ -1,0 +1,72 @@
+<!--создание/редактирование категории-->
+
+
+<mat-dialog-content>
+  <p mat-dialog-title>{{dialogTitle}}</p>
+
+
+  <mat-form-field>
+    <mat-label>Название (15 символов)</mat-label>
+    <input
+      #inputTitle
+
+      (keydown.enter)="onConfirm()" [(ngModel)]="categoryTitle"
+
+      matInput
+      maxlength="15"
+
+    />
+
+    <button
+      *ngIf="categoryTitle.trim().length > 0"
+
+      aria-label="Clear"
+      class="clear-icon size25" mat-button mat-icon-button matSuffix
+
+      (click)="categoryTitle= ''"
+
+    >
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+</mat-dialog-content>
+
+
+<!--  кнопки возможных действий-->
+<mat-dialog-actions>
+
+  <div class="col-12 text-center">
+
+    <button
+      (click)="onConfirm()" [disabled]="inputTitle.value.trim().length==0"
+      color="primary"
+      mat-raised-button
+    >
+      Сохранить
+    </button>
+
+    <button (click)="onCancel()" mat-raised-button>Отмена</button>
+
+  </div>
+
+
+  <div class="col-12 text-center">
+
+
+    <button
+      *ngIf="canDelete()"
+      (click)="delete()"
+      class="red" mat-button>
+
+      Удалить
+
+    </button>
+
+
+  </div>
+
+
+</mat-dialog-actions>
+
+
+
