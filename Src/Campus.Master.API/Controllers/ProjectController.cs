@@ -26,15 +26,13 @@ namespace Campus.Master.API.Controllers
         private readonly IProjectService _projectService;
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
-        private readonly int _limitOfItems;
-
+        
         public ProjectController(IProjectService projectService, IConfiguration configuration,
             ILogger<ProjectController> logger)
         {
             _projectService = projectService;
             _configuration = configuration;
             _logger = logger;
-            _limitOfItems = int.Parse(configuration["Endpoints:QueryItemsLimit"]);
         }
 
         /// <summary>
@@ -72,7 +70,7 @@ namespace Campus.Master.API.Controllers
 
             int userId = Convert.ToInt32(claimedId);
 
-            int offset = _limitOfItems * (page - 1);
+            int offset = items * (page - 1);
 
             try
             {
