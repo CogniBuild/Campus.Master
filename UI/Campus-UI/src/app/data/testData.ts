@@ -6,9 +6,9 @@ import {Status} from '../model/status';
 export class TestData {
 
   static statuses: Status[] = [
-    {id: 1, title: 'Active'},
-    {id: 2, title: 'In progress'},
-    {id: 3, title: 'Closed'}
+    {id: 1, title: 'Active', completed: false},
+    {id: 2, title: 'In progress', completed: false},
+    {id: 3, title: 'Closed', completed: true}
   ];
 
   static priorities: Priority[] = [
@@ -18,9 +18,9 @@ export class TestData {
   ];
 
   static categories: Category[] = [
-    {id: 1, title: 'yura'},
-    {id: 2, title: 'vlad'},
-    {id: 3, title: 'misha'},
+    {id: 1, title: 'Eduction'},
+    {id: 2, title: 'Coding'},
+    {id: 3, title: 'Other'},
   ];
 
   static tasks: Task[] = [
@@ -28,7 +28,7 @@ export class TestData {
       id: 1,
       title: 'Learn english',
       priority: TestData.priorities[0],
-      completed: false,
+      // completed: false,
       status: TestData.statuses[0],
       date: new Date('2020-05-29'),
       category: TestData.categories[0]
@@ -38,7 +38,7 @@ export class TestData {
       id: 2,
       title: 'Call mc Petya and give thanks for motivation',
       priority: TestData.priorities[1],
-      completed: true,
+      // completed: true,
       status: TestData.statuses[2],
       date: new Date('2020-06-1'),
       category: TestData.categories[0]
@@ -47,7 +47,7 @@ export class TestData {
       id: 3,
       title: 'Buy computer new album MC Petya',
       priority: TestData.priorities[1],
-      completed: false,
+      // completed: false,
       status: TestData.statuses[0],
       date: new Date('2020-06-7'),
       category: TestData.categories[1]
@@ -57,7 +57,7 @@ export class TestData {
       id: 4,
       title: 'Press F to pay respect',
       priority: TestData.priorities[2],
-      completed: false,
+      // completed: false,
       status: TestData.statuses[0],
       date: new Date('2020-06-20')
     },

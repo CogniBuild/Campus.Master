@@ -4,6 +4,7 @@ import {TaskDAO} from '../interface/TaskDAO';
 import {Task} from 'src/app/model/task';
 import {TestData} from '../../testData';
 import {Priority} from '../../../model/priority';
+import {Status} from "../../../model/status";
 
 export class TaskDAOArray implements TaskDAO {
 
@@ -20,6 +21,11 @@ export class TaskDAOArray implements TaskDAO {
     if (task.id === null || task.id === 0) {
       task.id = this.getLastIdTask();
     }
+
+    if (task.status === null) {
+      task.status = this.getStatus();
+    }
+
     TestData.tasks.push(task);
 
     return of(task);
@@ -29,8 +35,9 @@ export class TaskDAOArray implements TaskDAO {
     return Math.max.apply(Math, TestData.tasks.map(task => task.id)) + 1;
   }
 
-  getStatus(): Observable<Task[]> {
-    return of(TestData.tasks);
+
+  getStatus(): Status {
+    return {id: 1, title: 'Active', completed: false};
   }
 
   delete(id: number): Observable<Task> {
@@ -64,8 +71,13 @@ export class TaskDAOArray implements TaskDAO {
     let allTasks = TestData.tasks;
 
     if (status != null) {
-      allTasks = allTasks.filter(task => task.completed === status);
+
+      allTasks = allTasks.filter(task => task.status.completed === status);
+      console.log('ssss', status);
     }
+    // } else {
+    //   allTasks = allTasks.filter(task => task.status);
+    // }
 
     if (category != null) {
       allTasks = allTasks.filter(todo => todo.category === category);

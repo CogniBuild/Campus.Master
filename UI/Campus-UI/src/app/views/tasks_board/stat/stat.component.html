@@ -18,7 +18,8 @@
     <!--    </div>-->
   </div>
   <div class="progress-bar">
-    <mat-progress-bar class="progress-bar_style" value="30"></mat-progress-bar>
+    <mat-progress-bar class="progress-bar_style"
+                      value="{{(completeTasksInCategory / totalTasksInCategory) * 100}}"></mat-progress-bar>
   </div>
   <div>
     <div class="today-day">

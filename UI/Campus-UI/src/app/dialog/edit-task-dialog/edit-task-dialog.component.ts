@@ -6,7 +6,6 @@ import {Category} from '../../model/category';
 import {Priority} from '../../model/priority';
 import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {Status} from '../../model/status';
-import {FormControl, Validators} from '@angular/forms';
 import {OperType} from '../OperType';
 
 @Component({
@@ -28,9 +27,6 @@ export class EditTaskDialogComponent implements OnInit {
   priorities: Priority[];
   statuses: Status[];
   operType: OperType;
-
-  priorityControl = new FormControl('', Validators.required);
-  selectFormControl = new FormControl('', Validators.required);
 
   dialogTitle: string;
   task: Task;
@@ -77,8 +73,8 @@ export class EditTaskDialogComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
       data: {
-        dialogTitle: 'Confirm your choose',
-        message: `Are you delete task: "${this.task.title}"?`
+        dialogTitle: 'Delete task',
+        message: `Are you really want to delete task: "${this.task.title}"?`
       },
       autoFocus: false
     });

@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { Category } from '../../../model/category';
-import { MatDialog } from '@angular/material/dialog';
-import { EditTaskDialogComponent } from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
-import { OperType } from '../../../dialog/OperType';
-import { EditProjectDialogComponent } from '../../../dialog/edit-project-dialog/edit-project-dialog.component';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {DataHandlerService} from '../../../shared/services/data-handler.service';
+import {Category} from '../../../model/category';
+import {MatDialog} from '@angular/material/dialog';
+import {OperType} from '../../../dialog/OperType';
+import {EditProjectDialogComponent} from '../../../dialog/edit-project-dialog/edit-project-dialog.component';
 
 @Component({
   selector: 'app-projects',

@@ -5,6 +5,7 @@ import {Task} from 'src/app/model/task';
 import {MatDialog} from '@angular/material/dialog';
 import {EditTaskDialogComponent} from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
 import {Category} from '../../../model/category';
+import {Status} from "../../../model/status";
 
 
 @Component({
@@ -65,7 +66,7 @@ export class StatComponent implements OnInit, OnChanges {
   }
 
   openAddTaskDialog() {
-    const task = new Task(null, '', false, null, null, null, null);
+    const task = new Task(null, '', null, null, null, null);
 
     const dialogRef = this.dialog.open(EditTaskDialogComponent, {data: [task, 'Добавление задачи']});
 

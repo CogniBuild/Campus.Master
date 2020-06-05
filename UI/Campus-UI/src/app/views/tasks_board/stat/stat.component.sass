@@ -1,10 +1,22 @@
+@import "src/styles/styles"
+
+.stat
+  +sm
+    background-color: #fff
+    border-radius: 30px
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.04), 0 16px 24px rgba(0, 0, 0, 0.06)
+
 .stat-top-content
   display: flex
   justify-content: space-between
   align-items: center
+  +sm
+    justify-content: center
 
 .progress-bar
   margin-bottom: 20px
+  +sm
+    margin: 0 20px 20px 20px
 
   &_style ::ng-deep.mat-progress-bar-buffer
     background-color: #EBEFF2
@@ -15,6 +27,8 @@
 .today-day
   font-weight: bold
   font-size: 16px
+  +sm
+    text-align: center
 
   span
     color: #B3B3B3
@@ -24,6 +38,8 @@
   display: flex
   justify-content: flex-end
   margin-bottom: 32px
+  +sm
+    margin-bottom: 16px
 
   &::after
     content: ''
@@ -35,6 +51,8 @@
     background: #EBEFF2
     border: 2px solid rgba(235, 239, 242, 0.5)
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.04), 0 10px 20px rgba(0, 0, 0, 0.04)
+    +sm
+      display: none
 
   button
     background: #7E57C2
@@ -46,6 +64,8 @@
     color: #FFFFFF
     border-radius: 30px
     cursor: pointer
+    +sm
+      border-radius: 30px 0 30px 0
 
 //::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix
 //  width: 100px

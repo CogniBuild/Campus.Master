@@ -1,5 +1,13 @@
 <div class="stat-card">
-  <h3 class="stat-card__title">{{count}} tasks <span class="stat-card__completed">completed</span> out of <span
-    *ngIf="countTotal">{{countTotal}}</span>
+  <h3 class="stat-card__title" *ngIf="countTotal">{{count}} tasks <span class="stat-card__completed">completed</span>
+    out of <span
+    >{{countTotal}}</span>
   </h3>
 </div>
+
+<div class="stat-card" *ngIf="countTotal === count">
+  <h3 class="stat-card__title" style="text-align: center">
+    <a href="https://cutt.ly/9yBim4s" target="_blank">Great!</a>
+  </h3>
+</div>
+
