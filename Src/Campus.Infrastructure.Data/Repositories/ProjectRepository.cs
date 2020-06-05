@@ -25,7 +25,7 @@ namespace Campus.Infrastructure.Data.Repositories
                 _unitOfWork.Transaction);
         }
 
-        public async Task<Project> GetProjectInformationById(int projectId, int userId)
+        public async Task<Project> GetProjectInformationById(int userId, int projectId)
         {
             const string sql = @"SELECT * FROM Project WHERE UserId = @userId AND Id = @projectId";
 
@@ -38,13 +38,14 @@ namespace Campus.Infrastructure.Data.Repositories
         public async Task<int> CreateNewProject(int userId, Project project)
         {
             const string sql =
-                @"INSERT INTO Project (Name, Color, UserId, StatusId) VALUES (@Name, @Color, @userId, @StatusId)";
+                @"INSERT INTO Project (Name, Color, UserId, StatusId) VALUES (@Name, @Color, @userId, @StatusId);
+                  SELECT CAST(SCOPE_IDENTITY() as int)";
 
-            var affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql,
+            var newProjectId = await _unitOfWork.Connection.ExecuteAsync(sql,
                 new {project.Name, project.Color, userId, project.StatusId},
                 _unitOfWork.Transaction);
 
-            return affectedRows;
+            return newProjectId;
         }
 
         public async Task<int> DeleteProject(int userId, int projectId)
