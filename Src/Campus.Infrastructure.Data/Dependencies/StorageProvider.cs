@@ -14,6 +14,7 @@ namespace Campus.Infrastructure.Data.Dependencies
             services.AddScoped<IDbConnection>(provider => new SqlConnection(connectionString));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAppUserRepository, AppUserRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
         }
 
         public static void AddPostgreSqlStorage(this IServiceCollection services, string connectionString)
@@ -21,6 +22,7 @@ namespace Campus.Infrastructure.Data.Dependencies
             services.AddScoped<IDbConnection>(provider => new NpgsqlConnection(connectionString));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAppUserRepository, AppUserRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
         }
     }
 }

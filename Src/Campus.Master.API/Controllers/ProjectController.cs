@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-
 using Campus.Master.API.Models.Project;
 using Campus.Master.API.Models.Task;
 using Campus.Master.API.Models;
 using Campus.Master.API.Filters;
+using Campus.Services.Interfaces.DTO.Project;
+using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 
 namespace Campus.Master.API.Controllers
 {
@@ -20,13 +23,18 @@ namespace Campus.Master.API.Controllers
     [Route("api/[controller]")]
     public class ProjectController : ControllerBase
     {
+        private readonly IProjectService _projectService;
+        private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
-
-        public ProjectController(ILogger<ProjectController> logger)
+        
+        public ProjectController(IProjectService projectService, IConfiguration configuration,
+            ILogger<ProjectController> logger)
         {
+            _projectService = projectService;
+            _configuration = configuration;
             _logger = logger;
         }
-        
+
         /// <summary>
         /// Fetch stored projects.
         /// </summary>
@@ -56,26 +64,37 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> FetchProjects([FromQuery] int page, [FromQuery] int items)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Fetch Projects: Page={page}, Items={items}");
-            
-            // TODO: Put business logic here
-            
-            var result = await Task.Run(() => new [] 
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
+
+            int userId = Convert.ToInt32(claimedId);
+
+            int offset = items * (page - 1);
+
+            try
             {
-                new ProjectModel {
-                    Id = 1,
-                    Name = "Name",
-                    Color = "Color",
-                    Status = 1
-                },
-                new ProjectModel {
-                    Id = 2,
-                    Name = "Name",
-                    Color = "Color",
-                    Status = 1
+                var savedProjects = await _projectService.GetSavedProjects(userId, offset, items);
+
+                var result = new List<ProjectModel>();
+
+                foreach (var project in savedProjects)
+                {
+                    result.Add(new ProjectModel
+                    {
+                        Id = project.Id,
+                        Name = project.Name,
+                        Color = project.Color,
+                        Status = project.Status
+                    });
                 }
-            });
-            
-            return Ok(result);
+
+                return Ok(result);
+            }
+            catch (ApplicationException e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         /// <summary>
@@ -103,18 +122,28 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> GetProjectById(int id)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Project By Id #{id}");
-            
-            // TODO: Put business logic here
-            
-            var result = await Task.Run(() => new ProjectModel 
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
+
+            int userId = Convert.ToInt32(claimedId);
+
+            try
             {
-                Id = 1,
-                Name = "Name",
-                Color = "Color",
-                Status = 1
-            });
-            
-            return Ok(result);
+                var result = await _projectService.GetProjectById(userId, id);
+
+                return Ok(new ProjectModel
+                {
+                    Id = result.Id,
+                    Name = result.Name,
+                    Color = result.Color,
+                    Status = result.Status
+                });
+            }
+            catch (ApplicationException e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         /// <summary>
@@ -147,17 +176,25 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> CreateProject(ProjectContentModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Project");
-            
-            // TODO: Put business logic here
-            await Task.CompletedTask;
-            var idOfNewProject = 1;
+
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
+
+            int userId = Convert.ToInt32(claimedId);
+
+            int newProjectId = await _projectService.CreateProject(userId, new ProjectContentModelDto
+            {
+                Name = model.Name,
+                Color = model.Color,
+                Status = model.Status
+            });
 
             var status = new StateTransfer
             {
                 Message = $"'{model.Name}' project is created!",
-                Payload = $"api/project/{idOfNewProject}"
+                Payload = $"api/project/{newProjectId}"
             };
-            
+
             return Created(status.Payload, status);
         }
 
@@ -193,7 +230,7 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> EditProject(int id, [FromBody] ProjectContentModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Project #{id}");
-            
+
             // TODO: Put business logic here
             await Task.CompletedTask;
 
@@ -227,17 +264,17 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> DeleteProject(int id)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile #{id}");
-            
+
             // TODO: Put business logic here
             await Task.CompletedTask;
-            
+
             return Ok(new StateTransfer
             {
                 Message = "Project is deleted now!",
                 Payload = "/"
             });
         }
-        
+
         /// <summary>
         /// Get tasks related to the project.
         /// </summary>
@@ -267,22 +304,25 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetTasksRelatedToTheProject(int id, [FromQuery] int page, [FromQuery] int items)
+        public async Task<IActionResult> GetTasksRelatedToTheProject(int id, [FromQuery] int page,
+            [FromQuery] int items)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Tasks Related To The Project #{id}");
-            
+
             // TODO: Put business logic here
-            
-            var result = await Task.Run(() => new [] 
+
+            var result = await Task.Run(() => new[]
             {
-                new TaskModel {
+                new TaskModel
+                {
                     Id = 1,
                     Description = "Description",
                     Priority = "Priority",
                     Tag = "Tag",
                     Deadline = "00-00-0000"
                 },
-                new TaskModel {
+                new TaskModel
+                {
                     Id = 2,
                     Description = "Description",
                     Priority = "Priority",
@@ -290,7 +330,7 @@ namespace Campus.Master.API.Controllers
                     Deadline = "00-00-0000"
                 }
             });
-            
+
             return Ok(result);
         }
 
@@ -327,7 +367,7 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> AttachTaskToTheProject(int id, [FromBody] TaskContentModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Attach Task To The Project #{id}");
-            
+
             // TODO: Put business logic here
             await Task.CompletedTask;
 
