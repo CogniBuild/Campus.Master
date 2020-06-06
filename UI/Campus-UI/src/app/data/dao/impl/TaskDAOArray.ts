@@ -97,7 +97,8 @@ export class TaskDAOArray implements TaskDAO {
 
     if (searchText != null) {
       allTasks = allTasks.filter(
-        (task) => task.title.toUpperCase().includes(searchText.toUpperCase()) // учитываем текст поиска (если '' - возвращаются все значения)
+        (task) => task.title.toUpperCase().includes(searchText.toUpperCase()) 
+        // учитываем текст поиска (если '' - возвращаются все значения)
       );
     }
     console.log('all task ', allTasks);
