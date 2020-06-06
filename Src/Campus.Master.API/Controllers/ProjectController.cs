@@ -271,8 +271,7 @@ namespace Campus.Master.API.Controllers
             _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile #{id}");
 
             int userId = GetCurrentUserId();
-
-
+            
             try
             {
                 await _projectService.DeleteProject(userId, id);
