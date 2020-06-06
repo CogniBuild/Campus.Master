@@ -17,9 +17,12 @@ namespace Campus.Infrastructure.Data.Repositories
 
         public async Task<UserTask> GetTaskById(int userId, int taskId)
         {
-            const string sql = @"SELECT * FROM UserTask AS UT JOIN Project P on UT.ProjectId = P.Id
-                                 WHERE P.UserId = @userId AND UT.Id = @taskId";
-
+            const string sql = @"SELECT UT.Id, UT.Description, UT.Priority, UT.ProjectTag, UT.Deadline
+                                 FROM UserTask AS UT
+                                          JOIN Project P on UT.ProjectId = P.Id
+                                 WHERE P.UserId = @userId
+                                   AND UT.Id = @taskId";
+            
             var tasks = await _unitOfWork.Connection.QueryAsync<UserTask>(sql, new {userId, taskId},
                 _unitOfWork.Transaction);
 
