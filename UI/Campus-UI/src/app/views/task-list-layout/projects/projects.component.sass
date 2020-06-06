@@ -8,16 +8,26 @@
   background-color: #FFFFFF
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.04), 0 16px 24px rgba(0, 0, 0, 0.06)
   border-radius: 30px
+  +sm
+    display: none
 
   &__top
     display: flex
     justify-content: space-between
     align-items: center
+    +sm
+      padding-bottom: 7px
+      border-bottom: 2px solid #ededed
 
   &__title
     font-weight: bold
     font-size: 24px
     margin-right: 20px
+    +sm
+      margin: 0 0 0 40px
+      font-size: 18px
+    +ss
+      font-size: 14px
 
   &__add
     font-weight: bold
@@ -27,11 +37,20 @@
     background: rgba(196, 196, 196, 0.3)
     border-radius: 49px
     padding: 12px 0
-
+    +sm
+      padding: 8px 10px
+      font-size: 12px
+    +ss
+      font-size: 10px
+      padding: 6px 8px
 
 .today-day
   font-weight: bold
   font-size: 16px
+  +sm
+    font-size: 14px
+  +ss
+    font-size: 10px
 
   span
     color: #B3B3B3
@@ -46,6 +65,31 @@
     cursor: pointer
     transition: .1s
     border-radius: 49px
+    +sm
+      font-size: 16px
+      margin: 0
+      padding: 5px 10px
+      &:hover
+        background: rgba(196, 196, 196, 0.3)
+    +ss
+      font-size: 14px
 
-    &:hover
-      background: rgba(196, 196, 196, 0.3)
+  +sm
+    width: 50%
+    text-align: center
+    border-radius: 30px
+    display: flex
+    justify-content: center
+
+
+.project-mobile
+  display: none
+  +sm
+    display: block
+    padding-top: 9px
+    padding-bottom: 9px
+    margin: 0 0 16px
+
+.categories-wrap
+  display: flex
+  flex-wrap: wrap

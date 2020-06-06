@@ -1,6 +1,7 @@
 <div class="task_wrap">
   <div class="task" *ngFor="let task of tasks"
-       [ngClass]="task.priority === null ? 'Low': (task.priority.title)">
+       [ngClass]="task.priority === null ? 'Low': (task.priority.title)"
+  >
     <div class="task_right-content" (click)="openEditTaskDialog(task)">
       <div class=" task__name">
         <span class="task_title">{{task.title}}</span>

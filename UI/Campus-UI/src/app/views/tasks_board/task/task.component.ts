@@ -46,7 +46,7 @@ export class TaskComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log('я компонент task і буду сортувати за датою ', this.test.getDateSort());
+    // console.log('я компонент task і буду сортувати за датою ', this.test.getDateSort());
     // this.dataHandler.getAllTask().subscribe(tasks => this.tasks = tasks);
     // this.tasks = this.sorted();
   }
@@ -145,8 +145,8 @@ export class TaskComponent implements OnInit, OnChanges {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
       data: {
-        dialogTitle: 'Confirm your choose',
-        message: `Are you delete task: "${task.title}"?`
+        dialogTitle: 'Delete task',
+        message: `Are you really want to delete task: "${task.title}"?`
       },
       autoFocus: false
     });

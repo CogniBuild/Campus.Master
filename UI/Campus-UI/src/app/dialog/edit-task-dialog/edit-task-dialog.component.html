@@ -19,7 +19,7 @@
   <mat-form-field>
     <mat-label>Select project</mat-label>
     <mat-select [(ngModel)]="tmpCategory">
-      <mat-option [value]="null">Bez project</mat-option>
+      <mat-option [value]="null">Without project</mat-option>
       <mat-option *ngFor="let project of categories" [value]="project">
         {{project.title}}
       </mat-option>
@@ -50,7 +50,7 @@
 
   <!--  Calendar-->
   <mat-form-field>
-    <input matInput placeholder="date" #inputDate
+    <input matInput placeholder="Deadline" #inputDate
            readonly="true"
            [matDatepicker]="picker"
            [(ngModel)]="tmpDate"
@@ -67,13 +67,13 @@
     mat-raised-button color="primary"
     (click)="onConfirm()"
     [disabled]="inputTitle.value.trim().length === 0">
-    Save
+    Accept
   </button>
   <button mat-raised-button (click)="onCancel()">Cancel</button>
 
   <button mat-button class="red"
-          *ngIf="canDelete()"
-          (click)="delete()">
+          (click)="delete()"
+          *ngIf="canDelete()">
     Delete
   </button>
 </mat-dialog-actions>
