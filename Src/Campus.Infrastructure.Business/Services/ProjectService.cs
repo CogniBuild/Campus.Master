@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
 using Campus.Domain.Interfaces.Interfaces;
 using Campus.Services.Interfaces.DTO.Project;
+using Campus.Services.Interfaces.DTO.Task;
 using Campus.Services.Interfaces.Interfaces;
 
 namespace Campus.Infrastructure.Business.Services
@@ -70,6 +71,82 @@ namespace Campus.Infrastructure.Business.Services
                 Color = project.Color,
                 Status = project.StatusId
             };
+        }
+
+        public async Task<int> EditProject(int userId, int id, ProjectContentModelDto projectContent)
+        {
+            var affectedRows = await _projectRepository.EditProject(new Project
+            {
+                Id = id,
+                Name = projectContent.Name,
+                Color = projectContent.Color,
+                StatusId = projectContent.Status,
+                UserId = userId
+            });
+
+            if (affectedRows == 0)
+            {
+                throw new ApplicationException($"Project with specified id doesn't exist");
+            }
+
+            return affectedRows;
+        }
+
+        public async Task<IEnumerable<TaskModelDto>> GetProjectTasks(int userId, int id, int limit, int offset)
+        {
+            var projectTasks = await _projectRepository.GetProjectTasks(userId, id, limit, offset);
+
+            if (projectTasks == null)
+            {
+                throw new ApplicationException($"Tasks with specified project id don't exist");
+            }
+
+            var taskModelsDto = new List<TaskModelDto>();
+
+            foreach (var task in projectTasks)
+            {
+                taskModelsDto.Add(new TaskModelDto
+                {
+                    Id = task.Id,
+                    Description = task.Description,
+                    Priority = task.Priority,
+                    Tag = task.ProjectTag,
+                    Deadline = task.Deadline
+                });
+            }
+
+            return taskModelsDto;
+        }
+
+        public async Task<int> AddTaskToProject(int id, TaskContentModelDto model)
+        {
+            var affectedRows = await _projectRepository.AddTaskToProject(new UserTask
+            {
+                Description = model.Description,
+                Priority = model.Priority,
+                ProjectTag = model.Tag,
+                Deadline = model.Deadline,
+                ProjectId = id
+            });
+
+            if (affectedRows == 0)
+            {
+                throw new ApplicationException($"Project with specified id doesn't exist");
+            }
+
+            return affectedRows;
+        }
+
+        public async Task<int> DeleteProject(int userId, int projectId)
+        {
+            var affectedRows = await _projectRepository.DeleteProject(userId, projectId);
+
+            if (affectedRows == 0)
+            {
+                throw new ApplicationException($"Unable to delete project with specified id");
+            }
+
+            return affectedRows;
         }
     }
 }

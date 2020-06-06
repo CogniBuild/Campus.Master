@@ -11,6 +11,7 @@ using Campus.Master.API.Models.Task;
 using Campus.Master.API.Models;
 using Campus.Master.API.Filters;
 using Campus.Services.Interfaces.DTO.Project;
+using Campus.Services.Interfaces.DTO.Task;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,7 @@ namespace Campus.Master.API.Controllers
         private readonly IProjectService _projectService;
         private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
-        
+
         public ProjectController(IProjectService projectService, IConfiguration configuration,
             ILogger<ProjectController> logger)
         {
@@ -64,11 +65,8 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> FetchProjects([FromQuery] int page, [FromQuery] int items)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Fetch Projects: Page={page}, Items={items}");
-
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
-
-            int userId = Convert.ToInt32(claimedId);
+            
+            int userId = GetCurrentUserId();
 
             int offset = items * (page - 1);
 
@@ -122,11 +120,8 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> GetProjectById(int id)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Project By Id #{id}");
-
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
-
-            int userId = Convert.ToInt32(claimedId);
+            
+            int userId = GetCurrentUserId();
 
             try
             {
@@ -176,11 +171,8 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> CreateProject(ProjectContentModel model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Project");
-
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
-
-            int userId = Convert.ToInt32(claimedId);
+            
+            int userId = GetCurrentUserId();
 
             int newProjectId = await _projectService.CreateProject(userId, new ProjectContentModelDto
             {
@@ -231,14 +223,27 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Project #{id}");
 
-            // TODO: Put business logic here
-            await Task.CompletedTask;
+            int userId = GetCurrentUserId();
 
-            return Ok(new StateTransfer
+            try
             {
-                Message = $"Project fields are updated now!",
-                Payload = $"api/project/{id}"
-            });
+                await _projectService.EditProject(userId, id, new ProjectContentModelDto
+                {
+                    Name = model.Name,
+                    Color = model.Color,
+                    Status = model.Status
+                });
+
+                return Ok(new StateTransfer
+                {
+                    Message = $"Project fields are updated now!",
+                    Payload = $"api/project/{id}"
+                });
+            }
+            catch (ApplicationException e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         /// <summary>
@@ -265,14 +270,22 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile #{id}");
 
-            // TODO: Put business logic here
-            await Task.CompletedTask;
-
-            return Ok(new StateTransfer
+            int userId = GetCurrentUserId();
+            
+            try
             {
-                Message = "Project is deleted now!",
-                Payload = "/"
-            });
+                await _projectService.DeleteProject(userId, id);
+                
+                return Ok(new StateTransfer
+                {
+                    Message = "Project is deleted now!",
+                    Payload = "/"
+                });
+            }
+            catch (ApplicationException e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         /// <summary>
@@ -309,29 +322,33 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Tasks Related To The Project #{id}");
 
-            // TODO: Put business logic here
+            int userId = GetCurrentUserId();
+            int offset = items * (page - 1);
 
-            var result = await Task.Run(() => new[]
+            var taskModels = new List<TaskModel>();
+
+            try
             {
-                new TaskModel
-                {
-                    Id = 1,
-                    Description = "Description",
-                    Priority = "Priority",
-                    Tag = "Tag",
-                    Deadline = "00-00-0000"
-                },
-                new TaskModel
-                {
-                    Id = 2,
-                    Description = "Description",
-                    Priority = "Priority",
-                    Tag = "Tag",
-                    Deadline = "00-00-0000"
-                }
-            });
+                var projectTasks = await _projectService.GetProjectTasks(userId, id, items, offset);
 
-            return Ok(result);
+                foreach (var task in projectTasks)
+                {
+                    taskModels.Add(new TaskModel
+                    {
+                        Id = task.Id,
+                        Description = task.Description,
+                        Priority = task.Priority,
+                        Tag = task.Tag,
+                        Deadline = task.Deadline
+                    });
+                }
+
+                return Ok(taskModels);
+            }
+            catch (ApplicationException e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         /// <summary>
@@ -368,16 +385,36 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Attach Task To The Project #{id}");
 
-            // TODO: Put business logic here
-            await Task.CompletedTask;
-
-            var state = new StateTransfer
+            try
             {
-                Message = $"Task '{model.Description}' is created!",
-                Payload = $"/project/{id}"
-            };
+                await _projectService.AddTaskToProject(id, new TaskContentModelDto
+                {
+                    Description = model.Description,
+                    Priority = model.Priority,
+                    Tag = model.Tag,
+                    Deadline = model.Deadline
+                });
 
-            return Created(state.Payload, state);
+                var state = new StateTransfer
+                {
+                    Message = $"Task '{model.Description}' is created!",
+                    Payload = $"/project/{id}"
+                };
+
+                return Created(state.Payload, state);
+            }
+            catch (ApplicationException e)
+            {
+                return NotFound(e.Message);
+            }
+        }
+
+        private int GetCurrentUserId()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
+
+            return Convert.ToInt32(claimedId);
         }
     }
 }

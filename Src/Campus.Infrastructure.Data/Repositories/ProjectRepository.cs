@@ -63,7 +63,7 @@ namespace Campus.Infrastructure.Data.Repositories
             const string sql = @"UPDATE Project 
                                  SET Name = @Name,
                                  Color = @Color,
-                                 StatusId = @Status  
+                                 StatusId = @StatusId  
                                  WHERE Id = @Id AND UserId = @UserId";
 
             var affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql, project, _unitOfWork.Transaction);
