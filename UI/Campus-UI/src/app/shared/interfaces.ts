@@ -4,9 +4,10 @@ export interface User {
 }
 
 export interface RegisterUser {
-  firstName: string;
-  lastName: string;
-  email: string;
+  login: string;
   password: string;
   confirmPassword: string;
+  email: string;
+  firstName: string;
+  lastName: string;
 }
