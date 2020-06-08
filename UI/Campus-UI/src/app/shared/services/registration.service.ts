@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class RegistrationService {
   constructor(private httpClient: HttpClient) {}
 
-  registerUser(user: RegisterUser): Observable<any> {    
+  registerUser(user: RegisterUser): Observable<any> {
     return this.httpClient.post(environment.createProfilePath, user);
   }
 }
