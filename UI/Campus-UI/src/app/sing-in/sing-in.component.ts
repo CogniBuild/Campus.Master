@@ -13,8 +13,8 @@ export class SingInComponent implements OnInit {
 
   form: FormGroup;
 
-  // constructor(private auth: SignInService, private router: Router) {
-  // }
+  constructor(private auth: SignInService, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -29,9 +29,11 @@ export class SingInComponent implements OnInit {
       password: this.form.value.password
     };
 
+    this.router.navigate(['/campus/dashboard']);
+
     // this.auth.login(user).subscribe(() => {
-    //   this.form.reset();
-    //   this.router.navigate([]);
+    //  this.form.reset();
+    //  this.router.navigate(['/campus/dashboard']);
     // });
   }
 }
