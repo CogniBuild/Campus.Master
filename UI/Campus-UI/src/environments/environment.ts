@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  createProfilePath: "api/profile/create"
+  createProfilePath: 'api/profile/create',
 };
 
 /*

@@ -68,7 +68,7 @@ export class RegistrationPageComponent implements OnInit {
 
     this.router.navigate(['/campus/dashboard']);
 
-    //this.registrationService
+    // this.registrationService
     //  .registerUser(registerUser)
     //  .subscribe((data: any) => {
     //    console.log(data);
@@ -77,9 +77,9 @@ export class RegistrationPageComponent implements OnInit {
     //    }
     //  });
 
-    //this.auth.login(user).subscribe(() => {
+    // this.auth.login(user).subscribe(() => {
     //  this.form.reset();
     //  this.router.navigate([]);
-    //});
+    // });
   }
 }

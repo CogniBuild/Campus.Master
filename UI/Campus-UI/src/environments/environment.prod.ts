@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  createProfilePath: "api/profile/create"
+  createProfilePath: 'api/profile/create',
 };

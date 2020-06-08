@@ -31,9 +31,9 @@ export class SingInComponent implements OnInit {
 
     this.router.navigate(['/campus/dashboard']);
 
-    //this.auth.login(user).subscribe(() => {
+    // this.auth.login(user).subscribe(() => {
     //  this.form.reset();
     //  this.router.navigate(['/campus/dashboard']);
-    //});
+    // });
   }
 }
