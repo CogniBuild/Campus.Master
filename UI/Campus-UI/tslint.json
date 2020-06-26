@@ -55,15 +55,10 @@
         ]
       }
     ],
-    "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
-    ],
+    "no-console": true,
+    "only-arrow-functions": true,
     "no-empty": false,
+    "no-any": true,
     "no-inferrable-types": [
       true,
       "ignore-params"
