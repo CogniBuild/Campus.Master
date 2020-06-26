@@ -2,11 +2,11 @@
   <div class="project__top">
     <h2 class="project__title">Projects</h2>
     <div class="today-day">
-      <div>{{todayDate | date:'d MMM'}}, <span>{{todayDate | date:  'EEEE'}}</span></div>
+      <div>{{ todayDate | date:'d MMM'}}, <span>{{ todayDate | date:  'EEEE'}}</span></div>
     </div>
   </div>
   <div class="categories" *ngFor="let category of categories" (click)="showTasksByCategory(category)">
-    <div class="categories__item">{{category.title}}</div>
+    <div class="categories__item">{{ category.title }}</div>
   </div>
   <div (click)="openAddDialog()" class="project__add">
     Add new project
@@ -17,7 +17,7 @@
   <div class="project__top">
     <h2 class="project__title">Projects</h2>
     <div class="today-day">
-      <div>{{todayDate | date:'d MMM'}}, <span>{{todayDate | date:  'EEEE'}}</span></div>
+      <div>{{ todayDate | date:'d MMM'}}, <span>{{ todayDate | date:  'EEEE'}}</span></div>
     </div>
     <div (click)="openAddDialog()" class="project__add">
       Add new project
@@ -25,7 +25,7 @@
   </div>
   <div class="categories-wrap">
     <div class="categories" *ngFor="let category of categories" >
-      <div class="categories__item" (click)="showTasksByCategory(category)">{{category.title}}</div>
+      <div class="categories__item" (click)="showTasksByCategory(category)">{{ category.title }}</div>
     </div>
   </div>
 

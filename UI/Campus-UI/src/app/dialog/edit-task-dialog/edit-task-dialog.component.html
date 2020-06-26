@@ -21,7 +21,7 @@
     <mat-select [(ngModel)]="tmpCategory">
       <mat-option [value]="null">Without project</mat-option>
       <mat-option *ngFor="let project of categories" [value]="project">
-        {{project.title}}
+        {{ project.title }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -31,7 +31,7 @@
     <mat-select [(ngModel)]="tmpPriority">
       <!--            <mat-option [value]="Low">not priority</mat-option>-->
       <mat-option *ngFor="let priority of priorities" [value]="priority">
-        {{priority.title}}
+        {{ priority.title }}
       </mat-option>
     </mat-select>
     <!--  [formControl]="priorityControl"  <mat-error *ngIf="priorityControl.hasError('required')">Please choose an animal</mat-error>-->
@@ -42,7 +42,7 @@
     <mat-select [(ngModel)]="tmpStatus">
       <!--            <mat-option [value]="low">not priority</mat-option>-->
       <mat-option *ngFor="let status of statuses" [value]="status">
-        {{status.title}}
+        {{ status.title }}
       </mat-option>
     </mat-select>
   </mat-form-field>

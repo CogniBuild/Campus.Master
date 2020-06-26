@@ -1,8 +1,8 @@
-import {CommonDAO} from './CommonDAO';
-import {Task} from '../../../model/task';
-import {Category} from '../../../model/category';
-import {Observable} from 'rxjs';
-import {Priority} from '../../../model/priority';
+import { CommonDAO } from './CommonDAO';
+import { Task } from '../../../model/task';
+import { Category } from '../../../model/category';
+import { Observable } from 'rxjs';
+import { Priority } from '../../../model/priority';
 
 export interface TaskDAO extends CommonDAO<Task> {
 

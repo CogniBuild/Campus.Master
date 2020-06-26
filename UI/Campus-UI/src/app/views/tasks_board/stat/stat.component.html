@@ -6,7 +6,7 @@
     >
       <!--      [completed]="true"-->
     </app-stat-card>
-    <!--    <div class="stat__completed"> <span>completed</span> out of {{totalTasksInCategory}}</div>-->
+    <!--    <div class="stat__completed"> <span>completed</span> out of {{ totalTasksInCategory }}</div>-->
     <!--    <div class="stat__date">-->
     <!--      <mat-form-field>-->
     <!--        <mat-select [(value)]="selectedValue" (selectionChange)="selectOption($event.value)">-->
@@ -19,11 +19,11 @@
   </div>
   <div class="progress-bar">
     <mat-progress-bar class="progress-bar_style"
-                      value="{{(completeTasksInCategory / totalTasksInCategory) * 100}}"></mat-progress-bar>
+                      value="{{(completeTasksInCategory / totalTasksInCategory) * 100 }}"></mat-progress-bar>
   </div>
   <div>
     <div class="today-day">
-      <div>{{todayDate | date:'d MMM'}}, <span>{{todayDate | date:  'EEEE'}}</span></div>
+      <div>{{ todayDate | date:'d MMM'}}, <span>{{ todayDate | date:  'EEEE'}}</span></div>
     </div>
     <div class="add-task">
       <button (click)="openAddTaskDialog()">Add task</button>

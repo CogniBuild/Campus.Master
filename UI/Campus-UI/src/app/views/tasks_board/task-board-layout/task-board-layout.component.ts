@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Task} from '../../../model/task';
-import {DataHandlerService} from '../../../shared/services/data-handler.service';
-import {Category} from '../../../model/category';
-import {zip} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Task } from '../../../model/task';
+import { DataHandlerService } from '../../../shared/services/data-handler.service';
+import { Category } from '../../../model/category';
+import { zip } from 'rxjs';
 
 @Component({
   selector: 'app-task-board-layout',

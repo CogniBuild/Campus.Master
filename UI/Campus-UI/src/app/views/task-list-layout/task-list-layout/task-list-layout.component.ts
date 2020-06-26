@@ -15,7 +15,7 @@ export class TaskListLayoutComponent implements OnInit {
   selectedCategory: Category = null;
   searchCategoryText = '';
 
-  constructor(private dataHandlerService: DataHandlerService) {}
+  constructor(private dataHandlerService: DataHandlerService) { }
 
   ngOnInit(): void {
     this.dataHandlerService

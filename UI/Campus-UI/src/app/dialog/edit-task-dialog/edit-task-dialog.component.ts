@@ -1,12 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {DataHandlerService} from '../../shared/services/data-handler.service';
-import {Task} from '../../model/task';
-import {Category} from '../../model/category';
-import {Priority} from '../../model/priority';
-import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
-import {Status} from '../../model/status';
-import {OperType} from '../OperType';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DataHandlerService } from '../../shared/services/data-handler.service';
+import { Task } from '../../model/task';
+import { Category } from '../../model/category';
+import { Priority } from '../../model/priority';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { Status } from '../../model/status';
+import { OperType } from '../OperType';
 
 @Component({
   selector: 'app-edit-task-dialog',
@@ -74,7 +74,7 @@ export class EditTaskDialogComponent implements OnInit {
       maxWidth: '500px',
       data: {
         dialogTitle: 'Delete task',
-        message: `Are you really want to delete task: "${this.task.title}"?`
+        message: `Are you really want to delete task: "${ this.task.title }"?`
       },
       autoFocus: false
     });

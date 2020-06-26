@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {OperType} from '../OperType';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
+import { Component, Inject, OnInit } from '@angular/core';
+import { OperType } from '../OperType';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 class EditCategoryDialogComponent {
 }
@@ -47,7 +47,7 @@ export class EditProjectDialogComponent implements OnInit {
       maxWidth: '500px',
       data: {
         dialogTitle: 'Подтвердите действие',
-        message: `Вы действительно хотите удалить категорию: "${this.categoryTitle}"? (сами задачи не удаляются)`
+        message: `Вы действительно хотите удалить категорию: "${ this.categoryTitle }"? (сами задачи не удаляются)`
       },
       autoFocus: false
     });

@@ -1,6 +1,6 @@
-import {CommonDAO} from './CommonDAO';
-import {Observable} from 'rxjs';
-import {Category} from '../../../model/category';
+import { CommonDAO } from './CommonDAO';
+import { Observable } from 'rxjs';
+import { Category } from '../../../model/category';
 
 export interface CategoryDAO extends CommonDAO<Category> {
 

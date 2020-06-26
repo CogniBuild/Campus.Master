@@ -24,7 +24,7 @@ export class RegistrationPageComponent implements OnInit {
     private fb: FormBuilder,
     private registrationService: RegistrationService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(

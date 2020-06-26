@@ -24,7 +24,7 @@ export class StatComponent implements OnInit, OnChanges {
     private setDateOption: SortDateService,
     private dataHandlerService: DataHandlerService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   tasks: Task[];
   test: [];

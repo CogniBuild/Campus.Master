@@ -1,6 +1,6 @@
-import {Priority} from '../model/priority';
-import {Category} from '../model/category';
-import {Status} from '../model/status';
+import { Priority } from '../model/priority';
+import { Category } from '../model/category';
+import { Status } from '../model/status';
 
 export class Task {
   id: number;

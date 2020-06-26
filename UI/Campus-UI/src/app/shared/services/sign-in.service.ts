@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {User, StateTransfer} from '../interfaces';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { User, StateTransfer } from '../interfaces';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SignInService {

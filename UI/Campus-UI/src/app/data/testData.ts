@@ -1,26 +1,26 @@
-import {Priority} from '../model/priority';
-import {Task} from '../model/task';
-import {Category} from '../model/category';
-import {Status} from '../model/status';
+import { Priority } from '../model/priority';
+import { Task } from '../model/task';
+import { Category } from '../model/category';
+import { Status } from '../model/status';
 
 export class TestData {
 
   static statuses: Status[] = [
-    {id: 1, title: 'Active', completed: false},
-    {id: 2, title: 'In progress', completed: false},
-    {id: 3, title: 'Closed', completed: true}
+    { id: 1, title: 'Active', completed: false },
+    { id: 2, title: 'In progress', completed: false },
+    { id: 3, title: 'Closed', completed: true }
   ];
 
   static priorities: Priority[] = [
-    {id: 1, title: 'High', color: '#ED5C46'},
-    {id: 2, title: 'Medium', color: '#FFAD31'},
-    {id: 3, title: 'Low', color: '#5FD278'},
+    { id: 1, title: 'High', color: '#ED5C46'},
+    { id: 2, title: 'Medium', color: '#FFAD31'},
+    { id: 3, title: 'Low', color: '#5FD278'},
   ];
 
   static categories: Category[] = [
-    {id: 1, title: 'Eduction'},
-    {id: 2, title: 'Coding'},
-    {id: 3, title: 'Other'},
+    { id: 1, title: 'Eduction'},
+    { id: 2, title: 'Coding'},
+    { id: 3, title: 'Other'},
   ];
 
   static tasks: Task[] = [

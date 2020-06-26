@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class RegistrationService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   registerUser(user: RegisterUser): Observable<StateTransfer> {
     return this.httpClient.post<StateTransfer>(environment.createProfilePath, user);

@@ -1,8 +1,8 @@
-import {PriorityDAO} from '../interface/PriorityDAO';
-import {Priority} from '../../../model/priority';
-import {Observable, of} from 'rxjs';
-import {Category} from '../../../model/category';
-import {TestData} from '../../testData';
+import { PriorityDAO } from '../interface/PriorityDAO';
+import { Priority } from '../../../model/priority';
+import { Observable, of } from 'rxjs';
+import { Category } from '../../../model/category';
+import { TestData } from '../../testData';
 
 export class PriorityDAOArray implements PriorityDAO {
 

@@ -10,7 +10,7 @@
         <form action="#" [formGroup]="registerForm" (ngSubmit)="submit()">
           <div class="user-name">
             <div class="form-control"
-                 [ngClass]="{invalid: registerForm.get('first_name').touched && registerForm.get('first_name').invalid}">
+                 [ngClass]="{ invalid: registerForm.get('first_name').touched && registerForm.get('first_name').invalid }">
               <label for="first-name" class="first-name"></label>
               <input id="first-name" type="text" placeholder="First Name" formControlName="first_name">
               <div
@@ -25,7 +25,7 @@
               </div>
             </div>
             <div class="form-control"
-                 [ngClass]="{invalid: registerForm.get('last_name').touched && registerForm.get('last_name').invalid}">
+                 [ngClass]="{ invalid: registerForm.get('last_name').touched && registerForm.get('last_name').invalid }">
               <label for="last-name" class="last-name"></label>
               <input id="last-name" type="text" placeholder="Last Name" formControlName="last_name">
               <div
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="form-control"
-               [ngClass]="{invalid: registerForm.get('email').touched && registerForm.get('email').invalid}">
+               [ngClass]="{ invalid: registerForm.get('email').touched && registerForm.get('email').invalid }">
             <label for="email" class="email"></label>
             <input id="email" type="email" placeholder="Email" formControlName="email">
             <div
@@ -56,7 +56,7 @@
             </div>
           </div>
           <div class="form-control"
-               [ngClass]="{invalid: registerForm.get('password').touched && registerForm.get('password').invalid}">
+               [ngClass]="{ invalid: registerForm.get('password').touched && registerForm.get('password').invalid }">
             <label for="password" class="password"></label>
             <input id="password" type="password" placeholder="Password" formControlName="password">
             <div
@@ -66,12 +66,12 @@
                 Password is required
               </small>
               <small *ngIf="registerForm.get('password').errors.minlength">
-                Password must contains {{registerForm.get('password').errors.minlength.requiredLength}} characters
+                Password must contains {{ registerForm.get('password').errors.minlength.requiredLength }} characters
               </small>
             </div>
           </div>
           <div class="form-control"
-               [ngClass]="{invalid: registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid}">
+               [ngClass]="{ invalid: registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid }">
             <label for="match_password" class="math_password"></label>
             <input id="match_password" type="password" placeholder="Matching password"
                    formControlName="confirmPassword">
@@ -86,13 +86,13 @@
                 Password is required
               </small>
               <small *ngIf="registerForm.get('confirmPassword').errors.minlength">
-                Password must contains {{registerForm.get('confirmPassword').errors.minlength.requiredLength}}
+                Password must contains {{ registerForm.get('confirmPassword').errors.minlength.requiredLength }}
                 characters
               </small>
             </div>
           </div>
           <div class="radio-group"
-               [ngClass]="{invalid: registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid}">
+               [ngClass]="{ invalid: registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid }">
             <div class="form-control align-center registration-radio">
               <input id="radio-male" type="radio" name="gender" value="male"
                      formControlName="gender">

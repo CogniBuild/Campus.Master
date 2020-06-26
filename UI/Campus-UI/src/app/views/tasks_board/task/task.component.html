@@ -4,10 +4,10 @@
   >
     <div class="task_right-content" (click)="openEditTaskDialog(task)">
       <div class=" task__name">
-        <span class="task_title">{{task.title}}</span>
+        <span class="task_title">{{ task.title }}</span>
       </div>
       <div class="task__date">
-        <span class="date">{{task.date | date}}</span>
+        <span class="date">{{ task.date | date }}</span>
       </div>
       <div class="task__user">
         <div class="users">
@@ -24,11 +24,11 @@
       <div class="status">
 
         <button *ngIf="task.status === null; else elseBlock"
-                [ngClass]="{'Active': task.status === null}">Active
+                [ngClass]="{'Active': task.status === null }">Active
         </button>
 
         <ng-template #elseBlock>
-          <button [ngClass]="task.status.title">{{task.status.title}}</button>
+          <button [ngClass]="task.status.title">{{ task.status.title }}</button>
         </ng-template>
 
       </div>
