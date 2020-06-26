@@ -7,7 +7,7 @@
         "statements"
       ]
     },
-    "array-type": false,
+    "array-type": [true, "array"],
     "arrow-return-shorthand": true,
     "curly": true,
     "deprecation": {
@@ -63,6 +63,7 @@
       true,
       "ignore-params"
     ],
+    "triple-equals": [true, "allow-null-check", "allow-undefined-check"],
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,
