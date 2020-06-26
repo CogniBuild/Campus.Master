@@ -46,7 +46,6 @@ export class ProjectsComponent implements OnInit {
 
     this.selectedCategory = category;
 
-    console.log(this.selectedCategory);
     this.selectCategory.emit(this.selectedCategory);
   }
 

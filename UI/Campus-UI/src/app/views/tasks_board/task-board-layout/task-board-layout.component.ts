@@ -29,10 +29,7 @@ export class TaskBoardLayoutComponent implements OnInit {
     this.updateTasksAndStat();
     // this.dataHandlerService.getAllPriorities().subscribe(priorities => this.priorities = priorities);
     // this.dataHandlerService.getAllCategories().subscribe(categories => this.categories = categories);
-    console.log('total ', this.totalTasksCountInCategory);
-    console.log('completed тутуту ', this.completedCountInCategory);
 
-    // console.log('test', this.dataHandlerService.getTasks());
   }
 
   // onUpdatedTask(task: Task) {

@@ -41,12 +41,10 @@ export class TaskComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     // this.dataHandler.getAllTask().subscribe(tasks => this.tasks = tasks);
-    // console.log(this.tasks);
     // this.tasks = this.dataHandler.getTasks();
   }
 
   ngOnChanges() {
-    // console.log('я компонент task і буду сортувати за датою ', this.test.getDateSort());
     // this.dataHandler.getAllTask().subscribe(tasks => this.tasks = tasks);
     // this.tasks = this.sorted();
   }
@@ -57,13 +55,10 @@ export class TaskComponent implements OnInit, OnChanges {
 
     switch (true) {
       case this.sort === 'today-0':
-        console.log('case ', this.sortToday());
         return this.sortToday();
       case this.sort === 'week-1':
-        console.log('case ', this.sortToday());
         return this.sortWeek();
       case this.sort === 'month-2':
-        console.log('case ', this.sortToday());
         return this.sortMonth();
     }
   }
@@ -75,10 +70,8 @@ export class TaskComponent implements OnInit, OnChanges {
       if (task.date.getDate() === todayDate) {
         sortedByToday.push(task);
       } else {
-        console.log('problem');
       }
     }
-    console.log(sortedByToday);
     return sortedByToday;
   }
 
@@ -101,10 +94,8 @@ export class TaskComponent implements OnInit, OnChanges {
       if (task.date.getDate() > start.getDate() && task.date.getDate() < end.getDate()) {
         sortedByWeek.push(task);
       } else {
-        console.log('problem');
       }
     }
-    console.log(sortedByWeek);
     return sortedByWeek;
   }
 
@@ -115,10 +106,8 @@ export class TaskComponent implements OnInit, OnChanges {
       if (task.date.getMonth() + 1 === monthDate) {
         sortedByMonth.push(task);
       } else {
-        console.log('problem');
       }
     }
-    console.log(sortedByMonth);
     return sortedByMonth;
   }
 
@@ -169,7 +158,6 @@ export class TaskComponent implements OnInit, OnChanges {
   //   }
   //
   //   this.dataSource = this.tasks;
-  //   console.log('data ', this.dataSource); // обновить источник данных (т.к. данные массива tasks обновились)
   //
   // }
 }

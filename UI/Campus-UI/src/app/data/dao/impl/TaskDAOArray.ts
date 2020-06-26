@@ -85,7 +85,6 @@ export class TaskDAOArray implements TaskDAO {
 
     if (status != null) {
       allTasks = allTasks.filter((task) => task.status.completed === status);
-      console.log('ssss', status);
     }
     // } else {
     //   allTasks = allTasks.filter(task => task.status);
@@ -101,7 +100,6 @@ export class TaskDAOArray implements TaskDAO {
         // учитываем текст поиска (если '' - возвращаются все значения)
       );
     }
-    console.log('all task ', allTasks);
     return allTasks;
   }
 
