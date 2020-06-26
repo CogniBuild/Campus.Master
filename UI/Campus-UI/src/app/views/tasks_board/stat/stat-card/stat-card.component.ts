@@ -11,10 +11,10 @@ export class StatCardComponent implements OnInit {
   // completed = false;
 
   @Input()
-  count: any;
+  count: number;
 
   @Input()
-  countTotal: any;
+  countTotal: number;
 
   constructor() {
   }

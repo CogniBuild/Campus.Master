@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {User} from '../interfaces';
+import {User, StateTransfer} from '../interfaces';
 import {Observable} from 'rxjs';
 
 @Injectable()
@@ -12,8 +12,8 @@ export class SignInService {
     return '';
   }
 
-  login(user: User): Observable<any> {
-    return this.http.post('', user);
+  login(user: User): Observable<StateTransfer> {
+    return this.http.post<StateTransfer>('', user);
   }
 
   logout() {
