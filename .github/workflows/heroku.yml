@@ -1,0 +1,31 @@
+name: Deploy to HEROKU
+
+on:
+  push:
+    branches: [ release ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node 12
+      uses: actions/setup-node@v2-beta
+      with:
+        node-version: '12'
+
+    - name: Install Packages
+      run: npm install --prefix UI/Campus-UI
+
+    - name: Build production UI
+      run: npm run build:cd --prefix UI/Campus-UI
+
+    - name: Deployment
+      uses: akhileshns/heroku-deploy@v3.0.5
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "cognibuild-campus"
+        heroku_email: "fustethernet@gmail.com"
+        buildpack: "jincod/dotnetcore-buildpack"
+        branch: "master"
