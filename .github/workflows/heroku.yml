@@ -21,6 +21,9 @@ jobs:
 
     - name: Build production UI
       run: npm run build:cd --prefix UI/Campus-UI
+    
+    - name: Check entrypoint
+      run: test -f Src/Campus.Master.API/wwwroot/index.html && exit 0 || exit 1
 
     - name: Deployment
       uses: akhileshns/heroku-deploy@v3.0.5
