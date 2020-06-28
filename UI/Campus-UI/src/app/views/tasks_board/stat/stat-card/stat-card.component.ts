@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-stat-card',
@@ -11,10 +11,10 @@ export class StatCardComponent implements OnInit {
   // completed = false;
 
   @Input()
-  count: any;
+  count: number;
 
   @Input()
-  countTotal: any;
+  countTotal: number;
 
   constructor() {
   }

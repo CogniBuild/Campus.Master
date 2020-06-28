@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Task} from 'src/app/model/task';
-import {TestData} from '../../data/testData';
-import {Observable} from 'rxjs';
-import {TaskDAOArray} from '../../data/dao/impl/TaskDAOArray';
-import {Category} from '../../model/category';
-import {CategoryDAOArray} from '../../data/dao/impl/CategoryDAOArray';
-import {Priority} from '../../model/priority';
-import {PriorityDAOArray} from '../../data/dao/impl/PriorityDAOArray';
-import {Status} from '../../model/status';
-import {StatusDAOArray} from '../../data/dao/impl/StatusDAOArray';
+import { Injectable } from '@angular/core';
+import { Task } from 'src/app/model/task';
+import { TestData } from '../../data/testData';
+import { Observable } from 'rxjs';
+import { TaskDAOArray } from '../../data/dao/impl/TaskDAOArray';
+import { Category } from '../../model/category';
+import { CategoryDAOArray } from '../../data/dao/impl/CategoryDAOArray';
+import { Priority } from '../../model/priority';
+import { PriorityDAOArray } from '../../data/dao/impl/PriorityDAOArray';
+import { Status } from '../../model/status';
+import { StatusDAOArray } from '../../data/dao/impl/StatusDAOArray';
 
 @Injectable({
   providedIn: 'root'

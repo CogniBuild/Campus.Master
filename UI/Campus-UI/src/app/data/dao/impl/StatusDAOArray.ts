@@ -1,7 +1,7 @@
-import {Observable, of} from 'rxjs';
-import {TestData} from '../../testData';
-import {StatusDAO} from '../interface/StatusDAO';
-import {Status} from '../../../model/status';
+import { Observable, of } from 'rxjs';
+import { TestData } from '../../testData';
+import { StatusDAO } from '../interface/StatusDAO';
+import { Status } from '../../../model/status';
 
 export class StatusDAOArray implements StatusDAO {
 

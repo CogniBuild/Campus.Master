@@ -24,7 +24,7 @@ export class StatComponent implements OnInit, OnChanges {
     private setDateOption: SortDateService,
     private dataHandlerService: DataHandlerService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   tasks: Task[];
   test: [];
@@ -49,25 +49,20 @@ export class StatComponent implements OnInit, OnChanges {
 
   // selectOption(value: string) {
   //   this.selectedValue = value;
-  //   console.log('я компонент stat і віддаю значення ', this.selectedValue, ' cервісу');
   //   this.setDateOption.setDate(this.selectedValue);
   // }
 
   ngOnInit(): void {
     // this.dataHandlerService.getAllTask().subscribe(tasks => this.tasks = tasks);
     // for (const item of this.tasks) {
-    //   console.log(item.completed);
     //   if (item.completed) {
     //     this.taskCompleted++;
     //   }
     // }
-    console.log(this.completeTasksInCategory);
     // this.updateStat();
   }
 
   ngOnChanges() {
-    console.log('stat component ', this.completeTasksInCategory);
-    console.log('stat ', this.totalTasksInCategory);
   }
 
   openAddTaskDialog() {

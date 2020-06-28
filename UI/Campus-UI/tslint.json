@@ -7,7 +7,7 @@
         "statements"
       ]
     },
-    "array-type": false,
+    "array-type": [true, "array"],
     "arrow-return-shorthand": true,
     "curly": true,
     "deprecation": {
@@ -55,19 +55,15 @@
         ]
       }
     ],
-    "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
-    ],
+    "no-console": true,
+    "only-arrow-functions": true,
     "no-empty": false,
+    "no-any": true,
     "no-inferrable-types": [
       true,
       "ignore-params"
     ],
+    "triple-equals": [true, "allow-null-check", "allow-undefined-check"],
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
     "no-switch-case-fall-through": true,
@@ -124,9 +120,14 @@
         "check-branch",
         "check-decl",
         "check-operator",
+        "check-module",
         "check-separator",
+        "check-rest-spread",
         "check-type",
-        "check-typecast"
+        "check-typecast",
+        "check-type-operator",
+        "check-preblock",
+        "check-postbrace"
       ]
     },
     "no-conflicting-lifecycle": true,

@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {User} from '../shared/interfaces';
-import {SignInService} from '../shared/services/sign-in.service';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from '../shared/interfaces';
+import { SignInService } from '../shared/services/sign-in.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sing-in',

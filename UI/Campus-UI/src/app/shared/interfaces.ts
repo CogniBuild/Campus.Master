@@ -11,3 +11,8 @@ export interface RegisterUser {
   firstName: string;
   lastName: string;
 }
+
+export interface StateTransfer {
+  message: string;
+  payload: string;
+}

@@ -24,7 +24,7 @@ export class RegistrationPageComponent implements OnInit {
     private fb: FormBuilder,
     private registrationService: RegistrationService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
@@ -54,7 +54,6 @@ export class RegistrationPageComponent implements OnInit {
   submit() {
     this.submitted = true;
     if (this.registerForm.invalid) {
-      console.log('invalid');
       return;
     }
     const registerUser: RegisterUser = {
@@ -71,7 +70,6 @@ export class RegistrationPageComponent implements OnInit {
     // this.registrationService
     //  .registerUser(registerUser)
     //  .subscribe((data: any) => {
-    //    console.log(data);
     //    if (data.message) {
     //      this.registerForm.reset();
     //    }

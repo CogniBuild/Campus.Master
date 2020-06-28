@@ -57,4 +57,4 @@ import { HttpClientModule } from '@angular/common/http';
   entryComponents: [EditTaskDialogComponent, ConfirmDialogComponent],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

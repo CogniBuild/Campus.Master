@@ -1,5 +1,5 @@
-import {CommonDAO} from './CommonDAO';
-import {Priority} from '../../../model/priority';
+import { CommonDAO } from './CommonDAO';
+import { Priority } from '../../../model/priority';
 
 // специфичные методы для работы приоритетами (которые не входят в обычный CRUD)
 export interface PriorityDAO extends CommonDAO<Priority> {

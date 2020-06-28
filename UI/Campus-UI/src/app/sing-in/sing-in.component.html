@@ -9,7 +9,7 @@
         <h1 class="sign-in__title">Sign in <br class="sign-in__title_br">to <span>Campus</span></h1>
         <form action="#" [formGroup]="form" (ngSubmit)="submit()">
           <div class="form-control"
-               [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}">
+               [ngClass]="{ invalid: form.get('email').touched && form.get('email').invalid }">
             <label for="email" class="email"></label>
             <input id="email" type="email" placeholder="Email" formControlName="email">
             <div
@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="form-control"
-               [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}">
+               [ngClass]="{ invalid: form.get('password').touched && form.get('password').invalid }">
             <label for="password" class="password"></label>
             <input id="password" type="password" placeholder="Password" formControlName="password">
             <div
@@ -34,7 +34,7 @@
                 Password is required
               </small>
               <small *ngIf="form.get('password').errors.minlength">
-                Password must contains {{form.get('password').errors.minlength.requiredLength}} characters
+                Password must contains {{ form.get('password').errors.minlength.requiredLength }} characters
               </small>
             </div>
             <span class="forgot-pass"><a href="#">Forgot your password ?</a></span>

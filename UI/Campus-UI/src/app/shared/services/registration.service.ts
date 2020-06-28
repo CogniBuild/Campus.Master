@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { RegisterUser } from '../interfaces';
+import { RegisterUser, StateTransfer } from '../interfaces';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RegistrationService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
-  registerUser(user: RegisterUser): Observable<any> {
-    return this.httpClient.post(environment.createProfilePath, user);
+  registerUser(user: RegisterUser): Observable<StateTransfer> {
+    return this.httpClient.post<StateTransfer>(environment.createProfilePath, user);
   }
 }
