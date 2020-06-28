@@ -31,5 +31,3 @@ jobs:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "cognibuild-campus"
         heroku_email: "fustethernet@gmail.com"
-        buildpack: "jincod/dotnetcore-buildpack"
-        branch: "master"
