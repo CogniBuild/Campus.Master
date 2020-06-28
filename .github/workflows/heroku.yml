@@ -1,8 +1,8 @@
-name: Deploy to HEROKU
+name: Deploy to Heroku
 
 on:
-  push:
-    branches: [ release ]
+  release:
+    types: [created]
 
 jobs:
   build:
