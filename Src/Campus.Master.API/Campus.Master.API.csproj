@@ -4,11 +4,6 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
-    
-    <Target Name="Build Production UI" BeforeTargets="BeforeBuild">
-      <Exec Command="npm install --prefix ../../UI/Campus-UI" />
-      <Exec Command="npm run build:cd --prefix ../../UI/Campus-UI" />
-    </Target>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
