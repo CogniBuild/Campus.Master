@@ -14,7 +14,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@master
+      
+    - name: ANGULAR Setup Node.js
+      uses: actions/setup-node@v2-beta
+      with:
+        node-version: '12'
 
+    - name: ANGULAR Install Packages
+      run: npm install --prefix UI/Campus-UI
+
+    - name: ANGULAR Build in production
+      run: npm run build:cd --prefix UI/Campus-UI
+      
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v1
       with:
