@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
+using Campus.Master.API.Helpers.Contracts;
+using Campus.Master.API.Helpers.Implementations;
 
 namespace Campus.Master.API
 {
@@ -33,7 +35,7 @@ namespace Campus.Master.API
         {
             string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
-
+            
             services.AddControllers();
             services.AddCors();
             services.AddSwaggerGen(c =>
@@ -85,6 +87,8 @@ namespace Campus.Master.API
 
             services.AddSqlServerStorage(Configuration["ConnectionStrings:Default"]);
             services.AddServices();
+            services.AddTransient<ITokenBuilder>(builder => 
+                new JwtTokenBuilder(Configuration.GetSection("Security:EncryptionSecret").Value));
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

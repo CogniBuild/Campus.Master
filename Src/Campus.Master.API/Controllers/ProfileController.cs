@@ -1,20 +1,17 @@
 using System;
-using System.Text;
 using System.Threading.Tasks;
 using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Campus.Infrastructure.Business.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Models.Profile;
 using Campus.Master.API.Models;
 using Campus.Services.Interfaces.DTO;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
 
 namespace Campus.Master.API.Controllers
 {
@@ -25,15 +22,15 @@ namespace Campus.Master.API.Controllers
     public class ProfileController : ControllerBase
     {
         private readonly IProfileService _profileService;
+        private readonly ITokenBuilder _jwtBuilder;
         private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
 
         public ProfileController(IProfileService profileService,
-                                 IConfiguration configuration,
+                                 ITokenBuilder jwtBuilder,
                                  ILogger<ProfileController> logger)
         {
             _profileService = profileService;
-            _configuration = configuration;
+            _jwtBuilder = jwtBuilder;
             _logger = logger;
         }
 
@@ -322,27 +319,10 @@ namespace Campus.Master.API.Controllers
             });
         }
 
-        private string BuildToken(ProfileClaimsModel model)
-        {
-            var claims = new[] {
-                new Claim(ClaimTypes.NameIdentifier, model.ProfileId.ToString()),
-                new Claim(ClaimTypes.Role, model.RoleId.ToString())
-            };
-
-            var encryptingSecret = Encoding.UTF8.GetBytes(_configuration
-                .GetSection("Security:EncryptionSecret").Value);
-            var key = new SymmetricSecurityKey(encryptingSecret);
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-            var descriptor = new SecurityTokenDescriptor {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddHours(6),
-                SigningCredentials = credentials
-            };
-
-            var handler = new JwtSecurityTokenHandler();
-            var token = handler.CreateToken(descriptor);
-            
-            return handler.WriteToken(token);
-        }
+        private string BuildToken(ProfileClaimsModel model) => 
+            _jwtBuilder.ResetClaims()
+                .AddClaim(ClaimTypes.NameIdentifier, model.ProfileId.ToString())
+                .AddClaim(ClaimTypes.Role, model.RoleId.ToString())
+                .Build();
     }
 }

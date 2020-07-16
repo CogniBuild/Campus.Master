@@ -14,7 +14,6 @@ using Campus.Services.Interfaces.DTO.Project;
 using Campus.Services.Interfaces.DTO.Task;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Configuration;
 
 namespace Campus.Master.API.Controllers
 {
@@ -25,14 +24,12 @@ namespace Campus.Master.API.Controllers
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
-        private readonly IConfiguration _configuration;
         private readonly ILogger _logger;
 
-        public ProjectController(IProjectService projectService, IConfiguration configuration,
-            ILogger<ProjectController> logger)
+        public ProjectController(IProjectService projectService,
+                                 ILogger<ProjectController> logger)
         {
             _projectService = projectService;
-            _configuration = configuration;
             _logger = logger;
         }
 
