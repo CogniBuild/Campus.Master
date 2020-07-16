@@ -77,7 +77,7 @@ namespace Campus.Master.API
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                            Configuration.GetSection("Security:EndpointEncryptionSecret").Value)),
+                            Configuration.GetSection("Security:EncryptionSecret").Value)),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };

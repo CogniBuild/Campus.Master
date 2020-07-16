@@ -330,7 +330,7 @@ namespace Campus.Master.API.Controllers
             };
 
             var encryptingSecret = Encoding.UTF8.GetBytes(_configuration
-                .GetSection("Security:EndpointEncryptionSecret").Value);
+                .GetSection("Security:EncryptionSecret").Value);
             var key = new SymmetricSecurityKey(encryptingSecret);
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var descriptor = new SecurityTokenDescriptor {
