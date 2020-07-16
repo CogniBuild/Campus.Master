@@ -53,7 +53,7 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="403">Requested count of items exceeded the limit.</response>
         [HttpGet]
-        [TypeFilter(typeof(QueryItemsLimiter))]
+        [ServiceFilter(typeof(QueryItemsLimiter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -307,7 +307,7 @@ namespace Campus.Master.API.Controllers
         /// <response code="403">Requested count of items exceeded the limit.</response>
         /// <response code="404">Project wasn't found.</response>
         [HttpGet("{id}/task")]
-        [TypeFilter(typeof(QueryItemsLimiter))]
+        [ServiceFilter(typeof(QueryItemsLimiter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

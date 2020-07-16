@@ -48,7 +48,7 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="403">Requested count of items exceeded the limit.</response>
         [HttpGet]
-        [TypeFilter(typeof(QueryItemsLimiter))]
+        [ServiceFilter(typeof(QueryItemsLimiter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
+using Campus.Master.API.Filters;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
 
@@ -89,6 +90,9 @@ namespace Campus.Master.API
             services.AddServices();
             services.AddTransient<ITokenBuilder>(builder => 
                 new JwtTokenBuilder(Configuration.GetSection("Security:EncryptionSecret").Value));
+            services.AddScoped(limiter => 
+                new QueryItemsLimiter(
+                    Convert.ToInt32(Configuration.GetSection("Endpoints:QueryLimiter").Value)));
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

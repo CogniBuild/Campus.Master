@@ -11,21 +11,20 @@ namespace Campus.Master.API.Filters
 {
     public class QueryItemsLimiter : Attribute, IAsyncActionFilter
     {
-        private readonly IConfiguration _configuration;
+        private readonly int _limiterValue;
         private const string TargetQueryParameter = "items";
         private const string FailureResponseMessage = "Requested count of items exceeded the limit!";
 
-        public QueryItemsLimiter(IConfiguration configuration)
+        public QueryItemsLimiter(int limiterValue)
         {
-            _configuration = configuration;
+            _limiterValue = limiterValue;
         }
         
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var limiterValue = Convert.ToInt32(_configuration["Endpoints:QueryLimiter"]);
             var requestedItemsValue = Convert.ToInt32(context.HttpContext.Request.Query[TargetQueryParameter]);
 
-            if (requestedItemsValue > limiterValue)
+            if (requestedItemsValue > _limiterValue)
             {
                 var responseState = new StateTransfer
                 {
