@@ -103,7 +103,7 @@ namespace Campus.Master.API
                     Convert.ToString)));
             services.AddScoped(limiter => 
                 new QueryItemsLimiter(GetConfigurationValue(
-                    "Security:EncryptionSecret",
+                    "Endpoints:QueryLimiter",
                     inDevelopment,
                     Convert.ToInt32)));
         }
