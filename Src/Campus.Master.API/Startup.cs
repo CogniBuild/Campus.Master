@@ -22,22 +22,19 @@ namespace Campus.Master.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            WebEnvironment = environment;
         }
 
         public IConfiguration Configuration { get; }
-        
-        public IWebHostEnvironment WebEnvironment { get; }
 
         private const string ApiTitle = "Campus.Master Development mode API";
         private const string ApiVersion = "v1.2";
         
         public void ConfigureServices(IServiceCollection services)
         {
-            var inDevelopment = WebEnvironment.IsDevelopment();
+            var inDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
             string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
             
