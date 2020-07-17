@@ -32,8 +32,9 @@ namespace Campus.Master.API
         private const string ApiTitle = "Campus.Master Development mode API";
         private const string ApiVersion = "v1.2";
         
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
+            var inDevelopment = env.IsDevelopment();
             string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
             
@@ -80,19 +81,31 @@ namespace Campus.Master.API
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                            Configuration.GetSection("Security:EncryptionSecret").Value)),
+                        GetConfigurationValue(
+                            "Security:EncryptionSecret",
+                            inDevelopment,
+                            Convert.ToString)
+                        )),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
                 });
 
-            services.AddSqlServerStorage(Configuration["ConnectionStrings:Default"]);
+            services.AddSqlServerStorage(GetConfigurationValue(
+                "ConnectionStrings:Default",
+                inDevelopment,
+                Convert.ToString));
             services.AddServices();
             services.AddTransient<ITokenBuilder>(builder => 
-                new JwtTokenBuilder(Configuration.GetSection("Security:EncryptionSecret").Value));
+                new JwtTokenBuilder(GetConfigurationValue(
+                    "Security:EncryptionSecret",
+                    inDevelopment,
+                    Convert.ToString)));
             services.AddScoped(limiter => 
-                new QueryItemsLimiter(
-                    Convert.ToInt32(Configuration.GetSection("Endpoints:QueryLimiter").Value)));
+                new QueryItemsLimiter(GetConfigurationValue(
+                    "Security:EncryptionSecret",
+                    inDevelopment,
+                    Convert.ToInt32)));
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -123,6 +136,14 @@ namespace Campus.Master.API
                 context.Response.ContentType = "text/html";
                 await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
             });
+        }
+
+        private T GetConfigurationValue<T>(string key, bool inDevelopment, Func<string, T> formatter)
+        {
+            var appSettingsConfiguration = Configuration.GetSection(key).Value;
+            return inDevelopment ? 
+                formatter(appSettingsConfiguration) :
+                formatter(Environment.GetEnvironmentVariable(appSettingsConfiguration));
         }
     }
 }
