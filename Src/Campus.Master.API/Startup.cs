@@ -14,6 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
+using Campus.Master.API.Filters;
+using Campus.Master.API.Helpers.Contracts;
+using Campus.Master.API.Helpers.Implementations;
 
 namespace Campus.Master.API
 {
@@ -31,9 +34,10 @@ namespace Campus.Master.API
         
         public void ConfigureServices(IServiceCollection services)
         {
+            var inDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
             string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
-
+            
             services.AddControllers();
             services.AddCors();
             services.AddSwaggerGen(c =>
@@ -77,14 +81,31 @@ namespace Campus.Master.API
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                            Configuration.GetSection("Security:EndpointEncryptionSecret").Value)),
+                        GetConfigurationValue(
+                            "Security:EncryptionSecret",
+                            inDevelopment,
+                            Convert.ToString)
+                        )),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
                 });
 
-            services.AddSqlServerStorage(Configuration["ConnectionStrings:Default"]);
+            services.AddSqlServerStorage(GetConfigurationValue(
+                "ConnectionStrings:Default",
+                inDevelopment,
+                Convert.ToString));
             services.AddServices();
+            services.AddTransient<ITokenBuilder>(builder => 
+                new JwtTokenBuilder(GetConfigurationValue(
+                    "Security:EncryptionSecret",
+                    inDevelopment,
+                    Convert.ToString)));
+            services.AddScoped(limiter => 
+                new QueryItemsLimiter(GetConfigurationValue(
+                    "Endpoints:QueryLimiter",
+                    inDevelopment,
+                    Convert.ToInt32)));
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -115,6 +136,14 @@ namespace Campus.Master.API
                 context.Response.ContentType = "text/html";
                 await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
             });
+        }
+
+        private T GetConfigurationValue<T>(string key, bool inDevelopment, Func<string, T> formatter)
+        {
+            var appSettingsConfiguration = Configuration.GetSection(key).Value;
+            return inDevelopment ? 
+                formatter(appSettingsConfiguration) :
+                formatter(Environment.GetEnvironmentVariable(appSettingsConfiguration));
         }
     }
 }

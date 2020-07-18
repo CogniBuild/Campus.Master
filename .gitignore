@@ -7,3 +7,4 @@
 *.userprefs
 
 .vs/
+.idea/
