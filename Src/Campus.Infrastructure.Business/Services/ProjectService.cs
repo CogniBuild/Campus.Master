@@ -45,14 +45,15 @@ namespace Campus.Infrastructure.Business.Services
             return projectModels;
         }
 
-        public async Task<int> CreateProject(int userId, ProjectContentModelDto projectDto)
+        public async Task CreateProject(int userId, ProjectContentModelDto projectDto)
         {
-            return await _projectRepository.CreateNewProject(userId, new Project()
+            await _projectRepository.CreateNewProject(userId, new Project()
             {
                 Name = projectDto.Name,
                 Color = projectDto.Color,
                 StatusId = projectDto.Status,
             });
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task<ProjectModelDto> GetProjectById(int userId, int projectId)
@@ -73,9 +74,9 @@ namespace Campus.Infrastructure.Business.Services
             };
         }
 
-        public async Task<int> EditProject(int userId, int id, ProjectContentModelDto projectContent)
+        public async Task EditProject(int userId, int id, ProjectContentModelDto projectContent)
         {
-            var affectedRows = await _projectRepository.EditProject(new Project
+            await _projectRepository.EditProject(new Project
             {
                 Id = id,
                 Name = projectContent.Name,
@@ -84,12 +85,7 @@ namespace Campus.Infrastructure.Business.Services
                 UserId = userId
             });
 
-            if (affectedRows == 0)
-            {
-                throw new ApplicationException($"Project with specified id doesn't exist");
-            }
-
-            return affectedRows;
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task<IEnumerable<TaskModelDto>> GetProjectTasks(int userId, int id, int limit, int offset)
@@ -118,9 +114,9 @@ namespace Campus.Infrastructure.Business.Services
             return taskModelsDto;
         }
 
-        public async Task<int> AddTaskToProject(int id, TaskContentModelDto model)
+        public async Task AddTaskToProject(int id, TaskContentModelDto model)
         {
-            var affectedRows = await _projectRepository.AddTaskToProject(new UserTask
+            await _projectRepository.AddTaskToProject(new UserTask
             {
                 Description = model.Description,
                 Priority = model.Priority,
@@ -129,24 +125,13 @@ namespace Campus.Infrastructure.Business.Services
                 ProjectId = id
             });
 
-            if (affectedRows == 0)
-            {
-                throw new ApplicationException($"Project with specified id doesn't exist");
-            }
-
-            return affectedRows;
+            await _unitOfWork.CommitAsync();
         }
 
-        public async Task<int> DeleteProject(int userId, int projectId)
+        public async Task DeleteProject(int userId, int projectId)
         {
-            var affectedRows = await _projectRepository.DeleteProject(userId, projectId);
-
-            if (affectedRows == 0)
-            {
-                throw new ApplicationException($"Unable to delete project with specified id");
-            }
-
-            return affectedRows;
+            await _projectRepository.DeleteProject(userId, projectId);
+            await _unitOfWork.CommitAsync();
         }
     }
 }

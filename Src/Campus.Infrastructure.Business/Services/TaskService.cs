@@ -9,16 +9,18 @@ namespace Campus.Infrastructure.Business.Services
 {
     public class TaskService : ITaskService
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ITaskRepository _taskRepository;
 
-        public TaskService(ITaskRepository taskRepository)
+        public TaskService(IUnitOfWork unitOfWork, ITaskRepository taskRepository)
         {
+            _unitOfWork = unitOfWork;
             _taskRepository = taskRepository;
         }
 
         public async Task<TaskModelDto> GetTaskById(int userId, int taskId)
         {
-            var task = await _taskRepository.GetTaskById(userId, taskId);
+            var task = await _taskRepository.GetTaskById(taskId);
 
             if (task == null)
             {
@@ -35,9 +37,9 @@ namespace Campus.Infrastructure.Business.Services
             };
         }
 
-        public async Task<int> EditTaskById(int taskId, TaskContentModelDto taskDto)
+        public async Task EditTaskById(int taskId, TaskContentModelDto taskDto)
         {
-            var affectedRows = await _taskRepository.EditTask(new UserTask
+            await _taskRepository.EditTask(new UserTask
             {
                 Id = taskId,
                 Description = taskDto.Description,
@@ -46,24 +48,13 @@ namespace Campus.Infrastructure.Business.Services
                 Deadline = taskDto.Deadline,
             });
 
-            if (affectedRows == 0)
-            {
-                throw new ApplicationException("Unable to update task by id");
-            }
-
-            return affectedRows;
+            await _unitOfWork.CommitAsync();
         }
 
-        public async Task<int> DeleteTaskById(int taskId)
+        public async Task DeleteTaskById(int taskId)
         {
-            var affectedRows = await _taskRepository.DeleteTask(taskId);
-
-            if (affectedRows == 0)
-            {
-                throw new ApplicationException("Unable to delete task by id");
-            }
-
-            return affectedRows;
+            await _taskRepository.DeleteTask(taskId);
+            await _unitOfWork.CommitAsync();
         }
     }
 }

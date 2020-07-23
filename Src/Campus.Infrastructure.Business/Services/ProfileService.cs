@@ -25,8 +25,6 @@ namespace Campus.Infrastructure.Business.Services
 
         public async Task CreateAppUserProfileAsync(ProfileRegistrationModelDto registrationDto)
         {
-            _unitOfWork.Begin();
-
             try
             {
                 var (hash, salt) = _authenticationService.GenerateSecrets(registrationDto.Password);
@@ -42,11 +40,11 @@ namespace Campus.Infrastructure.Business.Services
                     RegistrationDate = DateTime.Now.ToString("d"),
                 });
 
-                _unitOfWork.Commit();
+                await _unitOfWork.CommitAsync();
             }
             catch (Exception)
             {
-                _unitOfWork.Rollback();
+                await _unitOfWork.RollbackAsync();
                 throw new ApplicationException("User already exists in database!");
             }
         }
@@ -86,25 +84,20 @@ namespace Campus.Infrastructure.Business.Services
 
         public async Task DeleteAppUserProfileByIdAsync(int id)
         {
-            _unitOfWork.Begin();
-
             try
             {
                 await _appUserRepository.DeleteAppUserByIdAsync(id);
-
-                _unitOfWork.Commit();
+                await _unitOfWork.CommitAsync();
             }
             catch (Exception)
             {
-                _unitOfWork.Rollback();
+                await _unitOfWork.RollbackAsync();
                 throw;
             }
         }
 
         public async Task EditAppUserProfileByIdAsync(int id, ProfileEditingModelDto editingDto)
         {
-            _unitOfWork.Begin();
-
             try
             {
                 await _appUserRepository.UpdateAppUserAsync(new AppUser()
@@ -114,11 +107,11 @@ namespace Campus.Infrastructure.Business.Services
                     Surname = editingDto.LastName
                 });
 
-                _unitOfWork.Commit();
+                await _unitOfWork.CommitAsync();
             }
             catch (Exception)
             {
-                _unitOfWork.Rollback();
+                await _unitOfWork.RollbackAsync();
                 throw;
             }
         }

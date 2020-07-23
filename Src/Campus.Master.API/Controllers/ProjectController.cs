@@ -171,7 +171,7 @@ namespace Campus.Master.API.Controllers
             
             int userId = GetCurrentUserId();
 
-            int newProjectId = await _projectService.CreateProject(userId, new ProjectContentModelDto
+            await _projectService.CreateProject(userId, new ProjectContentModelDto
             {
                 Name = model.Name,
                 Color = model.Color,
@@ -181,7 +181,7 @@ namespace Campus.Master.API.Controllers
             var status = new StateTransfer
             {
                 Message = $"'{model.Name}' project is created!",
-                Payload = $"api/project/{newProjectId}"
+                Payload = $"api/project"
             };
 
             return Created(status.Payload, status);

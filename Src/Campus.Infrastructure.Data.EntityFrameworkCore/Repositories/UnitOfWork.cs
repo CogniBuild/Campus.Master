@@ -1,23 +1,44 @@
+using System;
 using System.Threading.Tasks;
 using Campus.Domain.Interfaces.Interfaces;
+using Campus.Infrastructure.Data.EntityFrameworkCore.Context;
 
 namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
 {
-    public class UnitOfWork : IUnitOfWork
+    public sealed class UnitOfWork : IUnitOfWork
     {
+        private readonly CampusContext _context;
+        
+        public UnitOfWork(CampusContext context)
+        {
+            _context = context;
+        }
+        
+        private bool _disposed;
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+            _disposed = true;
+        }
+
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public async Task CommitAsync()
         {
-            throw new System.NotImplementedException();
+            await _context.SaveChangesAsync();
         }
 
-        public async Task RollbackAsync()
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task RollbackAsync() => await Task.CompletedTask;
     }
 }
