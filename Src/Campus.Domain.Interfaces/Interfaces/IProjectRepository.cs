@@ -10,14 +10,14 @@ namespace Campus.Domain.Interfaces.Interfaces
 
         Task<Project> GetProjectInformationById(int userId, int projectId);
 
-        Task<int> CreateNewProject(int userId, Project project);
+        Task CreateNewProject(int userId, Project project);
 
-        Task<int> DeleteProject(int userId, int projectId);
+        Task DeleteProject(int userId, int projectId);
 
-        Task<int> EditProject(Project project);
+        Task EditProject(Project project);
 
         Task<IEnumerable<UserTask>> GetProjectTasks(int userId, int projectId, int limit, int offset);
 
-        Task<int> AddTaskToProject(UserTask userTask);
+        Task AddTaskToProject(UserTask userTask);
     }
 }

@@ -16,10 +16,9 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
             _context = context;
         }
         
-        public async Task<int> CreateAppUserAsync(AppUser appUser)
+        public async Task CreateAppUserAsync(AppUser appUser)
         {
             await _context.Users.AddRangeAsync(appUser);
-            return 1;
         }
 
         public async Task<AppUser> GetAppUserByIdAsync(int id)
@@ -34,17 +33,15 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
                                 .FirstOrDefaultAsync();
         }
 
-        public async Task<int> DeleteAppUserByIdAsync(int id)
+        public async Task DeleteAppUserByIdAsync(int id)
         {
             var user = await GetAppUserByIdAsync(id);
             _context.Users.Remove(user);
-            return 1;
         }
 
-        public async Task<int> UpdateAppUserAsync(AppUser appUser)
+        public async Task UpdateAppUserAsync(AppUser appUser)
         {
             await Task.Run(() => _context.Users.Update(appUser));
-            return 1;
         }
     }
 }

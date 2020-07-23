@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
+using System.Data;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
 using Campus.Domain.Interfaces.Interfaces;
@@ -9,90 +9,82 @@ namespace Campus.Infrastructure.Data.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IDbConnection _connection;
 
-        public ProjectRepository(IUnitOfWork unitOfWork)
+        public ProjectRepository(IDbConnection connection)
         {
-            _unitOfWork = unitOfWork;
+            _connection = connection;
         }
 
         public async Task<IEnumerable<Project>> GetProjectsListing(int userId, int offset, int limit)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = @"SELECT * FROM Project WHERE UserId = @userId
                                  ORDER BY Id OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY";
 
-            return await _unitOfWork.Connection.QueryAsync<Project>(sql, new {userId, limit, offset},
-                _unitOfWork.Transaction);
+            return await _connection.QueryAsync<Project>(sql, new {userId, limit, offset}, transaction);
         }
 
         public async Task<Project> GetProjectInformationById(int userId, int projectId)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = @"SELECT * FROM Project WHERE UserId = @userId AND Id = @projectId";
 
-            var projects = await _unitOfWork.Connection.QueryAsync<Project>(sql, new {projectId, userId},
-                _unitOfWork.Transaction);
-
-            return projects.SingleOrDefault();
+            return await _connection.QuerySingleAsync<Project>(sql, new {projectId, userId}, transaction);
         }
 
-        public async Task<int> CreateNewProject(int userId, Project project)
+        public async Task CreateNewProject(int userId, Project project)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql =
                 @"INSERT INTO Project (Name, Color, UserId, StatusId) VALUES (@Name, @Color, @userId, @StatusId);
                   SELECT CAST(SCOPE_IDENTITY() as int)";
 
-            var newProjectId = await _unitOfWork.Connection.ExecuteAsync(sql,
-                new {project.Name, project.Color, userId, project.StatusId},
-                _unitOfWork.Transaction);
-
-            return newProjectId;
+            await _connection.ExecuteAsync(sql, new {project.Name, project.Color, userId, project.StatusId}, 
+                transaction);
         }
 
-        public async Task<int> DeleteProject(int userId, int projectId)
+        public async Task DeleteProject(int userId, int projectId)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = @"DELETE FROM Project WHERE Id = @projectId AND UserId = @userId";
 
-            var affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql, new {userId, projectId},
-                _unitOfWork.Transaction);
-
-            return affectedRows;
+            await _connection.ExecuteAsync(sql, new {userId, projectId}, transaction);
         }
 
-        public async Task<int> EditProject(Project project)
+        public async Task EditProject(Project project)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = @"UPDATE Project 
                                  SET Name = @Name,
                                  Color = @Color,
                                  StatusId = @StatusId  
                                  WHERE Id = @Id AND UserId = @UserId";
 
-            var affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql, project, _unitOfWork.Transaction);
-
-            return affectedRows;
+            await _connection.ExecuteAsync(sql, project, transaction);
         }
 
         public async Task<IEnumerable<UserTask>> GetProjectTasks(int userId, int projectId, int limit, int offset)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = @"SELECT *
                                  FROM UserTask UT
                                           JOIN Project P on UT.ProjectId = P.Id
                                  WHERE UT.ProjectId = @projectId AND P.UserId = @userId 
                                  ORDER BY UT.Id OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY";
 
-            return await _unitOfWork.Connection.QueryAsync<UserTask>(sql, new {userId, projectId, limit, offset},
-                _unitOfWork.Transaction);
+            return await _connection.QueryAsync<UserTask>(sql, new {userId, projectId, limit, offset},
+                transaction);
         }
 
-        public async Task<int> AddTaskToProject(UserTask userTask)
+        public async Task AddTaskToProject(UserTask userTask)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql =
                 @"INSERT INTO UserTask (Description, Priority, ProjectTag, Deadline, ProjectId)
                   VALUES (@Description, @Priority, @ProjectTag, @Deadline, @ProjectId)";
 
-            var affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql, userTask,
-                _unitOfWork.Transaction);
-
-            return affectedRows;
+            await _connection.ExecuteAsync(sql, userTask, transaction);
         }
     }
 }

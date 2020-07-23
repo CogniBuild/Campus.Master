@@ -5,8 +5,8 @@ namespace Campus.Domain.Interfaces.Interfaces
 {
     public interface ITaskRepository
     { 
-        Task<UserTask> GetTaskById(int userId, int taskId);
-        Task<int> DeleteTask(int taskId);
-        Task<int> EditTask(UserTask task);
+        Task<UserTask> GetTaskById(int taskId);
+        Task DeleteTask(int taskId);
+        Task EditTask(UserTask task);
     }
 }

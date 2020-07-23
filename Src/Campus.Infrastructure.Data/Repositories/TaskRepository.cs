@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Data;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
 using Campus.Domain.Interfaces.Interfaces;
@@ -8,39 +8,32 @@ namespace Campus.Infrastructure.Data.Repositories
 {
     public class TaskRepository : ITaskRepository
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IDbConnection _connection;
 
-        public TaskRepository(IUnitOfWork unitOfWork)
+        public TaskRepository(IDbConnection connection)
         {
-            _unitOfWork = unitOfWork;
+            _connection = connection;
         }
 
-        public async Task<UserTask> GetTaskById(int userId, int taskId)
+        public async Task<UserTask> GetTaskById(int taskId)
         {
-            const string sql = @"SELECT UT.Id, UT.Description, UT.Priority, UT.ProjectTag, UT.Deadline
-                                 FROM UserTask AS UT
-                                          JOIN Project P on UT.ProjectId = P.Id
-                                 WHERE P.UserId = @userId
-                                   AND UT.Id = @taskId";
+            using var transaction = _connection.BeginTransaction();
+            const string sql = @"SELECT * FROM UserTask WHERE Id = @taskId";
             
-            var tasks = await _unitOfWork.Connection.QueryAsync<UserTask>(sql, new {userId, taskId},
-                _unitOfWork.Transaction);
-
-            return tasks.SingleOrDefault();
+            return await _connection.QuerySingleAsync<UserTask>(sql, new {taskId}, transaction);
         }
 
-        public async Task<int> DeleteTask(int taskId)
+        public async Task DeleteTask(int taskId)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = @"DELETE FROM UserTask WHERE Id = @taskId";
 
-            var affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql, new {taskId},
-                _unitOfWork.Transaction);
-
-            return affectedRows;
+            await _connection.ExecuteAsync(sql, new {taskId}, transaction);
         }
 
-        public async Task<int> EditTask(UserTask task)
+        public async Task EditTask(UserTask task)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = @"UPDATE UserTask 
                                  SET Description = @Description,
                                  Priority = @Priority,
@@ -48,9 +41,7 @@ namespace Campus.Infrastructure.Data.Repositories
                                  Deadline = @Deadline
                                  WHERE Id = @Id";
 
-            var affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql, task, _unitOfWork.Transaction);
-
-            return affectedRows;
+            await _connection.ExecuteAsync(sql, task, transaction);
         }
     }
 }
