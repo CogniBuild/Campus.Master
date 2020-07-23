@@ -5,9 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Configs" />
+      <Folder Include="Configs\Populating" />
       <Folder Include="Dependencies" />
-      <Folder Include="Repositories" />
     </ItemGroup>
 
     <ItemGroup>
@@ -19,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Campus.Domain.Core\Campus.Domain.Core.csproj" />
+      <ProjectReference Include="..\Campus.Domain.Interfaces\Campus.Domain.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

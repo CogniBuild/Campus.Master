@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using Campus.Domain.Core.Models;
+using Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping;
 
 namespace Campus.Infrastructure.Data.EntityFrameworkCore.Context
 {
@@ -17,6 +18,7 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new UserMaps());
         }
     }
 }
