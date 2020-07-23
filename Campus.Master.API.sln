@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Campus.Infrastructure.Data"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Campus.Services.Interfaces", "Src\Campus.Services.Interfaces\Campus.Services.Interfaces.csproj", "{278B45F4-A347-4540-80A0-1B04A93340F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Campus.Infrastructure.Data.EntityFrameworkCore", "Src\Campus.Infrastructure.Data.EntityFrameworkCore\Campus.Infrastructure.Data.EntityFrameworkCore.csproj", "{0E3C28A9-E86F-4265-964C-626288CE4A2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{278B45F4-A347-4540-80A0-1B04A93340F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{278B45F4-A347-4540-80A0-1B04A93340F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{278B45F4-A347-4540-80A0-1B04A93340F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E3C28A9-E86F-4265-964C-626288CE4A2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E3C28A9-E86F-4265-964C-626288CE4A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E3C28A9-E86F-4265-964C-626288CE4A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E3C28A9-E86F-4265-964C-626288CE4A2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,5 +70,6 @@ Global
 		{CD1853B4-2CF3-445B-B474-98D6CE2F3F78} = {6DF4B688-FF8F-4CFD-961F-9AA989BD03BD}
 		{E92A2185-604D-4BEF-9D3C-968C51A20197} = {6DF4B688-FF8F-4CFD-961F-9AA989BD03BD}
 		{278B45F4-A347-4540-80A0-1B04A93340F0} = {28CA258B-8F72-47EB-BAC8-64C6D743487D}
+		{0E3C28A9-E86F-4265-964C-626288CE4A2E} = {6DF4B688-FF8F-4CFD-961F-9AA989BD03BD}
 	EndGlobalSection
 EndGlobal
