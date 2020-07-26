@@ -122,7 +122,7 @@ namespace Campus.Master.API.Controllers
 
             try
             {
-                var result = await _projectService.GetProjectById(userId, id);
+                var result = await _projectService.GetProjectById(id);
 
                 return Ok(new ProjectModel
                 {

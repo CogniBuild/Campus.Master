@@ -56,9 +56,9 @@ namespace Campus.Infrastructure.Business.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<ProjectModelDto> GetProjectById(int userId, int projectId)
+        public async Task<ProjectModelDto> GetProjectById(int projectId)
         {
-            var project = await _projectRepository.GetProjectInformationById(userId, projectId);
+            var project = await _projectRepository.GetProjectInformationById(projectId);
 
             if (project == null)
             {

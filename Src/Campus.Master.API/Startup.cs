@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Reflection;
-using Campus.Infrastructure.Data.Dependencies;
 using Campus.Infrastructure.Business.Dependencies;
+using Campus.Infrastructure.Data.EntityFrameworkCore.Dependencies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,7 +27,7 @@ namespace Campus.Master.API
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         private const string ApiTitle = "Campus.Master Development mode API";
         private const string ApiVersion = "v1.2";
