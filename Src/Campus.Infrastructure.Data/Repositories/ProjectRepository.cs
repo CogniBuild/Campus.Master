@@ -25,12 +25,12 @@ namespace Campus.Infrastructure.Data.Repositories
             return await _connection.QueryAsync<Project>(sql, new {userId, limit, offset}, transaction);
         }
 
-        public async Task<Project> GetProjectInformationById(int userId, int projectId)
+        public async Task<Project> GetProjectInformationById(int projectId)
         {
             using var transaction = _connection.BeginTransaction();
-            const string sql = @"SELECT * FROM Project WHERE UserId = @userId AND Id = @projectId";
+            const string sql = @"SELECT * FROM Project WHERE Id = @projectId";
 
-            return await _connection.QuerySingleAsync<Project>(sql, new {projectId, userId}, transaction);
+            return await _connection.QuerySingleAsync<Project>(sql, new {projectId}, transaction);
         }
 
         public async Task CreateNewProject(int userId, Project project)

@@ -8,7 +8,7 @@ namespace Campus.Domain.Interfaces.Interfaces
     {
         Task<IEnumerable<Project>> GetProjectsListing(int userId, int offset, int limit);
 
-        Task<Project> GetProjectInformationById(int userId, int projectId);
+        Task<Project> GetProjectInformationById(int projectId);
 
         Task CreateNewProject(int userId, Project project);
 
