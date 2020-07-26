@@ -15,6 +15,8 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Dependencies
             services.AddDbContext<CampusContext>(options => options.UseSqlServer(connectionString));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAppUserRepository, AppUserRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
         }
     }
 }
