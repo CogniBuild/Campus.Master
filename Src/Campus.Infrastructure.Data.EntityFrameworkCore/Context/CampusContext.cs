@@ -19,6 +19,10 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMaps());
+            modelBuilder.ApplyConfiguration(new RoleMaps());
+            modelBuilder.ApplyConfiguration(new StatusMaps());
+            modelBuilder.ApplyConfiguration(new ProjectMaps());
+            modelBuilder.ApplyConfiguration(new UserTaskMaps());
         }
     }
 }

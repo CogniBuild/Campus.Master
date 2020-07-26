@@ -1,4 +1,6 @@
-﻿namespace Campus.Domain.Core.Models
+﻿using System.Collections.Generic;
+
+namespace Campus.Domain.Core.Models
 {
     public class Project
     {
@@ -10,6 +12,12 @@
         
         public int StatusId { get; set; }
 
+        public Status Status { get; set; }
+
         public int UserId { get; set; }
+
+        public AppUser User { get; set; }
+
+        public ICollection<UserTask> Tasks { get; set; }
     }
 }

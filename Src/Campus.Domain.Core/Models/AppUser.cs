@@ -1,4 +1,6 @@
-﻿namespace Campus.Domain.Core.Models
+﻿using System.Collections.Generic;
+
+namespace Campus.Domain.Core.Models
 {
     public class AppUser
     {
@@ -21,5 +23,7 @@
         public int RoleId { get; set; }
 
         public Role Role { get; set; }
+
+        public ICollection<Project> Projects { get; set; }
     }
 }
