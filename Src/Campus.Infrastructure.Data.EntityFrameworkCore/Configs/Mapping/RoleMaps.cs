@@ -13,10 +13,6 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
 
             builder.Property(role => role.Name)
                 .IsRequired().HasMaxLength(50);
-
-            builder.HasMany(r => r.AppUsers)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

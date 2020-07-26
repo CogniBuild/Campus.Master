@@ -13,10 +13,6 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
 
             builder.Property(status => status.Name)
                 .IsRequired().HasMaxLength(50);
-
-            builder.HasMany(s => s.Projects)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
