@@ -37,7 +37,7 @@ namespace Campus.Infrastructure.Business.Services
                     Login = registrationDto.Login,
                     PasswordHash = hash,
                     PasswordSalt = salt,
-                    RegistrationDate = DateTime.Now.ToString("d"),
+                    RegistrationDate = DateTime.Now,
                 });
 
                 await _unitOfWork.CommitAsync();

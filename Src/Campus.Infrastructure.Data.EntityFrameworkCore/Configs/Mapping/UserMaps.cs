@@ -34,7 +34,7 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
                 .IsRequired();
 
             builder.HasOne(u => u.Role)
-                .WithMany(r => r.Users)
+                .WithMany(r => r.AppUsers)
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

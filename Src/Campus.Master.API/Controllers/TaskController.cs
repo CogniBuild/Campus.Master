@@ -70,7 +70,7 @@ namespace Campus.Master.API.Controllers
                     Description = "Description",
                     Priority = "Priority",
                     Tag = "Tag",
-                    Deadline = "00-00-0000"
+                    Deadline = DateTime.MinValue
                 },
                 new TaskModel
                 {
@@ -78,7 +78,7 @@ namespace Campus.Master.API.Controllers
                     Description = "Description",
                     Priority = "Priority",
                     Tag = "Tag",
-                    Deadline = "00-00-0000"
+                    Deadline = DateTime.MinValue
                 }
             });
 

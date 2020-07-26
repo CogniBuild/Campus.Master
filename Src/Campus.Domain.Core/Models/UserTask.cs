@@ -12,7 +12,7 @@ namespace Campus.Domain.Core.Models
 
         public string ProjectTag { get; set; }
 
-        public string Deadline { get; set; }
+        public DateTime Deadline { get; set; }
 
         public int ProjectId { get; set; }
 

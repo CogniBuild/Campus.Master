@@ -8,6 +8,6 @@ namespace Campus.Domain.Core.Models
         
         public string Name { get; set; }
 
-        public ICollection<AppUser> Users { get; set; }
+        public ICollection<AppUser> AppUsers { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Campus.Domain.Core.Models
 {
@@ -18,7 +19,7 @@ namespace Campus.Domain.Core.Models
         
         public byte[] PasswordSalt { get; set; }
         
-        public string RegistrationDate { get; set; }
+        public DateTime RegistrationDate { get; set; }
 
         public int RoleId { get; set; }
 
