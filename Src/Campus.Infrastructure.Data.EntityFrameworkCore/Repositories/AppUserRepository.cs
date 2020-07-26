@@ -18,7 +18,7 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
         
         public async Task CreateAppUserAsync(AppUser appUser)
         {
-            await _context.Users.AddRangeAsync(appUser);
+            await _context.Users.AddAsync(appUser);
         }
 
         public async Task<AppUser> GetAppUserByIdAsync(int id)
