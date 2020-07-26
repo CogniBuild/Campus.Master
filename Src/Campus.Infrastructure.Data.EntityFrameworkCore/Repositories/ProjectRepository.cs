@@ -26,10 +26,10 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
                 .Take(limit));
         }
 
-        public async Task<Project> GetProjectInformationById(int projectId)
+        public async Task<Project> GetProjectById(int projectId)
         {
-            return await _context.Projects.Where(project => project.Id == projectId)
-                .FirstOrDefaultAsync();
+            return await _context.Projects
+                .FirstOrDefaultAsync(project => project.Id == projectId);
         }
 
         public async Task CreateNewProject(int userId, Project project)
@@ -41,7 +41,7 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
 
         public async Task DeleteProject(int userId, int projectId)
         {
-            var project = await GetProjectInformationById(projectId);
+            var project = await GetProjectById(projectId);
 
             _context.Projects.Remove(project);
         }
@@ -53,8 +53,8 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
 
         public async Task<IEnumerable<UserTask>> GetProjectTasks(int userId, int projectId, int limit, int offset)
         {
-            var project = await GetProjectInformationById(projectId);
-            
+            var project = await GetProjectById(projectId);
+
             return project.Tasks.Skip(offset).Take(limit);
         }
 

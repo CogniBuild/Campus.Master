@@ -58,7 +58,7 @@ namespace Campus.Infrastructure.Business.Services
 
         public async Task<ProjectModelDto> GetProjectById(int projectId)
         {
-            var project = await _projectRepository.GetProjectInformationById(projectId);
+            var project = await _projectRepository.GetProjectById(projectId);
 
             if (project == null)
             {
