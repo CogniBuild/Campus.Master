@@ -115,7 +115,7 @@ namespace Campus.Master.API.Controllers
 
             try
             {
-                var task = await _taskService.GetTaskById(userId, id);
+                var task = await _taskService.GetTaskById(id);
 
                 return Ok(new TaskModel
                 {

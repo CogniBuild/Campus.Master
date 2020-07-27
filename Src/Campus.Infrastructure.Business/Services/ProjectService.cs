@@ -47,11 +47,12 @@ namespace Campus.Infrastructure.Business.Services
 
         public async Task CreateProject(int userId, ProjectContentModelDto projectDto)
         {
-            await _projectRepository.CreateNewProject(userId, new Project()
+            await _projectRepository.CreateNewProject(new Project()
             {
                 Name = projectDto.Name,
                 Color = projectDto.Color,
                 StatusId = projectDto.Status,
+                UserId = userId
             });
             await _unitOfWork.CommitAsync();
         }
@@ -74,23 +75,22 @@ namespace Campus.Infrastructure.Business.Services
             };
         }
 
-        public async Task EditProject(int userId, int id, ProjectContentModelDto projectContent)
+        public async Task EditProject(int id, ProjectContentModelDto projectContent)
         {
             await _projectRepository.EditProject(new Project
             {
                 Id = id,
                 Name = projectContent.Name,
                 Color = projectContent.Color,
-                StatusId = projectContent.Status,
-                UserId = userId
+                StatusId = projectContent.Status
             });
 
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<IEnumerable<TaskModelDto>> GetProjectTasks(int userId, int id, int limit, int offset)
+        public async Task<IEnumerable<TaskModelDto>> GetProjectTasks(int id, int limit, int offset)
         {
-            var projectTasks = await _projectRepository.GetProjectTasks(userId, id, limit, offset);
+            var projectTasks = await _projectRepository.GetProjectTasks(id, limit, offset);
 
             if (projectTasks == null)
             {
@@ -128,9 +128,9 @@ namespace Campus.Infrastructure.Business.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task DeleteProject(int userId, int projectId)
+        public async Task DeleteProject(int projectId)
         {
-            await _projectRepository.DeleteProject(userId, projectId);
+            await _projectRepository.DeleteProject(projectId);
             await _unitOfWork.CommitAsync();
         }
     }

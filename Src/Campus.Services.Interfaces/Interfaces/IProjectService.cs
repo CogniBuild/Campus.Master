@@ -10,9 +10,9 @@ namespace Campus.Services.Interfaces.Interfaces
         Task<IEnumerable<ProjectModelDto>> GetSavedProjects(int userId, int offset, int limit);
         Task CreateProject(int userId, ProjectContentModelDto projectDto);
         Task<ProjectModelDto> GetProjectById(int projectId);
-        Task EditProject(int userId,int id, ProjectContentModelDto projectContent);
-        Task<IEnumerable<TaskModelDto>> GetProjectTasks(int userId, int id, int limit, int offset);
+        Task EditProject(int id, ProjectContentModelDto projectContent);
+        Task<IEnumerable<TaskModelDto>> GetProjectTasks(int id, int limit, int offset);
         Task AddTaskToProject(int id, TaskContentModelDto model);
-        Task DeleteProject(int userId, int projectId);
+        Task DeleteProject(int projectId);
     }
 }

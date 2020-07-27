@@ -32,14 +32,12 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
                 .FirstOrDefaultAsync(project => project.Id == projectId);
         }
 
-        public async Task CreateNewProject(int userId, Project project)
+        public async Task CreateNewProject(Project project)
         {
-            project.UserId = userId;
-
             await _context.Projects.AddAsync(project);
         }
 
-        public async Task DeleteProject(int userId, int projectId)
+        public async Task DeleteProject(int projectId)
         {
             var project = await GetProjectById(projectId);
 
@@ -51,7 +49,7 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
             await Task.Run(() => _context.Projects.Update(project));
         }
 
-        public async Task<IEnumerable<UserTask>> GetProjectTasks(int userId, int projectId, int limit, int offset)
+        public async Task<IEnumerable<UserTask>> GetProjectTasks(int projectId, int limit, int offset)
         {
             var project = await GetProjectById(projectId);
 

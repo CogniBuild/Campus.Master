@@ -220,11 +220,9 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Project #{id}");
 
-            int userId = GetCurrentUserId();
-
             try
             {
-                await _projectService.EditProject(userId, id, new ProjectContentModelDto
+                await _projectService.EditProject(id, new ProjectContentModelDto
                 {
                     Name = model.Name,
                     Color = model.Color,
@@ -266,12 +264,10 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> DeleteProject(int id)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile #{id}");
-
-            int userId = GetCurrentUserId();
             
             try
             {
-                await _projectService.DeleteProject(userId, id);
+                await _projectService.DeleteProject(id);
                 
                 return Ok(new StateTransfer
                 {
@@ -319,14 +315,13 @@ namespace Campus.Master.API.Controllers
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Tasks Related To The Project #{id}");
 
-            int userId = GetCurrentUserId();
             int offset = items * (page - 1);
 
             var taskModels = new List<TaskModel>();
 
             try
             {
-                var projectTasks = await _projectService.GetProjectTasks(userId, id, items, offset);
+                var projectTasks = await _projectService.GetProjectTasks(id, items, offset);
 
                 foreach (var task in projectTasks)
                 {

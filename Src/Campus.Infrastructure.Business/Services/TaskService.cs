@@ -18,7 +18,7 @@ namespace Campus.Infrastructure.Business.Services
             _taskRepository = taskRepository;
         }
 
-        public async Task<TaskModelDto> GetTaskById(int userId, int taskId)
+        public async Task<TaskModelDto> GetTaskById(int taskId)
         {
             var task = await _taskRepository.GetTaskById(taskId);
 
