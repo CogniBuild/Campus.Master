@@ -41,7 +41,8 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
         {
             var project = await GetProjectById(projectId);
 
-            _context.Projects.Remove(project);
+            if (project != null)
+                _context.Projects.Remove(project);
         }
 
         public async Task EditProject(Project project)
@@ -53,7 +54,7 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
         {
             var project = await GetProjectById(projectId);
 
-            return project.Tasks.Skip(offset).Take(limit);
+            return project?.Tasks.Skip(offset).Take(limit);
         }
 
         public async Task AddTaskToProject(UserTask userTask)

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
 using Campus.Domain.Interfaces.Interfaces;
 using Campus.Infrastructure.Data.EntityFrameworkCore.Context;
@@ -25,7 +26,8 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
         {
             var task = await GetTaskById(taskId);
 
-            _context.Tasks.Remove(task);
+            if (task != null)
+                _context.Tasks.Remove(task);
         }
 
         public async Task EditTask(UserTask task)

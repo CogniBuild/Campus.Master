@@ -10,12 +10,12 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
     public class AppUserRepository : IAppUserRepository
     {
         private readonly CampusContext _context;
-        
+
         public AppUserRepository(CampusContext context)
         {
             _context = context;
         }
-        
+
         public async Task CreateAppUserAsync(AppUser appUser)
         {
             await _context.Users.AddAsync(appUser);
@@ -36,7 +36,9 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
         public async Task DeleteAppUserByIdAsync(int id)
         {
             var user = await GetAppUserByIdAsync(id);
-            _context.Users.Remove(user);
+
+            if (user != null)
+                _context.Users.Remove(user);
         }
 
         public async Task UpdateAppUserAsync(AppUser appUser)
