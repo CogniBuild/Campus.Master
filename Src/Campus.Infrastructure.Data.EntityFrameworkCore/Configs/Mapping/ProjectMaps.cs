@@ -25,7 +25,7 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
             builder.HasOne(p => p.User)
                 .WithMany(u => u.Projects)
                 .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
