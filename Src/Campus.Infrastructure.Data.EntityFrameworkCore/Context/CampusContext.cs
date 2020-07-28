@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Campus.Domain.Core.Models;
 using Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping;
+using Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Populating;
 
 namespace Campus.Infrastructure.Data.EntityFrameworkCore.Context
 {
@@ -23,6 +24,9 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Context
             modelBuilder.ApplyConfiguration(new StatusMaps());
             modelBuilder.ApplyConfiguration(new ProjectMaps());
             modelBuilder.ApplyConfiguration(new UserTaskMaps());
+            
+            modelBuilder.ApplyConfiguration(new RolePopulation());
+            modelBuilder.ApplyConfiguration(new StatusPopulation());
         }
     }
 }

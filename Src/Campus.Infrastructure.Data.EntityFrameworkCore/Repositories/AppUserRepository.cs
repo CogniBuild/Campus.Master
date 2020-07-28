@@ -18,6 +18,7 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
 
         public async Task CreateAppUserAsync(AppUser appUser)
         {
+            appUser.RoleId = _context.Roles.FirstOrDefault(r => r.Name == "Student")?.Id ?? 1;
             await _context.Users.AddAsync(appUser);
         }
 
