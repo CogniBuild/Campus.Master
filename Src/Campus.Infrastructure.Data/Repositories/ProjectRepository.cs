@@ -22,7 +22,7 @@ namespace Campus.Infrastructure.Data.Repositories
             const string sql = @"SELECT * FROM Project WHERE UserId = @userId
                                  ORDER BY Id OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY";
 
-            return await _connection.QueryAsync<Project>(sql, new {userId, limit, offset}, transaction);
+            return await _connection.QueryAsync<Project>(sql, new { userId, limit, offset }, transaction);
         }
 
         public async Task<Project> GetProjectById(int projectId)
@@ -30,26 +30,26 @@ namespace Campus.Infrastructure.Data.Repositories
             using var transaction = _connection.BeginTransaction();
             const string sql = @"SELECT * FROM Project WHERE Id = @projectId";
 
-            return await _connection.QuerySingleAsync<Project>(sql, new {projectId}, transaction);
+            return await _connection.QuerySingleAsync<Project>(sql, new { projectId }, transaction);
         }
 
-        public async Task CreateNewProject(int userId, Project project)
+        public async Task CreateNewProject(Project project)
         {
             using var transaction = _connection.BeginTransaction();
             const string sql =
-                @"INSERT INTO Project (Name, Color, UserId, StatusId) VALUES (@Name, @Color, @userId, @StatusId);
+                @"INSERT INTO Project (Name, Color, StatusId) VALUES (@Name, @Color, @StatusId);
                   SELECT CAST(SCOPE_IDENTITY() as int)";
 
-            await _connection.ExecuteAsync(sql, new {project.Name, project.Color, userId, project.StatusId}, 
+            await _connection.ExecuteAsync(sql, new { project.Name, project.Color, project.StatusId },
                 transaction);
         }
 
-        public async Task DeleteProject(int userId, int projectId)
+        public async Task DeleteProject(int projectId)
         {
             using var transaction = _connection.BeginTransaction();
-            const string sql = @"DELETE FROM Project WHERE Id = @projectId AND UserId = @userId";
+            const string sql = @"DELETE FROM Project WHERE Id = @projectId";
 
-            await _connection.ExecuteAsync(sql, new {userId, projectId}, transaction);
+            await _connection.ExecuteAsync(sql, new { projectId }, transaction);
         }
 
         public async Task EditProject(Project project)
@@ -64,16 +64,16 @@ namespace Campus.Infrastructure.Data.Repositories
             await _connection.ExecuteAsync(sql, project, transaction);
         }
 
-        public async Task<IEnumerable<UserTask>> GetProjectTasks(int userId, int projectId, int limit, int offset)
+        public async Task<IEnumerable<UserTask>> GetProjectTasks(int projectId, int limit, int offset)
         {
             using var transaction = _connection.BeginTransaction();
             const string sql = @"SELECT *
                                  FROM UserTask UT
                                           JOIN Project P on UT.ProjectId = P.Id
-                                 WHERE UT.ProjectId = @projectId AND P.UserId = @userId 
+                                 WHERE UT.ProjectId = @projectId
                                  ORDER BY UT.Id OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY";
 
-            return await _connection.QueryAsync<UserTask>(sql, new {userId, projectId, limit, offset},
+            return await _connection.QueryAsync<UserTask>(sql, new { projectId, limit, offset },
                 transaction);
         }
 
