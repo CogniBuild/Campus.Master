@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
@@ -19,11 +20,8 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
 
         public async Task<IEnumerable<Project>> GetProjectsListing(int userId, int offset, int limit)
         {
-            return await Task.Run(() => _context.Users.Include("Projects")
-                .FirstOrDefault(user => user.Id == userId)
-                ?.Projects
-                .Skip(offset)
-                .Take(limit));
+            return await _context.Projects.Where(p => p.UserId == userId)
+                .Skip(offset).Take(limit).ToListAsync();
         }
 
         public async Task<Project> GetProjectById(int projectId)
@@ -52,9 +50,8 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
 
         public async Task<IEnumerable<UserTask>> GetProjectTasks(int projectId, int limit, int offset)
         {
-            var project = await GetProjectById(projectId);
-
-            return project?.Tasks.Skip(offset).Take(limit);
+            return await _context.Tasks.Where(t => t.ProjectId == projectId)
+                .Skip(offset).Take(limit).ToListAsync();
         }
 
         public async Task AddTaskToProject(UserTask userTask)

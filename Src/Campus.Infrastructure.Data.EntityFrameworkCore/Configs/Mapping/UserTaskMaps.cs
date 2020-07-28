@@ -21,7 +21,7 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
                 .IsRequired().HasMaxLength(100);
 
             builder.Property(ut => ut.Deadline)
-                .HasColumnType("datetime");
+                .HasColumnType("date");
 
             builder.HasOne(ut => ut.Project)
                 .WithMany(p => p.Tasks)
