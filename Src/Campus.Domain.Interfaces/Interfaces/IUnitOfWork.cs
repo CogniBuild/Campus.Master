@@ -6,6 +6,5 @@ namespace Campus.Domain.Interfaces.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         Task CommitAsync();
-        Task RollbackAsync();
     }
 }

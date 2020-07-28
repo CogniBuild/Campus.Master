@@ -44,7 +44,6 @@ namespace Campus.Infrastructure.Business.Services
             }
             catch (Exception)
             {
-                await _unitOfWork.RollbackAsync();
                 throw new ApplicationException("User already exists in database!");
             }
         }
@@ -84,36 +83,20 @@ namespace Campus.Infrastructure.Business.Services
 
         public async Task DeleteAppUserProfileByIdAsync(int id)
         {
-            try
-            {
-                await _appUserRepository.DeleteAppUserByIdAsync(id);
-                await _unitOfWork.CommitAsync();
-            }
-            catch (Exception)
-            {
-                await _unitOfWork.RollbackAsync();
-                throw;
-            }
+            await _appUserRepository.DeleteAppUserByIdAsync(id);
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task EditAppUserProfileByIdAsync(int id, ProfileEditingModelDto editingDto)
         {
-            try
+            await _appUserRepository.UpdateAppUserAsync(new AppUser()
             {
-                await _appUserRepository.UpdateAppUserAsync(new AppUser()
-                {
-                    Id = id,
-                    Name = editingDto.FirstName,
-                    Surname = editingDto.LastName
-                });
+                Id = id,
+                Name = editingDto.FirstName,
+                Surname = editingDto.LastName
+            });
 
-                await _unitOfWork.CommitAsync();
-            }
-            catch (Exception)
-            {
-                await _unitOfWork.RollbackAsync();
-                throw;
-            }
+            await _unitOfWork.CommitAsync();
         }
     }
 }

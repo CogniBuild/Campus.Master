@@ -38,7 +38,5 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
         {
             await _context.SaveChangesAsync();
         }
-
-        public async Task RollbackAsync() => await Task.CompletedTask;
     }
 }
