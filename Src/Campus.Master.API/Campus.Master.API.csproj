@@ -19,7 +19,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Campus.Domain.Interfaces\Campus.Domain.Interfaces.csproj" />
       <ProjectReference Include="..\Campus.Infrastructure.Business\Campus.Infrastructure.Business.csproj" />
-      <ProjectReference Include="..\Campus.Infrastructure.Data\Campus.Infrastructure.Data.csproj" />
+      <ProjectReference Include="..\Campus.Infrastructure.Data.EntityFrameworkCore\Campus.Infrastructure.Data.EntityFrameworkCore.csproj" />
       <ProjectReference Include="..\Campus.Services.Interfaces\Campus.Services.Interfaces.csproj" />
     </ItemGroup>
 </Project>

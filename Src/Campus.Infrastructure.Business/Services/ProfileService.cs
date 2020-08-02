@@ -25,8 +25,6 @@ namespace Campus.Infrastructure.Business.Services
 
         public async Task CreateAppUserProfileAsync(ProfileRegistrationModelDto registrationDto)
         {
-            _unitOfWork.Begin();
-
             try
             {
                 var (hash, salt) = _authenticationService.GenerateSecrets(registrationDto.Password);
@@ -39,14 +37,13 @@ namespace Campus.Infrastructure.Business.Services
                     Login = registrationDto.Login,
                     PasswordHash = hash,
                     PasswordSalt = salt,
-                    RegistrationDate = DateTime.Now.ToString("d"),
+                    RegistrationDate = DateTime.Now,
                 });
 
-                _unitOfWork.Commit();
+                await _unitOfWork.CommitAsync();
             }
             catch (Exception)
             {
-                _unitOfWork.Rollback();
                 throw new ApplicationException("User already exists in database!");
             }
         }
@@ -86,41 +83,20 @@ namespace Campus.Infrastructure.Business.Services
 
         public async Task DeleteAppUserProfileByIdAsync(int id)
         {
-            _unitOfWork.Begin();
-
-            try
-            {
-                await _appUserRepository.DeleteAppUserByIdAsync(id);
-
-                _unitOfWork.Commit();
-            }
-            catch (Exception)
-            {
-                _unitOfWork.Rollback();
-                throw;
-            }
+            await _appUserRepository.DeleteAppUserByIdAsync(id);
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task EditAppUserProfileByIdAsync(int id, ProfileEditingModelDto editingDto)
         {
-            _unitOfWork.Begin();
-
-            try
+            await _appUserRepository.UpdateAppUserAsync(new AppUser()
             {
-                await _appUserRepository.UpdateAppUserAsync(new AppUser()
-                {
-                    Id = id,
-                    Name = editingDto.FirstName,
-                    Surname = editingDto.LastName
-                });
+                Id = id,
+                Name = editingDto.FirstName,
+                Surname = editingDto.LastName
+            });
 
-                _unitOfWork.Commit();
-            }
-            catch (Exception)
-            {
-                _unitOfWork.Rollback();
-                throw;
-            }
+            await _unitOfWork.CommitAsync();
         }
     }
 }

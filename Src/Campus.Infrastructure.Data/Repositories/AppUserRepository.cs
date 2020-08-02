@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Data;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
 using Campus.Domain.Interfaces.Interfaces;
@@ -8,60 +8,58 @@ namespace Campus.Infrastructure.Data.Repositories
 {
     public class AppUserRepository : IAppUserRepository
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IDbConnection _connection;
 
-        public AppUserRepository(IUnitOfWork unitOfWork)
+        public AppUserRepository(IDbConnection connection)
         {
-            _unitOfWork = unitOfWork;
+            _connection = connection;
         }
 
-        public async Task<int> CreateAppUserAsync(AppUser appUser)
+        public async Task CreateAppUserAsync(AppUser appUser)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = @"INSERT INTO AppUser 
                                  (Name, Surname, Email, Login, 
                                  PasswordHash, PasswordSalt, RegistrationDate, RoleId) 
                                  VALUES (@Name, @Surname, @Email, @Login, 
                                  @PasswordHash, @PasswordSalt, @RegistrationDate, 2)";
 
-            int affectedRows = await _unitOfWork.Connection.ExecuteAsync(sql, appUser, _unitOfWork.Transaction);
-            return affectedRows;
+            await _connection.ExecuteAsync(sql, appUser, transaction);
         }
 
         public async Task<AppUser> GetAppUserByIdAsync(int id)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = "SELECT * FROM AppUser WHERE Id = @Id";
 
-            var appUser = await _unitOfWork
-                .Connection
-                .QueryAsync<AppUser>(sql, new {Id = id});
-            return appUser.SingleOrDefault();
+            return await _connection.QuerySingleAsync<AppUser>(sql, new {Id = id});
         }
 
         public async Task<AppUser> GetAppUserByLoginAsync(string login)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = "SELECT * FROM AppUser WHERE Login = @Login";
 
-            var appUser = await _unitOfWork
-                .Connection
-                .QueryAsync<AppUser>(sql, new {Login = login});
-            return appUser.SingleOrDefault();
+            return await _connection.QuerySingleAsync<AppUser>(sql, new {Login = login});
         }
 
-        public async Task<int> DeleteAppUserByIdAsync(int id)
+        public async Task DeleteAppUserByIdAsync(int id)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = "DELETE FROM AppUser WHERE Id = @Id";
 
-            return await _unitOfWork.Connection.ExecuteAsync(sql, new {id}, _unitOfWork.Transaction);
+            await _connection.ExecuteAsync(sql, new {id}, transaction);
         }
 
-        public async Task<int> UpdateAppUserAsync(AppUser appUser)
+        public async Task UpdateAppUserAsync(AppUser appUser)
         {
+            using var transaction = _connection.BeginTransaction();
             const string sql = @"UPDATE AppUser 
                                  SET Name = @Name,
                                  Surname = @Surname 
                                  WHERE Id = @Id";
 
-            return await _unitOfWork.Connection.ExecuteAsync(sql, appUser, _unitOfWork.Transaction);
+            await _connection.ExecuteAsync(sql, appUser, transaction);
         }
     }
 }

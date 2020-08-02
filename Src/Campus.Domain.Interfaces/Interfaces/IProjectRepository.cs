@@ -8,16 +8,16 @@ namespace Campus.Domain.Interfaces.Interfaces
     {
         Task<IEnumerable<Project>> GetProjectsListing(int userId, int offset, int limit);
 
-        Task<Project> GetProjectInformationById(int userId, int projectId);
+        Task<Project> GetProjectById(int projectId);
 
-        Task<int> CreateNewProject(int userId, Project project);
+        Task CreateNewProject(Project project);
 
-        Task<int> DeleteProject(int userId, int projectId);
+        Task DeleteProject(int projectId);
 
-        Task<int> EditProject(Project project);
+        Task EditProject(Project project);
 
-        Task<IEnumerable<UserTask>> GetProjectTasks(int userId, int projectId, int limit, int offset);
+        Task<IEnumerable<UserTask>> GetProjectTasks(int projectId, int limit, int offset);
 
-        Task<int> AddTaskToProject(UserTask userTask);
+        Task AddTaskToProject(UserTask userTask);
     }
 }

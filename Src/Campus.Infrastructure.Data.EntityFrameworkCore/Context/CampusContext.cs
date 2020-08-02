@@ -1,0 +1,32 @@
+using Microsoft.EntityFrameworkCore;
+
+using Campus.Domain.Core.Models;
+using Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping;
+using Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Populating;
+
+namespace Campus.Infrastructure.Data.EntityFrameworkCore.Context
+{
+    public class CampusContext : DbContext
+    {
+        public DbSet<AppUser> Users { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Status> Statuses { get; set; }
+        public DbSet<UserTask> Tasks { get; set; }
+
+        public CampusContext(DbContextOptions<CampusContext> options)
+            : base(options) {}
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new UserMaps());
+            modelBuilder.ApplyConfiguration(new RoleMaps());
+            modelBuilder.ApplyConfiguration(new StatusMaps());
+            modelBuilder.ApplyConfiguration(new ProjectMaps());
+            modelBuilder.ApplyConfiguration(new UserTaskMaps());
+            
+            modelBuilder.ApplyConfiguration(new RolePopulation());
+            modelBuilder.ApplyConfiguration(new StatusPopulation());
+        }
+    }
+}
