@@ -28,9 +28,9 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Repositories
                                 .FirstOrDefaultAsync();
         }
 
-        public async Task<AppUser> GetAppUserByLoginAsync(string login)
+        public async Task<AppUser> GetAppUserByEmailAsync(string email)
         {
-            return await _context.Users.Where(u => u.Login == login)
+            return await _context.Users.Where(u => u.Email == email)
                                 .FirstOrDefaultAsync();
         }
 

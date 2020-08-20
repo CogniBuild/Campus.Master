@@ -66,7 +66,7 @@ namespace Campus.Infrastructure.Business.Services
 
         public async Task<ProfileClaimsDto> VerifyAppUserProfile(ProfileAuthenticationDto model)
         {
-            var appUser = await _appUserRepository.GetAppUserByLoginAsync(model.Login);
+            var appUser = await _appUserRepository.GetAppUserByEmailAsync(model.Email);
             
             if (appUser == null)
                 throw new ApplicationException("User with this login doesn't exist");

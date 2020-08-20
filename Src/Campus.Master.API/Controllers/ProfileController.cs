@@ -89,7 +89,7 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         “Login”: “...”,
+        ///         “Email”: “...”,
         ///         “Password”: “...”,
         ///         “ConfirmPassword”: “...”,
         ///         “Email”: “...”,
@@ -133,7 +133,7 @@ namespace Campus.Master.API.Controllers
 
                 var claims = await _profileService.VerifyAppUserProfile(new ProfileAuthenticationDto
                 {
-                    Login = model.Login,
+                    Email = model.Login,
                     Password = model.Password
                 });
 
@@ -173,7 +173,7 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         “Login”: “...”,
+        ///         “Email”: “...”,
         ///         “Password”: “...”
         ///     }
         /// 
@@ -189,13 +189,13 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AuthenticateProfile(AuthenticationModel model)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Authenticate Profile @{model.Login}");
+            _logger.LogInformation($"[{DateTime.Now} INFO] Authenticate Profile @{model.Email}");
 
             try
             {
                 var claims = await _profileService.VerifyAppUserProfile(new ProfileAuthenticationDto
                 {
-                    Login = model.Login,
+                    Email = model.Email,
                     Password = model.Password
                 });
 
