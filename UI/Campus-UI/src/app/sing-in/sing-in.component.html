@@ -2,19 +2,31 @@
   <div class="wrap-center">
     <div class="sign-in">
       <div class="sign-in__img">
-        <img src="/assets/img/sign-in/signIn.png" alt="photo">
+        <img src="/assets/img/sign-in/signIn.png" alt="photo" />
         <span class="sign-in__text">Act Learn Upgrade</span>
       </div>
       <div class="sign-in__form">
-        <h1 class="sign-in__title">Sign in <br class="sign-in__title_br">to <span>Campus</span></h1>
+        <h1 class="sign-in__title">
+          Sign in <br class="sign-in__title_br" />to <span>Campus</span>
+        </h1>
         <form action="#" [formGroup]="form" (ngSubmit)="submit()">
-          <div class="form-control"
-               [ngClass]="{ invalid: form.get('email').touched && form.get('email').invalid }">
+          <div
+            class="form-control"
+            [ngClass]="{
+              invalid: form.get('email').touched && form.get('email').invalid
+            }"
+          >
             <label for="email" class="email"></label>
-            <input id="email" type="email" placeholder="Email" formControlName="email">
+            <input
+              id="email"
+              type="email"
+              placeholder="Email"
+              formControlName="email"
+            />
             <div
               *ngIf="form.get('email').touched && form.get('email').invalid"
-              class="validation">
+              class="validation"
+            >
               <small *ngIf="form.get('email').errors.required">
                 Email is required
               </small>
@@ -23,28 +35,50 @@
               </small>
             </div>
           </div>
-          <div class="form-control"
-               [ngClass]="{ invalid: form.get('password').touched && form.get('password').invalid }">
+          <div
+            class="form-control"
+            [ngClass]="{
+              invalid:
+                form.get('password').touched && form.get('password').invalid
+            }"
+          >
             <label for="password" class="password"></label>
-            <input id="password" type="password" placeholder="Password" formControlName="password">
+            <input
+              id="password"
+              type="password"
+              placeholder="Password"
+              formControlName="password"
+            />
             <div
-              *ngIf="form.get('password').touched && form.get('password').invalid"
-              class="validation">
+              *ngIf="
+                form.get('password').touched && form.get('password').invalid
+              "
+              class="validation"
+            >
               <small *ngIf="form.get('password').errors.required">
                 Password is required
               </small>
               <small *ngIf="form.get('password').errors.minlength">
-                Password must contains {{ form.get('password').errors.minlength.requiredLength }} characters
+                Password must contains
+                {{ form.get("password").errors.minlength.requiredLength }}
+                characters
               </small>
             </div>
-            <span class="forgot-pass"><a href="#">Forgot your password ?</a></span>
+            <div class="validation center">
+              <small *ngIf="error">{{ error }}</small>
+            </div>
+            <span class="forgot-pass"
+              ><a href="#">Forgot your password ?</a></span
+            >
           </div>
-          <button type="submit" class="sign-in__btn" [disabled]="form.invalid">Sign in</button>
+          <button type="submit" class="sign-in__btn" [disabled]="form.invalid">
+            Sign in
+          </button>
         </form>
-        <a [routerLink]="['/registration']" class="sign-in__createAcc">Create Account</a>
+        <a [routerLink]="['/registration']" class="sign-in__createAcc"
+          >Create Account</a
+        >
       </div>
     </div>
   </div>
 </div>
-
-

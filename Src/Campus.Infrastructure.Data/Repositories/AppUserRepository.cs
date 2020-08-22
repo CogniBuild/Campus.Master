@@ -40,7 +40,7 @@ namespace Campus.Infrastructure.Data.Repositories
             using var transaction = _connection.BeginTransaction();
             const string sql = "SELECT * FROM AppUser WHERE Email = @Email";
 
-            return await _connection.QuerySingleAsync<AppUser>(sql, new {Login = email});
+            return await _connection.QuerySingleAsync<AppUser>(sql, new {Email = email});
         }
 
         public async Task DeleteAppUserByIdAsync(int id)

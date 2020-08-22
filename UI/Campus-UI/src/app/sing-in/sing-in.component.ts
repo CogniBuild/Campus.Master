@@ -7,33 +7,38 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-sing-in',
   templateUrl: './sing-in.component.html',
-  styleUrls: ['./sing-in.component.sass']
+  styleUrls: ['./sing-in.component.sass'],
 })
 export class SingInComponent implements OnInit {
-
   form: FormGroup;
-
-  constructor(private auth: SignInService, private router: Router) {
-  }
+  error: string = '';
+  constructor(private auth: SignInService, private router: Router) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required, Validators.minLength(6)])
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
 
   submit() {
     const user: User = {
       email: this.form.value.email,
-      password: this.form.value.password
+      password: this.form.value.password,
     };
 
-    this.router.navigate(['/campus/dashboard']);
-
-    // this.auth.login(user).subscribe(() => {
-    //  this.form.reset();
-    //  this.router.navigate(['/campus/dashboard']);
-    // });
+    this.auth.login(user).subscribe(
+      (data) => {
+        debugger;
+        this.form.reset();
+        this.router.navigate(['/campus/dashboard']);
+      },
+      (errorResponse) => {
+        this.error = errorResponse.error.message;
+      }
+    );
   }
 }

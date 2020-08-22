@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  createProfilePath: 'api/profile/create',
+  apiRoot: 'http://localhost:5000',
+  createProfilePath: '/api/profile/create',
+  authenticateProfile: '/api/profile/auth',
 };
 
 /*
