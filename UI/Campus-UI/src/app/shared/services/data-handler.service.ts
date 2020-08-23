@@ -56,7 +56,7 @@ export class DataHandlerService {
   }
 
   addCategory(title: string): Observable<ProjectModel> {
-    return this.categoryDaoArray.add(new ProjectModel(null, title));
+    return this.categoryDaoArray.add(new ProjectModel(null, title, null, 1));
   }
 
   updateCategory(category: ProjectModel): Observable<ProjectModel> {

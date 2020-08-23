@@ -12,15 +12,15 @@ export class TestData {
   ];
 
   static priorities: Priority[] = [
-    { id: 1, title: 'High', color: '#ED5C46'},
-    { id: 2, title: 'Medium', color: '#FFAD31'},
-    { id: 3, title: 'Low', color: '#5FD278'},
+    { id: 1, title: 'High', color: '#ED5C46' },
+    { id: 2, title: 'Medium', color: '#FFAD31' },
+    { id: 3, title: 'Low', color: '#5FD278' },
   ];
 
   static categories: ProjectModel[] = [
-    { id: 1, name: 'Eduction'},
-    { id: 2, name: 'Coding'},
-    { id: 3, name: 'Other'},
+    { id: 1, name: 'Eduction', color: '1', status: 1 },
+    { id: 2, name: 'Coding', color: '1', status: 1 },
+    { id: 3, name: 'Other', color: '1', status: 1 },
   ];
 
   static tasks: Task[] = [
