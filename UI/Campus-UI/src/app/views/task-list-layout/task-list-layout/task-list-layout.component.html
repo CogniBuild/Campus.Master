@@ -3,13 +3,13 @@
     (selectCategory)="onSelectCategory($event)"
     (addCategory)="onAddCategory($event)"
     (updateCategory)="onUpdateCategory($event)"
-    [categories]="categories"></app-projects>
+    [projects]="projects"></app-projects>
   <div class="project-task">
-    <h2 *ngIf="selectedCategory == null else selected_project" class="selected-project">
+    <h2 *ngIf="selectedProject == null else selected_project" class="selected-project">
       All task
     </h2>
     <ng-template #selected_project>
-      <h2 class="selected-project">{{ selectedCategory.title }}</h2>
+      <h2 class="selected-project">{{ selectedProject.name }}</h2>
     </ng-template>
     <app-task
       (updateTask)="onUpdatedTask($event)"

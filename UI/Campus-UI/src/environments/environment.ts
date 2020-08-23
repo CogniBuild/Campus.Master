@@ -7,6 +7,7 @@ export const environment = {
   apiRoot: 'http://localhost:5000',
   createProfilePath: '/api/profile/create',
   authenticateProfile: '/api/profile/auth',
+  getProjects: '/api/project?'
 };
 
 /*

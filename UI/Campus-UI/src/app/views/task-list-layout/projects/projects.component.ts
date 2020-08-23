@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { Category } from '../../../model/category';
+import { ProjectModel } from '../../../model/Project';
 import { MatDialog } from '@angular/material/dialog';
 import { OperType } from '../../../dialog/OperType';
 import { EditProjectDialogComponent } from '../../../dialog/edit-project-dialog/edit-project-dialog.component';
+import { ProjectService } from 'src/app/shared/services/project.service';
 
 @Component({
   selector: 'app-projects',
@@ -11,42 +12,42 @@ import { EditProjectDialogComponent } from '../../../dialog/edit-project-dialog/
   styleUrls: ['./projects.component.sass'],
 })
 export class ProjectsComponent implements OnInit {
-  @Input()
-  categories: Category[];
+
+  constructor(private projectService: ProjectService, private dialog: MatDialog) {
+
+  }
 
   @Input()
-  selectedCategory: Category;
+  projects: ProjectModel[];
+
+  @Input()
+  selectedProject: ProjectModel;
 
   @Output()
-  selectCategory = new EventEmitter<Category>();
+  selectCategory = new EventEmitter<ProjectModel>();
 
   @Output()
-  updateCategory = new EventEmitter<Category>();
+  updateCategory = new EventEmitter<ProjectModel>();
 
   @Output()
   addCategory = new EventEmitter<string>();
 
   todayDate: Date = new Date();
 
-  constructor(
-    private dataHandlerService: DataHandlerService,
-    private dialog: MatDialog
-  ) { }
-
   ngOnInit(): void {
-    this.dataHandlerService
-      .getAllCategories()
-      .subscribe((categories) => (this.categories = categories));
+    this.projectService
+      .getAllUserProjects()
+      .subscribe((projects) => (this.projects = projects));
   }
 
-  showTasksByCategory(category: Category) {
-    if (this.selectedCategory === category) {
+  getProjectTasks(project: ProjectModel) {
+    if (this.selectedProject === project) {
       return;
     }
 
-    this.selectedCategory = category;
+    this.selectedProject = project;
 
-    this.selectCategory.emit(this.selectedCategory);
+    this.selectCategory.emit(this.selectedProject);
   }
 
   openAddDialog() {

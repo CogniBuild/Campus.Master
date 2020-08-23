@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Category } from '../../../model/category';
+import { ProjectModel } from '../../../model/Project';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
 import { Task } from '../../../model/task';
 
@@ -10,26 +10,26 @@ import { Task } from '../../../model/task';
   encapsulation: ViewEncapsulation.None,
 })
 export class TaskListLayoutComponent implements OnInit {
-  categories: Category[];
+  projects: ProjectModel[];
   tasks: Task[];
-  selectedCategory: Category = null;
+  selectedProject: ProjectModel = null;
   searchCategoryText = '';
 
   constructor(private dataHandlerService: DataHandlerService) { }
 
   ngOnInit(): void {
     this.dataHandlerService
-      .getAllCategories()
-      .subscribe((categories) => (this.categories = categories));
+      .getAllProjects()
+      .subscribe((categories) => (this.projects = categories));
 
     this.onSelectCategory(null);
   }
 
-  onSelectCategory(category: Category) {
-    this.selectedCategory = category;
+  onSelectCategory(category: ProjectModel) {
+    this.selectedProject = category;
 
     this.dataHandlerService
-      .searchTasks(this.selectedCategory, null, null, null)
+      .searchTasks(this.selectedProject, null, null, null)
       .subscribe((tasks) => {
         this.tasks = tasks;
       }); // обирає таски для показу в таск ліст(показує відразу всі)
@@ -38,7 +38,7 @@ export class TaskListLayoutComponent implements OnInit {
   onUpdatedTask(task: Task) {
     this.dataHandlerService.updateTask(task).subscribe(() => {
       this.dataHandlerService
-        .searchTasks(this.selectedCategory, null, null, null)
+        .searchTasks(this.selectedProject, null, null, null)
         .subscribe((tasks) => {
           this.tasks = tasks;
         });
@@ -48,14 +48,14 @@ export class TaskListLayoutComponent implements OnInit {
   onDeleteTask(task: Task) {
     this.dataHandlerService.deleteTask(task.id).subscribe(() => {
       this.dataHandlerService
-        .searchTasks(this.selectedCategory, null, null, null)
+        .searchTasks(this.selectedProject, null, null, null)
         .subscribe((tasks) => {
           this.tasks = tasks;
         });
     });
   }
 
-  onUpdateCategory(category: Category) {
+  onUpdateCategory(category: ProjectModel) {
     this.dataHandlerService.updateCategory(category).subscribe(() => {
       this.onSearchCategory(this.searchCategoryText);
     });
@@ -69,15 +69,15 @@ export class TaskListLayoutComponent implements OnInit {
 
   private updateCategories() {
     this.dataHandlerService
-      .getAllCategories()
-      .subscribe((categories) => (this.categories = categories));
+      .getAllProjects()
+      .subscribe((categories) => (this.projects = categories));
   }
 
   private onSearchCategory(title: string) {
     this.searchCategoryText = title;
 
     this.dataHandlerService.searchCategories(title).subscribe((categories) => {
-      this.categories = categories;
+      this.projects = categories;
     });
   }
 }

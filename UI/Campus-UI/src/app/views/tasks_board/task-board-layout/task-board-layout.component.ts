@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../../../model/task';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { Category } from '../../../model/category';
+import { ProjectModel } from '../../../model/Project';
 import { zip } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ import { zip } from 'rxjs';
 export class TaskBoardLayoutComponent implements OnInit {
 
   tasks: Task[];
-  selectedCategory: Category = null;
+  selectedProject: ProjectModel = null;
   searchTaskText = '';
   statusFilter: boolean;
 
@@ -58,7 +58,7 @@ export class TaskBoardLayoutComponent implements OnInit {
   //
   //   this.dataHandlerService.deleteTask(task.id).subscribe(() => {
   //     this.dataHandlerService.searchTasks(
-  //       this.selectedCategory,
+  //       this.selectedProject,
   //       null,
   //       null,
   //       null
@@ -83,7 +83,7 @@ export class TaskBoardLayoutComponent implements OnInit {
 
   updateTasks() {
     this.dataHandlerService.searchTasks(
-      this.selectedCategory,
+      this.selectedProject,
       this.searchTaskText,
       this.statusFilter,
       null
@@ -113,8 +113,8 @@ export class TaskBoardLayoutComponent implements OnInit {
 
   updateStat() {
     zip(
-      this.dataHandlerService.getTotalCountInCategory(this.selectedCategory),
-      this.dataHandlerService.getCompletedCountInCategory(this.selectedCategory))
+      this.dataHandlerService.getTotalCountInCategory(this.selectedProject),
+      this.dataHandlerService.getCompletedCountInCategory(this.selectedProject))
 
       .subscribe(array => {
         this.totalTasksCountInCategory = array[0];

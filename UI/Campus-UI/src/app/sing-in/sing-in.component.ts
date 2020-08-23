@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from '../shared/interfaces';
+import { User, StateTransfer } from '../shared/interfaces';
 import { SignInService } from '../shared/services/sign-in.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-sing-in',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class SingInComponent implements OnInit {
   form: FormGroup;
   error: string = '';
-  constructor(private auth: SignInService, private router: Router) {}
+  constructor(private auth: SignInService, private router: Router) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -31,12 +32,11 @@ export class SingInComponent implements OnInit {
     };
 
     this.auth.login(user).subscribe(
-      (data) => {
-        debugger;
+      (data: StateTransfer) => {
         this.form.reset();
         this.router.navigate(['/campus/dashboard']);
       },
-      (errorResponse) => {
+      (errorResponse: HttpErrorResponse) => {
         this.error = errorResponse.error.message;
       }
     );

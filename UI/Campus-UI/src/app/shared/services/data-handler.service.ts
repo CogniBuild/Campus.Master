@@ -3,7 +3,7 @@ import { Task } from 'src/app/model/task';
 import { TestData } from '../../data/testData';
 import { Observable } from 'rxjs';
 import { TaskDAOArray } from '../../data/dao/impl/TaskDAOArray';
-import { Category } from '../../model/category';
+import { ProjectModel } from '../../model/Project';
 import { CategoryDAOArray } from '../../data/dao/impl/CategoryDAOArray';
 import { Priority } from '../../model/priority';
 import { PriorityDAOArray } from '../../data/dao/impl/PriorityDAOArray';
@@ -27,7 +27,7 @@ export class DataHandlerService {
     return this.taskDaoArray.getAll();
   }
 
-  getAllCategories(): Observable<Category[]> {
+  getAllProjects(): Observable<ProjectModel[]> {
     return this.categoryDaoArray.getAll();
   }
 
@@ -39,7 +39,7 @@ export class DataHandlerService {
     return this.statusDaoArray.getAll();
   }
 
-  searchTasks(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
+  searchTasks(category: ProjectModel, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
     return this.taskDaoArray.search(category, searchText, status, priority);
   }
 
@@ -55,27 +55,27 @@ export class DataHandlerService {
     return this.taskDaoArray.add(task);
   }
 
-  addCategory(title: string): Observable<Category> {
-    return this.categoryDaoArray.add(new Category(null, title));
+  addCategory(title: string): Observable<ProjectModel> {
+    return this.categoryDaoArray.add(new ProjectModel(null, title));
   }
 
-  updateCategory(category: Category): Observable<Category> {
+  updateCategory(category: ProjectModel): Observable<ProjectModel> {
     return this.categoryDaoArray.update(category);
   }
 
-  searchCategories(title: string): Observable<Category[]> {
+  searchCategories(title: string): Observable<ProjectModel[]> {
     return this.categoryDaoArray.search(title);
   }
 
-  getTotalCountInCategory(category: Category): Observable<number> {
+  getTotalCountInCategory(category: ProjectModel): Observable<number> {
     return this.taskDaoArray.getTotalCountInCategory(category);
   }
 
-  getCompletedCountInCategory(category: Category): Observable<number> {
+  getCompletedCountInCategory(category: ProjectModel): Observable<number> {
     return this.taskDaoArray.getCompletedCountInCategory(category);
   }
 
-  getUncompletedCountInCategory(category: Category): Observable<number> {
+  getUncompletedCountInCategory(category: ProjectModel): Observable<number> {
     return this.taskDaoArray.getUncompletedCountInCategory(category);
   }
 

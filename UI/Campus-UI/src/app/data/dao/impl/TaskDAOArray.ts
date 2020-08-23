@@ -1,4 +1,4 @@
-import { Category } from '../../../model/category';
+import { ProjectModel } from '../../../model/Project';
 import { Observable, of } from 'rxjs';
 import { TaskDAO } from '../interface/TaskDAO';
 import { Task } from 'src/app/model/task';
@@ -50,7 +50,7 @@ export class TaskDAOArray implements TaskDAO {
     return of(taskTmp);
   }
 
-  getCompletedCountInCategory(category: Category): Observable<number> {
+  getCompletedCountInCategory(category: ProjectModel): Observable<number> {
     return of(this.searchTask(category, null, true, null).length);
   }
 
@@ -58,16 +58,16 @@ export class TaskDAOArray implements TaskDAO {
     return of(TestData.tasks.length);
   }
 
-  getTotalCountInCategory(category: Category): Observable<number> {
+  getTotalCountInCategory(category: ProjectModel): Observable<number> {
     return of(this.searchTask(category, null, null, null).length);
   }
 
-  getUncompletedCountInCategory(category: Category): Observable<number> {
+  getUncompletedCountInCategory(category: ProjectModel): Observable<number> {
     return of(this.searchTask(category, null, false, null).length);
   }
 
   search(
-    category: Category,
+    category: ProjectModel,
     searchText: string,
     status: boolean,
     priority: Priority
@@ -76,7 +76,7 @@ export class TaskDAOArray implements TaskDAO {
   }
 
   searchTask(
-    category: Category,
+    category: ProjectModel,
     searchText: string,
     status: boolean,
     priority: Priority

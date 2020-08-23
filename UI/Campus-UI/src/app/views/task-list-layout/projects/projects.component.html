@@ -5,8 +5,8 @@
       <div>{{ todayDate | date:'d MMM'}}, <span>{{ todayDate | date:  'EEEE'}}</span></div>
     </div>
   </div>
-  <div class="categories" *ngFor="let category of categories" (click)="showTasksByCategory(category)">
-    <div class="categories__item">{{ category.title }}</div>
+  <div class="categories" *ngFor="let project of projects" (click)="getProjectTasks(project)">
+    <div class="categories__item">{{ project.name }}</div>
   </div>
   <div (click)="openAddDialog()" class="project__add">
     Add new project
@@ -24,8 +24,8 @@
     </div>
   </div>
   <div class="categories-wrap">
-    <div class="categories" *ngFor="let category of categories" >
-      <div class="categories__item" (click)="showTasksByCategory(category)">{{ category.title }}</div>
+    <div class="categories" *ngFor="let project of projects">
+      <div class="categories__item" (click)="getProjectTasks(project)">{{ project.name }}</div>
     </div>
   </div>
 

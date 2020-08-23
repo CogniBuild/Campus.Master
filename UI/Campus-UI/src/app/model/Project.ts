@@ -1,9 +1,9 @@
-export class Category {
+export class ProjectModel {
   id: number;
-  title: string;
+  name: string;
 
   constructor(id: number, title: string) {
     this.id = id;
-    this.title = title;
+    this.name = title;
   }
 }

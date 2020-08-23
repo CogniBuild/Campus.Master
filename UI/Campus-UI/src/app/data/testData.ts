@@ -1,6 +1,6 @@
 import { Priority } from '../model/priority';
 import { Task } from '../model/task';
-import { Category } from '../model/category';
+import { ProjectModel } from '../model/Project';
 import { Status } from '../model/status';
 
 export class TestData {
@@ -17,10 +17,10 @@ export class TestData {
     { id: 3, title: 'Low', color: '#5FD278'},
   ];
 
-  static categories: Category[] = [
-    { id: 1, title: 'Eduction'},
-    { id: 2, title: 'Coding'},
-    { id: 3, title: 'Other'},
+  static categories: ProjectModel[] = [
+    { id: 1, name: 'Eduction'},
+    { id: 2, name: 'Coding'},
+    { id: 3, name: 'Other'},
   ];
 
   static tasks: Task[] = [
