@@ -30,7 +30,7 @@ export class ProjectsComponent implements OnInit {
   updateCategory = new EventEmitter<ProjectModel>();
 
   @Output()
-  addCategory = new EventEmitter<string>();
+  addProject = new EventEmitter<string>();
 
   todayDate: Date = new Date();
 
@@ -58,7 +58,8 @@ export class ProjectsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.addCategory.emit(result as string);
+        this.projectService.createNewProject(result);
+        this.addProject.emit(result as string);
       }
     });
   }

@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class SingInComponent implements OnInit {
   form: FormGroup;
-  error: string = '';
+  error = '';
   constructor(private auth: SignInService, private router: Router) { }
 
   ngOnInit(): void {

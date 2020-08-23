@@ -7,14 +7,14 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class SignInService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   get token(): string {
     return '';
   }
 
   login(user: User): Observable<StateTransfer> {
-    let uri: string = environment.apiRoot + environment.authenticateProfile;
+    const uri: string = environment.apiRoot + environment.authenticateProfile;
 
     return this.http.post<StateTransfer>(uri, user).pipe(map((res) => {
       localStorage.setItem('token', res.message);
