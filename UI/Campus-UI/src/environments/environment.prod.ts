@@ -3,4 +3,5 @@ export const environment = {
   apiRoot: 'https://our-campus.azurewebsites.net',
   createProfilePath: '/api/profile/create',
   authenticateProfile: '/api/profile/auth',
+  projects: '/api/project'
 };
