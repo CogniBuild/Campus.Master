@@ -9,6 +9,6 @@
 .vs/
 .idea/
 
-UI/Campus-UI/.vscode/
+.vscode/
 
-UI/Campus-UI/debug.log
+debug.log
