@@ -32,7 +32,7 @@ export class TaskListLayoutComponent implements OnInit {
       .searchTasks(this.selectedProject, null, null, null)
       .subscribe((tasks) => {
         this.tasks = tasks;
-      }); // обирає таски для показу в таск ліст(показує відразу всі)
+      });
   }
 
   onUpdatedTask(task: Task) {

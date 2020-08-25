@@ -13,34 +13,34 @@ class EditCategoryDialogComponent {
 })
 export class EditProjectDialogComponent implements OnInit {
 
-  dialogTitle: string; // текст для диалогового окна
-  categoryTitle: string; // текст для названия категории (при реактировании или добавлении)
-  operType: OperType; // тип операции
+  dialogTitle: string; 
+  categoryTitle: string; 
+  operType: OperType; 
 
   constructor(
-    private dialogRef: MatDialogRef<EditCategoryDialogComponent>, // для работы с текущим диалог. окном
-    @Inject(MAT_DIALOG_DATA) private data: [string, string, OperType], // данные, которые передали в диалоговое окно
-    private dialog: MatDialog // для открытия нового диалогового окна (из текущего) - например для подтверждения удаления
+    private dialogRef: MatDialogRef<EditCategoryDialogComponent>, 
+    @Inject(MAT_DIALOG_DATA) private data: [string, string, OperType], 
+    private dialog: MatDialog 
   ) {
   }
 
   ngOnInit(): void {
     this.categoryTitle = this.data[0];
     this.dialogTitle = this.data[1];
-    this.operType = this.data[2]; // тип операции
+    this.operType = this.data[2]; 
   }
 
-  // нажали ОК
+  
   onConfirm() {
     this.dialogRef.close(this.categoryTitle);
   }
 
-  // нажали отмену (ничего не сохраняем и закрываем окно)
+  
   onCancel() {
     this.dialogRef.close(false);
   }
 
-  // нажали Удалить
+  
   delete() {
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -54,7 +54,7 @@ export class EditProjectDialogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dialogRef.close('delete'); // нажали удалить
+        this.dialogRef.close('delete'); 
       }
     });
 

@@ -51,7 +51,7 @@ export class EditTaskDialogComponent implements OnInit {
 
     this.dataHandlerService.getAllProjects().subscribe(items => this.categories = items);
     this.dataHandlerService.getAllPriorities().subscribe(items => this.priorities = items);
-    this.dataHandlerService.getAllStatuses().subscribe(items => this.statuses = items); // тут буде вивод статусу
+    this.dataHandlerService.getAllStatuses().subscribe(items => this.statuses = items); 
 
   }
 

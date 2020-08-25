@@ -7,7 +7,6 @@ export class CategoryDAOArray implements CategoryDAO {
 
   add(category: ProjectModel): Observable<ProjectModel> {
 
-    // если id пустой - генерируем его
     if (category.id === null || category.id === 0) {
       category.id = this.getLastIdCategory();
     }
@@ -42,7 +41,7 @@ export class CategoryDAOArray implements CategoryDAO {
 
   update(category: ProjectModel): Observable<ProjectModel> {
 
-    const tmpCategory = TestData.categories.find(t => t.id === category.id); // обновляем по id
+    const tmpCategory = TestData.categories.find(t => t.id === category.id);
     TestData.categories.splice(TestData.categories.indexOf(tmpCategory), 1, category);
 
     return of(tmpCategory);

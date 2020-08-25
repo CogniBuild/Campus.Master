@@ -16,7 +16,6 @@ export class TaskDAOArray implements TaskDAO {
   }
 
   add(task: Task): Observable<Task> {
-    // если id пустой - генерируем его
     if (task.id === null || task.id === 0) {
       task.id = this.getLastIdTask();
     }
@@ -97,14 +96,13 @@ export class TaskDAOArray implements TaskDAO {
     if (searchText != null) {
       allTasks = allTasks.filter(
         (task) => task.title.toUpperCase().includes(searchText.toUpperCase())
-        // учитываем текст поиска (если '' - возвращаются все значения)
       );
     }
     return allTasks;
   }
 
   update(task: Task): Observable<Task> {
-    const taskTmp = TestData.tasks.find((t) => t.id === task.id); // обновляем по id
+    const taskTmp = TestData.tasks.find((t) => t.id === task.id);
     TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1, task);
 
     return of(task);
