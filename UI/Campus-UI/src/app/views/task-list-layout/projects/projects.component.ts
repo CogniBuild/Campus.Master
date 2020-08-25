@@ -36,7 +36,7 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectService
-      .getAllUserProjects()
+      .getAllUserProjects(1, 20)
       .subscribe((projects) => (this.projects = projects));
   }
 

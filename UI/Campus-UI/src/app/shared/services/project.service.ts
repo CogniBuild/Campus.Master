@@ -12,8 +12,8 @@ export class ProjectService {
 
   constructor(private http: HttpClient) { }
 
-  getAllUserProjects(): Observable<ProjectModel[]> {
-    const uri: string = environment.apiRoot + environment.projects + `?page=${1}&items=${20}`;
+  getAllUserProjects(page: number, items: number): Observable<ProjectModel[]> {
+    const uri: string = environment.apiRoot + environment.projects + `?page=${page}&items=${items}`;
 
     return this.http.get<ProjectModel[]>(uri);
   }
