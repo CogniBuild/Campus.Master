@@ -1,6 +1,6 @@
 import { Priority } from '../model/priority';
 import { Task } from '../model/task';
-import { Category } from '../model/category';
+import { ProjectModel } from '../model/Project';
 import { Status } from '../model/status';
 
 export class TestData {
@@ -12,15 +12,15 @@ export class TestData {
   ];
 
   static priorities: Priority[] = [
-    { id: 1, title: 'High', color: '#ED5C46'},
-    { id: 2, title: 'Medium', color: '#FFAD31'},
-    { id: 3, title: 'Low', color: '#5FD278'},
+    { id: 1, title: 'High', color: '#ED5C46' },
+    { id: 2, title: 'Medium', color: '#FFAD31' },
+    { id: 3, title: 'Low', color: '#5FD278' },
   ];
 
-  static categories: Category[] = [
-    { id: 1, title: 'Eduction'},
-    { id: 2, title: 'Coding'},
-    { id: 3, title: 'Other'},
+  static categories: ProjectModel[] = [
+    { id: 1, name: 'Eduction', color: '1', status: 1 },
+    { id: 2, name: 'Coding', color: '1', status: 1 },
+    { id: 3, name: 'Other', color: '1', status: 1 },
   ];
 
   static tasks: Task[] = [

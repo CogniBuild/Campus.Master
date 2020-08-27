@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DataHandlerService } from '../../shared/services/data-handler.service';
 import { Task } from '../../model/task';
-import { Category } from '../../model/category';
+import { ProjectModel } from '../../model/Project';
 import { Priority } from '../../model/priority';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Status } from '../../model/status';
@@ -23,7 +23,7 @@ export class EditTaskDialogComponent implements OnInit {
   ) {
   }
 
-  categories: Category[];
+  categories: ProjectModel[];
   priorities: Priority[];
   statuses: Status[];
   operType: OperType;
@@ -32,7 +32,7 @@ export class EditTaskDialogComponent implements OnInit {
   task: Task;
 
   tmpTitle: string;
-  tmpCategory: Category;
+  tmpCategory: ProjectModel;
   tmpPriority: Priority;
   tmpStatus: Status;
   tmpDate: Date;
@@ -49,9 +49,9 @@ export class EditTaskDialogComponent implements OnInit {
     this.tmpStatus = this.task.status;
     this.tmpDate = this.task.date;
 
-    this.dataHandlerService.getAllCategories().subscribe(items => this.categories = items);
+    this.dataHandlerService.getAllProjects().subscribe(items => this.categories = items);
     this.dataHandlerService.getAllPriorities().subscribe(items => this.priorities = items);
-    this.dataHandlerService.getAllStatuses().subscribe(items => this.statuses = items); // тут буде вивод статусу
+    this.dataHandlerService.getAllStatuses().subscribe(items => this.statuses = items);
 
   }
 
@@ -74,7 +74,7 @@ export class EditTaskDialogComponent implements OnInit {
       maxWidth: '500px',
       data: {
         dialogTitle: 'Delete task',
-        message: `Are you really want to delete task: "${ this.task.title }"?`
+        message: `Are you really want to delete task: "${this.task.title}"?`
       },
       autoFocus: false
     });

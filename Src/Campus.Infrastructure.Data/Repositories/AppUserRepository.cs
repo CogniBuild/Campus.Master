@@ -19,9 +19,9 @@ namespace Campus.Infrastructure.Data.Repositories
         {
             using var transaction = _connection.BeginTransaction();
             const string sql = @"INSERT INTO AppUser 
-                                 (Name, Surname, Email, Login, 
+                                 (Name, Surname, Email, Email, 
                                  PasswordHash, PasswordSalt, RegistrationDate, RoleId) 
-                                 VALUES (@Name, @Surname, @Email, @Login, 
+                                 VALUES (@Name, @Surname, @Email, @Email, 
                                  @PasswordHash, @PasswordSalt, @RegistrationDate, 2)";
 
             await _connection.ExecuteAsync(sql, appUser, transaction);
@@ -35,12 +35,12 @@ namespace Campus.Infrastructure.Data.Repositories
             return await _connection.QuerySingleAsync<AppUser>(sql, new {Id = id});
         }
 
-        public async Task<AppUser> GetAppUserByLoginAsync(string login)
+        public async Task<AppUser> GetAppUserByEmailAsync(string email)
         {
             using var transaction = _connection.BeginTransaction();
-            const string sql = "SELECT * FROM AppUser WHERE Login = @Login";
+            const string sql = "SELECT * FROM AppUser WHERE Email = @Email";
 
-            return await _connection.QuerySingleAsync<AppUser>(sql, new {Login = login});
+            return await _connection.QuerySingleAsync<AppUser>(sql, new {Email = email});
         }
 
         public async Task DeleteAppUserByIdAsync(int id)

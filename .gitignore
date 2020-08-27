@@ -8,3 +8,7 @@
 
 .vs/
 .idea/
+
+.vscode/
+
+debug.log

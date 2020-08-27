@@ -11,7 +11,7 @@ import { DataHandlerService } from '../../../shared/services/data-handler.servic
 import { Task } from 'src/app/model/task';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
-import { Category } from '../../../model/category';
+import { ProjectModel } from '../../../model/Project';
 import { Status } from '../../../model/status';
 
 @Component({
@@ -29,20 +29,18 @@ export class StatComponent implements OnInit, OnChanges {
   tasks: Task[];
   test: [];
 
-  @Input() selectedCategory: Category;
+  @Input() selectedProject: ProjectModel;
 
   @Output() addTask = new EventEmitter<Task>();
 
-  // ----------------------- входящие параметры ----------------------------
+  @Input()
+  totalTasksInCategory: number;
 
   @Input()
-  totalTasksInCategory: number; // общее кол-во задач в категории
+  completeTasksInCategory: number;
 
   @Input()
-  completeTasksInCategory: number; // кол-во решенных задач в категории
-
-  @Input()
-  uncompleteTasksInCategory: number; // кол-во нерешенных задач в категории
+  uncompleteTasksInCategory: number;
 
   todayDate: Date = new Date();
   // selectedValue = 'week-1';
@@ -74,7 +72,7 @@ export class StatComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // если нажали ОК и есть результат
+
         this.addTask.emit(task);
       }
     });

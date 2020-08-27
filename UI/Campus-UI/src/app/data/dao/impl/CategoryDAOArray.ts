@@ -1,13 +1,12 @@
 import { CategoryDAO } from '../interface/CategoryDAO';
-import { Category } from '../../../model/category';
+import { ProjectModel } from '../../../model/Project';
 import { Observable, of } from 'rxjs';
 import { TestData } from '../../testData';
 
 export class CategoryDAOArray implements CategoryDAO {
 
-  add(category: Category): Observable<Category> {
+  add(category: ProjectModel): Observable<ProjectModel> {
 
-    // если id пустой - генерируем его
     if (category.id === null || category.id === 0) {
       category.id = this.getLastIdCategory();
     }
@@ -21,28 +20,28 @@ export class CategoryDAOArray implements CategoryDAO {
     return Math.max.apply(Math, TestData.categories.map(c => c.id)) + 1;
   }
 
-  delete(id: number): Observable<Category> {
+  delete(id: number): Observable<ProjectModel> {
     return undefined;
   }
 
-  get(id: number): Observable<Category> {
+  get(id: number): Observable<ProjectModel> {
     return undefined;
   }
 
-  getAll(): Observable<Category[]> {
+  getAll(): Observable<ProjectModel[]> {
     return of(TestData.categories);
   }
 
-  search(title: string): Observable<Category[]> {
+  search(title: string): Observable<ProjectModel[]> {
 
     return of(TestData.categories.filter(
-      cat => cat.title.toUpperCase().includes(title.toUpperCase()))
-      .sort((c1, c2) => c1.title.localeCompare(c2.title)));
+      cat => cat.name.toUpperCase().includes(title.toUpperCase()))
+      .sort((c1, c2) => c1.name.localeCompare(c2.name)));
   }
 
-  update(category: Category): Observable<Category> {
+  update(category: ProjectModel): Observable<ProjectModel> {
 
-    const tmpCategory = TestData.categories.find(t => t.id === category.id); // обновляем по id
+    const tmpCategory = TestData.categories.find(t => t.id === category.id);
     TestData.categories.splice(TestData.categories.indexOf(tmpCategory), 1, category);
 
     return of(tmpCategory);

@@ -1,5 +1,5 @@
 import { Priority } from '../model/priority';
-import { Category } from '../model/category';
+import { ProjectModel } from './Project';
 import { Status } from '../model/status';
 
 export class Task {
@@ -9,9 +9,9 @@ export class Task {
   status?: Status;
   priority?: Priority;
   date?: Date;
-  category?: Category;
+  category?: ProjectModel;
 
-  constructor(id: number, title: string, status?: Status, priority?: Priority, date?: Date, category?: Category) {
+  constructor(id: number, title: string, status?: Status, priority?: Priority, date?: Date, category?: ProjectModel) {
     this.id = id;
     this.title = title;
     // this.completed = completed;

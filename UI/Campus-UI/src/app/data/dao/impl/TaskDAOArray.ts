@@ -1,4 +1,4 @@
-import { Category } from '../../../model/category';
+import { ProjectModel } from '../../../model/Project';
 import { Observable, of } from 'rxjs';
 import { TaskDAO } from '../interface/TaskDAO';
 import { Task } from 'src/app/model/task';
@@ -16,7 +16,6 @@ export class TaskDAOArray implements TaskDAO {
   }
 
   add(task: Task): Observable<Task> {
-    // если id пустой - генерируем его
     if (task.id === null || task.id === 0) {
       task.id = this.getLastIdTask();
     }
@@ -50,7 +49,7 @@ export class TaskDAOArray implements TaskDAO {
     return of(taskTmp);
   }
 
-  getCompletedCountInCategory(category: Category): Observable<number> {
+  getCompletedCountInCategory(category: ProjectModel): Observable<number> {
     return of(this.searchTask(category, null, true, null).length);
   }
 
@@ -58,16 +57,16 @@ export class TaskDAOArray implements TaskDAO {
     return of(TestData.tasks.length);
   }
 
-  getTotalCountInCategory(category: Category): Observable<number> {
+  getTotalCountInCategory(category: ProjectModel): Observable<number> {
     return of(this.searchTask(category, null, null, null).length);
   }
 
-  getUncompletedCountInCategory(category: Category): Observable<number> {
+  getUncompletedCountInCategory(category: ProjectModel): Observable<number> {
     return of(this.searchTask(category, null, false, null).length);
   }
 
   search(
-    category: Category,
+    category: ProjectModel,
     searchText: string,
     status: boolean,
     priority: Priority
@@ -76,7 +75,7 @@ export class TaskDAOArray implements TaskDAO {
   }
 
   searchTask(
-    category: Category,
+    category: ProjectModel,
     searchText: string,
     status: boolean,
     priority: Priority
@@ -97,14 +96,13 @@ export class TaskDAOArray implements TaskDAO {
     if (searchText != null) {
       allTasks = allTasks.filter(
         (task) => task.title.toUpperCase().includes(searchText.toUpperCase())
-        // учитываем текст поиска (если '' - возвращаются все значения)
       );
     }
     return allTasks;
   }
 
   update(task: Task): Observable<Task> {
-    const taskTmp = TestData.tasks.find((t) => t.id === task.id); // обновляем по id
+    const taskTmp = TestData.tasks.find((t) => t.id === task.id);
     TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1, task);
 
     return of(task);

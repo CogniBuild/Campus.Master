@@ -7,7 +7,7 @@ namespace Campus.Domain.Interfaces.Interfaces
     {
         Task CreateAppUserAsync(AppUser appUser);
         Task<AppUser> GetAppUserByIdAsync(int id);
-        Task<AppUser> GetAppUserByLoginAsync(string login);
+        Task<AppUser> GetAppUserByEmailAsync(string email);
         Task DeleteAppUserByIdAsync(int id);
         Task UpdateAppUserAsync(AppUser appUser);
     }

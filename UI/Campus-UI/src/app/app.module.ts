@@ -23,7 +23,9 @@ import { EditProjectDialogComponent } from './dialog/edit-project-dialog/edit-pr
 import { StatCardComponent } from './views/tasks_board/stat/stat-card/stat-card.component';
 import { FooterComponent } from './views/footer/footer.component';
 import { RegistrationService } from './shared/services/registration.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth/auth.inteceptor';
+import { ProjectService } from './shared/services/project.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialModule,
     BrowserAnimationsModule,
   ],
-  providers: [SignInService, RegistrationService],
+  providers: [SignInService, RegistrationService, ProjectService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   entryComponents: [EditTaskDialogComponent, ConfirmDialogComponent],
   bootstrap: [AppComponent],
 })
