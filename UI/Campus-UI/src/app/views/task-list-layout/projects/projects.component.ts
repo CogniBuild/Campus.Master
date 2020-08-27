@@ -1,17 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
 import { ProjectModel } from '../../../model/Project';
 import { MatDialog } from '@angular/material/dialog';
 import { OperType } from '../../../dialog/OperType';
 import { EditProjectDialogComponent } from '../../../dialog/edit-project-dialog/edit-project-dialog.component';
 import { ProjectService } from 'src/app/shared/services/project.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.sass'],
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit, OnDestroy {
+
+  private getAllUserProjects$: Subscription = new Subscription();
 
   constructor(private projectService: ProjectService, private dialog: MatDialog) {
 
@@ -35,9 +38,13 @@ export class ProjectsComponent implements OnInit {
   todayDate: Date = new Date();
 
   ngOnInit(): void {
-    this.projectService
+    this.getAllUserProjects$ = this.projectService
       .getAllUserProjects(1, 20)
       .subscribe((projects) => (this.projects = projects));
+  }
+
+  ngOnDestroy(): void {
+    this.getAllUserProjects$.unsubscribe();
   }
 
   getProjectTasks(project: ProjectModel) {
