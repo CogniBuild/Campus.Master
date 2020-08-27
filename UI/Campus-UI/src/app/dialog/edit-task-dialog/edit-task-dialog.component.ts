@@ -51,7 +51,7 @@ export class EditTaskDialogComponent implements OnInit {
 
     this.dataHandlerService.getAllProjects().subscribe(items => this.categories = items);
     this.dataHandlerService.getAllPriorities().subscribe(items => this.priorities = items);
-    this.dataHandlerService.getAllStatuses().subscribe(items => this.statuses = items); 
+    this.dataHandlerService.getAllStatuses().subscribe(items => this.statuses = items);
 
   }
 
@@ -74,7 +74,7 @@ export class EditTaskDialogComponent implements OnInit {
       maxWidth: '500px',
       data: {
         dialogTitle: 'Delete task',
-        message: `Are you really want to delete task: "${ this.task.title }"?`
+        message: `Are you really want to delete task: "${this.task.title}"?`
       },
       autoFocus: false
     });
