@@ -33,8 +33,6 @@ export class StatComponent implements OnInit, OnChanges {
 
   @Output() addTask = new EventEmitter<Task>();
 
-  // ----------------------- входящие параметры ----------------------------
-
   @Input()
   totalTasksInCategory: number;
 
