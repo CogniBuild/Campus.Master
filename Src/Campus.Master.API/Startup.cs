@@ -39,7 +39,6 @@ namespace Campus.Master.API
             string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
             
             services.AddControllers();
-            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(ApiVersion, new OpenApiInfo {Title = ApiTitle, Version = ApiVersion});
