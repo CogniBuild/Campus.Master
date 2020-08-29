@@ -39,7 +39,6 @@ namespace Campus.Master.API
             string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
             
             services.AddControllers();
-            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(ApiVersion, new OpenApiInfo {Title = ApiTitle, Version = ApiVersion});
@@ -113,8 +112,6 @@ namespace Campus.Master.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors(builder =>
-                    builder.WithOrigins(Configuration["DevUI:ProxyUrl"]).AllowAnyHeader().AllowAnyMethod());
                 app.UseSwagger();
                 app.UseSwaggerUI(c => { c.SwaggerEndpoint(Configuration["Swagger:StaticRoute"], ApiTitle); });
             }
