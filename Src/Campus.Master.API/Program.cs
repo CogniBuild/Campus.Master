@@ -21,7 +21,7 @@ namespace Campus.Master.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseWebRoot("wwwroot");
+                    webBuilder.UseWebRoot("UI/wwwroot");
                 });
     }
 }
