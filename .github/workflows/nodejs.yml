@@ -25,5 +25,5 @@ jobs:
       run: npm run lint:ci --prefix UI/Campus-UI
     - name: Build UI
       run: npm run build:ci --prefix UI/Campus-UI
-    - name: Build UI Production
-      run: npm run build:ci:prod --prefix UI/Campus-UI    
+    - name: Test UI
+      run: npm run test:ci --prefix UI/Campus-UI
