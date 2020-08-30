@@ -17,8 +17,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12'
-    - name: setup-chromedriver
-      uses: nanasess/setup-chromedriver@v1.0.1
     - name: Install Packages
       run: npm install --prefix UI/Campus-UI
     - name: Lint UI
