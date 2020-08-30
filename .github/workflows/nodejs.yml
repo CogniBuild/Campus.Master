@@ -18,10 +18,10 @@ jobs:
       with:
         node-version: '12'
     - name: Install Packages
-      run: npm install --prefix UI/Campus-UI
+      run: npm install --prefix Src/Campus.Master.API/UI
     - name: Lint UI
-      run: npm run lint:ci --prefix UI/Campus-UI
+      run: npm run lint:ci --prefix Src/Campus.Master.API/UI
     - name: Build UI
-      run: npm run build:ci --prefix UI/Campus-UI
+      run: npm run build:ci --prefix Src/Campus.Master.API/UI
     - name: Test UI
-      run: npm run test:ci --prefix UI/Campus-UI
+      run: npm run test:ci --prefix Src/Campus.Master.API/UI
