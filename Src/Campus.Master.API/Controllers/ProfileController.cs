@@ -149,17 +149,13 @@ namespace Campus.Master.API.Controllers
 
                 return Created(state.Payload, state);
             }
-            catch (ApplicationException)
+            catch (ArgumentException)
             {
                 return BadRequest(new StateTransfer
                 {
                     Message = "User already exists!",
                     Payload = "api/profile/create"
                 });
-            }
-            catch (Exception)
-            {
-                return StatusCode(500);
             }
         }
 
