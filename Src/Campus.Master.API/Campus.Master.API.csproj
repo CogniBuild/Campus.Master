@@ -13,7 +13,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot" />
+      <Content Include="UI\wwwroot\**">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
