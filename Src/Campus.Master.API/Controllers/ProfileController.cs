@@ -212,10 +212,6 @@ namespace Campus.Master.API.Controllers
                     Payload = "api/profile/auth"
                 });
             }
-            catch (Exception)
-            {
-                return StatusCode(500);
-            }
         }
 
         /// <summary>

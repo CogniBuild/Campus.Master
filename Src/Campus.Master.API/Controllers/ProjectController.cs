@@ -86,7 +86,7 @@ namespace Campus.Master.API.Controllers
 
                 return Ok(result);
             }
-            catch (ApplicationException e)
+            catch (ArgumentException e)
             {
                 return NotFound(e.Message);
             }
@@ -132,7 +132,7 @@ namespace Campus.Master.API.Controllers
                     Status = result.Status
                 });
             }
-            catch (ApplicationException e)
+            catch (ArgumentException e)
             {
                 return NotFound(e.Message);
             }
