@@ -21,10 +21,10 @@ jobs:
         node-version: '12'
 
     - name: ANGULAR Install Packages
-      run: npm install --prefix UI/Campus-UI
+      run: npm install --prefix Src/Campus.Master.API/UI
 
     - name: ANGULAR Build in production
-      run: npm run build:cd --prefix UI/Campus-UI
+      run: npm run build:cd --prefix Src/Campus.Master.API/UI
       
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v1

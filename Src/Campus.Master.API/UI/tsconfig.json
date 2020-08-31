@@ -14,10 +14,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "types": ["reflect-metadata", "jest"],
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
-  }
+  },
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],
+  "include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }
