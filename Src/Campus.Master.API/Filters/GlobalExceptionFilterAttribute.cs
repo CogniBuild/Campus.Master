@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Net;
+using System.Text.Json;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,7 +21,16 @@ namespace Campus.Master.API.Filters
         public void OnException(ExceptionContext context)
         {
             var triggerDate = DateTime.Now.ToString("O", new CultureInfo("de-DE"));
-            _logger.LogError(context.Exception, $"[{triggerDate} ERROR]");
+            
+            _logger.LogError(JsonSerializer.Serialize(new
+            {
+                Date = triggerDate,
+                Header = "ERROR",
+                Origin = "GlobalExceptionFilter",
+                Message = context.Exception.Message,
+                Trace = context.Exception.StackTrace
+            }));
+            
             context.Result = new ContentResult
             {
                 StatusCode = (int)HttpStatusCode.InternalServerError,

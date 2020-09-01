@@ -17,6 +17,8 @@ using Microsoft.IdentityModel.Tokens;
 using Campus.Master.API.Filters;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
+using Campus.Master.API.Logging.File;
+using Microsoft.Extensions.Logging;
 
 namespace Campus.Master.API
 {
@@ -111,13 +113,17 @@ namespace Campus.Master.API
                     Convert.ToInt32)));
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => { c.SwaggerEndpoint(Configuration["Swagger:StaticRoute"], ApiTitle); });
+                logger.AddFile(GetConfigurationValue(
+                    "Logging:FilePath",
+                    env.IsDevelopment(),
+                    Convert.ToString));
             }
             else
             {
