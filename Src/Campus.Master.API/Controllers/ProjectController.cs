@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Campus.Master.API.Models.Project;
-using Campus.Master.API.Models.Task;
 using Campus.Master.API.Models;
 using Campus.Master.API.Filters;
 using Campus.Services.Interfaces.DTO.Project;
@@ -71,11 +69,11 @@ namespace Campus.Master.API.Controllers
             {
                 var savedProjects = await _projectService.GetSavedProjects(userId, offset, items);
 
-                var result = new List<ProjectModel>();
+                var result = new List<ProjectDto>();
 
                 foreach (var project in savedProjects)
                 {
-                    result.Add(new ProjectModel
+                    result.Add(new ProjectDto
                     {
                         Id = project.Id,
                         Name = project.Name,
@@ -122,7 +120,7 @@ namespace Campus.Master.API.Controllers
             {
                 var result = await _projectService.GetProjectById(id);
 
-                return Ok(new ProjectModel
+                return Ok(new ProjectDto
                 {
                     Id = result.Id,
                     Name = result.Name,
@@ -153,7 +151,7 @@ namespace Campus.Master.API.Controllers
         ///     }
         /// 
         /// </remarks>
-        /// <param name="model">Project creation form data.</param>
+        /// <param name="project">Project creation form data.</param>
         /// <returns>State transfer model.</returns>
         /// <response code="201">New project created.</response>
         /// <response code="400">Form data is invalid.</response>
@@ -163,22 +161,17 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> CreateProject(ProjectContentModel model)
+        public async Task<IActionResult> CreateProject(ProjectContentDto project)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Create Project");
             
             int userId = GetCurrentUserId();
 
-            await _projectService.CreateProject(userId, new ProjectContentModelDto
-            {
-                Name = model.Name,
-                Color = model.Color,
-                Status = model.Status
-            });
+            await _projectService.CreateProject(userId, project);
 
             var status = new StateTransfer
             {
-                Message = $"'{model.Name}' project is created!",
+                Message = $"'{project.Name}' project is created!",
                 Payload = $"api/project"
             };
 
@@ -214,13 +207,13 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> EditProject(int id, [FromBody] ProjectContentModel model)
+        public async Task<IActionResult> EditProject(int id, [FromBody] ProjectContentDto model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Project #{id}");
 
             try
             {
-                await _projectService.EditProject(id, new ProjectContentModelDto
+                await _projectService.EditProject(id, new ProjectContentDto
                 {
                     Name = model.Name,
                     Color = model.Color,
@@ -315,7 +308,7 @@ namespace Campus.Master.API.Controllers
 
             int offset = items * (page - 1);
 
-            var taskModels = new List<TaskModel>();
+            var taskModels = new List<TaskDto>();
 
             try
             {
@@ -323,7 +316,7 @@ namespace Campus.Master.API.Controllers
 
                 foreach (var task in projectTasks)
                 {
-                    taskModels.Add(new TaskModel
+                    taskModels.Add(new TaskDto
                     {
                         Id = task.Id,
                         Description = task.Description,
@@ -371,13 +364,13 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AttachTaskToTheProject(int id, [FromBody] TaskContentModel model)
+        public async Task<IActionResult> AttachTaskToTheProject(int id, [FromBody] TaskContentDto model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Attach Task To The Project #{id}");
 
             try
             {
-                await _projectService.AddTaskToProject(id, new TaskContentModelDto
+                await _projectService.AddTaskToProject(id, new TaskContentDto
                 {
                     Description = model.Description,
                     Priority = model.Priority,

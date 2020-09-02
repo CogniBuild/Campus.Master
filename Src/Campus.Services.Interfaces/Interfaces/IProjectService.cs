@@ -7,12 +7,12 @@ namespace Campus.Services.Interfaces.Interfaces
 {
     public interface IProjectService
     {
-        Task<IEnumerable<ProjectModelDto>> GetSavedProjects(int userId, int offset, int limit);
-        Task CreateProject(int userId, ProjectContentModelDto projectDto);
-        Task<ProjectModelDto> GetProjectById(int projectId);
-        Task EditProject(int id, ProjectContentModelDto projectContent);
-        Task<IEnumerable<TaskModelDto>> GetProjectTasks(int id, int limit, int offset);
-        Task AddTaskToProject(int id, TaskContentModelDto model);
+        Task<IEnumerable<ProjectDto>> GetSavedProjects(int userId, int offset, int limit);
+        Task CreateProject(int userId, ProjectContentDto projectDto);
+        Task<ProjectDto> GetProjectById(int projectId);
+        Task EditProject(int id, ProjectContentDto projectContent);
+        Task<IEnumerable<TaskDto>> GetProjectTasks(int id, int limit, int offset);
+        Task AddTaskToProject(int id, TaskContentDto model);
         Task DeleteProject(int projectId);
     }
 }

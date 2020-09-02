@@ -5,8 +5,8 @@ namespace Campus.Services.Interfaces.Interfaces
 {
     public interface ITaskService
     {
-        Task<TaskModelDto> GetTaskById(int taskId);
-        Task EditTaskById(int taskId, TaskContentModelDto taskDto);
+        Task<TaskDto> GetTaskById(int taskId);
+        Task EditTaskById(int taskId, TaskContentDto taskDto);
         Task DeleteTaskById(int taskId);
     }
 }
