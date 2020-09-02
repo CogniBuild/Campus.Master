@@ -25,4 +25,8 @@
       <ProjectReference Include="..\Campus.Infrastructure.Data.EntityFrameworkCore\Campus.Infrastructure.Data.EntityFrameworkCore.csproj" />
       <ProjectReference Include="..\Campus.Services.Interfaces\Campus.Services.Interfaces.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="logs" />
+    </ItemGroup>
 </Project>
