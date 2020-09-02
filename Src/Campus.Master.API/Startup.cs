@@ -19,6 +19,7 @@ using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
 using Campus.Master.API.Logging.File;
 using Microsoft.Extensions.Logging;
+using FluentValidation.AspNetCore;
 
 namespace Campus.Master.API
 {
@@ -43,7 +44,7 @@ namespace Campus.Master.API
             services.AddControllers(options =>
             {
                 options.Filters.Add<GlobalExceptionFilterAttribute>();
-            });
+            }).AddFluentValidation();
             
             services.AddSwaggerGen(c =>
             {
@@ -133,7 +134,10 @@ namespace Campus.Master.API
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
             
             app.UseDefaultFiles();
             app.UseStaticFiles();
