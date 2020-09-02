@@ -117,6 +117,8 @@ namespace Campus.Master.API
                     Convert.ToInt32)));
             
             services.AddTransient<IValidator<ProfileRegistrationDto>, ProfileRegistrationValidator>();
+            services.AddTransient<IValidator<ProfileAuthenticationDto>, ProfileAuthenticationValidator>();
+            services.AddTransient<IValidator<ProfileEditingDto>, ProfileEditingValidator>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)

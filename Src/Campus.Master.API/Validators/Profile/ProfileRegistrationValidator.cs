@@ -21,10 +21,8 @@ namespace Campus.Master.API.Validators.Profile
                 .NotEmpty().WithMessage("Password is required")
                 .MinimumLength(8).WithMessage("Password length should be > 8 symbols")
                 .MaximumLength(100).WithMessage("Password length should be < 100 symbols")
-                .Must(password => password.Any(char.IsDigit))
-                .WithMessage("Add at least one digit")
-                .Must(password => password.Any(char.IsUpper))
-                .WithMessage("Add at least one symbol in upper case");
+                .Must(password => password.Any(char.IsDigit)).WithMessage("Add at least one digit")
+                .Must(password => password.Any(char.IsUpper)).WithMessage("Add at least one symbol in upper case");
             RuleFor(profile => profile.ConfirmPassword)
                 .NotNull().WithMessage("Confirm password should not be null")
                 .NotEmpty().WithMessage("Password is required")
