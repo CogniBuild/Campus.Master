@@ -18,8 +18,11 @@ using Campus.Master.API.Filters;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
 using Campus.Master.API.Logging.File;
-using Microsoft.Extensions.Logging;
+using Campus.Master.API.Validators.Profile;
+using Campus.Services.Interfaces.DTO.Profile;
+using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Logging;
 
 namespace Campus.Master.API
 {
@@ -112,6 +115,8 @@ namespace Campus.Master.API
                     "Endpoints:QueryLimiter",
                     inDevelopment,
                     Convert.ToInt32)));
+            
+            services.AddTransient<IValidator<ProfileRegistrationDto>, ProfileRegistrationValidator>();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)

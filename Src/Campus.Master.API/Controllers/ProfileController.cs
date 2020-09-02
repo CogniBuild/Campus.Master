@@ -130,7 +130,7 @@ namespace Campus.Master.API.Controllers
 
                 var state = new StateTransfer
                 {
-                    Message = BuildToken(new ProfileClaimsModel
+                    Message = BuildToken(new ProfileClaimsDto
                     {
                         ProfileId = claims.ProfileId,
                         RoleId = claims.RoleId
@@ -188,7 +188,7 @@ namespace Campus.Master.API.Controllers
 
                 return Ok(new StateTransfer
                 {
-                    Message = BuildToken(new ProfileClaimsModel { 
+                    Message = BuildToken(new ProfileClaimsDto { 
                         ProfileId = claims.ProfileId, 
                         RoleId = claims.RoleId 
                     }),
@@ -302,7 +302,7 @@ namespace Campus.Master.API.Controllers
             });
         }
 
-        private string BuildToken(ProfileClaimsModel model) => 
+        private string BuildToken(ProfileClaimsDto model) => 
             _jwtBuilder.ResetClaims()
                 .AddClaim(ClaimTypes.NameIdentifier, model.ProfileId.ToString())
                 .AddClaim(ClaimTypes.Role, model.RoleId.ToString())
