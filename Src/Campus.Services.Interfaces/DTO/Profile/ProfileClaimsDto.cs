@@ -1,4 +1,4 @@
-namespace Campus.Services.Interfaces.DTO
+namespace Campus.Services.Interfaces.DTO.Profile
 {
     public class ProfileClaimsDto
     {

@@ -2,8 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
 using Campus.Domain.Interfaces.Interfaces;
-using Campus.Infrastructure.Business.DTO;
-using Campus.Services.Interfaces.DTO;
+using Campus.Services.Interfaces.DTO.Profile;
 using Campus.Services.Interfaces.Interfaces;
 
 namespace Campus.Infrastructure.Business.Services
@@ -23,7 +22,7 @@ namespace Campus.Infrastructure.Business.Services
             _authenticationService = authenticationService;
         }
 
-        public async Task CreateAppUserProfileAsync(ProfileRegistrationModelDto registrationDto)
+        public async Task CreateAppUserProfileAsync(ProfileRegistrationDto registrationDto)
         {
             try
             {
@@ -48,14 +47,14 @@ namespace Campus.Infrastructure.Business.Services
             }
         }
 
-        public async Task<ProfileViewModelDto> GetAppUserProfileByIdAsync(int id)
+        public async Task<ProfileViewDto> GetAppUserProfileByIdAsync(int id)
         {
             var appUser = await _appUserRepository.GetAppUserByIdAsync(id);
             
             if (appUser == null)
                 throw new ApplicationException("User with this ID doesn't exist");
             
-            return new ProfileViewModelDto
+            return new ProfileViewDto
             {
                 Login = appUser.Login,
                 Email = appUser.Email,
@@ -87,7 +86,7 @@ namespace Campus.Infrastructure.Business.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task EditAppUserProfileByIdAsync(int id, ProfileEditingModelDto editingDto)
+        public async Task EditAppUserProfileByIdAsync(int id, ProfileEditingDto editingDto)
         {
             await _appUserRepository.UpdateAppUserAsync(new AppUser()
             {

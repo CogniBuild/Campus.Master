@@ -117,8 +117,6 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> GetProjectById(int id)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Get Project By Id #{id}");
-            
-            int userId = GetCurrentUserId();
 
             try
             {
