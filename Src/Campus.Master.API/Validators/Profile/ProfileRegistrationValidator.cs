@@ -15,7 +15,7 @@ namespace Campus.Master.API.Validators.Profile
             RuleFor(profile => profile.Login)
                 .NotNull().WithMessage("Login should not be null")
                 .NotEmpty().WithMessage("Login is required")
-                .MaximumLength(200).WithMessage("Login length should be < 100 symbols");
+                .MaximumLength(200).WithMessage("Login length should be < 200 symbols");
             RuleFor(profile => profile.Password)
                 .NotNull().WithMessage("Password should not be null")
                 .NotEmpty().WithMessage("Password is required")
