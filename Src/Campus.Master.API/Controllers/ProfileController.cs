@@ -124,7 +124,7 @@ namespace Campus.Master.API.Controllers
 
                 var claims = await _profileService.VerifyAppUserProfile(new ProfileAuthenticationDto
                 {
-                    Email = profile.Login,
+                    Email = profile.Email,
                     Password = profile.Password
                 });
 
