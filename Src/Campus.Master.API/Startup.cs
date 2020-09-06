@@ -17,6 +17,13 @@ using Microsoft.IdentityModel.Tokens;
 using Campus.Master.API.Filters;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
+using Campus.Master.API.Logging.File;
+using Campus.Master.API.Validators.Profile;
+using Campus.Services.Interfaces.DTO.Profile;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Logging;
+using ICampusConfigurationProvider = Campus.Master.API.Helpers.Contracts.IConfigurationProvider;
 
 namespace Campus.Master.API
 {
@@ -25,24 +32,29 @@ namespace Campus.Master.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            SettingsProvider = new ConfigurationProviderFactory(
+                    Configuration,
+                    Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+                .CreateProvider();
         }
 
         private IConfiguration Configuration { get; }
+
+        private ICampusConfigurationProvider SettingsProvider { get; }
 
         private const string ApiTitle = "Campus.Master Development mode API";
         private const string ApiVersion = "v1.2";
         
         public void ConfigureServices(IServiceCollection services)
         {
-            var providerFactory = new ConfigurationProviderFactory(
-                Configuration, 
-                Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development");
-            var configProvider = providerFactory.CreateProvider();
-
             string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
             
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<GlobalExceptionFilterAttribute>();
+            }).AddFluentValidation();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(ApiVersion, new OpenApiInfo {Title = ApiTitle, Version = ApiVersion});
@@ -84,7 +96,7 @@ namespace Campus.Master.API
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                            configProvider.GetConfigurationValue("Security:EncryptionSecret", Convert.ToString)
+                            SettingsProvider.GetConfigurationValue("Security:EncryptionSecret", Convert.ToString)
                         )),
                         ValidateIssuer = false,
                         ValidateAudience = false
@@ -92,8 +104,8 @@ namespace Campus.Master.API
                 });
 
             var connectionProviderName =
-                configProvider.GetConfigurationValue("ConnectionStrings:Provider", Convert.ToString);
-            var connectionString = configProvider.GetConfigurationValue("ConnectionStrings:Default", Convert.ToString);
+                SettingsProvider.GetConfigurationValue("ConnectionStrings:Provider", Convert.ToString);
+            var connectionString = SettingsProvider.GetConfigurationValue("ConnectionStrings:Default", Convert.ToString);
 
             switch (connectionProviderName)
             {
@@ -108,21 +120,36 @@ namespace Campus.Master.API
             services.AddServices();
             
             services.AddTransient<ITokenBuilder>(builder => 
-                new JwtTokenBuilder(configProvider.GetConfigurationValue("Security:EncryptionSecret", Convert.ToString))
+                new JwtTokenBuilder(
+                    SettingsProvider.GetConfigurationValue("Security:EncryptionSecret", Convert.ToString)
+                )
             );
             
-            services.AddScoped(limiter => 
-                new QueryItemsLimiter(configProvider.GetConfigurationValue("Endpoints:QueryLimiter", Convert.ToInt32))
+            services.AddScoped(limiter =>
+                new QueryItemsLimiter(
+                    SettingsProvider.GetConfigurationValue("Endpoints:QueryLimiter", Convert.ToInt32)
+                )
             );
+
+            services.AddTransient<IValidator<ProfileRegistrationDto>, ProfileRegistrationValidator>();
+            services.AddTransient<IValidator<ProfileAuthenticationDto>, ProfileAuthenticationValidator>();
+            services.AddTransient<IValidator<ProfileEditingDto>, ProfileEditingValidator>();
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => { c.SwaggerEndpoint(Configuration["Swagger:StaticRoute"], ApiTitle); });
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint(
+                        SettingsProvider.GetConfigurationValue("Swagger:StaticRoute", Convert.ToString), 
+                        ApiTitle
+                    );
+                });
+                logger.AddFile(SettingsProvider.GetConfigurationValue("Logging:FilePath", Convert.ToString));
             }
             else
             {
@@ -132,7 +159,10 @@ namespace Campus.Master.API
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
             
             app.UseDefaultFiles();
             app.UseStaticFiles();

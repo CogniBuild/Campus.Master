@@ -7,12 +7,13 @@
     "build": "ng build",
     "build:ci": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build",
     "build:cd": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --prod",
+    "build:watch": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --watch",
     "test": "jest",
     "test:ci": "node --max_old_space_size=8192 ./node_modules/jest/bin/jest --esModuleInterop=true",
     "lint": "ng lint",
     "lint:ci": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng lint",
     "e2e": "ng e2e",
-    "test:watch": "jest --watch"
+    "test:watch": "node --max_old_space_size=8192 ./node_modules/jest/bin/jest --esModuleInterop=true --watch"
   },
   "private": true,
   "dependencies": {

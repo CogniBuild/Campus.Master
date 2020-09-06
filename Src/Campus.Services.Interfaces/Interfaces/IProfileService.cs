@@ -1,15 +1,14 @@
 ﻿using System.Threading.Tasks;
-using Campus.Infrastructure.Business.DTO;
-using Campus.Services.Interfaces.DTO;
+using Campus.Services.Interfaces.DTO.Profile;
 
 namespace Campus.Services.Interfaces.Interfaces
 {
     public interface IProfileService
     {
-        Task CreateAppUserProfileAsync(ProfileRegistrationModelDto registrationDto);
-        Task<ProfileViewModelDto> GetAppUserProfileByIdAsync(int id);
+        Task CreateAppUserProfileAsync(ProfileRegistrationDto registrationDto);
+        Task<ProfileViewDto> GetAppUserProfileByIdAsync(int id);
         Task<ProfileClaimsDto> VerifyAppUserProfile(ProfileAuthenticationDto model);
         Task DeleteAppUserProfileByIdAsync(int id);
-        Task EditAppUserProfileByIdAsync(int id, ProfileEditingModelDto editingDto);
+        Task EditAppUserProfileByIdAsync(int id, ProfileEditingDto editingDto);
     }
 }

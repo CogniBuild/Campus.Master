@@ -18,7 +18,7 @@ namespace Campus.Infrastructure.Business.Services
             _taskRepository = taskRepository;
         }
 
-        public async Task<TaskModelDto> GetTaskById(int taskId)
+        public async Task<TaskDto> GetTaskById(int taskId)
         {
             var task = await _taskRepository.GetTaskById(taskId);
 
@@ -27,7 +27,7 @@ namespace Campus.Infrastructure.Business.Services
                 throw new ApplicationException("Task with specified id not found");
             }
 
-            return new TaskModelDto
+            return new TaskDto
             {
                 Id = task.Id,
                 Description = task.Description,
@@ -37,7 +37,7 @@ namespace Campus.Infrastructure.Business.Services
             };
         }
 
-        public async Task EditTaskById(int taskId, TaskContentModelDto taskDto)
+        public async Task EditTaskById(int taskId, TaskContentDto taskDto)
         {
             await _taskRepository.EditTask(new UserTask
             {

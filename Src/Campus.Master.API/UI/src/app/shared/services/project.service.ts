@@ -13,13 +13,13 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   getAllUserProjects(page: number, items: number): Observable<ProjectModel[]> {
-    const uri: string = environment.apiRoot + environment.projects + `?page=${page}&items=${items}`;
+    const uri: string = environment.projects + `?page=${page}&items=${items}`;
 
     return this.http.get<ProjectModel[]>(uri);
   }
 
   createNewProject(projectName: string) {
-    const uri: string = environment.apiRoot + environment.projects;
+    const uri: string = environment.projects;
 
     return this.http.post<StateTransfer>(uri, { name: projectName, color: '.', status: 1 });
   }

@@ -1,9 +1,10 @@
 using System;
 
-namespace Campus.Master.API.Models.Task
+namespace Campus.Services.Interfaces.DTO.Task
 {
-    public class TaskContentModel
+    public class TaskDto
     {
+        public int Id { get; set; }
         public string Description { get; set; }
         public string Priority { get; set; }
         public string Tag { get; set; }
