@@ -1,6 +1,6 @@
-namespace Campus.Master.API.Models.Profile
+namespace Campus.Services.Interfaces.DTO.Profile
 {
-    public class ProfileEditingModel
+    public class ProfileEditingDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

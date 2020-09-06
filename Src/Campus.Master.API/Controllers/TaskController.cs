@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Campus.Master.API.Models.Task;
 using Campus.Master.API.Models;
 using Campus.Master.API.Filters;
 using Campus.Services.Interfaces.DTO.Task;
@@ -63,7 +62,7 @@ namespace Campus.Master.API.Controllers
 
             var result = await Task.Run(() => new[]
             {
-                new TaskModel
+                new TaskDto
                 {
                     Id = 1,
                     Description = "Description",
@@ -71,7 +70,7 @@ namespace Campus.Master.API.Controllers
                     Tag = "Tag",
                     Deadline = DateTime.MinValue
                 },
-                new TaskModel
+                new TaskDto
                 {
                     Id = 2,
                     Description = "Description",
@@ -116,7 +115,7 @@ namespace Campus.Master.API.Controllers
             {
                 var task = await _taskService.GetTaskById(id);
 
-                return Ok(new TaskModel
+                return Ok(new TaskDto
                 {
                     Id = task.Id,
                     Description = task.Description,
@@ -162,13 +161,13 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> EditTask(int id, [FromBody] TaskContentModel model)
+        public async Task<IActionResult> EditTask(int id, [FromBody] TaskContentDto model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit task #{id}");
 
             try
             {
-                await _taskService.EditTaskById(id, new TaskContentModelDto
+                await _taskService.EditTaskById(id, new TaskContentDto
                 {
                     Description = model.Description,
                     Priority = model.Priority,

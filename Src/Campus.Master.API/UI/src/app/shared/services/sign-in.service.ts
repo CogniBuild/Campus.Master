@@ -14,7 +14,7 @@ export class SignInService {
   }
 
   login(user: User): Observable<StateTransfer> {
-    const uri: string = environment.apiRoot + environment.authenticateProfile;
+    const uri: string = environment.authenticateProfile;
 
     return this.http.post<StateTransfer>(uri, user).pipe(map((res) => {
       localStorage.setItem('token', res.message);

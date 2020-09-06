@@ -20,11 +20,11 @@ namespace Campus.Infrastructure.Business.Services
             _projectRepository = projectRepository;
         }
 
-        public async Task<IEnumerable<ProjectModelDto>> GetSavedProjects(int userId, int offset, int limit)
+        public async Task<IEnumerable<ProjectDto>> GetSavedProjects(int userId, int offset, int limit)
         {
             var projects = await _projectRepository.GetProjectsListing(userId, offset, limit);
 
-            var projectModels = new List<ProjectModelDto>();
+            var projectModels = new List<ProjectDto>();
 
             if (projects == null)
             {
@@ -33,7 +33,7 @@ namespace Campus.Infrastructure.Business.Services
 
             foreach (var project in projects)
             {
-                projectModels.Add(new ProjectModelDto
+                projectModels.Add(new ProjectDto
                 {
                     Id = project.Id,
                     Name = project.Name,
@@ -45,7 +45,7 @@ namespace Campus.Infrastructure.Business.Services
             return projectModels;
         }
 
-        public async Task CreateProject(int userId, ProjectContentModelDto projectDto)
+        public async Task CreateProject(int userId, ProjectContentDto projectDto)
         {
             await _projectRepository.CreateNewProject(new Project()
             {
@@ -57,7 +57,7 @@ namespace Campus.Infrastructure.Business.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<ProjectModelDto> GetProjectById(int projectId)
+        public async Task<ProjectDto> GetProjectById(int projectId)
         {
             var project = await _projectRepository.GetProjectById(projectId);
 
@@ -66,7 +66,7 @@ namespace Campus.Infrastructure.Business.Services
                 throw new ApplicationException("Project with specified id doesn't exist");
             }
 
-            return new ProjectModelDto
+            return new ProjectDto
             {
                 Id = project.Id,
                 Name = project.Name,
@@ -75,7 +75,7 @@ namespace Campus.Infrastructure.Business.Services
             };
         }
 
-        public async Task EditProject(int id, ProjectContentModelDto projectContent)
+        public async Task EditProject(int id, ProjectContentDto projectContent)
         {
             await _projectRepository.EditProject(new Project
             {
@@ -88,7 +88,7 @@ namespace Campus.Infrastructure.Business.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<IEnumerable<TaskModelDto>> GetProjectTasks(int id, int limit, int offset)
+        public async Task<IEnumerable<TaskDto>> GetProjectTasks(int id, int limit, int offset)
         {
             var projectTasks = await _projectRepository.GetProjectTasks(id, limit, offset);
 
@@ -97,11 +97,11 @@ namespace Campus.Infrastructure.Business.Services
                 throw new ApplicationException($"Tasks with specified project id don't exist");
             }
 
-            var taskModelsDto = new List<TaskModelDto>();
+            var taskModelsDto = new List<TaskDto>();
 
             foreach (var task in projectTasks)
             {
-                taskModelsDto.Add(new TaskModelDto
+                taskModelsDto.Add(new TaskDto
                 {
                     Id = task.Id,
                     Description = task.Description,
@@ -114,7 +114,7 @@ namespace Campus.Infrastructure.Business.Services
             return taskModelsDto;
         }
 
-        public async Task AddTaskToProject(int id, TaskContentModelDto model)
+        public async Task AddTaskToProject(int id, TaskContentDto model)
         {
             await _projectRepository.AddTaskToProject(new UserTask
             {

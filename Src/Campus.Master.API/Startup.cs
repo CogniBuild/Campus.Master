@@ -17,6 +17,12 @@ using Microsoft.IdentityModel.Tokens;
 using Campus.Master.API.Filters;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
+using Campus.Master.API.Logging.File;
+using Campus.Master.API.Validators.Profile;
+using Campus.Services.Interfaces.DTO.Profile;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Logging;
 
 namespace Campus.Master.API
 {
@@ -38,7 +44,11 @@ namespace Campus.Master.API
             string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
             
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<GlobalExceptionFilterAttribute>();
+            }).AddFluentValidation();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(ApiVersion, new OpenApiInfo {Title = ApiTitle, Version = ApiVersion});
@@ -105,15 +115,23 @@ namespace Campus.Master.API
                     "Endpoints:QueryLimiter",
                     inDevelopment,
                     Convert.ToInt32)));
+            
+            services.AddTransient<IValidator<ProfileRegistrationDto>, ProfileRegistrationValidator>();
+            services.AddTransient<IValidator<ProfileAuthenticationDto>, ProfileAuthenticationValidator>();
+            services.AddTransient<IValidator<ProfileEditingDto>, ProfileEditingValidator>();
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => { c.SwaggerEndpoint(Configuration["Swagger:StaticRoute"], ApiTitle); });
+                logger.AddFile(GetConfigurationValue(
+                    "Logging:FilePath",
+                    env.IsDevelopment(),
+                    Convert.ToString));
             }
             else
             {
@@ -123,7 +141,10 @@ namespace Campus.Master.API
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
             
             app.UseDefaultFiles();
             app.UseStaticFiles();

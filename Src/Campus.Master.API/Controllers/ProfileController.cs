@@ -2,14 +2,12 @@ using System;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using System.Linq;
-using Campus.Infrastructure.Business.DTO;
+using Campus.Services.Interfaces.DTO.Profile;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Campus.Master.API.Helpers.Contracts;
-using Campus.Master.API.Models.Profile;
 using Campus.Master.API.Models;
-using Campus.Services.Interfaces.DTO;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
@@ -68,7 +66,7 @@ namespace Campus.Master.API.Controllers
             var id = Convert.ToInt32(claimedId);
             var profileById = await _profileService.GetAppUserProfileByIdAsync(id);
 
-            var result = new ProfileViewModel
+            var result = new ProfileViewDto
             {
                 Login = profileById.Login,
                 Email = profileById.Email,
@@ -98,7 +96,7 @@ namespace Campus.Master.API.Controllers
         ///     }
         /// 
         /// </remarks>
-        /// <param name="model">Register form data.</param>
+        /// <param name="profile">Register form data.</param>
         /// <returns>JWT token.</returns>
         /// <response code="201">New profile created.</response>
         /// <response code="400">Form data is invalid.</response>
@@ -107,11 +105,11 @@ namespace Campus.Master.API.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateProfile(ProfileRegistrationModel model)
+        public async Task<IActionResult> CreateProfile(ProfileRegistrationDto profile)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Create Profile @{model.Login}");
+            _logger.LogInformation($"[{DateTime.Now} INFO] Create Profile @{profile.Login}");
 
-            if (model.Password != model.ConfirmPassword)
+            if (profile.Password != profile.ConfirmPassword)
             {
                 return BadRequest(new StateTransfer
                 {
@@ -122,24 +120,17 @@ namespace Campus.Master.API.Controllers
 
             try
             {
-                await _profileService.CreateAppUserProfileAsync(new ProfileRegistrationModelDto
-                {
-                    Login = model.Login,
-                    Password = model.Password,
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName
-                });
+                await _profileService.CreateAppUserProfileAsync(profile);
 
                 var claims = await _profileService.VerifyAppUserProfile(new ProfileAuthenticationDto
                 {
-                    Email = model.Login,
-                    Password = model.Password
+                    Email = profile.Email,
+                    Password = profile.Password
                 });
 
                 var state = new StateTransfer
                 {
-                    Message = BuildToken(new ProfileClaimsModel
+                    Message = BuildToken(new ProfileClaimsDto
                     {
                         ProfileId = claims.ProfileId,
                         RoleId = claims.RoleId
@@ -149,17 +140,13 @@ namespace Campus.Master.API.Controllers
 
                 return Created(state.Payload, state);
             }
-            catch (ApplicationException)
+            catch (ArgumentException)
             {
                 return BadRequest(new StateTransfer
                 {
                     Message = "User already exists!",
                     Payload = "api/profile/create"
                 });
-            }
-            catch (Exception)
-            {
-                return StatusCode(500);
             }
         }
 
@@ -187,7 +174,7 @@ namespace Campus.Master.API.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AuthenticateProfile(AuthenticationModel model)
+        public async Task<IActionResult> AuthenticateProfile(ProfileAuthenticationDto model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Authenticate Profile @{model.Email}");
 
@@ -201,7 +188,7 @@ namespace Campus.Master.API.Controllers
 
                 return Ok(new StateTransfer
                 {
-                    Message = BuildToken(new ProfileClaimsModel { 
+                    Message = BuildToken(new ProfileClaimsDto { 
                         ProfileId = claims.ProfileId, 
                         RoleId = claims.RoleId 
                     }),
@@ -215,10 +202,6 @@ namespace Campus.Master.API.Controllers
                     Message = "Wrong username or password!",
                     Payload = "api/profile/auth"
                 });
-            }
-            catch (Exception)
-            {
-                return StatusCode(500);
             }
         }
 
@@ -248,7 +231,7 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> EditProfile(ProfileEditingModel model)
+        public async Task<IActionResult> EditProfile(ProfileEditingDto model)
         {
             _logger.LogInformation($"[{DateTime.Now} INFO] Edit Profile");
 
@@ -263,7 +246,7 @@ namespace Campus.Master.API.Controllers
                 });
             
             var id = Convert.ToInt32(claimedId);
-            await _profileService.EditAppUserProfileByIdAsync(id, new ProfileEditingModelDto
+            await _profileService.EditAppUserProfileByIdAsync(id, new ProfileEditingDto
             {
                 FirstName = model.FirstName,
                 LastName = model.LastName
@@ -319,7 +302,7 @@ namespace Campus.Master.API.Controllers
             });
         }
 
-        private string BuildToken(ProfileClaimsModel model) => 
+        private string BuildToken(ProfileClaimsDto model) => 
             _jwtBuilder.ResetClaims()
                 .AddClaim(ClaimTypes.NameIdentifier, model.ProfileId.ToString())
                 .AddClaim(ClaimTypes.Role, model.RoleId.ToString())
