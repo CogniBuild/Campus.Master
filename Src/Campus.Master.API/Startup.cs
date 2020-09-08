@@ -23,6 +23,7 @@ using Campus.Services.Interfaces.DTO.Profile;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Logging;
+using ICampusConfigurationProvider = Campus.Master.API.Helpers.Contracts.IConfigurationProvider;
 
 namespace Campus.Master.API
 {
@@ -31,16 +32,21 @@ namespace Campus.Master.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            SettingsProvider = new ConfigurationProviderFactory(
+                    Configuration,
+                    Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+                .CreateProvider();
         }
 
         private IConfiguration Configuration { get; }
+
+        private ICampusConfigurationProvider SettingsProvider { get; }
 
         private const string ApiTitle = "Campus.Master Development mode API";
         private const string ApiVersion = "v1.2";
         
         public void ConfigureServices(IServiceCollection services)
         {
-            var inDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
             string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
             
@@ -83,39 +89,48 @@ namespace Campus.Master.API
 
                 c.IncludeXmlComments(xmlDocPath);
             });
-            
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(bearer => {
                     bearer.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                        GetConfigurationValue(
-                            "Security:EncryptionSecret",
-                            inDevelopment,
-                            Convert.ToString)
+                            SettingsProvider.GetConfigurationValue("Security:EncryptionSecret", Convert.ToString)
                         )),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
                 });
 
-            services.AddSqlServerStorage(GetConfigurationValue(
-                "ConnectionStrings:Default",
-                inDevelopment,
-                Convert.ToString));
+            var connectionProviderName =
+                SettingsProvider.GetConfigurationValue("ConnectionStrings:Provider", Convert.ToString);
+            var connectionString = SettingsProvider.GetConfigurationValue("ConnectionStrings:Default", Convert.ToString);
+
+            switch (connectionProviderName)
+            {
+                case "POSTGRES":
+                    services.AddPostgreSqlStorage(connectionString);
+                    break;
+                case "SQLSERVER":
+                    services.AddSqlServerStorage(connectionString);
+                    break;
+            }
+
             services.AddServices();
-            services.AddTransient<ITokenBuilder>(builder => 
-                new JwtTokenBuilder(GetConfigurationValue(
-                    "Security:EncryptionSecret",
-                    inDevelopment,
-                    Convert.ToString)));
-            services.AddScoped(limiter => 
-                new QueryItemsLimiter(GetConfigurationValue(
-                    "Endpoints:QueryLimiter",
-                    inDevelopment,
-                    Convert.ToInt32)));
             
+            services.AddTransient<ITokenBuilder>(builder => 
+                new JwtTokenBuilder(
+                    SettingsProvider.GetConfigurationValue("Security:EncryptionSecret", Convert.ToString)
+                )
+            );
+            
+            services.AddScoped(limiter =>
+                new QueryItemsLimiter(
+                    SettingsProvider.GetConfigurationValue("Endpoints:QueryLimiter", Convert.ToInt32)
+                )
+            );
+
             services.AddTransient<IValidator<ProfileRegistrationDto>, ProfileRegistrationValidator>();
             services.AddTransient<IValidator<ProfileAuthenticationDto>, ProfileAuthenticationValidator>();
             services.AddTransient<IValidator<ProfileEditingDto>, ProfileEditingValidator>();
@@ -127,11 +142,14 @@ namespace Campus.Master.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => { c.SwaggerEndpoint(Configuration["Swagger:StaticRoute"], ApiTitle); });
-                logger.AddFile(GetConfigurationValue(
-                    "Logging:FilePath",
-                    env.IsDevelopment(),
-                    Convert.ToString));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint(
+                        SettingsProvider.GetConfigurationValue("Swagger:StaticRoute", Convert.ToString), 
+                        ApiTitle
+                    );
+                });
+                logger.AddFile(SettingsProvider.GetConfigurationValue("Logging:FilePath", Convert.ToString));
             }
             else
             {
@@ -154,14 +172,6 @@ namespace Campus.Master.API
                 context.Response.ContentType = "text/html";
                 await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
             });
-        }
-
-        private T GetConfigurationValue<T>(string key, bool inDevelopment, Func<string, T> formatter)
-        {
-            var appSettingsConfiguration = Configuration.GetSection(key).Value;
-            return inDevelopment ? 
-                formatter(appSettingsConfiguration) :
-                formatter(Environment.GetEnvironmentVariable(appSettingsConfiguration));
         }
     }
 }
