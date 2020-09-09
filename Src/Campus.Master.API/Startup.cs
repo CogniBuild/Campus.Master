@@ -149,7 +149,6 @@ namespace Campus.Master.API
                         ApiTitle
                     );
                 });
-                logger.AddFile(SettingsProvider.GetConfigurationValue("Logging:FilePath", Convert.ToString));
             }
             else
             {
