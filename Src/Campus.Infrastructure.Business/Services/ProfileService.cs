@@ -29,7 +29,7 @@ namespace Campus.Infrastructure.Business.Services
             
             var appUser = await _appUserRepository.GetAppUserByEmailAsync(registrationDto.Email);
             
-            if (appUser == null)
+            if (appUser != null)
                 throw new ApplicationException("User already exists.");
 
             var (hash, salt) = _authenticationService.GenerateSecrets(registrationDto.Password);
