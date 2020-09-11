@@ -135,7 +135,6 @@ namespace Campus.Master.API
             );
 
             services.AddTransient<IValidator<ProfileRegistrationDto>, ProfileRegistrationValidator>();
-            services.AddTransient<IValidator<ProfileAuthenticationDto>, ProfileAuthenticationValidator>();
             services.AddTransient<IValidator<ProfileEditingDto>, ProfileEditingValidator>();
         }
         
