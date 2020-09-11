@@ -15,6 +15,7 @@ namespace Campus.Master.API.Controllers
 {
     [ApiController]
     [Authorize]
+    [ApplicationExceptionHandler]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class ProfileController : ControllerBase

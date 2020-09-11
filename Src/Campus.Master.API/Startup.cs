@@ -56,6 +56,7 @@ namespace Campus.Master.API
             }).AddFluentValidation();
 
             services.AddScoped<EntryPointLoggingFilter>();
+            services.AddScoped<ApplicationExceptionFilter>();
             
             services.AddSwaggerGen(c =>
             {

@@ -26,6 +26,11 @@ namespace Campus.Infrastructure.Business.Services
         {
             if (registrationDto.Password != registrationDto.ConfirmPassword)
                 throw new ApplicationException("Wrong username or password.");
+            
+            var appUser = await _appUserRepository.GetAppUserByEmailAsync(registrationDto.Email);
+            
+            if (appUser == null)
+                throw new ApplicationException("User already exists.");
 
             var (hash, salt) = _authenticationService.GenerateSecrets(registrationDto.Password);
             
@@ -45,7 +50,7 @@ namespace Campus.Infrastructure.Business.Services
             }
             catch (Exception)
             {
-                throw new ApplicationException("User already exists in database!");
+                throw new ApplicationException("Failed to create new user.");
             }
         }
 
@@ -54,7 +59,7 @@ namespace Campus.Infrastructure.Business.Services
             var appUser = await _appUserRepository.GetAppUserByIdAsync(id);
             
             if (appUser == null)
-                throw new ApplicationException("User with this ID doesn't exist");
+                throw new ApplicationException("User with this ID doesn't exist.");
             
             return new ProfileViewDto
             {
@@ -69,10 +74,10 @@ namespace Campus.Infrastructure.Business.Services
             var appUser = await _appUserRepository.GetAppUserByEmailAsync(model.Email);
             
             if (appUser == null)
-                throw new ApplicationException("User with this email doesn't exist");
+                throw new ApplicationException("Wrong username or password.");
 
             if (!_authenticationService.VerifyPassword(model.Password, appUser.PasswordHash, appUser.PasswordSalt))
-                throw new ApplicationException("Failed to verify password!");
+                throw new ApplicationException("Wrong username or password.");
             
             return new ProfileClaimsDto
             {
