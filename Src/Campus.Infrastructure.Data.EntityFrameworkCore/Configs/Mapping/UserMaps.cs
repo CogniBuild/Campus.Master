@@ -19,10 +19,8 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
                 .HasMaxLength(80);
             
             builder.Property(u => u.Email)
-                .IsRequired().HasMaxLength(100);
-            
-            builder.Property(u => u.Login)
-                .IsRequired().HasMaxLength(60);
+                .IsRequired()
+                .HasMaxLength(100);
 
             builder.Property(u => u.PasswordHash)
                 .IsRequired();
@@ -37,6 +35,9 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
                 .WithMany(r => r.AppUsers)
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
+            
+            builder.HasIndex(u => u.Email)
+                .IsUnique();
         }
     }
 }

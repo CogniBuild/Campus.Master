@@ -33,7 +33,6 @@ namespace Campus.Infrastructure.Business.Services
                     Name = registrationDto.FirstName,
                     Surname = registrationDto.LastName,
                     Email = registrationDto.Email,
-                    Login = registrationDto.Login,
                     PasswordHash = hash,
                     PasswordSalt = salt,
                     RegistrationDate = DateTime.Now,
@@ -56,7 +55,6 @@ namespace Campus.Infrastructure.Business.Services
             
             return new ProfileViewDto
             {
-                Login = appUser.Login,
                 Email = appUser.Email,
                 FirstName = appUser.Name,
                 LastName = appUser.Surname
