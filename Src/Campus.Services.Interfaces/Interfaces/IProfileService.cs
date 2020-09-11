@@ -5,7 +5,7 @@ namespace Campus.Services.Interfaces.Interfaces
 {
     public interface IProfileService
     {
-        Task CreateAppUserProfileAsync(ProfileRegistrationDto registrationDto);
+        Task CreateProfileAsync(ProfileRegistrationDto registrationDto);
         Task<ProfileViewDto> GetAppUserProfileByIdAsync(int id);
         Task<ProfileClaimsDto> VerifyAppUserProfile(ProfileAuthenticationDto model);
         Task DeleteAppUserProfileByIdAsync(int id);

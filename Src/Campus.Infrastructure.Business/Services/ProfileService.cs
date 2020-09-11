@@ -22,12 +22,15 @@ namespace Campus.Infrastructure.Business.Services
             _authenticationService = authenticationService;
         }
 
-        public async Task CreateAppUserProfileAsync(ProfileRegistrationDto registrationDto)
+        public async Task CreateProfileAsync(ProfileRegistrationDto registrationDto)
         {
+            if (registrationDto.Password != registrationDto.ConfirmPassword)
+                throw new ApplicationException("Wrong username or password.");
+
+            var (hash, salt) = _authenticationService.GenerateSecrets(registrationDto.Password);
+            
             try
             {
-                var (hash, salt) = _authenticationService.GenerateSecrets(registrationDto.Password);
-                
                 await _appUserRepository.CreateAppUserAsync(new AppUser
                 {
                     Name = registrationDto.FirstName,
