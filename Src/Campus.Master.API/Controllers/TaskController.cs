@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Campus.Master.API.Models;
 using Campus.Master.API.Filters;
 using Campus.Services.Interfaces.DTO.Task;
@@ -17,12 +16,10 @@ namespace Campus.Master.API.Controllers
     public class TaskController : ControllerBase
     {
         private readonly ITaskService _taskService;
-        private readonly ILogger _logger;
 
-        public TaskController(ITaskService taskService, ILogger<TaskController> logger)
+        public TaskController(ITaskService taskService)
         {
             _taskService = taskService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -46,6 +43,7 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="403">Requested count of items exceeded the limit.</response>
         [HttpGet]
+        [EntryPointLogging(ActionName = "[Task] Fetch Tasks", SenderName = "TaskController")]
         [ServiceFilter(typeof(QueryItemsLimiter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -55,9 +53,6 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> FetchTasks([FromQuery] int page, [FromQuery] int items,
             [FromQuery] string filterBy)
         {
-            _logger.LogInformation(
-                $"[{DateTime.Now} INFO] Fetch Tasks: Page={page}, Items={items}, FilterBy={filterBy}");
-
             // TODO: Put business logic here
 
             var result = await Task.Run(() => new[]
@@ -101,14 +96,13 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="404">Task with given ID doesn't exist.</response>
         [HttpGet("{id}")]
+        [EntryPointLogging(ActionName = "[Task] Get Task By Id", SenderName = "TaskController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetTaskById(int id)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Get Task By Id #{id}");
-
             int userId = GetCurrentUserId();
 
             try
@@ -157,14 +151,13 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="404">Task wasn't found.</response>
         [HttpPut("{id}")]
+        [EntryPointLogging(ActionName = "[Task] Edit Task", SenderName = "TaskController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EditTask(int id, [FromBody] TaskContentDto model)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Edit task #{id}");
-
             try
             {
                 await _taskService.EditTaskById(id, new TaskContentDto
@@ -204,10 +197,12 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="404">Task wasn't found.</response>
         [HttpDelete("{id}")]
+        [EntryPointLogging(ActionName = "[Task] Delete Task", SenderName = "TaskController")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteTask(int id)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Delete task #{id}");
-
             try
             {
                 await _taskService.DeleteTaskById(id);

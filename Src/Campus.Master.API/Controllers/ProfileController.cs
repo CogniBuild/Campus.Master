@@ -2,10 +2,10 @@ using System;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using System.Linq;
+using Campus.Master.API.Filters;
 using Campus.Services.Interfaces.DTO.Profile;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Models;
 using Campus.Services.Interfaces.Interfaces;
@@ -21,15 +21,12 @@ namespace Campus.Master.API.Controllers
     {
         private readonly IProfileService _profileService;
         private readonly ITokenBuilder _jwtBuilder;
-        private readonly ILogger _logger;
 
         public ProfileController(IProfileService profileService,
-                                 ITokenBuilder jwtBuilder,
-                                 ILogger<ProfileController> logger)
+                                 ITokenBuilder jwtBuilder)
         {
             _profileService = profileService;
             _jwtBuilder = jwtBuilder;
-            _logger = logger;
         }
 
         /// <summary>
@@ -47,12 +44,11 @@ namespace Campus.Master.API.Controllers
         /// <response code="200">User exists and is authorized.</response>
         /// <response code="401">User is unauthorized.</response>  
         [HttpGet]
+        [EntryPointLogging(ActionName = "[Profile] Get Profile Information", SenderName = "ProfileController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetProfileInformation()
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Get Profile Information");
-
             var claimsIdentity = User.Identity as ClaimsIdentity;
             var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
 
@@ -102,13 +98,12 @@ namespace Campus.Master.API.Controllers
         /// <response code="400">Form data is invalid.</response>
         [AllowAnonymous]
         [HttpPost("create")]
+        [EntryPointLogging(ActionName = "[Profile] Create Profile", SenderName = "ProfileController")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateProfile(ProfileRegistrationDto profile)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Create Profile @{profile.Login}");
-
             if (profile.Password != profile.ConfirmPassword)
             {
                 return BadRequest(new StateTransfer
@@ -170,14 +165,13 @@ namespace Campus.Master.API.Controllers
         /// <response code="200">New profile created.</response>
         /// <response code="400">Form data is invalid.</response>
         [AllowAnonymous]
+        [EntryPointLogging(ActionName = "[Profile] Authenticate Profile", SenderName = "ProfileController")]
         [HttpPost("auth")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AuthenticateProfile(ProfileAuthenticationDto model)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Authenticate Profile @{model.Email}");
-
             try
             {
                 var claims = await _profileService.VerifyAppUserProfile(new ProfileAuthenticationDto
@@ -227,14 +221,13 @@ namespace Campus.Master.API.Controllers
         /// <response code="400">Edit profile form data is invalid.</response>
         /// <response code="401">User is unauthorized.</response>
         [HttpPut]
+        [EntryPointLogging(ActionName = "[Profile] Edit Profile", SenderName = "ProfileController")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> EditProfile(ProfileEditingDto model)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Edit Profile");
-
             var claimsIdentity = User.Identity as ClaimsIdentity;
             var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
 
@@ -275,13 +268,12 @@ namespace Campus.Master.API.Controllers
         /// <response code="200">Profile is deleted.</response>
         /// <response code="401">User is unauthorized.</response>  
         [HttpDelete]
+        [EntryPointLogging(ActionName = "[Profile] Delete Profile", SenderName = "ProfileController")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> DeleteProfile()
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile");
-
             var claimsIdentity = User.Identity as ClaimsIdentity;
             var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
 

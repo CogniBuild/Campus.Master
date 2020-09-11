@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using System.Net;
 using System.Text.Json;
 
@@ -7,8 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Filters;
 
+using Campus.Master.API.Logging.Messaging;
+
 namespace Campus.Master.API.Filters
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class GlobalExceptionFilterAttribute : Attribute, IExceptionFilter
     {
         private readonly ILogger _logger;
@@ -20,12 +22,10 @@ namespace Campus.Master.API.Filters
         
         public void OnException(ExceptionContext context)
         {
-            var triggerDate = DateTime.Now.ToString("O", new CultureInfo("de-DE"));
-            
-            _logger.LogError(JsonSerializer.Serialize(new
+            _logger.LogError(JsonSerializer.Serialize(new ErrorLoggingMessage
             {
-                Date = triggerDate,
-                Header = "ERROR",
+                Date = DateTime.Now,
+                Header = LoggingHeader.Error.ToString(),
                 Origin = "GlobalExceptionFilter",
                 Message = context.Exception.Message,
                 Trace = context.Exception.StackTrace

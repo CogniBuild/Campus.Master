@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Campus.Master.API.Models;
 using Campus.Master.API.Filters;
 using Campus.Services.Interfaces.DTO.Project;
@@ -22,13 +21,10 @@ namespace Campus.Master.API.Controllers
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
-        private readonly ILogger _logger;
 
-        public ProjectController(IProjectService projectService,
-                                 ILogger<ProjectController> logger)
+        public ProjectController(IProjectService projectService)
         {
             _projectService = projectService;
-            _logger = logger;
         }
 
         /// <summary>
@@ -51,6 +47,7 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="403">Requested count of items exceeded the limit.</response>
         [HttpGet]
+        [EntryPointLogging(ActionName = "[Project] Fetch Projects", SenderName = "ProjectController")]
         [ServiceFilter(typeof(QueryItemsLimiter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -59,8 +56,6 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> FetchProjects([FromQuery] int page, [FromQuery] int items)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Fetch Projects: Page={page}, Items={items}");
-            
             int userId = GetCurrentUserId();
 
             int offset = items * (page - 1);
@@ -108,14 +103,13 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="404">Project with given ID doesn't exist.</response>
         [HttpGet("{id}")]
+        [EntryPointLogging(ActionName = "[Project] Get Project By Id", SenderName = "ProjectController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProjectById(int id)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Get Project By Id #{id}");
-
             try
             {
                 var result = await _projectService.GetProjectById(id);
@@ -157,14 +151,13 @@ namespace Campus.Master.API.Controllers
         /// <response code="400">Form data is invalid.</response>
         /// <response code="401">User is unauthorized.</response>
         [HttpPost]
+        [EntryPointLogging(ActionName = "[Project] Create Project", SenderName = "ProjectController")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> CreateProject(ProjectContentDto project)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Create Project");
-            
             int userId = GetCurrentUserId();
 
             await _projectService.CreateProject(userId, project);
@@ -203,14 +196,13 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="404">Project wasn't found.</response>
         [HttpPut("{id}")]
+        [EntryPointLogging(ActionName = "[Project] Edit Project", SenderName = "ProjectController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EditProject(int id, [FromBody] ProjectContentDto model)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Edit Project #{id}");
-
             try
             {
                 await _projectService.EditProject(id, new ProjectContentDto
@@ -249,13 +241,12 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="404">Project wasn't found.</response>
         [HttpDelete("{id}")]
+        [EntryPointLogging(ActionName = "[Project] Delete Project", SenderName = "ProjectController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteProject(int id)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Delete Profile #{id}");
-            
             try
             {
                 await _projectService.DeleteProject(id);
@@ -294,6 +285,7 @@ namespace Campus.Master.API.Controllers
         /// <response code="403">Requested count of items exceeded the limit.</response>
         /// <response code="404">Project wasn't found.</response>
         [HttpGet("{id}/task")]
+        [EntryPointLogging(ActionName = "[Project] Get Tasks Related To The Project", SenderName = "ProjectController")]
         [ServiceFilter(typeof(QueryItemsLimiter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -304,8 +296,6 @@ namespace Campus.Master.API.Controllers
         public async Task<IActionResult> GetTasksRelatedToTheProject(int id, [FromQuery] int page,
             [FromQuery] int items)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Get Tasks Related To The Project #{id}");
-
             int offset = items * (page - 1);
 
             var taskModels = new List<TaskDto>();
@@ -360,14 +350,13 @@ namespace Campus.Master.API.Controllers
         /// <response code="401">User is unauthorized.</response>
         /// <response code="404">Project wasn't found.</response>
         [HttpPost("{id}/task")]
+        [EntryPointLogging(ActionName = "[Project] Attach Task To The Project", SenderName = "ProjectController")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> AttachTaskToTheProject(int id, [FromBody] TaskContentDto model)
         {
-            _logger.LogInformation($"[{DateTime.Now} INFO] Attach Task To The Project #{id}");
-
             try
             {
                 await _projectService.AddTaskToProject(id, new TaskContentDto
