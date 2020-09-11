@@ -1,23 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { RegisterUser, User } from '../shared/interfaces';
+import { RegisterUser, User, StateTransfer } from '../shared/interfaces';
 import { ConfirmPasswordValidator } from '../shared/confirmed.validator';
 import { RegistrationService } from '../shared/services/registration.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-registration-page',
   templateUrl: './registration-page.component.html',
   styleUrls: ['./registration-page.component.sass'],
 })
-export class RegistrationPageComponent implements OnInit {
+export class RegistrationPageComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   submitted = false;
+  private registerUser$: Subscription = new Subscription();
 
   // private auth: SignInService, private router: Router - add to constructor
   constructor(
@@ -51,6 +54,10 @@ export class RegistrationPageComponent implements OnInit {
     );
   }
 
+  ngOnDestroy(): void {
+    this.registerUser$.unsubscribe();
+  }
+
   submit() {
     this.submitted = true;
     if (this.registerForm.invalid) {
@@ -64,20 +71,12 @@ export class RegistrationPageComponent implements OnInit {
       firstName: this.registerForm.value.first_name,
       lastName: this.registerForm.value.last_name,
     };
-
-    this.router.navigate(['/campus/dashboard']);
-
-    // this.registrationService
-    //  .registerUser(registerUser)
-    //  .subscribe((data: any) => {
-    //    if (data.message) {
-    //      this.registerForm.reset();
-    //    }
-    //  });
-
-    // this.auth.login(user).subscribe(() => {
-    //  this.form.reset();
-    //  this.router.navigate([]);
-    // });
+    this.registerUser$ = this.registrationService
+      .registerUser(registerUser)
+      .subscribe((data: StateTransfer) => {
+        this.registerForm.reset();
+        this.router.navigate(['/campus/dashboard']);
+      }, (errorResponse: HttpErrorResponse) => {
+      });
   }
 }
