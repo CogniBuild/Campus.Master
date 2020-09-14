@@ -9,13 +9,16 @@ using Campus.Infrastructure.Data.EntityFrameworkCore.Repositories;
 using Campus.Infrastructure.Business.Services;
 using Campus.Services.Interfaces.Interfaces;
 
+using Campus.Master.API.Helpers.Contracts;
+using Campus.Master.API.Helpers.Implementations;
+
 namespace Campus.Master.IntegrationTests
 {
     public class BaseTest : IDisposable
     {
-        public ServiceProvider Provider { get; }
+        protected ServiceProvider Provider { get; }
 
-        public BaseTest()
+        protected BaseTest()
         {
             var serviceCollection = new ServiceCollection();
 
@@ -31,6 +34,8 @@ namespace Campus.Master.IntegrationTests
             serviceCollection.AddScoped<IProfileService, ProfileService>();
             serviceCollection.AddScoped<IProjectService, ProjectService>();
             serviceCollection.AddScoped<ITaskService, TaskService>();
+
+            serviceCollection.AddTransient<ITokenBuilder>(builder => new JwtTokenBuilder("test encryption key"));
 
             Provider = serviceCollection.BuildServiceProvider();
         }
