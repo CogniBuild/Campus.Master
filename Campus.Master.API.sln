@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Campus.Services.Interfaces"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Campus.Infrastructure.Data.EntityFrameworkCore", "Src\Campus.Infrastructure.Data.EntityFrameworkCore\Campus.Infrastructure.Data.EntityFrameworkCore.csproj", "{0E3C28A9-E86F-4265-964C-626288CE4A2E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{0FB95748-D31C-47E8-8B93-DBC1796234CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Campus.Master.IntegrationTests", "Test\Campus.Master.IntegrationTests\Campus.Master.IntegrationTests.csproj", "{DA9E68CB-AF98-4921-88EC-FB5E038EB5FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,10 @@ Global
 		{0E3C28A9-E86F-4265-964C-626288CE4A2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E3C28A9-E86F-4265-964C-626288CE4A2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E3C28A9-E86F-4265-964C-626288CE4A2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA9E68CB-AF98-4921-88EC-FB5E038EB5FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA9E68CB-AF98-4921-88EC-FB5E038EB5FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA9E68CB-AF98-4921-88EC-FB5E038EB5FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA9E68CB-AF98-4921-88EC-FB5E038EB5FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,5 +72,6 @@ Global
 		{CD1853B4-2CF3-445B-B474-98D6CE2F3F78} = {6DF4B688-FF8F-4CFD-961F-9AA989BD03BD}
 		{278B45F4-A347-4540-80A0-1B04A93340F0} = {28CA258B-8F72-47EB-BAC8-64C6D743487D}
 		{0E3C28A9-E86F-4265-964C-626288CE4A2E} = {6DF4B688-FF8F-4CFD-961F-9AA989BD03BD}
+		{DA9E68CB-AF98-4921-88EC-FB5E038EB5FE} = {0FB95748-D31C-47E8-8B93-DBC1796234CA}
 	EndGlobalSection
 EndGlobal
