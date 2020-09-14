@@ -13,8 +13,6 @@ namespace Campus.Domain.Core.Models
 
         public string Email { get; set; }
 
-        public string Login { get; set; }
-
         public byte[] PasswordHash { get; set; }
         
         public byte[] PasswordSalt { get; set; }

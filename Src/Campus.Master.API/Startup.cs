@@ -54,6 +54,9 @@ namespace Campus.Master.API
             {
                 options.Filters.Add<GlobalExceptionFilterAttribute>();
             }).AddFluentValidation();
+
+            services.AddScoped<EntryPointLoggingFilter>();
+            services.AddScoped<ApplicationExceptionFilter>();
             
             services.AddSwaggerGen(c =>
             {
@@ -132,11 +135,10 @@ namespace Campus.Master.API
             );
 
             services.AddTransient<IValidator<ProfileRegistrationDto>, ProfileRegistrationValidator>();
-            services.AddTransient<IValidator<ProfileAuthenticationDto>, ProfileAuthenticationValidator>();
             services.AddTransient<IValidator<ProfileEditingDto>, ProfileEditingValidator>();
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

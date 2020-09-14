@@ -2,14 +2,13 @@ using System;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Configuration;
 
 using Campus.Master.API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Campus.Master.API.Filters
 {
-    public class QueryItemsLimiter : Attribute, IAsyncActionFilter
+    public sealed class QueryItemsLimiter : Attribute, IAsyncActionFilter
     {
         private readonly int _limiterValue;
         private const string TargetQueryParameter = "items";

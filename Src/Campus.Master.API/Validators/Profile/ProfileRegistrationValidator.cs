@@ -12,10 +12,6 @@ namespace Campus.Master.API.Validators.Profile
                 .NotNull().WithMessage("Email should not be null")
                 .NotEmpty().WithMessage("Email is required")
                 .EmailAddress().WithMessage("Use the following email pattern example@domain.com");
-            RuleFor(profile => profile.Login)
-                .NotNull().WithMessage("Login should not be null")
-                .NotEmpty().WithMessage("Login is required")
-                .MaximumLength(200).WithMessage("Login length should be < 200 symbols");
             RuleFor(profile => profile.Password)
                 .NotNull().WithMessage("Password should not be null")
                 .NotEmpty().WithMessage("Password is required")
