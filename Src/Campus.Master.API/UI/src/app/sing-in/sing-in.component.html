@@ -2,19 +2,19 @@
   <div class="wrap-center">
     <div class="sign-in">
       <div class="sign-in__img">
-        <img src="/assets/img/sign-in/signIn.png" alt="photo" />
+        <img src="/assets/img/sign-in/signIn.png" alt="photo"/>
         <span class="sign-in__text">Act Learn Upgrade</span>
       </div>
       <div class="sign-in__form">
         <h1 class="sign-in__title">
-          Sign in <br class="sign-in__title_br" />to <span>Campus</span>
+          Sign in <br class="sign-in__title_br"/>to <span>Campus</span>
         </h1>
         <form action="#" [formGroup]="form" (ngSubmit)="submit()">
           <div class="form-control" [ngClass]="{
               invalid: form.get('email').touched && form.get('email').invalid
             }">
             <label for="email" class="email"></label>
-            <input id="email" type="email" placeholder="Email" formControlName="email" />
+            <input id="email" type="email" placeholder="Email" formControlName="email"/>
             <div *ngIf="form.get('email').touched && form.get('email').invalid" class="validation">
               <small *ngIf="form.get('email').errors.required">
                 Email is required
@@ -29,7 +29,7 @@
                 form.get('password').touched && form.get('password').invalid
             }">
             <label for="password" class="password"></label>
-            <input id="password" type="password" placeholder="Password" formControlName="password" />
+            <input id="password" type="password" placeholder="Password" formControlName="password"/>
             <div *ngIf="
                 form.get('password').touched && form.get('password').invalid
               " class="validation">
@@ -51,7 +51,12 @@
             Sign in
           </button>
         </form>
-        <a [routerLink]="['/registration']" class="sign-in__createAcc">Create Account</a>
+        <div class="sign-in__createAcc">
+          <span>
+            Not registered yet ?
+            <a routerLink="/registration">Sign Up</a>
+          </span>
+        </div>
       </div>
     </div>
   </div>

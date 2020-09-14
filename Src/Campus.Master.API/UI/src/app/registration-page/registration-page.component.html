@@ -111,8 +111,11 @@
           </div>
           <button type="submit" class="registration__btn" [disabled]="registerForm.invalid">Register</button>
         </form>
-        <span class="registered">Already registered ? <a [routerLink]="['/']"
-                                                         class="registration__createAcc">Sign In</a></span>
+
+        <div class="registration__createAcc">
+          <span class="registered">Already registered ? <a routerLink="/">Sign In</a></span>
+        </div>
+
       </div>
     </div>
   </div>
