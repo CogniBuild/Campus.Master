@@ -12,11 +12,9 @@ namespace Campus.Master.IntegrationTests.ProfileController
     public class AuthenticateProfileTests : ProfileControllerTest
     {
         [Fact]
-        public async Task ShouldThrowException_WhenUserWithEmailDoesntExist()
+        public async Task ShouldThrowException_WhenUserWithEmailDoesNotExist()
         {
             // Arrange
-            await ConfigureUsers();
-
             var profile = new ProfileAuthenticationDto
             {
                 Email = "example@domain.com",
@@ -32,11 +30,27 @@ namespace Campus.Master.IntegrationTests.ProfileController
         }
         
         [Fact]
-        public async Task ShouldReturnStateTransfer_WhenUserPasswordMatchWithDatabase()
+        public async Task ShouldThrowException_WhenUserPasswordDoesNotMatchWithDatabase()
         {
             // Arrange
-            await ConfigureUsers();
+            var profile = new ProfileAuthenticationDto
+            {
+                Email = "example@gmail.com",
+                Password = "11111111"
+            };
 
+            // Act
+            Func<Task> sutCall = async () => await Sut.AuthenticateProfile(profile);
+
+            // Assert
+            await sutCall.Should().ThrowAsync<ApplicationException>()
+                .WithMessage("Wrong username or password.");
+        }
+        
+        [Fact]
+        public async Task ShouldReturnStateTransfer_WhenUserPasswordMatchesWithDatabase()
+        {
+            // Arrange
             var profile = new ProfileAuthenticationDto
             {
                 Email = "example@gmail.com",
@@ -48,12 +62,6 @@ namespace Campus.Master.IntegrationTests.ProfileController
 
             // Assert
             response.Should().NotBeNull();
-        }
-
-        private async Task ConfigureUsers()
-        {
-            await ClearRecordsAsync();
-            await AddSampleUsers();
         }
     }
 }

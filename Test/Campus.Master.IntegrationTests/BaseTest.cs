@@ -1,5 +1,5 @@
 using System;
-
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +14,7 @@ using Campus.Master.API.Helpers.Implementations;
 
 namespace Campus.Master.IntegrationTests
 {
-    public class BaseTest : IDisposable
+    public class BaseTest : IAsyncDisposable
     {
         protected ServiceProvider Provider { get; }
 
@@ -40,7 +40,13 @@ namespace Campus.Master.IntegrationTests
             Provider = serviceCollection.BuildServiceProvider();
         }
 
-        public void Dispose() =>
-            Provider.Dispose();
+        public async ValueTask DisposeAsync()
+        {
+            await OnDestroyAsync();
+            await Provider.DisposeAsync();
+        }
+
+        protected virtual async Task OnDestroyAsync() =>
+            await Task.CompletedTask;
     }
 }
