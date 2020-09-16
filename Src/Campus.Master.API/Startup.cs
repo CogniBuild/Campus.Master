@@ -136,6 +136,7 @@ namespace Campus.Master.API
 
             services.AddTransient<IValidator<ProfileRegistrationDto>, ProfileRegistrationValidator>();
             services.AddTransient<IValidator<ProfileEditingDto>, ProfileEditingValidator>();
+            services.AddHttpContextAccessor();
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

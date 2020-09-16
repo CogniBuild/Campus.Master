@@ -17,6 +17,7 @@ namespace Campus.Master.IntegrationTests.ProfileController
         protected ProfileControllerTest()
         {
             Sut = new Controller(
+                null,
                 (IProfileService)Provider.GetService(typeof(IProfileService)),
                 (ITokenBuilder)Provider.GetService(typeof(ITokenBuilder)));
 
