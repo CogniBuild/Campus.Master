@@ -9,6 +9,7 @@ using Xunit;
 
 namespace Campus.Master.IntegrationTests.ProfileController
 {
+    [Collection("Authenticate Profile")]
     public class AuthenticateProfileTests : ProfileControllerTest
     {
         [Fact]
