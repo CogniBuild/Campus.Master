@@ -1,10 +1,11 @@
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
 using Campus.Services.Interfaces.Interfaces;
 using Campus.Infrastructure.Data.EntityFrameworkCore.Context;
 using Campus.Master.API.Helpers.Contracts;
-
+using Microsoft.AspNetCore.Http;
 using Controller =  Campus.Master.API.Controllers.ProfileController;
 
 namespace Campus.Master.IntegrationTests.ProfileController
@@ -12,12 +13,12 @@ namespace Campus.Master.IntegrationTests.ProfileController
     public class ProfileControllerTest : BaseTest
     {
         protected Controller Sut { get; }
-        protected CampusContext Context { get; }
+        private CampusContext Context { get; }
 
         protected ProfileControllerTest()
         {
             Sut = new Controller(
-                null,
+                SetIdentityProvider(),
                 (IProfileService)Provider.GetService(typeof(IProfileService)),
                 (ITokenBuilder)Provider.GetService(typeof(ITokenBuilder)));
 
@@ -25,20 +26,40 @@ namespace Campus.Master.IntegrationTests.ProfileController
             
             AddSampleUsers();
         }
+        
+        private IHttpContextAccessor SetIdentityProvider()
+        {
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, "1"),
+                new Claim(ClaimTypes.Role, "1")
+            };
 
-        protected void ClearRecords()
+            var identity = new ClaimsIdentity(claims);
+            var accessor = new HttpContextAccessor
+            {
+                HttpContext = new DefaultHttpContext()
+                {
+                    User = new ClaimsPrincipal(identity)
+                }
+            };
+
+            return accessor;
+        }
+
+        private void ClearRecords()
         {
             Context.Users.RemoveRange(Context.Users.AsEnumerable());
             Context.SaveChanges();
         }
 
-        protected void AddRecord(AppUser user)
+        private void AddRecord(AppUser user)
         {
             Context.Users.Add(user);
             Context.SaveChanges();
         }
 
-        protected void AddSampleUsers()
+        private void AddSampleUsers()
         {
             AddRecord(new AppUser
             {
