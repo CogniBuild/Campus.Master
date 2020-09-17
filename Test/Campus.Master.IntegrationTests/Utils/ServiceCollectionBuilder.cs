@@ -16,12 +16,9 @@ namespace Campus.Master.IntegrationTests.Utils
 {
     public static class ServiceCollectionBuilder
     {
-        public static ServiceProvider BuildCollection()
+        public static ServiceCollection BuildCollection()
         {
             var serviceCollection = new ServiceCollection();
-
-            serviceCollection.AddDbContext<CampusContext>(
-                options => options.UseInMemoryDatabase(databaseName: "CampusDb"));
 
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
             serviceCollection.AddScoped<IAppUserRepository, AppUserRepository>();
@@ -35,7 +32,7 @@ namespace Campus.Master.IntegrationTests.Utils
 
             serviceCollection.AddTransient<ITokenBuilder>(builder => new JwtTokenBuilder("test encryption key"));
 
-            return serviceCollection.BuildServiceProvider();
+            return serviceCollection;
         }
     }
 }

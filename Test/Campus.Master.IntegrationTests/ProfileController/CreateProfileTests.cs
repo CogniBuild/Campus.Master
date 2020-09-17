@@ -1,5 +1,8 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
 using Campus.Infrastructure.Data.EntityFrameworkCore.Context;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.IntegrationTests.Utils;
@@ -20,11 +23,18 @@ namespace Campus.Master.IntegrationTests.ProfileController
         
         public CreateProfileTests()
         {
-            var serviceProvider = ServiceCollectionBuilder.BuildCollection();
+            var collection = ServiceCollectionBuilder.BuildCollection();
+            
+            collection.AddDbContext<CampusContext>(
+                options => options.UseInMemoryDatabase(databaseName: nameof(CreateProfileTests)));
+            
+            var provider = collection.BuildServiceProvider();
+            
             var accessor = ContextAccessorBuilder.Build("1", "1");
-            var profile = ServiceLocator.Get<IProfileService>(serviceProvider);
-            var token = ServiceLocator.Get<ITokenBuilder>(serviceProvider);
-            var context = ServiceLocator.Get<CampusContext>(serviceProvider);
+
+            var profile = ServiceLocator.Get<IProfileService>(provider);
+            var token = ServiceLocator.Get<ITokenBuilder>(provider);
+            var context = ServiceLocator.Get<CampusContext>(provider);
 
             context.AddSampleUsers();
             Accessor = accessor;
