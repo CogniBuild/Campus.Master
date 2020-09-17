@@ -1,4 +1,6 @@
 using System;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using Campus.Infrastructure.Data.EntityFrameworkCore.Context;
 using Campus.Master.API.Helpers.Contracts;
@@ -12,13 +14,13 @@ using Controller =  Campus.Master.API.Controllers.ProfileController;
 
 namespace Campus.Master.IntegrationTests.ProfileController
 {
-    public class AuthenticateProfileTests : IDisposable
+    public class GetProfileInformationTests : IDisposable
     {
         private Controller Sut { get; }
         private IHttpContextAccessor Accessor { get; }
         private CampusContext Context { get; }
         
-        public AuthenticateProfileTests()
+        public GetProfileInformationTests()
         {
             var serviceProvider = ServiceCollectionBuilder.BuildCollection();
             var accessor = ContextAccessorBuilder.Build("1", "1");
@@ -31,58 +33,57 @@ namespace Campus.Master.IntegrationTests.ProfileController
             Context = context;
             Sut = new Controller(accessor, profile, token);
         }
-        
+
         [Fact]
-        public async Task ShouldThrowException_WhenUserWithEmailDoesNotExist()
+        public async Task ShouldThrowException_WhenIdentityHasWrongType()
         {
             // Arrange
-            var profile = new ProfileAuthenticationDto
-            {
-                Email = "example@domain.com",
-                Password = "password"
-            };
-
+            Accessor.HttpContext.User = new ClaimsPrincipal(new GenericIdentity(""));
+            
             // Act
-            Func<Task> sutCall = async () => await Sut.AuthenticateProfile(profile);
+            Func<Task> sutCall = async () => await Sut.GetProfileInformation();
 
             // Assert
             await sutCall.Should().ThrowAsync<ApplicationException>()
-                .WithMessage("Wrong username or password.");
+                .WithMessage("Failed to identify user.");
         }
         
         [Fact]
-        public async Task ShouldThrowException_WhenUserPasswordDoesNotMatchWithDatabase()
+        public async Task ShouldThrowException_WhenIdentityHasNoClaims()
         {
             // Arrange
-            var profile = new ProfileAuthenticationDto
-            {
-                Email = "example@gmail.com",
-                Password = "11111111"
-            };
-
+            Accessor.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[0]));
+            
             // Act
-            Func<Task> sutCall = async () => await Sut.AuthenticateProfile(profile);
+            Func<Task> sutCall = async () => await Sut.GetProfileInformation();
 
             // Assert
             await sutCall.Should().ThrowAsync<ApplicationException>()
-                .WithMessage("Wrong username or password.");
+                .WithMessage("Failed to identify user.");
         }
         
         [Fact]
-        public async Task ShouldReturnStateTransfer_WhenUserPasswordMatchesWithDatabase()
+        public async Task ShouldReturnProfileView_WhenUserExistsInDatabase()
         {
             // Arrange
-            var profile = new ProfileAuthenticationDto
+            Accessor.HttpContext.User = new ClaimsPrincipal(new ClaimsIdentity(new []
             {
-                Email = "example@gmail.com",
-                Password = "A1111111"
-            };
+                new Claim(ClaimTypes.NameIdentifier, "1"),
+                new Claim(ClaimTypes.Role, "1")
+            }));
 
+            var expectedResponse = new ProfileViewDto
+            {
+                Email = "user1@domain.com",
+                FirstName = "Foo",
+                LastName = "Bar"
+            };
+            
             // Act
-            var response = await Sut.AuthenticateProfile(profile);
+            var response = await Sut.GetProfileInformation();
 
             // Assert
-            response.Should().NotBeNull();
+            response.Should().BeEquivalentTo(expectedResponse);
         }
 
         public void Dispose()

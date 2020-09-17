@@ -12,13 +12,11 @@ using Campus.Services.Interfaces.Interfaces;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
 
-namespace Campus.Master.IntegrationTests
+namespace Campus.Master.IntegrationTests.Utils
 {
-    public class BaseTest : IAsyncDisposable
+    public static class ServiceCollectionBuilder
     {
-        protected ServiceProvider Provider { get; }
-
-        protected BaseTest()
+        public static ServiceProvider BuildCollection()
         {
             var serviceCollection = new ServiceCollection();
 
@@ -37,16 +35,7 @@ namespace Campus.Master.IntegrationTests
 
             serviceCollection.AddTransient<ITokenBuilder>(builder => new JwtTokenBuilder("test encryption key"));
 
-            Provider = serviceCollection.BuildServiceProvider();
+            return serviceCollection.BuildServiceProvider();
         }
-
-        public async ValueTask DisposeAsync()
-        {
-            await OnDestroyAsync();
-            await Provider.DisposeAsync();
-        }
-
-        protected virtual async Task OnDestroyAsync() =>
-            await Task.CompletedTask;
     }
 }

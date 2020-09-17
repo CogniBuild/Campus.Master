@@ -1,68 +1,25 @@
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
-using Campus.Services.Interfaces.Interfaces;
 using Campus.Infrastructure.Data.EntityFrameworkCore.Context;
-using Campus.Master.API.Helpers.Contracts;
-using Microsoft.AspNetCore.Http;
-using Controller =  Campus.Master.API.Controllers.ProfileController;
 
-namespace Campus.Master.IntegrationTests.ProfileController
+namespace Campus.Master.IntegrationTests.Utils
 {
-    public class ProfileControllerTest : BaseTest
+    public static class TestContextExtensions
     {
-        protected Controller Sut { get; }
-        private CampusContext Context { get; }
-
-        protected ProfileControllerTest()
+        public static CampusContext AddUser(this CampusContext context, AppUser user)
         {
-            Sut = new Controller(
-                SetIdentityProvider(),
-                (IProfileService)Provider.GetService(typeof(IProfileService)),
-                (ITokenBuilder)Provider.GetService(typeof(ITokenBuilder)));
-
-            Context = (CampusContext) Provider.GetService(typeof(CampusContext));
-            
-            AddSampleUsers();
+            context.Users.Add(user);
+            context.SaveChanges();
+            return context;
         }
-        
-        private IHttpContextAccessor SetIdentityProvider()
+
+        public static CampusContext AddSampleUsers(this CampusContext context)
         {
-            var claims = new[]
+            context.Users.Add(new AppUser
             {
-                new Claim(ClaimTypes.NameIdentifier, "1"),
-                new Claim(ClaimTypes.Role, "1")
-            };
-
-            var identity = new ClaimsIdentity(claims);
-            var accessor = new HttpContextAccessor
-            {
-                HttpContext = new DefaultHttpContext()
-                {
-                    User = new ClaimsPrincipal(identity)
-                }
-            };
-
-            return accessor;
-        }
-
-        private void ClearRecords()
-        {
-            Context.Users.RemoveRange(Context.Users.AsEnumerable());
-            Context.SaveChanges();
-        }
-
-        private void AddRecord(AppUser user)
-        {
-            Context.Users.Add(user);
-            Context.SaveChanges();
-        }
-
-        private void AddSampleUsers()
-        {
-            AddRecord(new AppUser
-            {
+                Id = 1,
+                Name = "Foo",
+                Surname = "Bar",
                 Email = "user1@domain.com",
                 PasswordHash = new byte[] { 167, 139, 163, 99, 136, 221, 199, 4, 0, 198, 231, 121, 40, 148, 77, 
                     45, 137, 23, 24, 51, 101, 207, 90, 148, 57, 29, 213, 120, 92, 47, 19, 
@@ -79,8 +36,11 @@ namespace Campus.Master.IntegrationTests.ProfileController
                     209, 20, 18, 175, 138, 127, 153, 115, 38, 58, 190, 149, 208, 79, 234, 52, 
                     95, 182, 215, 156 }
             });
-            AddRecord(new AppUser
+            context.Users.Add(new AppUser
             {
+                Id = 2,
+                Name = "Foo",
+                Surname = "Bar",
                 Email = "user2@domain.com",
                 PasswordHash = new byte[] { 167, 139, 163, 99, 136, 221, 199, 4, 0, 198, 231, 121, 40, 148, 77, 
                     45, 137, 23, 24, 51, 101, 207, 90, 148, 57, 29, 213, 120, 92, 47, 19, 
@@ -97,8 +57,11 @@ namespace Campus.Master.IntegrationTests.ProfileController
                     209, 20, 18, 175, 138, 127, 153, 115, 38, 58, 190, 149, 208, 79, 234, 52, 
                     95, 182, 215, 156 }
             });
-            AddRecord(new AppUser
+            context.Users.Add(new AppUser
             {
+                Id = 3,
+                Name = "Foo",
+                Surname = "Bar",
                 Email = "user3@domain.com",
                 PasswordHash = new byte[] { 167, 139, 163, 99, 136, 221, 199, 4, 0, 198, 231, 121, 40, 148, 77, 
                     45, 137, 23, 24, 51, 101, 207, 90, 148, 57, 29, 213, 120, 92, 47, 19, 
@@ -115,8 +78,11 @@ namespace Campus.Master.IntegrationTests.ProfileController
                     209, 20, 18, 175, 138, 127, 153, 115, 38, 58, 190, 149, 208, 79, 234, 52, 
                     95, 182, 215, 156 }
             });
-            AddRecord(new AppUser
+            context.Users.Add(new AppUser
             {
+                Id = 4,
+                Name = "Foo",
+                Surname = "Bar",
                 Email = "example@gmail.com",
                 PasswordHash = new byte[] { 167, 139, 163, 99, 136, 221, 199, 4, 0, 198, 231, 121, 40, 148, 77, 
                     45, 137, 23, 24, 51, 101, 207, 90, 148, 57, 29, 213, 120, 92, 47, 19, 
@@ -133,12 +99,17 @@ namespace Campus.Master.IntegrationTests.ProfileController
                     209, 20, 18, 175, 138, 127, 153, 115, 38, 58, 190, 149, 208, 79, 234, 52, 
                     95, 182, 215, 156 }
             });
+            
+            context.SaveChanges();
+
+            return context;
         }
-        
-        protected override async Task OnDestroyAsync()
+
+        public static CampusContext ClearUsers(this CampusContext context)
         {
-            await base.OnDestroyAsync();
-            ClearRecords();
+            context.Users.RemoveRange(context.Users.AsEnumerable());
+            context.SaveChanges();
+            return context;
         }
     }
 }
