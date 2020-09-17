@@ -18,7 +18,6 @@ namespace Campus.Master.IntegrationTests.ProfileController
     public class CreateProfileTests : IDisposable
     {
         private Controller Sut { get; }
-        private IHttpContextAccessor Accessor { get; }
         private CampusContext Context { get; }
         
         public CreateProfileTests()
@@ -37,7 +36,6 @@ namespace Campus.Master.IntegrationTests.ProfileController
             var context = ServiceLocator.Get<CampusContext>(provider);
 
             context.AddSampleUsers();
-            Accessor = accessor;
             Context = context;
             Sut = new Controller(accessor, profile, token);
         }
