@@ -92,6 +92,7 @@
     font-size: 14px
     text-align: center
     color: #C4C4C4
+
     a
       color: #7E57C2
 
@@ -154,10 +155,34 @@ form
   display: block
   text-align: center
   margin-bottom: 20px
+
   a
     font-size: 14px
     color: #7E57C2
+
   +sm
     text-align: end
     font-size: 14px
+
+.loader-02
+  border: 5px solid transparent
+  border-left-color: currentcolor
+  border-right-color: currentcolor
+  border-radius: 50%
+  animation: 1s loader-02 linear infinite
+  width: 9px
+  height: 8.4px
+  margin: 0 14.95px
+
+
+@keyframes loader-02
+  0%
+    transform: rotate(0deg)
+
+  100%
+    transform: rotate(360deg)
+
+
+.none
+  display: none
 

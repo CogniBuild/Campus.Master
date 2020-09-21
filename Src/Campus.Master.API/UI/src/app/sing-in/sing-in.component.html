@@ -48,8 +48,10 @@
             <span class="forgot-pass"><a href="#">Forgot your password ?</a></span>
           </div>
           <button type="submit" class="sign-in__btn" [disabled]="form.invalid">
-            Sign in
+            <span [ngClass]="{'none': spinner}">Sign in</span>
+            <div [ngClass]="{'box loader-02': spinner}"></div>
           </button>
+
         </form>
         <div class="sign-in__createAcc">
           <span>
@@ -61,3 +63,4 @@
     </div>
   </div>
 </div>
+<div></div>
