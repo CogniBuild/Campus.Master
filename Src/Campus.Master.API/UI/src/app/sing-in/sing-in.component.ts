@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {User, StateTransfer} from '../shared/interfaces';
-import {SignInService} from '../shared/services/sign-in.service';
-import {Router} from '@angular/router';
-import {HttpErrorResponse} from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User, StateTransfer } from '../shared/interfaces';
+import { SignInService } from '../shared/services/sign-in.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-sing-in',
@@ -15,7 +15,7 @@ export class SingInComponent implements OnInit {
   error = '';
   spinner: boolean;
 
-  constructor(private auth: SignInService, private router: Router) {
+  constructor(public auth: SignInService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class SingInComponent implements OnInit {
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(6),
-      ]),
+      ])
     });
   }
 
@@ -41,7 +41,8 @@ export class SingInComponent implements OnInit {
         this.router.navigate(['/campus/dashboard']);
       },
       (errorResponse: HttpErrorResponse) => {
-        this.error = errorResponse.error.message;
+        this.spinner = false;
+        this.form.reset({email: user.email});
       }
     );
   }

@@ -109,7 +109,10 @@
               <label for="radio-none" class="registration-radio-value">Can’t say</label>
             </div>
           </div>
-          <button type="submit" class="registration__btn" [disabled]="registerForm.invalid">Register</button>
+          <button type="submit" class="registration__btn" [disabled]="registerForm.invalid">
+            <span [ngClass]="{'none-block': spinner}">Register</span>
+            <div [ngClass]="{'box loader-02': spinner}"></div>
+          </button>
         </form>
 
         <div class="registration__createAcc">

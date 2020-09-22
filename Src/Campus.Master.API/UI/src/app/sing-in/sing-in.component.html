@@ -13,6 +13,9 @@
           <div class="form-control" [ngClass]="{
               invalid: form.get('email').touched && form.get('email').invalid
             }">
+            <div class="validation validation_sign-in" *ngIf="auth.error$ | async as error">
+              {{error}}
+            </div>
             <label for="email" class="email"></label>
             <input id="email" type="email" placeholder="Email" formControlName="email"/>
             <div *ngIf="form.get('email').touched && form.get('email').invalid" class="validation">
@@ -42,16 +45,12 @@
                 characters
               </small>
             </div>
-            <div class="validation center">
-              <small *ngIf="error">{{ error }}</small>
-            </div>
             <span class="forgot-pass"><a href="#">Forgot your password ?</a></span>
           </div>
           <button type="submit" class="sign-in__btn" [disabled]="form.invalid">
-            <span [ngClass]="{'none': spinner}">Sign in</span>
+            <span [ngClass]="{'none-block': spinner}">Sign in</span>
             <div [ngClass]="{'box loader-02': spinner}"></div>
           </button>
-
         </form>
         <div class="sign-in__createAcc">
           <span>
@@ -63,4 +62,4 @@
     </div>
   </div>
 </div>
-<div></div>
+

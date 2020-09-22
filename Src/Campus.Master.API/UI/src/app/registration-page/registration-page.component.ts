@@ -21,13 +21,15 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   submitted = false;
   private registerUser$: Subscription = new Subscription();
+  spinner: boolean;
 
   // private auth: SignInService, private router: Router - add to constructor
   constructor(
     private fb: FormBuilder,
     private registrationService: RegistrationService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
@@ -50,7 +52,7 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
           Validators.minLength(6),
         ]),
       },
-      { validator: ConfirmPasswordValidator.MatchPassword }
+      {validator: ConfirmPasswordValidator.MatchPassword}
     );
   }
 
@@ -59,6 +61,7 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    this.spinner = true;
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
@@ -77,6 +80,8 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
         this.registerForm.reset();
         this.router.navigate(['/campus/dashboard']);
       }, (errorResponse: HttpErrorResponse) => {
+        this.spinner = false;
+        console.log(errorResponse);
       });
   }
 }
