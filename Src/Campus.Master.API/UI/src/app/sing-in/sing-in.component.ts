@@ -41,7 +41,7 @@ export class SingInComponent implements OnInit {
       },
       (errorResponse: HttpErrorResponse) => {
         this.spinner = false;
-        this.form.reset({email: user.email});
+        this.form.reset({ email: user.email});
       }
     );
   }

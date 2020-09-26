@@ -52,7 +52,7 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
           Validators.required,
         ]),
       },
-      {validator: ConfirmPasswordValidator.MatchPassword}
+      { validator: ConfirmPasswordValidator.MatchPassword}
     );
   }
 
