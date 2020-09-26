@@ -13,7 +13,7 @@
           <div class="form-control" [ngClass]="{
               invalid: form.get('email').touched && form.get('email').invalid
             }">
-            <div class="validation validation_sign-in" *ngIf="auth.error$ | async as error">
+            <div class="validation validation_error-with-server" *ngIf="auth.error$ | async as error">
               {{error}}
             </div>
             <label for="email" class="email"></label>

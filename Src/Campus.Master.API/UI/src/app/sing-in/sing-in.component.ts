@@ -12,7 +12,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class SingInComponent implements OnInit {
   form: FormGroup;
-  error = '';
   spinner: boolean;
 
   constructor(public auth: SignInService, private router: Router) {
@@ -23,7 +22,7 @@ export class SingInComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
         Validators.required,
-        Validators.minLength(6),
+        Validators.minLength(8),
       ])
     });
   }

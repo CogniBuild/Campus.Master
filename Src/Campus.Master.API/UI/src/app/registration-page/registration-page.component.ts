@@ -26,7 +26,7 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
   // private auth: SignInService, private router: Router - add to constructor
   constructor(
     private fb: FormBuilder,
-    private registrationService: RegistrationService,
+    public registrationService: RegistrationService,
     private router: Router
   ) {
   }
@@ -40,16 +40,16 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
         ]),
         last_name: new FormControl(null, [
           Validators.required,
-          Validators.pattern('[a-zA-Z ]*'),
+          Validators.pattern('[a-zA-Z]*'),
         ]),
         email: new FormControl(null, [Validators.required, Validators.email]),
         password: new FormControl(null, [
           Validators.required,
-          Validators.minLength(6),
+          Validators.minLength(8),
+          Validators.pattern('(?=.*?[0-9])(?=.*?[A-Z]).{8,}.+')
         ]),
         confirmPassword: new FormControl(null, [
           Validators.required,
-          Validators.minLength(6),
         ]),
       },
       {validator: ConfirmPasswordValidator.MatchPassword}
@@ -81,7 +81,6 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
         this.router.navigate(['/campus/dashboard']);
       }, (errorResponse: HttpErrorResponse) => {
         this.spinner = false;
-        console.log(errorResponse);
       });
   }
 }

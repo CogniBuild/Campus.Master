@@ -9,6 +9,9 @@
         <h1 class="registration__title">Getting started with <span>Campus</span></h1>
         <form action="#" [formGroup]="registerForm" (ngSubmit)="submit()">
           <div class="user-name">
+            <div class="validation validation_error-with-server" *ngIf="registrationService.error$ | async as error">
+              {{error}}
+            </div>
             <div class="form-control"
                  [ngClass]="{ invalid: registerForm.get('first_name').touched && registerForm.get('first_name').invalid }">
               <label for="first-name" class="first-name"></label>
@@ -68,6 +71,10 @@
               <small *ngIf="registerForm.get('password').errors.minlength">
                 Password must contains {{ registerForm.get('password').errors.minlength.requiredLength }} characters
               </small>
+              <small *ngIf="registerForm.get('password').errors.pattern">
+                The password must include at least one capital letter
+              </small>
+
             </div>
           </div>
           <div class="form-control"
@@ -94,18 +101,15 @@
           <div class="radio-group"
                [ngClass]="{ invalid: registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid }">
             <div class="form-control align-center registration-radio">
-              <input id="radio-male" type="radio" name="gender" value="male"
-                     formControlName="gender">
+              <input id="radio-male" type="radio" name="gender" value="male">
               <label for="radio-male" class="registration-radio-value">Male</label>
             </div>
             <div class="form-control align-center registration-radio">
-              <input id="radio-female" type="radio" name="gender" value="female"
-                     formControlName="gender">
+              <input id="radio-female" type="radio" name="gender" value="female">
               <label for="radio-female" class="registration-radio-value">Female</label>
             </div>
             <div class="form-control align-center registration-radio">
-              <input id="radio-none" type="radio" name="gender" value="none"
-                     formControlName="gender">
+              <input id="radio-none" type="radio" name="gender" value="none">
               <label for="radio-none" class="registration-radio-value">Can’t say</label>
             </div>
           </div>
