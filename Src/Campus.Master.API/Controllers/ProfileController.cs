@@ -20,12 +20,15 @@ namespace Campus.Master.API.Controllers
     [Route("api/[controller]")]
     public class ProfileController : ControllerBase
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IProfileService _profileService;
         private readonly ITokenBuilder _jwtBuilder;
 
-        public ProfileController(IProfileService profileService,
+        public ProfileController(IHttpContextAccessor httpContextAccessor,
+                                 IProfileService profileService,
                                  ITokenBuilder jwtBuilder)
         {
+            _httpContextAccessor = httpContextAccessor;
             _profileService = profileService;
             _jwtBuilder = jwtBuilder;
         }
@@ -193,13 +196,17 @@ namespace Campus.Master.API.Controllers
 
         private int GetUserIdFromClaims()
         {
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            var claimedId = claimsIdentity?.Claims.FirstOrDefault()?.Value;
-
-            if (claimedId == null)
-                throw new ApplicationException("Failed to identify claims.");
+            var identity = _httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
             
-            return Convert.ToInt32(claimedId);
+            if (identity == null)
+                throw new ApplicationException("Failed to identify user.");
+            
+            var idClaim = identity.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+            
+            if (idClaim == null)
+                throw new ApplicationException("Failed to identify user.");
+
+            return Convert.ToInt32(idClaim.Value);
         }
     }
 }
