@@ -61,12 +61,12 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         “Email”: “...”,
         ///         “Password”: “...”,
         ///         “ConfirmPassword”: “...”,
         ///         “Email”: “...”,
         ///         “FirstName”: “...”,
-        ///         “LastName”: “...”
+        ///         “LastName”: “...”,
+        ///         “Gender”: “...”
         ///     }
         /// 
         /// </remarks>
@@ -173,7 +173,7 @@ namespace Campus.Master.API.Controllers
         private async Task<StateTransfer> VerifyAppUserAndBuildToken(ProfileAuthenticationDto profile)
         {
             var claims = await _profileService.VerifyAppUserProfile(profile);
-
+            
             return new StateTransfer
             {
                 Message = BuildToken(new ProfileClaimsDto

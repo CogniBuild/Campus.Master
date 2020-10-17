@@ -44,6 +44,7 @@ namespace Campus.Infrastructure.Business.Services
                     PasswordHash = hash,
                     PasswordSalt = salt,
                     RegistrationDate = DateTime.Now,
+                    Gender = registrationDto.Gender
                 });
 
                 await _unitOfWork.CommitAsync();
