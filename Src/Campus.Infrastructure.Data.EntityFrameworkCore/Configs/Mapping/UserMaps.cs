@@ -33,7 +33,6 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
                 .IsRequired();
 
             builder.Property(u => u.Gender)
-                .HasDefaultValue(Gender.CantSay)
                 .HasConversion<string>();
 
             builder.HasOne(u => u.Role)
