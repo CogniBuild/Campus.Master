@@ -94,19 +94,19 @@
           <div class="radio-group"
                [ngClass]="{ invalid: registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid }">
             <div class="form-control align-center registration-radio">
-              <input id="radio-male" type="radio" name="gender" value="male"
+              <input id="radio-male" type="radio" name="gender" value="0"
                      formControlName="gender">
               <label for="radio-male" class="registration-radio-value">Male</label>
             </div>
             <div class="form-control align-center registration-radio">
-              <input id="radio-female" type="radio" name="gender" value="female"
+              <input id="radio-female" type="radio" name="gender" value="1"
                      formControlName="gender">
               <label for="radio-female" class="registration-radio-value">Female</label>
             </div>
             <div class="form-control align-center registration-radio">
-              <input id="radio-none" type="radio" name="gender" value="none"
-                     formControlName="gender">
-              <label for="radio-none" class="registration-radio-value">Can’t say</label>
+              <input id="radio-cantSay" type="radio" name="gender" value="2"
+                     formControlName="gender" checked>
+              <label for="radio-cantSay" class="registration-radio-value">Can’t say</label>
             </div>
           </div>
           <button type="submit" class="registration__btn" [disabled]="registerForm.invalid">Register</button>
