@@ -139,9 +139,9 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         ///
         ///     {
-        ///         “Name”: “...”,
-        ///         “Color”: “...”,
-        ///         “Status”: “...”
+        ///         "Name": "...",
+        ///         "Color": "...",
+        ///         "Status": "..."
         ///     }
         /// 
         /// </remarks>
@@ -182,9 +182,9 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         ///
         ///     {
-        ///         “Name”: “...”,
-        ///         “Color”: “...”,
-        ///         “Status”: “...”
+        ///         "Name": "...",
+        ///         "Color": "...",
+        ///         "Status": "..."
         ///     }
         /// 
         /// </remarks>
@@ -335,10 +335,10 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         ///
         ///     {
-        ///         “Description”: “...”,
-        ///         “Priority”: “...”,
-        ///         “Tag”: “...”,
-        ///         “Deadline”: “...”
+        ///         "Description": "...",
+        ///         "Priority": "...",
+        ///         "Tag": "...",
+        ///         "Deadline": "..."
         ///     }
         ///
         /// </remarks>

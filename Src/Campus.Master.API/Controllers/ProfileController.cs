@@ -61,12 +61,12 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         “Password”: “...”,
-        ///         “ConfirmPassword”: “...”,
-        ///         “Email”: “...”,
-        ///         “FirstName”: “...”,
-        ///         “LastName”: “...”,
-        ///         “Gender”: “...”
+        ///         "Password": "...",
+        ///         "ConfirmPassword": "...",
+        ///         "Email": "...",
+        ///         "FirstName": "...",
+        ///         "LastName": "...",
+        ///         "Gender": "..."
         ///     }
         /// 
         /// </remarks>
@@ -100,8 +100,8 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         “Email”: “...”,
-        ///         “Password”: “...”
+        ///         "Email": "...",
+        ///         "Password": "..."
         ///     }
         /// 
         /// </remarks>
@@ -129,8 +129,8 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         “FirstName”: “...”,
-        ///         “LastName”: “...”
+        ///         "FirstName": "...",
+        ///         "LastName": "..."
         ///     }
         /// 
         /// </remarks>
