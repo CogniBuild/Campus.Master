@@ -49,9 +49,12 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(6),
         ]),
+        gender: new FormControl(null),
       },
       { validator: ConfirmPasswordValidator.MatchPassword }
     );
+
+    this.registerForm.patchValue({ gender: '2', tc: true });
   }
 
   ngOnDestroy(): void {
@@ -64,12 +67,12 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
       return;
     }
     const registerUser: RegisterUser = {
-      login: this.registerForm.value.email,
       password: this.registerForm.value.password,
       confirmPassword: this.registerForm.value.confirmPassword,
       email: this.registerForm.value.email,
       firstName: this.registerForm.value.first_name,
       lastName: this.registerForm.value.last_name,
+      gender: Number(this.registerForm.value.gender)
     };
     this.registerUser$ = this.registrationService
       .registerUser(registerUser)

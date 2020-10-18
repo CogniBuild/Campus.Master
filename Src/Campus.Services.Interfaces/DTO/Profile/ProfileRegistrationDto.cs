@@ -1,3 +1,5 @@
+using Campus.Domain.Core.Models;
+
 namespace Campus.Services.Interfaces.DTO.Profile
 {
     public class ProfileRegistrationDto
@@ -7,5 +9,6 @@ namespace Campus.Services.Interfaces.DTO.Profile
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public Gender Gender { get; set; }
     }
 }

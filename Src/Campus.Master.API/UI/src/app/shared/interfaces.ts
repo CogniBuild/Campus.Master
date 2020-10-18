@@ -4,12 +4,12 @@ export interface User {
 }
 
 export interface RegisterUser {
-  login: string;
   password: string;
   confirmPassword: string;
   email: string;
   firstName: string;
   lastName: string;
+  gender: number;
 }
 
 export interface StateTransfer {
