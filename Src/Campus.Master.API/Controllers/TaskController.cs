@@ -136,10 +136,10 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         ///
         ///     {
-        ///         “Description”: “...”,
-        ///         “Priority”: “...”,
-        ///         “Tag”: “...”,
-        ///         “Deadline”: “...”
+        ///         "Description": "...",
+        ///         "Priority": "...",
+        ///         "Tag": "...",
+        ///         "Deadline": "..."
         ///     }
         /// 
         /// </remarks>

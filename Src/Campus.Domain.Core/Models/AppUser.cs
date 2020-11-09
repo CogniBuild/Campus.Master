@@ -24,5 +24,7 @@ namespace Campus.Domain.Core.Models
         public Role Role { get; set; }
 
         public ICollection<Project> Projects { get; set; }
+
+        public Gender Gender { get; set; }
     }
 }

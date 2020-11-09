@@ -25,7 +25,7 @@ namespace Campus.Infrastructure.Business.Services
         public async Task CreateProfileAsync(ProfileRegistrationDto registrationDto)
         {
             if (registrationDto.Password != registrationDto.ConfirmPassword)
-                throw new ApplicationException("Wrong username or password.");
+                throw new ApplicationException("Wrong email or password.");
             
             var appUser = await _appUserRepository.GetAppUserByEmailAsync(registrationDto.Email);
             
@@ -44,6 +44,7 @@ namespace Campus.Infrastructure.Business.Services
                     PasswordHash = hash,
                     PasswordSalt = salt,
                     RegistrationDate = DateTime.Now,
+                    Gender = registrationDto.Gender
                 });
 
                 await _unitOfWork.CommitAsync();
@@ -74,10 +75,10 @@ namespace Campus.Infrastructure.Business.Services
             var appUser = await _appUserRepository.GetAppUserByEmailAsync(model.Email);
             
             if (appUser == null)
-                throw new ApplicationException("Wrong username or password.");
+                throw new ApplicationException("Wrong email or password.");
 
             if (!_authenticationService.VerifyPassword(model.Password, appUser.PasswordHash, appUser.PasswordSalt))
-                throw new ApplicationException("Wrong username or password.");
+                throw new ApplicationException("Wrong email or password.");
             
             return new ProfileClaimsDto
             {
