@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User, StateTransfer } from '../shared/interfaces';
 import { SignInService } from '../shared/services/sign-in.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sing-in',
   templateUrl: './sing-in.component.html',
   styleUrls: ['./sing-in.component.sass'],
 })
-export class SingInComponent implements OnInit {
+export class SingInComponent implements OnInit, OnDestroy {
   form: FormGroup;
   spinner: boolean;
+  errorMessage: string;
+
+  private signInUser$: Subscription = new Subscription();
 
   constructor(public auth: SignInService, private router: Router) {
   }
@@ -27,6 +31,10 @@ export class SingInComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.signInUser$.unsubscribe();
+  }
+
   submit() {
     this.spinner = true;
     const user: User = {
@@ -34,12 +42,14 @@ export class SingInComponent implements OnInit {
       password: this.form.value.password,
     };
 
-    this.auth.login(user).subscribe(
+    this.signInUser$ = this.auth.login(user).subscribe(
       (data: StateTransfer) => {
+        localStorage.setItem('token', data.message);
         this.form.reset();
         this.router.navigate(['/campus/dashboard']);
       },
       (errorResponse: HttpErrorResponse) => {
+        this.errorMessage = errorResponse.message;
         this.spinner = false;
         this.form.reset({ email: user.email});
       }

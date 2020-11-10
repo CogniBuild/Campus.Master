@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { RegisterUser, User, StateTransfer } from '../shared/interfaces';
+import { RegisterUser, StateTransfer } from '../shared/interfaces';
 import { ConfirmPasswordValidator } from '../shared/confirmed.validator';
 import { RegistrationService } from '../shared/services/registration.service';
 import { Router } from '@angular/router';
@@ -20,13 +20,14 @@ import { Subscription } from 'rxjs';
 export class RegistrationPageComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   submitted = false;
-  private registerUser$: Subscription = new Subscription();
   spinner: boolean;
+  errorMessage: string;
 
-  // private auth: SignInService, private router: Router - add to constructor
+  private registerUser$: Subscription = new Subscription();
+
   constructor(
     private fb: FormBuilder,
-    public registrationService: RegistrationService,
+    private registrationService: RegistrationService,
     private router: Router
   ) {
   }
@@ -80,9 +81,11 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
     this.registerUser$ = this.registrationService
       .registerUser(registerUser)
       .subscribe((data: StateTransfer) => {
+        localStorage.setItem('token', data.message);
         this.registerForm.reset();
         this.router.navigate(['/campus/dashboard']);
       }, (errorResponse: HttpErrorResponse) => {
+        this.errorMessage = errorResponse.message;
         this.spinner = false;
       });
   }
