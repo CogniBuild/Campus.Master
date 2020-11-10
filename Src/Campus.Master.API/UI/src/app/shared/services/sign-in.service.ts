@@ -7,7 +7,7 @@ import { Observable, Subject, throwError } from 'rxjs';
 
 @Injectable()
 export class SignInService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(user: User): Observable<StateTransfer> {
     return this.http.post<StateTransfer>(environment.authenticateProfile, user);
