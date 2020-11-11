@@ -73,16 +73,21 @@
 
 
   &__btn
+    min-width: 180px
+    min-height: 40px
     font-size: 16px
     color: #ffffff
     background-color: #7E57C2
     border: none
-    padding: 11px 66px
     border-radius: 8px
     display: block
     margin: 0 auto
     cursor: pointer
     outline: none
+    +sm
+      min-width: 170px
+      min-height: 50px
+      font-size: 20px
 
   &__btn:disabled
     cursor: not-allowed
@@ -92,6 +97,7 @@
     font-size: 14px
     text-align: center
     color: #C4C4C4
+
     a
       color: #7E57C2
 
@@ -136,28 +142,17 @@ form
     background-size: contain
     transform: translate(11px, 11px)
 
-.validation
-  color: red
-  font-size: 14px
-  width: 327px
-  position: absolute
-  top: 40px
-  +xl
-    width: 250px
-  +lg
-    width: 200px
-  +ms
-    width: calc(100% - 44px)
-
-
 .forgot-pass
   display: block
   text-align: center
   margin-bottom: 20px
+
   a
     font-size: 14px
     color: #7E57C2
+
   +sm
     text-align: end
     font-size: 14px
+
 

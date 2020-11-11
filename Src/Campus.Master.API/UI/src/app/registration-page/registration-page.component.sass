@@ -80,16 +80,21 @@
 
 
   &__btn
+    min-width: 180px
+    min-height: 40px
     font-size: 16px
     color: #ffffff
     background-color: #7E57C2
     border: none
-    padding: 6px 66px
     border-radius: 8px
     display: block
     margin: 0 auto
     cursor: pointer
     outline: none
+    +sm
+      min-width: 170px
+      min-height: 50px
+      font-size: 20px
 
   &__btn:disabled
     cursor: not-allowed
@@ -176,16 +181,8 @@ form
     background-size: contain
     transform: translate(11px, 8px)
 
-.validation
-  color: red
-  font-size: 14px
-  width: 100%
-  position: absolute
-  top: 35px
-//+ms
-//  width: calc(100% - 44px)
-
 .user-name
+  position: relative
   display: flex
   justify-content: space-between
   +sm
@@ -200,6 +197,12 @@ form
     max-width: 159px
     +md
       max-width: none
+
+.validation
+  top: 35px
+
+  &_error-with-server
+    top: -23px
 
 
 .radio-group

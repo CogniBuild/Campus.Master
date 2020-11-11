@@ -9,6 +9,9 @@
         <h1 class="registration__title">Getting started with <span>Campus</span></h1>
         <form action="#" [formGroup]="registerForm" (ngSubmit)="submit()">
           <div class="user-name">
+            <div class="validation validation_error-with-server" *ngIf="errorMessage">
+              {{errorMessage}}
+            </div>
             <div class="form-control"
                  [ngClass]="{ invalid: registerForm.get('first_name').touched && registerForm.get('first_name').invalid }">
               <label for="first-name" class="first-name"></label>
@@ -68,6 +71,10 @@
               <small *ngIf="registerForm.get('password').errors.minlength">
                 Password must contains {{ registerForm.get('password').errors.minlength.requiredLength }} characters
               </small>
+              <small *ngIf="registerForm.get('password').errors.pattern">
+                The password must include at least one capital letter
+              </small>
+
             </div>
           </div>
           <div class="form-control"
@@ -109,7 +116,10 @@
               <label for="radio-cantSay" class="registration-radio-value">Can’t say</label>
             </div>
           </div>
-          <button type="submit" class="registration__btn" [disabled]="registerForm.invalid">Register</button>
+          <button type="submit" class="registration__btn" [disabled]="registerForm.invalid">
+            <span [ngClass]="{'none-block': spinner}">Register</span>
+            <div [ngClass]="{'box loader-02': spinner}"></div>
+          </button>
         </form>
 
         <div class="registration__createAcc">

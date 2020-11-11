@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { RegisterUser, User, StateTransfer } from '../shared/interfaces';
+import { RegisterUser, StateTransfer } from '../shared/interfaces';
 import { ConfirmPasswordValidator } from '../shared/confirmed.validator';
 import { RegistrationService } from '../shared/services/registration.service';
 import { Router } from '@angular/router';
@@ -20,14 +20,17 @@ import { Subscription } from 'rxjs';
 export class RegistrationPageComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   submitted = false;
+  spinner: boolean;
+  errorMessage: string;
+
   private registerUser$: Subscription = new Subscription();
 
-  // private auth: SignInService, private router: Router - add to constructor
   constructor(
     private fb: FormBuilder,
     private registrationService: RegistrationService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
@@ -38,20 +41,20 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
         ]),
         last_name: new FormControl(null, [
           Validators.required,
-          Validators.pattern('[a-zA-Z ]*'),
+          Validators.pattern('[a-zA-Z]*'),
         ]),
         email: new FormControl(null, [Validators.required, Validators.email]),
         password: new FormControl(null, [
           Validators.required,
-          Validators.minLength(6),
+          Validators.minLength(8),
+          Validators.pattern('(?=.*?[0-9])(?=.*?[A-Z]).{8,}.+')
         ]),
         confirmPassword: new FormControl(null, [
           Validators.required,
-          Validators.minLength(6),
         ]),
         gender: new FormControl(null),
       },
-      { validator: ConfirmPasswordValidator.MatchPassword }
+      { validator: ConfirmPasswordValidator.MatchPassword}
     );
 
     this.registerForm.patchValue({ gender: '2', tc: true });
@@ -62,6 +65,7 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    this.spinner = true;
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
@@ -77,9 +81,12 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
     this.registerUser$ = this.registrationService
       .registerUser(registerUser)
       .subscribe((data: StateTransfer) => {
+        localStorage.setItem('token', data.message);
         this.registerForm.reset();
         this.router.navigate(['/campus/dashboard']);
       }, (errorResponse: HttpErrorResponse) => {
+        this.errorMessage = errorResponse.error;
+        this.spinner = false;
       });
   }
 }
