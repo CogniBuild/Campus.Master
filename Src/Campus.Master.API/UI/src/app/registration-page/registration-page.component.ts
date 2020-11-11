@@ -85,7 +85,7 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
         this.registerForm.reset();
         this.router.navigate(['/campus/dashboard']);
       }, (errorResponse: HttpErrorResponse) => {
-        this.errorMessage = errorResponse.message;
+        this.errorMessage = errorResponse.error;
         this.spinner = false;
       });
   }

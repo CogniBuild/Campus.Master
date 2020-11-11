@@ -49,7 +49,7 @@ export class SingInComponent implements OnInit, OnDestroy {
         this.router.navigate(['/campus/dashboard']);
       },
       (errorResponse: HttpErrorResponse) => {
-        this.errorMessage = errorResponse.message;
+        this.errorMessage = errorResponse.error;
         this.spinner = false;
         this.form.reset({ email: user.email});
       }
