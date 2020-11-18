@@ -47,7 +47,7 @@
             </div>
             <span class="forgot-pass"><a href="#">Forgot your password ?</a></span>
           </div>
-          <button type="submit" class="sign-in__btn" [disabled]="form.invalid">
+          <button type="submit" class="sign-in__btn" [disabled]="form.invalid && form.touched">
             <span [ngClass]="{'none-block': spinner}">Sign in</span>
             <div [ngClass]="{'box loader-02': spinner}"></div>
           </button>
