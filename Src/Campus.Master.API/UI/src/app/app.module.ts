@@ -26,6 +26,7 @@ import { RegistrationService } from './shared/services/registration.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.inteceptor';
 import { ProjectService } from './shared/services/project.service';
+import { FirstErrorPipe } from './pipes/first-error.pipe';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ProjectService } from './shared/services/project.service';
     EditProjectDialogComponent,
     StatCardComponent,
     FooterComponent,
+    FirstErrorPipe,
   ],
   imports: [
     HttpClientModule,

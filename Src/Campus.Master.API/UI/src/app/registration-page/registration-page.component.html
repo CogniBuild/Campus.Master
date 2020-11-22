@@ -16,16 +16,20 @@
                  [ngClass]="{ invalid: registerForm.get('first_name').touched && registerForm.get('first_name').invalid }">
               <label for="first-name" class="first-name"></label>
               <input id="first-name" type="text" placeholder="First Name" formControlName="first_name">
-              <div
-                *ngIf="registerForm.get('first_name').touched && registerForm.get('first_name').invalid"
+              <div *ngIf="registerForm.get('first_name').touched && registerForm.get('first_name').invalid"
                 class="validation">
-                <small *ngIf="registerForm.get('first_name').errors.required">
+                <div [ngSwitch]="registerForm.get('first_name').errors | firstError">
+                  <small *ngSwitchCase="'required'">
                   First name is required
                 </small>
-                <small *ngIf="registerForm.get('first_name').errors.pattern">
-                  Only english letters
+                  <small *ngSwitchCase="'maxlength'">
+                    First name > 50 symbols
                 </small>
+                  <small *ngSwitchCase="'pattern'">
+                    Only English letters
+                  </small>
               </div>
+            </div>
             </div>
             <div class="form-control"
                  [ngClass]="{ invalid: registerForm.get('last_name').touched && registerForm.get('last_name').invalid }">
