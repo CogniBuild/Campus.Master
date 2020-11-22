@@ -42,7 +42,8 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
         ]),
         last_name: new FormControl(null, [
           Validators.required,
-          Validators.pattern('[a-zA-Z]*'),
+          Validators.maxLength(50),
+          Validators.pattern('[a-zA-Z]*')
         ]),
         email: new FormControl(null, [Validators.required, Validators.email]),
         password: new FormControl(null, [
