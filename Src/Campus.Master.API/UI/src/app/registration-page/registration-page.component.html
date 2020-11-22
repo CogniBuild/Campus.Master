@@ -72,17 +72,21 @@
             <input id="password" type="password" placeholder="Password" formControlName="password">
             <div
               *ngIf="registerForm.get('password').touched && registerForm.get('password').invalid"
-              class="validation">
-              <small *ngIf="registerForm.get('password').errors.required">
+              class="validation"> 
+              <div [ngSwitch]="registerForm.get('password').errors | firstError">
+              <small *ngSwitchCase="'required'">
                 Password is required
               </small>
-              <small *ngIf="registerForm.get('password').errors.minlength">
-                Password must contains {{ registerForm.get('password').errors.minlength.requiredLength }} characters
+              <small *ngSwitchCase="'minlength'">
+                Password length should be > {{ registerForm.get('password').errors.minlength.requiredLength }} symbols                
               </small>
-              <small *ngIf="registerForm.get('password').errors.pattern">
-                The password must include at least one capital letter
+              <small *ngSwitchCase="'maxlength'">
+                Password > {{ registerForm.get('password').errors.maxlength.requiredLength }} symbols                
               </small>
-
+              <small *ngSwitchCase="'pattern'">
+                Add at least one symbol in upper case & one digit
+              </small>
+            </div>             
             </div>
           </div>
           <div class="form-control"
@@ -99,10 +103,6 @@
               </small>
               <small *ngIf="registerForm.get('confirmPassword').errors.required">
                 Password is required
-              </small>
-              <small *ngIf="registerForm.get('confirmPassword').errors.minlength">
-                Password must contains {{ registerForm.get('confirmPassword').errors.minlength.requiredLength }}
-                characters
               </small>
             </div>
           </div>
