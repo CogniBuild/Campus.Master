@@ -26,7 +26,7 @@
                     First name > 50 symbols
                 </small>
                   <small *ngSwitchCase="'pattern'">
-                    Only English letters
+                    Only Latin characters
                   </small>
               </div>
             </div>
@@ -45,7 +45,7 @@
                     Last name > 50 symbols
                 </small>
                   <small *ngSwitchCase="'pattern'">
-                    Only English letters
+                    Only Latin characters
                   </small>
               </div>
             </div>
@@ -97,12 +97,12 @@
             <div
               *ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid"
               class="validation">
+              <small *ngIf="registerForm.get('confirmPassword').errors.required">
+                Password is required
+              </small>
               <small *ngIf="registerForm.get('confirmPassword').errors &&
                 registerForm.get('confirmPassword').errors.ConfirmPassword">
                 Passwords don't match
-              </small>
-              <small *ngIf="registerForm.get('confirmPassword').errors.required">
-                Password is required
               </small>
             </div>
           </div>
