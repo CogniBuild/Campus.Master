@@ -50,7 +50,7 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(100),
-          Validators.pattern('(?=.*?[0-9])(?=.*?[A-Z]).{8,}.+')
+          Validators.pattern('(?=.*[0-9])(?=.*[A-Z]).{8,}')
         ]),
         confirmPassword: new FormControl(null, [
           Validators.required,
