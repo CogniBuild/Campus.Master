@@ -37,24 +37,27 @@ export class RegistrationPageComponent implements OnInit, OnDestroy {
       {
         first_name: new FormControl(null, [
           Validators.required,
-          Validators.pattern('[a-zA-Z ]*'),
+          Validators.maxLength(50),
+          Validators.pattern('[a-zA-Z]*')
         ]),
         last_name: new FormControl(null, [
           Validators.required,
-          Validators.pattern('[a-zA-Z]*'),
+          Validators.maxLength(50),
+          Validators.pattern('[a-zA-Z]*')
         ]),
         email: new FormControl(null, [Validators.required, Validators.email]),
         password: new FormControl(null, [
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern('(?=.*?[0-9])(?=.*?[A-Z]).{8,}.+')
+          Validators.maxLength(100),
+          Validators.pattern('(?=.*[0-9])(?=.*[A-Z]).{8,}')
         ]),
         confirmPassword: new FormControl(null, [
           Validators.required,
         ]),
         gender: new FormControl(null),
       },
-      { validator: ConfirmPasswordValidator.MatchPassword}
+      { validator: ConfirmPasswordValidator.MatchPassword }
     );
 
     this.registerForm.patchValue({ gender: '2', tc: true });

@@ -16,32 +16,40 @@
                  [ngClass]="{ invalid: registerForm.get('first_name').touched && registerForm.get('first_name').invalid }">
               <label for="first-name" class="first-name"></label>
               <input id="first-name" type="text" placeholder="First Name" formControlName="first_name">
-              <div
-                *ngIf="registerForm.get('first_name').touched && registerForm.get('first_name').invalid"
+              <div *ngIf="registerForm.get('first_name').touched && registerForm.get('first_name').invalid"
                 class="validation">
-                <small *ngIf="registerForm.get('first_name').errors.required">
+                <div [ngSwitch]="registerForm.get('first_name').errors | firstError">
+                  <small *ngSwitchCase="'required'">
                   First name is required
                 </small>
-                <small *ngIf="registerForm.get('first_name').errors.pattern">
-                  Only english letters
+                  <small *ngSwitchCase="'maxlength'">
+                    First name > 50 symbols
                 </small>
+                  <small *ngSwitchCase="'pattern'">
+                    Only Latin characters
+                  </small>
               </div>
+            </div>
             </div>
             <div class="form-control"
                  [ngClass]="{ invalid: registerForm.get('last_name').touched && registerForm.get('last_name').invalid }">
               <label for="last-name" class="last-name"></label>
               <input id="last-name" type="text" placeholder="Last Name" formControlName="last_name">
-              <div
-                *ngIf="registerForm.get('last_name').touched && registerForm.get('last_name').invalid"
+              <div *ngIf="registerForm.get('last_name').touched && registerForm.get('last_name').invalid"
                 class="validation">
-                <small *ngIf="registerForm.get('last_name').errors.required">
+                <div [ngSwitch]="registerForm.get('last_name').errors | firstError">
+                  <small *ngSwitchCase="'required'">
                   Last name is required
                 </small>
-                <small *ngIf="registerForm.get('last_name').errors.pattern">
-                  Only english letters
+                  <small *ngSwitchCase="'maxlength'">
+                    Last name > 50 symbols
                 </small>
+                  <small *ngSwitchCase="'pattern'">
+                    Only Latin characters
+                  </small>
               </div>
             </div>
+          </div>
           </div>
           <div class="form-control"
                [ngClass]="{ invalid: registerForm.get('email').touched && registerForm.get('email').invalid }">
@@ -54,7 +62,7 @@
                 Email is required
               </small>
               <small *ngIf="registerForm.get('email').errors.email">
-                Please, enter the correct email type
+                Follow this email pattern example@domain.com
               </small>
             </div>
           </div>
@@ -64,17 +72,21 @@
             <input id="password" type="password" placeholder="Password" formControlName="password">
             <div
               *ngIf="registerForm.get('password').touched && registerForm.get('password').invalid"
-              class="validation">
-              <small *ngIf="registerForm.get('password').errors.required">
+              class="validation"> 
+              <div [ngSwitch]="registerForm.get('password').errors | firstError">
+              <small *ngSwitchCase="'required'">
                 Password is required
               </small>
-              <small *ngIf="registerForm.get('password').errors.minlength">
-                Password must contains {{ registerForm.get('password').errors.minlength.requiredLength }} characters
+              <small *ngSwitchCase="'minlength'">
+                Password length should be > {{ registerForm.get('password').errors.minlength.requiredLength }} symbols                
               </small>
-              <small *ngIf="registerForm.get('password').errors.pattern">
-                The password must include at least one capital letter
+              <small *ngSwitchCase="'maxlength'">
+                Password > {{ registerForm.get('password').errors.maxlength.requiredLength }} symbols                
               </small>
-
+              <small *ngSwitchCase="'pattern'">
+                Add at least one symbol in upper case & one digit
+              </small>
+            </div>             
             </div>
           </div>
           <div class="form-control"
@@ -85,16 +97,12 @@
             <div
               *ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid"
               class="validation">
-              <small *ngIf="registerForm.get('confirmPassword').errors &&
-                registerForm.get('confirmPassword').errors.ConfirmPassword">
-                Passwords don't match
-              </small>
               <small *ngIf="registerForm.get('confirmPassword').errors.required">
                 Password is required
               </small>
-              <small *ngIf="registerForm.get('confirmPassword').errors.minlength">
-                Password must contains {{ registerForm.get('confirmPassword').errors.minlength.requiredLength }}
-                characters
+              <small *ngIf="registerForm.get('confirmPassword').errors &&
+                registerForm.get('confirmPassword').errors.ConfirmPassword">
+                Passwords don't match
               </small>
             </div>
           </div>
