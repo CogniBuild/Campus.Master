@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProjectModel } from 'src/app/model/Project';
+import { Project } from 'src/app/model/Project';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StateTransfer } from '../interfaces';
@@ -12,10 +12,10 @@ export class ProjectService {
 
   constructor(private http: HttpClient) { }
 
-  getAllUserProjects(page: number, items: number): Observable<ProjectModel[]> {
+  getAllUserProjects(page: number, items: number): Observable<Project[]> {
     const uri: string = environment.projects + `?page=${page}&items=${items}`;
 
-    return this.http.get<ProjectModel[]>(uri);
+    return this.http.get<Project[]>(uri);
   }
 
   createNewProject(projectName: string) {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { ProjectModel } from '../../../model/Project';
+import { Project } from '../../../model/Project';
 import { MatDialog } from '@angular/material/dialog';
 import { OperType } from '../../../dialog/OperType';
 import { EditProjectDialogComponent } from '../../../dialog/edit-project-dialog/edit-project-dialog.component';
@@ -21,16 +21,16 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   @Input()
-  projects: ProjectModel[];
+  projects: Project[];
 
   @Input()
-  selectedProject: ProjectModel;
+  selectedProject: Project;
 
   @Output()
-  selectCategory = new EventEmitter<ProjectModel>();
+  selectCategory = new EventEmitter<Project>();
 
   @Output()
-  updateCategory = new EventEmitter<ProjectModel>();
+  updateCategory = new EventEmitter<Project>();
 
   @Output()
   addProject = new EventEmitter<string>();
@@ -47,7 +47,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.getAllUserProjects$.unsubscribe();
   }
 
-  getProjectTasks(project: ProjectModel) {
+  getProjectTasks(project: Project) {
     if (this.selectedProject === project) {
       return;
     }

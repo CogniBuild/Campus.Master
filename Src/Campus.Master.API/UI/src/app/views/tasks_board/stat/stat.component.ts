@@ -11,7 +11,7 @@ import { DataHandlerService } from '../../../shared/services/data-handler.servic
 import { Task } from 'src/app/model/task';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
-import { ProjectModel } from '../../../model/Project';
+import { Project } from '../../../model/Project';
 import { Status } from '../../../model/status';
 
 @Component({
@@ -29,7 +29,7 @@ export class StatComponent implements OnInit, OnChanges {
   tasks: Task[];
   test: [];
 
-  @Input() selectedProject: ProjectModel;
+  @Input() selectedProject: Project;
 
   @Output() addTask = new EventEmitter<Task>();
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ProjectModel } from '../../../model/Project';
+import { Project } from '../../../model/Project';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
 import { Task } from '../../../model/task';
 
@@ -10,9 +10,9 @@ import { Task } from '../../../model/task';
   encapsulation: ViewEncapsulation.None,
 })
 export class TaskListLayoutComponent implements OnInit {
-  projects: ProjectModel[];
+  projects: Project[];
   tasks: Task[];
-  selectedProject: ProjectModel = null;
+  selectedProject: Project = null;
   searchCategoryText = '';
 
   constructor(private dataHandlerService: DataHandlerService) { }
@@ -25,7 +25,7 @@ export class TaskListLayoutComponent implements OnInit {
     this.onSelectCategory(null);
   }
 
-  onSelectCategory(category: ProjectModel) {
+  onSelectCategory(category: Project) {
     this.selectedProject = category;
 
     this.dataHandlerService
@@ -55,16 +55,15 @@ export class TaskListLayoutComponent implements OnInit {
     });
   }
 
-  onUpdateCategory(category: ProjectModel) {
+  onUpdateCategory(category: Project) {
     this.dataHandlerService.updateCategory(category).subscribe(() => {
       this.onSearchCategory(this.searchCategoryText);
     });
   }
 
   onAddCategory(title: string) {
-    this.dataHandlerService
-      .addCategory(title)
-      .subscribe(() => this.updateCategories());
+    debugger
+    this.projects.push(new Project(null, title, null, 1));
   }
 
   private updateCategories() {

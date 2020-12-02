@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../../../model/task';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { ProjectModel } from '../../../model/Project';
+import { Project } from '../../../model/Project';
 import { zip } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ import { zip } from 'rxjs';
 export class TaskBoardLayoutComponent implements OnInit {
 
   tasks: Task[];
-  selectedProject: ProjectModel = null;
+  selectedProject: Project = null;
   searchTaskText = '';
   statusFilter: boolean;
 

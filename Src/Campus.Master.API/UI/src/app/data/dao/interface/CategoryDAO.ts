@@ -1,9 +1,9 @@
 import { CommonDAO } from './CommonDAO';
 import { Observable } from 'rxjs';
-import { ProjectModel } from '../../../model/Project';
+import { Project } from '../../../model/Project';
 
-export interface CategoryDAO extends CommonDAO<ProjectModel> {
+export interface CategoryDAO extends CommonDAO<Project> {
 
-  search(title: string): Observable<ProjectModel[]>;
+  search(title: string): Observable<Project[]>;
 
 }
