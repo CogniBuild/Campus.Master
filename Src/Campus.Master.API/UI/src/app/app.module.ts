@@ -58,7 +58,7 @@ import { FirstErrorPipe } from './pipes/first-error.pipe';
     BrowserAnimationsModule,
   ],
   providers: [SignInService, RegistrationService, ProjectService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
-  entryComponents: [EditTaskDialogComponent, ConfirmDialogComponent],
+  entryComponents: [EditProjectDialogComponent, EditTaskDialogComponent, ConfirmDialogComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
