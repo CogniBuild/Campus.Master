@@ -25,7 +25,7 @@ import { RegistrationService } from './shared/services/registration.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './auth/http.token.inteceptor';
 import { ProjectService } from './shared/services/project.service';
-import { FirstErrorPipe } from './pipes/first-error.pipe';
+import { FirstErrorPipe } from './shared/pipes/first-error.pipe';
 
 @NgModule({
   declarations: [
