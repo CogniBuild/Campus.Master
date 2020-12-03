@@ -23,7 +23,7 @@ import { EditProjectDialogComponent } from './dialog/edit-project-dialog/edit-pr
 import { StatCardComponent } from './views/tasks_board/stat/stat-card/stat-card.component';
 import { RegistrationService } from './shared/services/registration.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpTokenInterceptor } from './auth/http.token.inteceptor';
+import { HttpTokenInterceptor } from './auth/http.token.interceptor';
 import { ProjectService } from './shared/services/project.service';
 import { FirstErrorPipe } from './shared/pipes/first-error.pipe';
 
