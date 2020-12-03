@@ -23,7 +23,7 @@ import { EditProjectDialogComponent } from './dialog/edit-project-dialog/edit-pr
 import { StatCardComponent } from './views/tasks_board/stat/stat-card/stat-card.component';
 import { RegistrationService } from './shared/services/registration.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './auth/auth.inteceptor';
+import { HttpTokenInterceptor } from './auth/http.token.inteceptor';
 import { ProjectService } from './shared/services/project.service';
 import { FirstErrorPipe } from './pipes/first-error.pipe';
 
@@ -55,7 +55,12 @@ import { FirstErrorPipe } from './pipes/first-error.pipe';
     MaterialModule,
     BrowserAnimationsModule,
   ],
-  providers: [SignInService, RegistrationService, ProjectService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [
+    SignInService,
+    RegistrationService,
+    ProjectService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true }
+  ],
   entryComponents: [EditProjectDialogComponent, EditTaskDialogComponent, ConfirmDialogComponent],
   bootstrap: [AppComponent],
 })

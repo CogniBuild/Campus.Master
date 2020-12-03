@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export class HttpTokenInterceptor implements HttpInterceptor {
 
     constructor(private router: Router) {
 
