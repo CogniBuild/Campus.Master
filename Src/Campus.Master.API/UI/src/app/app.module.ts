@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { SingInComponent } from './sing-in/sing-in.component';
 import { SignInService } from './shared/services/sign-in.service';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
-import { SidebarComponent } from './views/sidebar/sidebar.component';
+import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.component';
 import { StatComponent } from './views/tasks_board/stat/stat.component';
 import { UserPageLayoutComponent } from './views/user-page-layout/user-page-layout.component';
 import { TaskBoardLayoutComponent } from './views/tasks_board/task-board-layout/task-board-layout.component';
@@ -21,7 +21,6 @@ import { ProjectTasksComponent } from './views/tasks_board/task_board_left/proje
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import { EditProjectDialogComponent } from './dialog/edit-project-dialog/edit-project-dialog.component';
 import { StatCardComponent } from './views/tasks_board/stat/stat-card/stat-card.component';
-import { FooterComponent } from './views/footer/footer.component';
 import { RegistrationService } from './shared/services/registration.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.inteceptor';
@@ -33,7 +32,7 @@ import { FirstErrorPipe } from './pipes/first-error.pipe';
     AppComponent,
     SingInComponent,
     RegistrationPageComponent,
-    SidebarComponent,
+    LeftSidebarComponent,
     StatComponent,
     UserPageLayoutComponent,
     TaskBoardLayoutComponent,
@@ -45,7 +44,6 @@ import { FirstErrorPipe } from './pipes/first-error.pipe';
     ConfirmDialogComponent,
     EditProjectDialogComponent,
     StatCardComponent,
-    FooterComponent,
     FirstErrorPipe,
   ],
   imports: [

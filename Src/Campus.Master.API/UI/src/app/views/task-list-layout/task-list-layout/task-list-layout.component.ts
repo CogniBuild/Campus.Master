@@ -62,7 +62,6 @@ export class TaskListLayoutComponent implements OnInit {
   }
 
   onAddCategory(title: string) {
-    debugger
     this.projects.push(new Project(null, title, null, 1));
   }
 
