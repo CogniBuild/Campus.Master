@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Project } from '../../../model/Project';
+import { Project } from '../../../shared/models/project';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { Task } from '../../../model/task';
+import { Task } from '../../../shared/models/task';
 
 @Component({
   selector: 'app-task-list-layout',

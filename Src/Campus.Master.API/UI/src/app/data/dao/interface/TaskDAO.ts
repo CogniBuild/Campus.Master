@@ -1,8 +1,8 @@
 import { CommonDAO } from './CommonDAO';
-import { Task } from '../../../model/task';
-import { Project } from '../../../model/Project';
+import { Task } from '../../../shared/models/task';
+import { Project } from '../../../shared/models/project';
 import { Observable } from 'rxjs';
-import { Priority } from '../../../model/priority';
+import { Priority } from '../../../shared/models/priority';
 
 export interface TaskDAO extends CommonDAO<Task> {
 

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Task } from 'src/app/model/task';
+import { Task } from 'src/app/shared/models/task';
 import { TestData } from '../../data/testData';
 import { Observable } from 'rxjs';
 import { TaskDAOArray } from '../../data/dao/impl/TaskDAOArray';
-import { Project } from '../../model/Project';
+import { Project } from '../models/project';
 import { CategoryDAOArray } from '../../data/dao/impl/CategoryDAOArray';
-import { Priority } from '../../model/priority';
+import { Priority } from '../models/priority';
 import { PriorityDAOArray } from '../../data/dao/impl/PriorityDAOArray';
-import { Status } from '../../model/status';
+import { Status } from '../models/status';
 import { StatusDAOArray } from '../../data/dao/impl/StatusDAOArray';
 
 @Injectable({

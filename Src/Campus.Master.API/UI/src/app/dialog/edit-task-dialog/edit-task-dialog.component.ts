@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DataHandlerService } from '../../shared/services/data-handler.service';
-import { Task } from '../../model/task';
-import { Project } from '../../model/Project';
-import { Priority } from '../../model/priority';
+import { Task } from '../../shared/models/task';
+import { Project } from '../../shared/models/project';
+import { Priority } from '../../shared/models/priority';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { Status } from '../../model/status';
+import { Status } from '../../shared/models/status';
 import { OperType } from '../OperType';
 
 @Component({

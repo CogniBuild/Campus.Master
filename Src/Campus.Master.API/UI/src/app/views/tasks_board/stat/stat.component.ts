@@ -8,11 +8,11 @@ import {
 } from '@angular/core';
 import { SortDateService } from '../../../shared/services/sort-date.service';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { Task } from 'src/app/model/task';
+import { Task } from 'src/app/shared/models/task';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
-import { Project } from '../../../model/Project';
-import { Status } from '../../../model/status';
+import { Project } from '../../../shared/models/project';
+import { Status } from '../../../shared/models/status';
 
 @Component({
   selector: 'app-stat',

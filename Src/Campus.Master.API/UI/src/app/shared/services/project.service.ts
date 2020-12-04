@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Project } from 'src/app/model/Project';
+import { Project } from 'src/app/shared/models/project';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StateTransfer } from '../interfaces';

@@ -1,7 +1,7 @@
-import { Priority } from '../model/priority';
-import { Task } from '../model/task';
-import { Project } from '../model/Project';
-import { Status } from '../model/status';
+import { Priority } from '../shared/models/priority';
+import { Task } from '../shared/models/task';
+import { Project } from '../shared/models/project';
+import { Status } from '../shared/models/status';
 
 export class TestData {
 

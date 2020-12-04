@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { Project } from '../../../model/Project';
+import { Project } from '../../../shared/models/project';
 import { MatDialog } from '@angular/material/dialog';
 import { OperType } from '../../../dialog/OperType';
 import { EditProjectDialogComponent } from '../../../dialog/edit-project-dialog/edit-project-dialog.component';
