@@ -1,5 +1,5 @@
 import { CategoryDAO } from '../interface/CategoryDAO';
-import { Project } from '../../../shared/models/project';
+import { Project } from '../../../shared/models/task-list/project';
 import { Observable, of } from 'rxjs';
 import { TestData } from '../../testData';
 

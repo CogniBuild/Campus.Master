@@ -1,10 +1,10 @@
-import { Project } from '../../../shared/models/project';
+import { Project } from '../../../shared/models/task-list/project';
 import { Observable, of } from 'rxjs';
 import { TaskDAO } from '../interface/TaskDAO';
-import { Task } from 'src/app/shared/models/task';
+import { Task } from 'src/app/shared/models/task-list/task';
 import { TestData } from '../../testData';
-import { Priority } from '../../../shared/models/priority';
-import { Status } from '../../../shared/models/status';
+import { Priority } from '../../../shared/models/task-list/priority';
+import { Status } from '../../../shared/models/task-list/status';
 
 export class TaskDAOArray implements TaskDAO {
   getAll(): Observable<Task[]> {

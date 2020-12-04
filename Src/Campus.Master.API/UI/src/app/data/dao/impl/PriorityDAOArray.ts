@@ -1,7 +1,7 @@
 import { PriorityDAO } from '../interface/PriorityDAO';
-import { Priority } from '../../../shared/models/priority';
+import { Priority } from '../../../shared/models/task-list/priority';
 import { Observable, of } from 'rxjs';
-import { Project } from '../../../shared/models/project';
+import { Project } from '../../../shared/models/task-list/project';
 import { TestData } from '../../testData';
 
 export class PriorityDAOArray implements PriorityDAO {
