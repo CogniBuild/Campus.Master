@@ -7,12 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserPageLayoutComponent implements OnInit {
 
-constructor() {
-}
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
-
-
-
 }
