@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { User, StateTransfer } from '../interfaces';
-import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Observable, Subject, throwError } from 'rxjs';
+import { User } from '../models/user/user';
+import { StateTransfer } from '../models/state-transfer';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class SignInService {

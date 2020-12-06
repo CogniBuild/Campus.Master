@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DataHandlerService } from '../../shared/services/data-handler.service';
-import { Task } from '../../model/task';
-import { ProjectModel } from '../../model/Project';
-import { Priority } from '../../model/priority';
+import { Task } from '../../shared/models/task-list/task';
+import { Project } from '../../shared/models/task-list/project';
+import { Priority } from '../../shared/models/task-list/priority';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { Status } from '../../model/status';
+import { Status } from '../../shared/models/task-list/status';
 import { OperType } from '../OperType';
 
 @Component({
@@ -23,7 +23,7 @@ export class EditTaskDialogComponent implements OnInit {
   ) {
   }
 
-  categories: ProjectModel[];
+  categories: Project[];
   priorities: Priority[];
   statuses: Status[];
   operType: OperType;
@@ -32,7 +32,7 @@ export class EditTaskDialogComponent implements OnInit {
   task: Task;
 
   tmpTitle: string;
-  tmpCategory: ProjectModel;
+  tmpCategory: Project;
   tmpPriority: Priority;
   tmpStatus: Status;
   tmpDate: Date;

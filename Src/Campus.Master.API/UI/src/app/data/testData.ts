@@ -1,7 +1,7 @@
-import { Priority } from '../model/priority';
-import { Task } from '../model/task';
-import { ProjectModel } from '../model/Project';
-import { Status } from '../model/status';
+import { Priority } from '../shared/models/task-list/priority';
+import { Task } from '../shared/models/task-list/task';
+import { Project } from '../shared/models/task-list/project';
+import { Status } from '../shared/models/task-list/status';
 
 export class TestData {
 
@@ -17,7 +17,7 @@ export class TestData {
     { id: 3, title: 'Low', color: '#5FD278' },
   ];
 
-  static categories: ProjectModel[] = [
+  static categories: Project[] = [
     { id: 1, name: 'Eduction', color: '1', status: 1 },
     { id: 2, name: 'Coding', color: '1', status: 1 },
     { id: 3, name: 'Other', color: '1', status: 1 },

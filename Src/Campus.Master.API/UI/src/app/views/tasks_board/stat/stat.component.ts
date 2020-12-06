@@ -8,11 +8,11 @@ import {
 } from '@angular/core';
 import { SortDateService } from '../../../shared/services/sort-date.service';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { Task } from 'src/app/model/task';
+import { Task } from 'src/app/shared/models/task-list/task';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
-import { ProjectModel } from '../../../model/Project';
-import { Status } from '../../../model/status';
+import { Project } from '../../../shared/models/task-list/project';
+import { Status } from '../../../shared/models/task-list/status';
 
 @Component({
   selector: 'app-stat',
@@ -29,7 +29,7 @@ export class StatComponent implements OnInit, OnChanges {
   tasks: Task[];
   test: [];
 
-  @Input() selectedProject: ProjectModel;
+  @Input() selectedProject: Project;
 
   @Output() addTask = new EventEmitter<Task>();
 

@@ -5,12 +5,13 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { RegisterUser, StateTransfer } from '../shared/interfaces';
 import { ConfirmPasswordValidator } from '../shared/confirmed.validator';
 import { RegistrationService } from '../shared/services/registration.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+import { RegisterUser } from '../shared/models/user/register-user';
+import { StateTransfer } from '../shared/models/state-transfer';
 
 @Component({
   selector: 'app-registration-page',

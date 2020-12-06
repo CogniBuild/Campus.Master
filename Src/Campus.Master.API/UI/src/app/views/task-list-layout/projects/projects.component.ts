@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { ProjectModel } from '../../../model/Project';
+import { Project } from '../../../shared/models/task-list/project';
 import { MatDialog } from '@angular/material/dialog';
 import { OperType } from '../../../dialog/OperType';
 import { EditProjectDialogComponent } from '../../../dialog/edit-project-dialog/edit-project-dialog.component';
@@ -12,42 +12,30 @@ import { Subscription } from 'rxjs';
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.sass'],
 })
-export class ProjectsComponent implements OnInit, OnDestroy {
-
-  private getAllUserProjects$: Subscription = new Subscription();
+export class ProjectsComponent {
 
   constructor(private projectService: ProjectService, private dialog: MatDialog) {
 
   }
 
   @Input()
-  projects: ProjectModel[];
+  projects: Project[];
 
   @Input()
-  selectedProject: ProjectModel;
+  selectedProject: Project;
 
   @Output()
-  selectCategory = new EventEmitter<ProjectModel>();
+  selectCategory = new EventEmitter<Project>();
 
   @Output()
-  updateCategory = new EventEmitter<ProjectModel>();
+  updateCategory = new EventEmitter<Project>();
 
   @Output()
   addProject = new EventEmitter<string>();
 
   todayDate: Date = new Date();
 
-  ngOnInit(): void {
-    this.getAllUserProjects$ = this.projectService
-      .getAllUserProjects(1, 20)
-      .subscribe((projects) => (this.projects = projects));
-  }
-
-  ngOnDestroy(): void {
-    this.getAllUserProjects$.unsubscribe();
-  }
-
-  getProjectTasks(project: ProjectModel) {
+  getProjectTasks(project: Project) {
     if (this.selectedProject === project) {
       return;
     }
@@ -65,7 +53,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.projectService.createNewProject(result);
+        this.projectService.createNewProject(result).subscribe();
         this.addProject.emit(result as string);
       }
     });

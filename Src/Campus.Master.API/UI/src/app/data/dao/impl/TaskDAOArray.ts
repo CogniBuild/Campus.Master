@@ -1,10 +1,10 @@
-import { ProjectModel } from '../../../model/Project';
+import { Project } from '../../../shared/models/task-list/project';
 import { Observable, of } from 'rxjs';
 import { TaskDAO } from '../interface/TaskDAO';
-import { Task } from 'src/app/model/task';
+import { Task } from 'src/app/shared/models/task-list/task';
 import { TestData } from '../../testData';
-import { Priority } from '../../../model/priority';
-import { Status } from '../../../model/status';
+import { Priority } from '../../../shared/models/task-list/priority';
+import { Status } from '../../../shared/models/task-list/status';
 
 export class TaskDAOArray implements TaskDAO {
   getAll(): Observable<Task[]> {
@@ -49,7 +49,7 @@ export class TaskDAOArray implements TaskDAO {
     return of(taskTmp);
   }
 
-  getCompletedCountInCategory(category: ProjectModel): Observable<number> {
+  getCompletedCountInCategory(category: Project): Observable<number> {
     return of(this.searchTask(category, null, true, null).length);
   }
 
@@ -57,16 +57,16 @@ export class TaskDAOArray implements TaskDAO {
     return of(TestData.tasks.length);
   }
 
-  getTotalCountInCategory(category: ProjectModel): Observable<number> {
+  getTotalCountInCategory(category: Project): Observable<number> {
     return of(this.searchTask(category, null, null, null).length);
   }
 
-  getUncompletedCountInCategory(category: ProjectModel): Observable<number> {
+  getUncompletedCountInCategory(category: Project): Observable<number> {
     return of(this.searchTask(category, null, false, null).length);
   }
 
   search(
-    category: ProjectModel,
+    category: Project,
     searchText: string,
     status: boolean,
     priority: Priority
@@ -75,7 +75,7 @@ export class TaskDAOArray implements TaskDAO {
   }
 
   searchTask(
-    category: ProjectModel,
+    category: Project,
     searchText: string,
     status: boolean,
     priority: Priority
