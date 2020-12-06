@@ -12,9 +12,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.sass'],
 })
-export class ProjectsComponent implements OnInit, OnDestroy {
-
-  private getAllUserProjects$: Subscription = new Subscription();
+export class ProjectsComponent {
 
   constructor(private projectService: ProjectService, private dialog: MatDialog) {
 
@@ -37,16 +35,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   todayDate: Date = new Date();
 
-  ngOnInit(): void {
-    this.getAllUserProjects$ = this.projectService
-      .getAllUserProjects(1, 20)
-      .subscribe((projects) => (this.projects = projects));
-  }
-
-  ngOnDestroy(): void {
-    this.getAllUserProjects$.unsubscribe();
-  }
-
   getProjectTasks(project: Project) {
     if (this.selectedProject === project) {
       return;
@@ -65,7 +53,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.projectService.createNewProject(result);
+        this.projectService.createNewProject(result).subscribe();
         this.addProject.emit(result as string);
       }
     });

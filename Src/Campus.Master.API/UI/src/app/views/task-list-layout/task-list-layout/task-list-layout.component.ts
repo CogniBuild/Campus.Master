@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Project } from '../../../shared/models/task-list/project';
 import { DataHandlerService } from '../../../shared/services/data-handler.service';
 import { Task } from '../../../shared/models/task-list/task';
+import { Subscription } from 'rxjs';
+import { ProjectService } from 'src/app/shared/services/project.service';
 
 @Component({
   selector: 'app-task-list-layout',
@@ -9,18 +11,23 @@ import { Task } from '../../../shared/models/task-list/task';
   styleUrls: ['./task-list-layout.component.sass'],
   encapsulation: ViewEncapsulation.None,
 })
-export class TaskListLayoutComponent implements OnInit {
+export class TaskListLayoutComponent implements OnInit, OnDestroy {
   projects: Project[];
   tasks: Task[];
   selectedProject: Project = null;
   searchCategoryText = '';
+  private getAllUserProjects$: Subscription = new Subscription();
 
-  constructor(private dataHandlerService: DataHandlerService) { }
+  constructor(private dataHandlerService: DataHandlerService, private projectService: ProjectService) { }
+
+  ngOnDestroy(): void {
+    this.getAllUserProjects$.unsubscribe();
+  }
 
   ngOnInit(): void {
-    this.dataHandlerService
-      .getAllProjects()
-      .subscribe((categories) => (this.projects = categories));
+    this.getAllUserProjects$ = this.projectService
+      .getAllUserProjects(1, 20)
+      .subscribe((projects) => (this.projects = projects));
 
     this.onSelectCategory(null);
   }
