@@ -17,7 +17,7 @@ import { TaskComponent } from './views/tasks_board/task/task.component';
 import { EditTaskDialogComponent } from './dialog/edit-task-dialog/edit-task-dialog.component';
 import { TaskListLayoutComponent } from './views/task-list-layout/task-list-layout/task-list-layout.component';
 import { ProjectsComponent } from './views/task-list-layout/projects/projects.component';
-import { ProjectTasksComponent } from './views/tasks_board/task_board_left/project-tasks.component';
+import { RightSidebarComponent } from './views/tasks_board/right-sidebar/right-sidebar.component';
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import { EditProjectDialogComponent } from './dialog/edit-project-dialog/edit-project-dialog.component';
 import { StatCardComponent } from './views/tasks_board/stat/stat-card/stat-card.component';
@@ -40,7 +40,7 @@ import { FirstErrorPipe } from './shared/pipes/first-error.pipe';
     EditTaskDialogComponent,
     TaskListLayoutComponent,
     ProjectsComponent,
-    ProjectTasksComponent,
+    RightSidebarComponent,
     ConfirmDialogComponent,
     EditProjectDialogComponent,
     StatCardComponent,
