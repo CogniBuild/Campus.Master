@@ -7,7 +7,7 @@ import { MaterialModule } from './material/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SingInComponent } from './sing-in/sing-in.component';
-import { SignInService } from './shared/services/sign-in.service';
+import { SignInService } from './services/sign-in.service';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.component';
 import { StatComponent } from './views/tasks_board/stat/stat.component';
@@ -21,10 +21,10 @@ import { RightSidebarComponent } from './views/tasks_board/right-sidebar/right-s
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import { EditProjectDialogComponent } from './dialog/edit-project-dialog/edit-project-dialog.component';
 import { StatCardComponent } from './views/tasks_board/stat/stat-card/stat-card.component';
-import { RegistrationService } from './shared/services/registration.service';
+import { RegistrationService } from './services/registration.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './auth/http.token.interceptor';
-import { ProjectService } from './shared/services/project.service';
+import { ProjectService } from './services/project.service';
 import { FirstErrorPipe } from './shared/pipes/first-error.pipe';
 
 @NgModule({
