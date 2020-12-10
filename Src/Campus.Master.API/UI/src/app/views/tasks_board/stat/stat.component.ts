@@ -1,30 +1,17 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  OnChanges,
-  EventEmitter,
-  Output,
-} from '@angular/core';
-import { SortDateService } from '../../../services/sort-date.service';
-import { DataHandlerService } from '../../../services/data-handler.service';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Task } from 'src/app/models/task-list/task';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
 import { Project } from '../../../models/task-list/project';
-import { Status } from '../../../models/task-list/status';
 
 @Component({
   selector: 'app-stat',
   templateUrl: './stat.component.html',
   styleUrls: ['./stat.component.sass'],
 })
-export class StatComponent implements OnInit, OnChanges {
-  constructor(
-    private setDateOption: SortDateService,
-    private dataHandlerService: DataHandlerService,
-    private dialog: MatDialog
-  ) { }
+export class StatComponent {
+  constructor(private dialog: MatDialog) {
+  }
 
   tasks: Task[];
   test: [];
@@ -43,25 +30,6 @@ export class StatComponent implements OnInit, OnChanges {
   uncompleteTasksInCategory: number;
 
   todayDate: Date = new Date();
-  // selectedValue = 'week-1';
-
-  // selectOption(value: string) {
-  //   this.selectedValue = value;
-  //   this.setDateOption.setDate(this.selectedValue);
-  // }
-
-  ngOnInit(): void {
-    // this.dataHandlerService.getAllTask().subscribe(tasks => this.tasks = tasks);
-    // for (const item of this.tasks) {
-    //   if (item.completed) {
-    //     this.taskCompleted++;
-    //   }
-    // }
-    // this.updateStat();
-  }
-
-  ngOnChanges() {
-  }
 
   openAddTaskDialog() {
     const task = new Task(null, '', null, null, null, null);
