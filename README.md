@@ -2,6 +2,7 @@
 
 ![Documentation](https://img.shields.io/static/v1?label=Cogni&message=Build&color=blue&style=for-the-badge)
 ![Documentation](https://img.shields.io/website?down_message=dead&label=campus&style=for-the-badge&up_message=alive&url=https%3A%2F%2Four-campus.azurewebsites.net%2F)
+![Documentation](https://img.shields.io/github/contributors/CogniBuild/Campus.Master?style=for-the-badge)
 
 ## Pipelines status
 
