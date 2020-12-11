@@ -1,12 +1,12 @@
 # CogniBuild Campus
 
-![Documentation](https://img.shields.io/static/v1?label=Cogni&message=Build&color=blue)
-![Documentation](https://img.shields.io/github/commit-activity/m/CogniBuild/Campus.Master)
+![Documentation](https://img.shields.io/static/v1?label=Cogni&message=Build&color=blue&style=for-the-badge)
+![Documentation](https://img.shields.io/website?down_message=dead&label=campus&style=for-the-badge&up_message=alive&url=https%3A%2F%2Four-campus.azurewebsites.net%2F)
 
 ## Pipelines status
 
-![Documentation](https://img.shields.io/github/workflow/status/CogniBuild/Campus.Master/.NET%20Core?label=.NET%20Core)
-![Documentation](https://img.shields.io/github/workflow/status/CogniBuild/Campus.Master/Angular?label=Angular)
+![Documentation](https://img.shields.io/github/workflow/status/CogniBuild/Campus.Master/.NET%20Core?label=.NET%20Core&style=for-the-badge)
+![Documentation](https://img.shields.io/github/workflow/status/CogniBuild/Campus.Master/Angular?label=Angular&style=for-the-badge)
 
 ## Description
 
