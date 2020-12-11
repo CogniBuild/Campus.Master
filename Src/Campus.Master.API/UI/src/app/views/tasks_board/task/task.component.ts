@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { Task } from 'src/app/models/task-list/task';
 import { DataHandlerService } from '../../../services/data-handler.service';
 import { SortDateService } from '../../../services/sort-date.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
 import { ConfirmDialogComponent } from '../../../dialog/confirm-dialog/confirm-dialog.component';
 
@@ -135,7 +135,7 @@ export class TaskComponent implements OnInit, OnChanges {
       maxWidth: '500px',
       data: {
         dialogTitle: 'Delete task',
-        message: `Are you really want to delete task: "${ task.title }"?`
+        message: `Are you really want to delete task: "${task.title}"?`
       },
       autoFocus: false
     });

@@ -11,8 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatNavList } from '@angular/material/list';
 
 
 const MaterialComponents = [
