@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 
@@ -49,8 +48,6 @@ import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.componen
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
     MaterialModule,
     BrowserAnimationsModule,
     SharedModule
