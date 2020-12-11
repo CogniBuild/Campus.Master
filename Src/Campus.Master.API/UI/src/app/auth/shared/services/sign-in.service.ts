@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable, Subject, throwError } from 'rxjs';
-import { User } from '../models/user/user';
-import { StateTransfer } from '../models/state-transfer';
+import { User } from '../models/user';
+import { StateTransfer } from '../../../models/state-transfer';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()

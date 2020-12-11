@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SignInService } from '../services/sign-in.service';
+import { SignInService } from '../shared/services/sign-in.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { User } from '../models/user/user';
-import { StateTransfer } from '../models/state-transfer';
+import { User } from '../shared/models/user';
+import { StateTransfer } from '../../models/state-transfer';
 
 @Component({
   selector: 'app-sing-in',

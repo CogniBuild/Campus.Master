@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SingInComponent } from './sing-in/sing-in.component';
-import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { UserPageLayoutComponent } from './views/user-page-layout/user-page-layout.component';
 import { TaskListLayoutComponent } from './views/task-list-layout/task-list-layout/task-list-layout.component';
 import { TaskBoardLayoutComponent } from './views/tasks_board/task-board-layout/task-board-layout.component';
 
 
 const routes: Routes = [
-  { path: '', component: SingInComponent },
-  { path: 'registration', component: RegistrationPageComponent },
+  { path: '', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
   {
     path: 'campus', component: UserPageLayoutComponent, children: [
       { path: '', component: TaskBoardLayoutComponent },

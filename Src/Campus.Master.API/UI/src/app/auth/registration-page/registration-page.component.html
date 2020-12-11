@@ -2,7 +2,7 @@
   <div class="wrap-center">
     <div class="registration">
       <div class="registration__img">
-        <img src="/assets/img/registration/reg.png" alt="photo">
+        <img src="../../../assets/img/registration/reg.png" alt="photo">
         <span class="registration__text">Your time has come</span>
       </div>
       <div class="registration__form">
@@ -72,21 +72,21 @@
             <input id="password" type="password" placeholder="Password" formControlName="password">
             <div
               *ngIf="registerForm.get('password').touched && registerForm.get('password').invalid"
-              class="validation"> 
+              class="validation">
               <div [ngSwitch]="registerForm.get('password').errors | firstError">
               <small *ngSwitchCase="'required'">
                 Password is required
               </small>
               <small *ngSwitchCase="'minlength'">
-                Password length should be > {{ registerForm.get('password').errors.minlength.requiredLength }} symbols                
+                Password length should be > {{ registerForm.get('password').errors.minlength.requiredLength }} symbols
               </small>
               <small *ngSwitchCase="'maxlength'">
-                Password > {{ registerForm.get('password').errors.maxlength.requiredLength }} symbols                
+                Password > {{ registerForm.get('password').errors.maxlength.requiredLength }} symbols
               </small>
               <small *ngSwitchCase="'pattern'">
                 Add at least one symbol in upper case & one digit
               </small>
-            </div>             
+            </div>
             </div>
           </div>
           <div class="form-control"
