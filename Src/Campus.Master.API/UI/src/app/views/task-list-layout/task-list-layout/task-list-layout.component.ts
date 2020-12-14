@@ -3,7 +3,7 @@ import { Project } from '../../../models/task-list/project';
 import { DataHandlerService } from '../../../services/data-handler.service';
 import { Task } from '../../../models/task-list/task';
 import { Subscription } from 'rxjs';
-import { ProjectService } from 'src/app/services/project.service';
+import { ProjectService } from 'app/services/project.service';
 
 @Component({
   selector: 'app-task-list-layout',

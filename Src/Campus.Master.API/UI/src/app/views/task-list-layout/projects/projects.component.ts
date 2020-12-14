@@ -4,7 +4,7 @@ import { Project } from '../../../models/task-list/project';
 import { MatDialog } from '@angular/material/dialog';
 import { OperType } from '../../../dialog/OperType';
 import { EditProjectDialogComponent } from '../../../dialog/edit-project-dialog/edit-project-dialog.component';
-import { ProjectService } from 'src/app/services/project.service';
+import { ProjectService } from 'app/services/project.service';
 import { Subscription } from 'rxjs';
 
 @Component({

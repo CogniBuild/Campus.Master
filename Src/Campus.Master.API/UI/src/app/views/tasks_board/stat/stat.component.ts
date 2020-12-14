@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { Task } from 'src/app/models/task-list/task';
+import { Task } from 'app/models/task-list/task';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
 import { Project } from '../../../models/task-list/project';
