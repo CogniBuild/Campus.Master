@@ -4,7 +4,7 @@
     "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
     "paths": {
-      "@sharedModels/*": ["app/models/*"],
+      "@shared-models/*": ["app/models/*"],
       "@services/*": ["app/services/*"]
     },
     "sourceMap": true,

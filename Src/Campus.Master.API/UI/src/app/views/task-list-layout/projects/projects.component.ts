@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
-import { Project } from '@sharedModels/task-list/project';
+import { Project } from '@shared-models/task-list/project';
 import { MatDialog } from '@angular/material/dialog';
 import { OperType } from '../../../dialog/OperType';
 import { EditProjectDialogComponent } from '../../../dialog/edit-project-dialog/edit-project-dialog.component';

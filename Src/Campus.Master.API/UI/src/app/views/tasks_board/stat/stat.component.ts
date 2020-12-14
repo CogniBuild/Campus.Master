@@ -2,7 +2,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { Task } from 'app/models/task-list/task';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from '../../../dialog/edit-task-dialog/edit-task-dialog.component';
-import { Project } from '@sharedModels/task-list/project';
+import { Project } from '@shared-models/task-list/project';
 
 @Component({
   selector: 'app-stat',
