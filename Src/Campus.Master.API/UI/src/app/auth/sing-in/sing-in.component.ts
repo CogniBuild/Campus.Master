@@ -4,8 +4,8 @@ import { SignInService } from '../shared/services/sign-in.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { User } from '../shared/models/user/user';
-import { StateTransfer } from '../shared/models/state-transfer';
+import { User } from '../shared/models/user';
+import { StateTransfer } from '../../models/state-transfer';
 
 @Component({
   selector: 'app-sing-in',

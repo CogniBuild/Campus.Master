@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
-import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { Project } from '../../../shared/models/task-list/project';
+import { Project } from '@shared-models/task-list/project';
 import { MatDialog } from '@angular/material/dialog';
 import { OperType } from '../../../dialog/OperType';
 import { EditProjectDialogComponent } from '../../../dialog/edit-project-dialog/edit-project-dialog.component';
-import { ProjectService } from 'src/app/shared/services/project.service';
-import { Subscription } from 'rxjs';
+import { ProjectService } from 'app/services/project.service';
 
 @Component({
   selector: 'app-projects',

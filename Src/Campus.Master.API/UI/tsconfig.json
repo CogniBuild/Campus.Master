@@ -1,8 +1,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
+    "paths": {
+      "@shared-models/*": ["app/models/*"],
+      "@services/*": ["app/services/*"]
+    },
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -15,14 +19,27 @@
       "es2018",
       "dom"
     ],
-    "types": ["reflect-metadata", "jest"],
-    "typeRoots": ["./types", "./node_modules/@types"]
+    "types": [
+      "reflect-metadata",
+      "jest",
+      "node"
+    ],
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ]
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "enableIvy": false
   },
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],
-  "include": ["./src/**/*.tsx", "./src/**/*.ts"]
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts"
+  ],
+  "include": [
+    "./src/**/*.tsx",
+    "**/*.spec.ts"
+  ]
 }

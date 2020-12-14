@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Project } from '../../../shared/models/task-list/project';
-import { DataHandlerService } from '../../../shared/services/data-handler.service';
-import { Task } from '../../../shared/models/task-list/task';
+import { Project } from '@shared-models/task-list/project';
+import { DataHandlerService } from '@services/data-handler.service';
+import { Task } from '@shared-models/task-list/task';
 import { Subscription } from 'rxjs';
-import { ProjectService } from 'src/app/shared/services/project.service';
+import { ProjectService } from 'app/services/project.service';
 
 @Component({
   selector: 'app-task-list-layout',
