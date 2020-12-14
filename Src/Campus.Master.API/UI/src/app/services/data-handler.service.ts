@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Task } from 'app/models/task-list/task';
-import { TestData } from '../data/testData';
 import { Observable } from 'rxjs';
 import { TaskDAOArray } from '../data/dao/impl/TaskDAOArray';
 import { Project } from '../models/task-list/project';

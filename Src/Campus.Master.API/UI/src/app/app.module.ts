@@ -19,7 +19,7 @@ import { EditProjectDialogComponent } from './dialog/edit-project-dialog/edit-pr
 import { StatCardComponent } from './views/tasks_board/stat/stat-card/stat-card.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './auth/http.token.interceptor';
-import { ProjectService } from './services/project.service';
+import { ProjectService } from '@services/project.service';
 import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.component';
 
 @NgModule({

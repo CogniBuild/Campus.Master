@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Project } from '../../../models/task-list/project';
-import { DataHandlerService } from '../../../services/data-handler.service';
-import { Task } from '../../../models/task-list/task';
+import { Project } from '@sharedModels/task-list/project';
+import { DataHandlerService } from '@services/data-handler.service';
+import { Task } from '@sharedModels/task-list/task';
 import { Subscription } from 'rxjs';
 import { ProjectService } from 'app/services/project.service';
 

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DataHandlerService } from '../../services/data-handler.service';
+import { DataHandlerService } from '@services/data-handler.service';
 import { Task } from '../../models/task-list/task';
 import { Project } from '../../models/task-list/project';
 import { Priority } from '../../models/task-list/priority';

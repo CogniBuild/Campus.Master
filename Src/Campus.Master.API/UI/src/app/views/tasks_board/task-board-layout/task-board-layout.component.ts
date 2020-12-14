@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from '../../../models/task-list/task';
-import { DataHandlerService } from '../../../services/data-handler.service';
-import { Project } from '../../../models/task-list/project';
+import { Task } from '@sharedModels/task-list/task';
+import { DataHandlerService } from '@services/data-handler.service';
+import { Project } from '@sharedModels/task-list/project';
 import { zip } from 'rxjs';
 
 @Component({
