@@ -21,6 +21,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './auth/http.token.interceptor';
 import { ProjectService } from '@services/project.service';
 import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.component';
+import { SignInService } from './core/sign-in.service';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.componen
   ],
   providers: [
     ProjectService,
+    SignInService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true }
   ],
   entryComponents: [EditProjectDialogComponent, EditTaskDialogComponent, ConfirmDialogComponent],

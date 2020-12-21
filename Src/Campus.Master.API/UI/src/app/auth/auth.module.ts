@@ -4,7 +4,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { SingInComponent } from './sing-in/sing-in.component';
 import { SharedModule } from '../shared/shared.module';
-import { SignInService } from './shared/services/sign-in.service';
 import { RegistrationService } from './shared/services/registration.service';
 
 @NgModule({
@@ -13,7 +12,7 @@ import { RegistrationService } from './shared/services/registration.service';
     SharedModule,
     AuthRoutingModule
   ],
-  providers: [SignInService, RegistrationService]
+  providers: [RegistrationService]
 })
 export class AuthModule {
 }
