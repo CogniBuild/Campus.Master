@@ -4,7 +4,7 @@ import { AuthenticatedUser } from '../auth/shared/models/authenticated-user';
 import { HttpClient } from '@angular/common/http';
 import { StateTransfer } from '../models/state-transfer';
 import { ProfileInformation } from '../auth/shared/models/profile-information';
-import { environment } from '../../environments/environment';
+import { environment } from 'environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
