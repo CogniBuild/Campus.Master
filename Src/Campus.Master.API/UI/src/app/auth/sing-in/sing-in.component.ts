@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SignInService } from '../shared/services/sign-in.service';
+import { SignInService } from '../../core/sign-in.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { User } from '../shared/models/user';
+import { AuthenticatedUser } from '../shared/models/authenticated-user';
 import { StateTransfer } from '../../models/state-transfer';
 
 @Component({
@@ -38,7 +38,7 @@ export class SingInComponent implements OnInit, OnDestroy {
 
   submit() {
     this.spinner = true;
-    const user: User = {
+    const user: AuthenticatedUser = {
       email: this.form.value.email,
       password: this.form.value.password,
     };
