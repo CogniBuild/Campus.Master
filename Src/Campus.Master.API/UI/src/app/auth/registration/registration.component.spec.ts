@@ -1,7 +1,7 @@
-import { RegistrationPageComponent } from './registration-page.component';
+import { RegistrationComponent } from './registration.component';
 
 describe('SingInComponent', () => {
-    let component: RegistrationPageComponent;
+    let component: RegistrationComponent;
 
     /* tslint:disable:no-any */
     const formGroup = {
@@ -18,7 +18,7 @@ describe('SingInComponent', () => {
     /* tslint:enable:no-any */
 
     beforeAll(() => {
-        component = new RegistrationPageComponent(
+        component = new RegistrationComponent(
             formGroup,
             registrationService,
             router
