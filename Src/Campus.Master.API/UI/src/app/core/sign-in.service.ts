@@ -7,10 +7,11 @@ import { ProfileInformation } from '../auth/shared/models/profile-information';
 import { environment } from 'environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class SignInService {
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
   }
 
   login(user: AuthenticatedUser): Observable<StateTransfer> {
@@ -28,6 +29,7 @@ export class SignInService {
       }),
       catchError(() => {
         this.router.navigate(['']);
+        this.toastr.error('Your are not authorized', '401');
         return of(false);
       })
     );

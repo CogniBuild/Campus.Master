@@ -22,6 +22,7 @@ import { HttpTokenInterceptor } from './auth/http.token.interceptor';
 import { ProjectService } from '@services/project.service';
 import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.component';
 import { SignInService } from './core/sign-in.service';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { SignInService } from './core/sign-in.service';
     RightSidebarComponent,
     ConfirmDialogComponent,
     EditProjectDialogComponent,
-    StatCardComponent
+    StatCardComponent,
   ],
   imports: [
     HttpClientModule,
@@ -45,6 +46,7 @@ import { SignInService } from './core/sign-in.service';
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     SharedModule
   ],
   providers: [
