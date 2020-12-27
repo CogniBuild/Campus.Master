@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { RegisterUser } from '../models/register-user';
-import { StateTransfer } from '../../../models/state-transfer';
+import { StateTransfer } from '@shared-models/state-transfer';
 
 @Injectable({
   providedIn: 'root',

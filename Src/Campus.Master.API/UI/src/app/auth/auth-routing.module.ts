@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { SingInComponent } from './sing-in/sing-in.component';
-import { RegistrationPageComponent } from './registration-page/registration-page.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes = [
   { path: '', component: SingInComponent },
-  { path: 'registration', component: RegistrationPageComponent }
+  { path: 'registration', component: RegistrationComponent }
 ];
 
 @NgModule({

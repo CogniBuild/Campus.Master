@@ -21,6 +21,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './auth/http.token.interceptor';
 import { ProjectService } from '@services/project.service';
 import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.component';
+import { SignInService } from './core/sign-in.service';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,7 @@ import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.componen
     RightSidebarComponent,
     ConfirmDialogComponent,
     EditProjectDialogComponent,
-    StatCardComponent
+    StatCardComponent,
   ],
   imports: [
     HttpClientModule,
@@ -44,10 +46,12 @@ import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.componen
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     SharedModule
   ],
   providers: [
     ProjectService,
+    SignInService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true }
   ],
   entryComponents: [EditProjectDialogComponent, EditTaskDialogComponent, ConfirmDialogComponent],

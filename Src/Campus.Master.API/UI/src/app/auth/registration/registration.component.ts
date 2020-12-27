@@ -15,10 +15,10 @@ import { StateTransfer } from '../../models/state-transfer';
 
 @Component({
   selector: 'app-registration-page',
-  templateUrl: './registration-page.component.html',
-  styleUrls: ['./registration-page.component.sass'],
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.sass'],
 })
-export class RegistrationPageComponent implements OnInit, OnDestroy {
+export class RegistrationComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   submitted = false;
   spinner: boolean;
