@@ -22,7 +22,9 @@ export class CanActivateDashboardGuard implements CanActivate {
       }),
       catchError(() => {
         this.router.navigate(['']);
-        this.toastr.error('Your are not authorized', '401');
+        this.toastr.error('Your are not authorized', '401', {
+          toastClass: 'ngx-toastr server-error-toastr'
+        });
         return of(false);
       })
     );
