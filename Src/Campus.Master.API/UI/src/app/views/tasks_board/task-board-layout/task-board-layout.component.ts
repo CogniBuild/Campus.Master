@@ -75,12 +75,6 @@ export class TaskBoardLayoutComponent implements OnInit {
     });
   }
 
-  onSearchTasks(searchString: string) {
-    this.searchTaskText = searchString;
-    // this.updateTasks();
-    this.updateTasksAndStat();
-  }
-
   updateTasks() {
     this.dataHandlerService.searchTasks(
       this.selectedProject,
