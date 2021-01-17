@@ -8,7 +8,6 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { StatComponent } from './views/tasks_board/stat/stat.component';
 import { UserPageLayoutComponent } from './views/user-page-layout/user-page-layout.component';
-import { TaskBoardLayoutComponent } from './views/tasks_board/task-board-layout/task-board-layout.component';
 import { TaskComponent } from './views/tasks_board/task/task.component';
 import { EditTaskDialogComponent } from './dialog/edit-task-dialog/edit-task-dialog.component';
 import { TaskListLayoutComponent } from './views/task-list-layout/task-list-layout/task-list-layout.component';
@@ -29,7 +28,6 @@ import { ToastrModule } from 'ngx-toastr';
     LeftSidebarComponent,
     StatComponent,
     UserPageLayoutComponent,
-    TaskBoardLayoutComponent,
     TaskComponent,
     EditTaskDialogComponent,
     TaskListLayoutComponent,
