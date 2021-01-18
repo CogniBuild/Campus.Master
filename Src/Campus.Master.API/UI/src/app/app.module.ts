@@ -6,15 +6,10 @@ import { MaterialModule } from './material/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
-import { StatComponent } from './views/tasks_board/stat/stat.component';
 import { UserPageLayoutComponent } from './views/user-page-layout/user-page-layout.component';
-import { TaskComponent } from './views/tasks_board/task/task.component';
 import { EditTaskDialogComponent } from './dialog/edit-task-dialog/edit-task-dialog.component';
-import { TaskListLayoutComponent } from './views/task-list-layout/task-list-layout/task-list-layout.component';
-import { ProjectsComponent } from './views/task-list-layout/projects/projects.component';
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import { EditProjectDialogComponent } from './dialog/edit-project-dialog/edit-project-dialog.component';
-import { StatCardComponent } from './views/tasks_board/stat/stat-card/stat-card.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './auth/http.token.interceptor';
 import { ProjectService } from '@services/project.service';
@@ -26,15 +21,10 @@ import { ToastrModule } from 'ngx-toastr';
   declarations: [
     AppComponent,
     LeftSidebarComponent,
-    StatComponent,
     UserPageLayoutComponent,
-    TaskComponent,
     EditTaskDialogComponent,
-    TaskListLayoutComponent,
-    ProjectsComponent,
     ConfirmDialogComponent,
     EditProjectDialogComponent,
-    StatCardComponent,
   ],
   imports: [
     HttpClientModule,
