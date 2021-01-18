@@ -4,6 +4,7 @@
     "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
     "paths": {
+      "@environment": ["environments/environment"],
       "@shared-models/*": ["app/models/*"],
       "@services/*": ["app/services/*"]
     },

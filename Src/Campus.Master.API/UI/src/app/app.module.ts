@@ -17,12 +17,15 @@ import { RightSidebarComponent } from './views/tasks_board/right-sidebar/right-s
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import { EditProjectDialogComponent } from './dialog/edit-project-dialog/edit-project-dialog.component';
 import { StatCardComponent } from './views/tasks_board/stat/stat-card/stat-card.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { HttpTokenInterceptor } from './auth/http.token.interceptor';
 import { ProjectService } from '@services/project.service';
 import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.component';
 import { SignInService } from './core/sign-in.service';
 import { ToastrModule } from 'ngx-toastr';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpLoaderFactory } from './shared/locale/loader';
+import { environment } from '@environment';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,15 @@ import { ToastrModule } from 'ngx-toastr';
     MaterialModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    SharedModule
+    SharedModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      },
+      defaultLanguage: environment.defaultLocale
+    })
   ],
   providers: [
     ProjectService,

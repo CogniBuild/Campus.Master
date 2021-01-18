@@ -3,11 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FirstErrorPipe } from './pipes/first-error.pipe';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
-
-import { HttpLoaderFactory } from './locale/loader';
-import { environment } from 'environment/environment';
 
 @NgModule({
   declarations: [FirstErrorPipe],
@@ -16,15 +11,7 @@ import { environment } from 'environment/environment';
     CommonModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forChild({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      },
-      defaultLanguage: environment.defaultLocale
-    })]
+    ReactiveFormsModule]
 })
 export class SharedModule {
 }
