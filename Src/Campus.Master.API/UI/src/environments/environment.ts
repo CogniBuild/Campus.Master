@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  localesPath: './assets/locale/',
+  defaultLocale: 'en',
   getProfileInformation: '/api/profile',
   createProfilePath: '/api/profile/create',
   authenticateProfile: '/api/profile/auth',

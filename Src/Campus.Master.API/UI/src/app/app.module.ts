@@ -2,8 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
@@ -22,7 +20,6 @@ import { StatCardComponent } from './views/tasks_board/stat/stat-card/stat-card.
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './auth/http.token.interceptor';
 import { ProjectService } from '@services/project.service';
-import { HttpLoaderFactory } from './locale/loader'
 import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.component';
 import { SignInService } from './core/sign-in.service';
 import { ToastrModule } from 'ngx-toastr';
@@ -50,15 +47,7 @@ import { ToastrModule } from 'ngx-toastr';
     MaterialModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    SharedModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-      useDefaultLang: false,
-    })
+    SharedModule
   ],
   providers: [
     ProjectService,
