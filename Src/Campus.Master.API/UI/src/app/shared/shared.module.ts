@@ -20,8 +20,9 @@ import { HttpLoaderFactory } from './locale/loader';
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      }
+        deps: [HttpClient]
+      },
+      defaultLanguage: 'en'
     })]
 })
 export class SharedModule {
