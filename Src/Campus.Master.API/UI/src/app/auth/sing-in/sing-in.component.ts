@@ -47,7 +47,7 @@ export class SingInComponent implements OnInit, OnDestroy {
       (data: StateTransfer) => {
         localStorage.setItem('token', data.message);
         this.form.reset();
-        this.router.navigate(['/campus/dashboard']);
+        this.router.navigate(['/campus']);
       },
       (errorResponse: HttpErrorResponse) => {
         this.errorMessage = errorResponse.error;
