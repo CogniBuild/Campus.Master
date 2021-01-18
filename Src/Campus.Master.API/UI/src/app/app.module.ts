@@ -11,7 +11,7 @@ import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.c
 import { EditProjectDialogComponent } from './dialog/edit-project-dialog/edit-project-dialog.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './auth/http.token.interceptor';
-import { LeftSidebarComponent } from './views/left-sidebar/left-sidebar.component';
+import { LeftSidebarComponent } from './core/left-sidebar/left-sidebar.component';
 import { SignInService } from './core/sign-in.service';
 import { ToastrModule } from 'ngx-toastr';
 
