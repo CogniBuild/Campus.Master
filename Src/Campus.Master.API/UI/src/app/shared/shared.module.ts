@@ -7,6 +7,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 
 import { HttpLoaderFactory } from './locale/loader';
+import { environment } from 'environment/environment';
 
 @NgModule({
   declarations: [FirstErrorPipe],
@@ -22,7 +23,7 @@ import { HttpLoaderFactory } from './locale/loader';
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       },
-      defaultLanguage: 'en'
+      defaultLanguage: environment.defaultLocale
     })]
 })
 export class SharedModule {
