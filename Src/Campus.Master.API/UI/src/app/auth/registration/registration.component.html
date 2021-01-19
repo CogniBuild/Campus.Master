@@ -15,7 +15,7 @@
             <div class="form-control"
                  [ngClass]="{ invalid: registerForm.get('first_name').touched && registerForm.get('first_name').invalid }">
               <label for="first-name" class="first-name"></label>
-              <input id="first-name" type="text" placeholder="First Name" formControlName="first_name">
+              <input id="first-name" type="text" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.FIRST-NAME' | translate }}" formControlName="first_name">
               <div *ngIf="registerForm.get('first_name').touched && registerForm.get('first_name').invalid"
                 class="validation">
                 <div [ngSwitch]="registerForm.get('first_name').errors | firstError">
@@ -34,7 +34,7 @@
             <div class="form-control"
                  [ngClass]="{ invalid: registerForm.get('last_name').touched && registerForm.get('last_name').invalid }">
               <label for="last-name" class="last-name"></label>
-              <input id="last-name" type="text" placeholder="Last Name" formControlName="last_name">
+              <input id="last-name" type="text" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.LAST-NAME' | translate }}" formControlName="last_name">
               <div *ngIf="registerForm.get('last_name').touched && registerForm.get('last_name').invalid"
                 class="validation">
                 <div [ngSwitch]="registerForm.get('last_name').errors | firstError">
@@ -54,7 +54,7 @@
           <div class="form-control"
                [ngClass]="{ invalid: registerForm.get('email').touched && registerForm.get('email').invalid }">
             <label for="email" class="email"></label>
-            <input id="email" type="email" placeholder="Email" formControlName="email">
+            <input id="email" type="email" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.EMAIL' | translate }}" formControlName="email">
             <div
               *ngIf="registerForm.get('email').touched && registerForm.get('email').invalid"
               class="validation">
@@ -69,7 +69,7 @@
           <div class="form-control"
                [ngClass]="{ invalid: registerForm.get('password').touched && registerForm.get('password').invalid }">
             <label for="password" class="password"></label>
-            <input id="password" type="password" placeholder="Password" formControlName="password">
+            <input id="password" type="password" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.PASSWORD' | translate }}" formControlName="password">
             <div
               *ngIf="registerForm.get('password').touched && registerForm.get('password').invalid"
               class="validation">
@@ -92,7 +92,7 @@
           <div class="form-control"
                [ngClass]="{ invalid: registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid }">
             <label for="match_password" class="math_password"></label>
-            <input id="match_password" type="password" placeholder="Matching password"
+            <input id="match_password" type="password" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.MATCH' | translate }}"
                    formControlName="confirmPassword">
             <div
               *ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid"

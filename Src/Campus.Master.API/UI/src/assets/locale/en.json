@@ -8,6 +8,13 @@
                 "FEMALE": "Female",
                 "CANTSAY": "Can’t say"
             },
+            "FORM-TEXTBOX": {
+                "FIRST-NAME": "First Name",
+                "LAST-NAME": "Last Name",
+                "EMAIL": "Email",
+                "PASSWORD": "Password",
+                "MATCH": "Matching password"
+            },
             "ERROR-MESSAGES": {
                 "FIRST-NAME": {
                     "REQUIRED": "First name is required",
