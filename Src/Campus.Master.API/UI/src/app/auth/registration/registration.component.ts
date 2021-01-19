@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { ConfirmPasswordValidator } from '../confirmed.validator';
 import { RegistrationService } from '../shared/services/registration.service';
-import { LocaleService } from '../../shared/services/locale.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -31,11 +30,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private registrationService: RegistrationService,
-    private localeService: LocaleService,
     private router: Router
-  ) {
-    this.localeService.useDetectedLocale();
-  }
+  ) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
