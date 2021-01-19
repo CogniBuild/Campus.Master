@@ -1,4 +1,9 @@
 {
+  "linterOptions": {
+    "exclude": [
+      "**/*.spec.ts"
+    ]
+  },
   "extends": "tslint:recommended",
   "rules": {
     "align": {
