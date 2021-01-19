@@ -15,10 +15,15 @@ describe('SingInComponent', () => {
         navigate: jest.fn()
     } as any;
 
+    const localeService = {
+        useDetectedLocale: jest.fn()
+    } as any;
+
     beforeAll(() => {
         component = new RegistrationComponent(
             formGroup,
             registrationService,
+            localeService,
             router
         );
     });
