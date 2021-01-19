@@ -1,0 +1,39 @@
+{
+    "AUTH": {
+        "REGISTRATION": {
+            "TEXT-IMG": "Your time has come",
+            "FORM-TITLE": "Getting started with",
+            "FORM-GENDER": {
+                "MALE": "Male",
+                "FEMALE": "Female",
+                "CANTSAY": "Can’t say"
+            },
+            "ERROR-MESSAGES": {
+                "FIRST-NAME": {
+                    "REQUIRED": "First name is required",
+                    "MAXLENGTH": "First name > 50 symbols",
+                    "LATINONLY": "Only Latin characters"
+                },
+                "LAST-NAME": {
+                    "REQUIRED": "Last name is required",
+                    "MAXLENGTH": "Last name > 50 symbols",
+                    "LATINONLY": "Only Latin characters"
+                },
+                "EMAIL": {
+                    "REQUIRED": "Email is required",
+                    "PATTERN": "Follow this email pattern example@domain.com"
+                },
+                "PASSWORD": {
+                    "REQUIRED": "Password is required",
+                    "MINLENGTH": "Password length should be > {{ minlength }} symbols",
+                    "MAXLENGTH": "Password > {{ maxlength }} symbols",
+                    "PATTERN": "Add at least one symbol in upper case & one digit",
+                    "MATCH": "Passwords don't match"
+                }
+            },
+            "REGISTER": "Register",
+            "ALREADY-REGISTERED": "Already registered ?",
+            "SIGN-IN": "Sign In"
+        }
+    }
+}

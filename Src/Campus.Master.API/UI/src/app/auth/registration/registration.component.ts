@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { ConfirmPasswordValidator } from '../confirmed.validator';
 import { RegistrationService } from '../shared/services/registration.service';
+import { LocaleService } from '@shared-assets/services/locale.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -23,14 +24,17 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   submitted = false;
   spinner: boolean;
   errorMessage: string;
+  param = { minlength: 8, maxlength: 100 };
 
   private registerUser$: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
     private registrationService: RegistrationService,
+    private localeService: LocaleService,
     private router: Router
   ) {
+    this.localeService.useDetectedLocale();
   }
 
   ngOnInit(): void {
