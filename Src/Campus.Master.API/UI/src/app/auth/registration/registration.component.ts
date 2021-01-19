@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { RegisterUser } from '../shared/models/register-user';
-import { StateTransfer } from '../../models/state-transfer';
+import { StateTransfer } from '@shared-models/state-transfer';
 
 @Component({
   selector: 'app-registration-page',

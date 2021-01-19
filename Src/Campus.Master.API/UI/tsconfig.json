@@ -5,7 +5,7 @@
     "outDir": "./dist/out-tsc",
     "paths": {
       "@shared-assets/*": ["app/shared/*"],
-      "@shared-models/*": ["app/models/*"],
+      "@shared-models/*": ["app/shared/models/*"],
       "@services/*": ["app/services/*"]
     },
     "sourceMap": true,
