@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { AuthenticatedUser } from '../shared/models/authenticated-user';
-import { StateTransfer } from '../../models/state-transfer';
+import { StateTransfer } from '@shared-models/state-transfer';
 
 @Component({
   selector: 'app-sing-in',
@@ -47,7 +47,7 @@ export class SingInComponent implements OnInit, OnDestroy {
       (data: StateTransfer) => {
         localStorage.setItem('token', data.message);
         this.form.reset();
-        this.router.navigate(['/campus/dashboard']);
+        this.router.navigate(['/campus']);
       },
       (errorResponse: HttpErrorResponse) => {
         this.errorMessage = errorResponse.error;
