@@ -41,6 +41,29 @@
             "REGISTER": "Register",
             "ALREADY-REGISTERED": "Already registered ?",
             "SIGN-IN": "Sign In"
+        },
+        "SIGN-IN": {
+            "TEXT-IMG": "Act Learn Upgrade",
+            "FORM-TITLE-LEFT": "Sign in ",
+            "FORM-TITLE-RIGHT": "to ",
+            "FORM-TEXTBOX": {
+                "EMAIL": "Email",
+                "PASSWORD": "Password"
+            },
+            "ERROR-MESSAGES": {
+                "EMAIL": {
+                    "REQUIRED": "Email is required",
+                    "PATTERN": "Email pattern is incorrect"
+                },
+                "PASSWORD": {
+                    "REQUIRED": "Password is required",
+                    "MINLENGTH": "Password length should be > {{ minlength }} symbols"
+                }
+            },
+            "FORGOT-PASSWORD": "Forgot your password?",
+            "SIGN-IN": "Sign in",
+            "NOT-REGISTERED": "Not registered yet?",
+            "SIGN-UP": "Sign Up"
         }
     }
 }

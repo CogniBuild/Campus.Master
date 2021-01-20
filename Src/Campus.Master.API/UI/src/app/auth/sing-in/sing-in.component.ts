@@ -16,6 +16,7 @@ export class SingInComponent implements OnInit, OnDestroy {
   form: FormGroup;
   spinner: boolean;
   errorMessage: string;
+  param = { minlength: 8 };
 
   private signInUser$: Subscription = new Subscription();
 

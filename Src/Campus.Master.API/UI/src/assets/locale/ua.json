@@ -39,8 +39,31 @@
                 }
             },
             "REGISTER": "Зареєструватися",
-            "ALREADY-REGISTERED": "Вже зареєстровані ?",
-            "SIGN-IN": "Увійти в мережу"
+            "ALREADY-REGISTERED": "Вже зареєстровані?",
+            "SIGN-IN": "Увійти"
+        },
+        "SIGN-IN": {
+            "TEXT-IMG": "Дійте Навчайтесь Змінюйтесь",
+            "FORM-TITLE-LEFT": "Увійти ",
+            "FORM-TITLE-RIGHT": "до ",
+            "FORM-TEXTBOX": {
+                "EMAIL": "Адреса електронної пошти",
+                "PASSWORD": "Пароль"
+            },
+            "ERROR-MESSAGES": {
+                "EMAIL": {
+                    "REQUIRED": "Поле адреси не може бути порожнім",
+                    "PATTERN": "Адреса не відповідає шаблону"
+                },
+                "PASSWORD": {
+                    "REQUIRED": "Поле паролю не може бути порожнім",
+                    "MINLENGTH": "Мінімальна довжина паролю - {{ minlength }} символів"
+                }
+            },
+            "FORGOT-PASSWORD": "Забули пароль?",
+            "SIGN-IN": "Вхід",
+            "NOT-REGISTERED": "Ще не зареєстровані?",
+            "SIGN-UP": "Зареєструватися"
         }
     }
 }
