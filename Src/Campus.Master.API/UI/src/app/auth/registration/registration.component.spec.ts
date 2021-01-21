@@ -3,7 +3,6 @@ import { RegistrationComponent } from './registration.component';
 describe('SingInComponent', () => {
     let component: RegistrationComponent;
 
-    /* tslint:disable:no-any */
     const formGroup = {
         group: jest.fn()
     } as any;
@@ -15,7 +14,6 @@ describe('SingInComponent', () => {
     const router = {
         navigate: jest.fn()
     } as any;
-    /* tslint:enable:no-any */
 
     beforeAll(() => {
         component = new RegistrationComponent(

@@ -1,0 +1,69 @@
+{
+    "AUTH": {
+        "REGISTRATION": {
+            "TEXT-IMG": "Your time has come",
+            "FORM-TITLE": "Getting started with",
+            "FORM-GENDER": {
+                "MALE": "Male",
+                "FEMALE": "Female",
+                "CANTSAY": "Can’t say"
+            },
+            "FORM-TEXTBOX": {
+                "FIRST-NAME": "First Name",
+                "LAST-NAME": "Last Name",
+                "EMAIL": "Email",
+                "PASSWORD": "Password",
+                "MATCH": "Matching password"
+            },
+            "ERROR-MESSAGES": {
+                "FIRST-NAME": {
+                    "REQUIRED": "First name is required",
+                    "MAXLENGTH": "First name > 50 symbols",
+                    "LATINONLY": "Only Latin characters"
+                },
+                "LAST-NAME": {
+                    "REQUIRED": "Last name is required",
+                    "MAXLENGTH": "Last name > 50 symbols",
+                    "LATINONLY": "Only Latin characters"
+                },
+                "EMAIL": {
+                    "REQUIRED": "Email is required",
+                    "PATTERN": "Follow this email pattern example@domain.com"
+                },
+                "PASSWORD": {
+                    "REQUIRED": "Password is required",
+                    "MINLENGTH": "Password length should be > {{ minlength }} symbols",
+                    "MAXLENGTH": "Password > {{ maxlength }} symbols",
+                    "PATTERN": "Add at least one symbol in upper case & one digit",
+                    "MATCH": "Passwords don't match"
+                }
+            },
+            "REGISTER": "Register",
+            "ALREADY-REGISTERED": "Already registered ?",
+            "SIGN-IN": "Sign In"
+        },
+        "SIGN-IN": {
+            "TEXT-IMG": "Act Learn Upgrade",
+            "FORM-TITLE-LEFT": "Sign in ",
+            "FORM-TITLE-RIGHT": "to ",
+            "FORM-TEXTBOX": {
+                "EMAIL": "Email",
+                "PASSWORD": "Password"
+            },
+            "ERROR-MESSAGES": {
+                "EMAIL": {
+                    "REQUIRED": "Email is required",
+                    "PATTERN": "Email pattern is incorrect"
+                },
+                "PASSWORD": {
+                    "REQUIRED": "Password is required",
+                    "MINLENGTH": "Password length should be > {{ minlength }} symbols"
+                }
+            },
+            "FORGOT-PASSWORD": "Forgot your password?",
+            "SIGN-IN": "Sign in",
+            "NOT-REGISTERED": "Not registered yet?",
+            "SIGN-UP": "Sign Up"
+        }
+    }
+}
