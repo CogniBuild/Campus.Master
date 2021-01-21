@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  localesPath: './assets/locale/',
   getProfileInformation: '/api/profile',
   createProfilePath: '/api/profile/create',
   authenticateProfile: '/api/profile/auth',

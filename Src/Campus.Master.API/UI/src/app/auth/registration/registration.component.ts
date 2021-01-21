@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { RegisterUser } from '../shared/models/register-user';
-import { StateTransfer } from '@shared/models/state-transfer';
+import { StateTransfer } from '@shared-models/state-transfer';
 
 @Component({
   selector: 'app-registration-page',
@@ -23,7 +23,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   submitted = false;
   spinner: boolean;
   errorMessage: string;
-  param = { minlength: 8, maxlength: 100 };
 
   private registerUser$: Subscription = new Subscription();
 
@@ -31,7 +30,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private registrationService: RegistrationService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(

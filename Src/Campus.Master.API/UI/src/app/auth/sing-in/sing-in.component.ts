@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { AuthenticatedUser } from '../shared/models/authenticated-user';
-import { StateTransfer } from '@shared/models/state-transfer';
+import { StateTransfer } from '@shared-models/state-transfer';
 
 @Component({
   selector: 'app-sing-in',
@@ -16,7 +16,6 @@ export class SingInComponent implements OnInit, OnDestroy {
   form: FormGroup;
   spinner: boolean;
   errorMessage: string;
-  param = { minlength: 8 };
 
   private signInUser$: Subscription = new Subscription();
 

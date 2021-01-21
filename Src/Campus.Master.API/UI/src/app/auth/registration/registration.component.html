@@ -3,10 +3,10 @@
     <div class="registration">
       <div class="registration__img">
         <img src="assets/img/registration/reg.png" alt="photo">
-        <span class="registration__text">{{ 'AUTH.REGISTRATION.TEXT-IMG' | translate }}</span>
+        <span class="registration__text">Your time has come</span>
       </div>
       <div class="registration__form">
-        <h1 class="registration__title">{{ 'AUTH.REGISTRATION.FORM-TITLE' | translate }} <span>Campus</span></h1>
+        <h1 class="registration__title">Getting started with <span>Campus</span></h1>
         <form action="#" [formGroup]="registerForm" (ngSubmit)="submit()">
           <div class="user-name">
             <div class="validation validation_error-with-server" *ngIf="errorMessage">
@@ -15,18 +15,18 @@
             <div class="form-control"
                  [ngClass]="{ invalid: registerForm.get('first_name').touched && registerForm.get('first_name').invalid }">
               <label for="first-name" class="first-name"></label>
-              <input id="first-name" type="text" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.FIRST-NAME' | translate }}" formControlName="first_name">
+              <input id="first-name" type="text" placeholder="First Name" formControlName="first_name">
               <div *ngIf="registerForm.get('first_name').touched && registerForm.get('first_name').invalid"
                 class="validation">
                 <div [ngSwitch]="registerForm.get('first_name').errors | firstError">
                   <small *ngSwitchCase="'required'">
-                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.FIRST-NAME.REQUIRED' | translate }}
+                  First name is required
                 </small>
                   <small *ngSwitchCase="'maxlength'">
-                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.FIRST-NAME.MAXLENGTH' | translate }}
+                    First name > 50 symbols
                 </small>
                   <small *ngSwitchCase="'pattern'">
-                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.FIRST-NAME.LATINONLY' | translate }}
+                    Only Latin characters
                   </small>
               </div>
             </div>
@@ -34,18 +34,18 @@
             <div class="form-control"
                  [ngClass]="{ invalid: registerForm.get('last_name').touched && registerForm.get('last_name').invalid }">
               <label for="last-name" class="last-name"></label>
-              <input id="last-name" type="text" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.LAST-NAME' | translate }}" formControlName="last_name">
+              <input id="last-name" type="text" placeholder="Last Name" formControlName="last_name">
               <div *ngIf="registerForm.get('last_name').touched && registerForm.get('last_name').invalid"
                 class="validation">
                 <div [ngSwitch]="registerForm.get('last_name').errors | firstError">
                   <small *ngSwitchCase="'required'">
-                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.LAST-NAME.REQUIRED' | translate }}
+                  Last name is required
                 </small>
                   <small *ngSwitchCase="'maxlength'">
-                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.LAST-NAME.MAXLENGTH' | translate }}
+                    Last name > 50 symbols
                 </small>
                   <small *ngSwitchCase="'pattern'">
-                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.LAST-NAME.LATINONLY' | translate }}
+                    Only Latin characters
                   </small>
               </div>
             </div>
@@ -54,37 +54,37 @@
           <div class="form-control"
                [ngClass]="{ invalid: registerForm.get('email').touched && registerForm.get('email').invalid }">
             <label for="email" class="email"></label>
-            <input id="email" type="email" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.EMAIL' | translate }}" formControlName="email">
+            <input id="email" type="email" placeholder="Email" formControlName="email">
             <div
               *ngIf="registerForm.get('email').touched && registerForm.get('email').invalid"
               class="validation">
               <small *ngIf="registerForm.get('email').errors.required">
-                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.EMAIL.REQUIRED' | translate }}
+                Email is required
               </small>
               <small *ngIf="registerForm.get('email').errors.email">
-                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.EMAIL.PATTERN' | translate }}
+                Follow this email pattern example@domain.com
               </small>
             </div>
           </div>
           <div class="form-control"
                [ngClass]="{ invalid: registerForm.get('password').touched && registerForm.get('password').invalid }">
             <label for="password" class="password"></label>
-            <input id="password" type="password" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.PASSWORD' | translate }}" formControlName="password">
+            <input id="password" type="password" placeholder="Password" formControlName="password">
             <div
               *ngIf="registerForm.get('password').touched && registerForm.get('password').invalid"
               class="validation">
               <div [ngSwitch]="registerForm.get('password').errors | firstError">
               <small *ngSwitchCase="'required'">
-                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.REQUIRED' | translate }}
+                Password is required
               </small>
               <small *ngSwitchCase="'minlength'">
-                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.MINLENGTH' | translate:param }}
+                Password length should be > {{ registerForm.get('password').errors.minlength.requiredLength }} symbols
               </small>
               <small *ngSwitchCase="'maxlength'">
-                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.MAXLENGTH' | translate:param }}
+                Password > {{ registerForm.get('password').errors.maxlength.requiredLength }} symbols
               </small>
               <small *ngSwitchCase="'pattern'">
-                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.PATTERN' | translate }}
+                Add at least one symbol in upper case & one digit
               </small>
             </div>
             </div>
@@ -92,17 +92,17 @@
           <div class="form-control"
                [ngClass]="{ invalid: registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid }">
             <label for="match_password" class="math_password"></label>
-            <input id="match_password" type="password" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.MATCH' | translate }}"
+            <input id="match_password" type="password" placeholder="Matching password"
                    formControlName="confirmPassword">
             <div
               *ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid"
               class="validation">
               <small *ngIf="registerForm.get('confirmPassword').errors.required">
-                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.REQUIRED' | translate }}
+                Password is required
               </small>
               <small *ngIf="registerForm.get('confirmPassword').errors &&
                 registerForm.get('confirmPassword').errors.ConfirmPassword">
-                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.MATCH' | translate }}
+                Passwords don't match
               </small>
             </div>
           </div>
@@ -111,27 +111,27 @@
             <div class="form-control align-center registration-radio">
               <input id="radio-male" type="radio" name="gender" value="0"
                      formControlName="gender">
-              <label for="radio-male" class="registration-radio-value">{{ 'AUTH.REGISTRATION.FORM-GENDER.MALE' | translate }}</label>
+              <label for="radio-male" class="registration-radio-value">Male</label>
             </div>
             <div class="form-control align-center registration-radio">
               <input id="radio-female" type="radio" name="gender" value="1"
                      formControlName="gender">
-              <label for="radio-female" class="registration-radio-value">{{ 'AUTH.REGISTRATION.FORM-GENDER.FEMALE' | translate }}</label>
+              <label for="radio-female" class="registration-radio-value">Female</label>
             </div>
             <div class="form-control align-center registration-radio">
               <input id="radio-cantSay" type="radio" name="gender" value="2"
                      formControlName="gender">
-              <label for="radio-cantSay" class="registration-radio-value">{{ 'AUTH.REGISTRATION.FORM-GENDER.CANTSAY' | translate }}</label>
+              <label for="radio-cantSay" class="registration-radio-value">Can’t say</label>
             </div>
           </div>
           <button type="submit" class="registration__btn" [disabled]="registerForm.invalid">
-            <span [ngClass]="{'none-block': spinner}">{{ 'AUTH.REGISTRATION.REGISTER' | translate }}</span>
+            <span [ngClass]="{'none-block': spinner}">Register</span>
             <div [ngClass]="{'box loader-02': spinner}"></div>
           </button>
         </form>
 
         <div class="registration__createAcc">
-          <span class="registered">{{ 'AUTH.REGISTRATION.ALREADY-REGISTERED' | translate }} <a routerLink="/">{{ 'AUTH.REGISTRATION.SIGN-IN' | translate }}</a></span>
+          <span class="registered">Already registered ? <a routerLink="/">Sign In</a></span>
         </div>
 
       </div>
