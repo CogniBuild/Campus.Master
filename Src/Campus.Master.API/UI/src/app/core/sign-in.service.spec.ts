@@ -4,6 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { AuthenticatedUser } from '../auth/shared/models/authenticated-user';
 import { StateTransfer } from '@shared-models/state-transfer';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ProfileInformation } from '../auth/shared/models/profile-information';
 
 describe('SignInService', () => {
 
@@ -24,48 +25,73 @@ describe('SignInService', () => {
     httpTestingController.verify();
   });
 
-  test('should return state transfer when user logged in', () => {
-    const mockResponse: StateTransfer = {
-      message: 'token',
-      payload: 'api/profile'
-    };
+  describe('login()', () => {
 
-    const authenticatedUserMock: AuthenticatedUser = {
-      email: 'exmple@example.com',
-      password: 'Password321'
-    };
+    test('should return state transfer when user logged in', () => {
+      const mockResponse: StateTransfer = {
+        message: 'token',
+        payload: 'api/profile'
+      };
 
-    signInService.login(authenticatedUserMock).subscribe(response =>
-      expect(response).toEqual(mockResponse));
+      const authenticatedUserMock: AuthenticatedUser = {
+        email: 'exmple@example.com',
+        password: 'Password321'
+      };
 
-    const req = httpTestingController.expectOne('/api/profile/auth');
-    expect(req.request.method).toMatch('POST');
+      signInService.login(authenticatedUserMock).subscribe(response =>
+        expect(response).toEqual(mockResponse));
 
-    req.flush(mockResponse);
+      const req = httpTestingController.expectOne('/api/profile/auth');
+      expect(req.request.method).toMatch('POST');
+
+      req.flush(mockResponse);
+    });
+
+    test('should respond with 400 error when wrong email or password', (done) => {
+
+      const unauthenticatedUserMock: AuthenticatedUser = {
+        email: 'wrong email',
+        password: 'wrong password'
+      };
+
+      const errorMessage = 'Wrong email or password.';
+
+      signInService.login(unauthenticatedUserMock)
+        .subscribe(_ => {
+            fail('should have failed with 400 error');
+            done();
+          },
+          (error: HttpErrorResponse) => {
+            expect(error.status).toBe(400);
+            expect(error.error).toMatch(errorMessage);
+            done();
+          });
+
+      const req = httpTestingController.expectOne('/api/profile/auth');
+      expect(req.request.method).toMatch('POST');
+
+      req.flush(errorMessage, { status: 400, statusText: 'Bad Request' });
+    });
   });
 
-  test('should respond with 400 error when wrong email or password', (done) => {
+  describe('getProfileInformation()', () => {
 
-    const unauthenticatedUserMock: AuthenticatedUser = {
-      email: 'wrong email',
-      password: 'wrong password'
-    };
+    test('should return profile information when user exists', () => {
+      const registeredUserMock: ProfileInformation = {
+        email: 'exmple@example.com',
+        firstName: 'firstName',
+        lastName: 'lastName'
+      };
 
-    const errorMessage = 'Wrong email or password.';
+      signInService.getProfileInformation()
+        .subscribe(response => {
+          expect(response).toEqual(registeredUserMock);
+        });
 
-    signInService.login(unauthenticatedUserMock).subscribe(_ => {
-        fail('should have failed with 400 error');
-        done();
-      },
-      (error: HttpErrorResponse) => {
-        expect(error.status).toBe(400);
-        expect(error.error).toMatch(errorMessage);
-        done();
-      });
+      const req = httpTestingController.expectOne('/api/profile');
+      expect(req.request.method).toMatch('GET');
 
-    const req = httpTestingController.expectOne('/api/profile/auth');
-    expect(req.request.method).toMatch('POST');
-
-    req.flush(errorMessage, { status: 400, statusText: 'Bad Request' });
+      req.flush(registeredUserMock);
+    });
   });
 });
