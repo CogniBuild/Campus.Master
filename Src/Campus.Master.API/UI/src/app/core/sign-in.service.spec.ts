@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthenticatedUser } from '../auth/shared/models/authenticated-user';
 import { StateTransfer } from '@shared-models/state-transfer';
+import { HttpErrorResponse } from '@angular/common/http';
 
 describe('SignInService', () => {
 
@@ -41,5 +42,30 @@ describe('SignInService', () => {
     expect(req.request.method).toMatch('POST');
 
     req.flush(mockResponse);
+  });
+
+  test('should respond with 400 error when wrong email or password', (done) => {
+
+    const unauthenticatedUserMock: AuthenticatedUser = {
+      email: 'wrong email',
+      password: 'wrong password'
+    };
+
+    const errorMessage = 'Wrong email or password.';
+
+    signInService.login(unauthenticatedUserMock).subscribe(_ => {
+        fail('should have failed with 400 error');
+        done();
+      },
+      (error: HttpErrorResponse) => {
+        expect(error.status).toBe(400);
+        expect(error.error).toMatch(errorMessage);
+        done();
+      });
+
+    const req = httpTestingController.expectOne('/api/profile/auth');
+    expect(req.request.method).toMatch('POST');
+
+    req.flush(errorMessage, { status: 400, statusText: 'Bad Request' });
   });
 });
