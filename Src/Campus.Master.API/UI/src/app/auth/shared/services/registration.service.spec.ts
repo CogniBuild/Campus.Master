@@ -53,12 +53,12 @@ describe('registerUser()', () => {
 
     registrationService.registerUser(mockUser)
       .subscribe((_) => {
-          fail('should failed with the 400 error');
+          fail('should have failed with 400 error');
           done();
         },
         (error: HttpErrorResponse) => {
           expect(error.status).toBe(400);
-          expect(error.error).toMatch(errorMsg);
+          expect(error.error).toEqual(errorMsg);
           done();
         }
       );

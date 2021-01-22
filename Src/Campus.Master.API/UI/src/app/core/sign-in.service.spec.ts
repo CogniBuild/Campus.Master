@@ -63,7 +63,7 @@ describe('SignInService', () => {
           },
           (error: HttpErrorResponse) => {
             expect(error.status).toBe(400);
-            expect(error.error).toMatch(errorMessage);
+            expect(error.error).toEqual(errorMessage);
             done();
           });
 
@@ -92,6 +92,25 @@ describe('SignInService', () => {
       expect(req.request.method).toMatch('GET');
 
       req.flush(registeredUserMock);
+    });
+
+    test('should respond with 400 error when unauthorized', (done) => {
+      const errorMessage = 'Failed to identify user.';
+
+      signInService.getProfileInformation()
+        .subscribe(_ => {
+          fail('should have failed with 400 error');
+          done();
+        }, (error: HttpErrorResponse) => {
+          expect(error.status).toBe(400);
+          expect(error.error).toEqual(errorMessage);
+          done();
+        });
+
+      const req = httpTestingController.expectOne('/api/profile');
+      expect(req.request.method).toMatch('GET');
+
+      req.flush(errorMessage, { status: 400, statusText: 'Bad Request' });
     });
   });
 });
