@@ -43,7 +43,7 @@ describe('registerUser()', () => {
       );
 
     const req = httpTestingController.expectOne('/api/profile/create');
-    expect(req.request.method).toEqual('POST');
+    expect(req.request.method).toMatch('POST');
 
     req.flush(mockStateTransfer);
   });
@@ -64,6 +64,7 @@ describe('registerUser()', () => {
       );
 
     const req = httpTestingController.expectOne('/api/profile/create');
+    expect(req.request.method).toMatch('POST');
 
     req.flush(errorMsg, { status: 400, statusText: 'Bad Request' });
   });
