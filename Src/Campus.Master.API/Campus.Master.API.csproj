@@ -19,6 +19,17 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Remove="UI\src\**" />
+        <Content Remove="UI\angular.json" />
+        <Content Remove="UI\package.json" />
+        <Content Remove="UI\package-lock.json" />
+        <Content Remove="UI\tsconfig.app.json" />
+        <Content Remove="UI\tsconfig.json" />
+        <Content Remove="UI\tsconfig.spec.json" />
+        <Content Remove="UI\tslint.json" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Campus.Domain.Interfaces\Campus.Domain.Interfaces.csproj" />
       <ProjectReference Include="..\Campus.Infrastructure.Business\Campus.Infrastructure.Business.csproj" />
       <ProjectReference Include="..\Campus.Infrastructure.Data.EntityFrameworkCore\Campus.Infrastructure.Data.EntityFrameworkCore.csproj" />
