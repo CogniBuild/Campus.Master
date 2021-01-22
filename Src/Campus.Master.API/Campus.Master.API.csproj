@@ -2,7 +2,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <EnableDefaultContentItems>false</EnableDefaultContentItems>
+        <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
         <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
 
@@ -15,9 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="UI\wwwroot\**">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
+        <None Include="UI\wwwroot\**" CopyToPublishDirectory="PreserveNewest" />
     </ItemGroup>
 
     <ItemGroup>
