@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { Subscription, zip } from 'rxjs';
 import { RegisterUser } from '../shared/models/register-user';
 import { StateTransfer } from '@shared/models/state-transfer';
-import { LocaleService } from '@shared/services/locale.service';
+import { LocaleService } from '../../shared/services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
