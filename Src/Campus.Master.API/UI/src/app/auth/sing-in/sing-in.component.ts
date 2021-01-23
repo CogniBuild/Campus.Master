@@ -2,10 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignInService } from '../../core/sign-in.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Subscription, zip } from 'rxjs';
 import { AuthenticatedUser } from '../shared/models/authenticated-user';
 import { StateTransfer } from '@shared/models/state-transfer';
+import { LocaleService } from '../../shared/services/locale.service';
 
 @Component({
   selector: 'app-sing-in',
@@ -15,12 +17,18 @@ import { StateTransfer } from '@shared/models/state-transfer';
 export class SingInComponent implements OnInit, OnDestroy {
   form: FormGroup;
   spinner: boolean;
-  errorMessage: string;
   param = { minlength: 8 };
 
   private signInUser$: Subscription = new Subscription();
 
-  constructor(public auth: SignInService, private router: Router) {
+  private toastStyles = {
+    toastClass: 'ngx-toastr server-error-toastr'
+  };
+
+  constructor(private auth: SignInService,
+              private toastr: ToastrService,
+              private localeService: LocaleService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -50,8 +58,11 @@ export class SingInComponent implements OnInit, OnDestroy {
         this.form.reset();
         this.router.navigate(['/campus']);
       },
-      (errorResponse: HttpErrorResponse) => {
-        this.errorMessage = errorResponse.error;
+      _ => {
+        zip(
+          this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
+          this.localeService.get('AUTH.ERROR-TOASTR.HEADER')
+        ).toPromise().then(([message, header]) => this.toastr.error(message, header, this.toastStyles));
         this.spinner = false;
         this.form.reset({ email: user.email});
       }
