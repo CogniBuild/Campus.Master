@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 import { Locales } from '../enum/locales.enum';
 
 @Injectable({
@@ -24,5 +25,9 @@ export class LocaleService {
 
   useLocale(locale: Locales): void {
     this.translate.use(locale);
+  }
+
+  get(key: string, param?: object): Observable<string> {
+    return this.translate.get(key, param);
   }
 }
