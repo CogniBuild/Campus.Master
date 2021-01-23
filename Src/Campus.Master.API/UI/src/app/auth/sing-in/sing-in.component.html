@@ -3,11 +3,11 @@
     <div class="sign-in">
       <div class="sign-in__img">
         <img src="assets/img/sign-in/signIn.png" alt="photo"/>
-        <span class="sign-in__text">Act Learn Upgrade</span>
+        <span class="sign-in__text">{{ 'AUTH.SIGN-IN.TEXT-IMG' | translate }}</span>
       </div>
       <div class="sign-in__form">
         <h1 class="sign-in__title">
-          Sign in <br class="sign-in__title_br"/>to <span>Campus</span>
+          {{ 'AUTH.SIGN-IN.FORM-TITLE-LEFT' | translate }}<br class="sign-in__title_br"/>{{ 'AUTH.SIGN-IN.FORM-TITLE-RIGHT' | translate }}<span>Campus</span>
         </h1>
         <form action="#" [formGroup]="form" (ngSubmit)="submit()">
           <div class="form-control" [ngClass]="{
@@ -17,13 +17,13 @@
               {{errorMessage}}
             </div>
             <label for="email" class="email"></label>
-            <input id="email" type="email" placeholder="Email" formControlName="email"/>
+            <input id="email" type="email" placeholder="{{ 'AUTH.SIGN-IN.FORM-TEXTBOX.EMAIL' | translate }}" formControlName="email"/>
             <div *ngIf="form.get('email').touched && form.get('email').invalid" class="validation">
               <small *ngIf="form.get('email').errors.required">
-                Email is required
+                {{ 'AUTH.SIGN-IN.ERROR-MESSAGES.EMAIL.REQUIRED' | translate }}
               </small>
               <small *ngIf="form.get('email').errors.email">
-                Please, enter the correct email type
+                {{ 'AUTH.SIGN-IN.ERROR-MESSAGES.EMAIL.PATTERN' | translate }}
               </small>
             </div>
           </div>
@@ -32,31 +32,29 @@
                 form.get('password').touched && form.get('password').invalid
             }">
             <label for="password" class="password"></label>
-            <input id="password" type="password" placeholder="Password" formControlName="password"/>
+            <input id="password" type="password" placeholder="{{ 'AUTH.SIGN-IN.FORM-TEXTBOX.PASSWORD' | translate }}" formControlName="password"/>
             <div *ngIf="
                 form.get('password').touched && form.get('password').invalid
               " class="validation">
               <small *ngIf="form.get('password').errors.required">
-                Password is required
+                {{ 'AUTH.SIGN-IN.ERROR-MESSAGES.PASSWORD.REQUIRED' | translate }}
               </small>
               <small *ngIf="form.get('password').errors.minlength">
-                Password must contains
-                {{ form.get("password").errors.minlength.requiredLength }}
-                characters
+                {{ 'AUTH.SIGN-IN.ERROR-MESSAGES.PASSWORD.MINLENGTH' | translate:param }}
               </small>
             </div>
-            <span class="forgot-pass"><a href="#">Forgot your password ?</a></span>
+            <span class="forgot-pass"><a href="#">{{ 'AUTH.SIGN-IN.FORGOT-PASSWORD' | translate }}</a></span>
           </div>
           <button type="submit" class="sign-in__btn"
                   [disabled]="form.invalid && form.touched">
-            <span [ngClass]="{'none-block': spinner}">Sign in</span>
+            <span [ngClass]="{'none-block': spinner}">{{ 'AUTH.SIGN-IN.SIGN-IN' | translate }}</span>
             <div [ngClass]="{'box loader-02': spinner}"></div>
           </button>
         </form>
         <div class="sign-in__createAcc">
           <span>
-            Not registered yet ?
-            <a routerLink="/registration">Sign Up</a>
+            {{ 'AUTH.SIGN-IN.NOT-REGISTERED' | translate }}
+            <a routerLink="/registration">{{ 'AUTH.SIGN-IN.SIGN-UP' | translate }}</a>
           </span>
         </div>
       </div>

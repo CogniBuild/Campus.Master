@@ -1,4 +1,9 @@
 {
+  "linterOptions": {
+    "exclude": [
+      "**/*.spec.ts"
+    ]
+  },
   "extends": "tslint:recommended",
   "rules": {
     "align": {
@@ -56,7 +61,6 @@
       }
     ],
     "no-console": true,
-    "only-arrow-functions": true,
     "no-empty": false,
     "no-any": true,
     "no-inferrable-types": [

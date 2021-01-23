@@ -2,6 +2,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
         <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
 
@@ -14,9 +15,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="UI\wwwroot\**">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
+        <None Include="UI\wwwroot\**" CopyToPublishDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Remove="UI\src\**" />
+        <Content Remove="UI\angular.json" />
+        <Content Remove="UI\package.json" />
+        <Content Remove="UI\package-lock.json" />
+        <Content Remove="UI\tsconfig.app.json" />
+        <Content Remove="UI\tsconfig.json" />
+        <Content Remove="UI\tsconfig.spec.json" />
+        <Content Remove="UI\tslint.json" />
     </ItemGroup>
 
     <ItemGroup>
