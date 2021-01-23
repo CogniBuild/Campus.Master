@@ -3,11 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignInService } from '../../core/sign-in.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription, zip } from 'rxjs';
 import { AuthenticatedUser } from '../shared/models/authenticated-user';
 import { StateTransfer } from '@shared/models/state-transfer';
-import { LocaleService } from '../../shared/services/locale.service';
+import { LocaleService } from '@shared/services/locale.service';
 
 @Component({
   selector: 'app-sing-in',
