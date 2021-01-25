@@ -33,7 +33,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   };
 
   private responseLocaleMap = {
-    'Passwords don\'t match.': 'AUTH.ERROR-TOASTR.MATCH',
     'User already exists.': 'AUTH.ERROR-TOASTR.USER-EXISTS',
     'Failed to create new user.': 'AUTH.ERROR-TOASTR.NEW-USER'
   };
