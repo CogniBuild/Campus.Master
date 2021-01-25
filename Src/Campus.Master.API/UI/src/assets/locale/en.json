@@ -69,7 +69,6 @@
             "HEADER": "Error",
             "NOT-AUTHORIZED": "You are not authorized",
             "SERVER-ERROR": "A server error has occurred",
-            "MATCH": "Passwords don't match",
             "USER-EXISTS": "User already exists",
             "NEW-USER": "Failed to create new user",
             "WRONG-EMAIL-PASSWORD": "Wrong email or password"
