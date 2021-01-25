@@ -100,7 +100,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       .subscribe((data: StateTransfer) => {
         localStorage.setItem('token', data.message);
         this.registerForm.reset();
-        this.router.navigate(['/campus/dashboard']);
+        this.router.navigate(['/campus']);
       }, (errorResponse: HttpErrorResponse) => {
         const msgLocale$ = errorResponse.status === 400 ?
                           zip(this.localeService.get(this.responseLocaleMap[errorResponse.error]),
