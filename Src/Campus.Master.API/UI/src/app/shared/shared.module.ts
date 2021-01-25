@@ -23,7 +23,7 @@ import { LocaleService } from './services/locale.service';
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       },
-      defaultLanguage: Locales.EN
+      defaultLanguage: Locales.UA
     })],
   providers: [LocaleService, TranslateStore]
 })
