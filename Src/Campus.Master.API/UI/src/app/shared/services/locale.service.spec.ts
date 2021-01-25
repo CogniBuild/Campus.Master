@@ -1,10 +1,14 @@
 import { LocaleService } from './locale.service';
 import { Locales } from '../enum/locales.enum';
+import { Subscription, of } from 'rxjs';
 
 describe('LocaleService', () => {
+  let valueLocale$ = new Subscription();
+
   const translateMock = {
     getBrowserLang: jest.fn(),
-    use: jest.fn()
+    use: jest.fn(),
+    get: jest.fn()
   };
 
   const service = new LocaleService(translateMock as any);
@@ -66,5 +70,21 @@ describe('LocaleService', () => {
 
     // assert
     expect(translateMock.use).toHaveBeenCalledWith(customLocale);
+  })
+
+  it('should return observable of localed text by key', (done) => {
+    // arrange
+    translateMock.get.mockReturnValue(of("Sample text"));
+
+    // act
+    valueLocale$ = service.get("key").subscribe((value) => {
+      // assert
+      expect(value).toEqual("Sample text");
+      done();
+    });
+  })
+
+  afterAll(() => {
+    valueLocale$.unsubscribe();
   })
 });

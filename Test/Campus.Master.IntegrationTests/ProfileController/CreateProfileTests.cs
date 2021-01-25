@@ -58,7 +58,7 @@ namespace Campus.Master.IntegrationTests.ProfileController
 
             // Assert
             await sutCall.Should().ThrowAsync<ApplicationException>()
-                .WithMessage("Wrong email or password.");
+                .WithMessage("Passwords don't match.");
         }
         
         [Fact]

@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { SignInService } from '../sign-in.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { LocaleService } from '@shared/services/locale.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CanActivateDashboardGuard implements CanActivate {
 
-  constructor(private signInService: SignInService, private router: Router, private toastr: ToastrService) {
+  constructor(private signInService: SignInService,
+              private router: Router,
+              private toastr: ToastrService,
+              private localeService: LocaleService) {
   }
 
   canActivate(
@@ -21,10 +25,17 @@ export class CanActivateDashboardGuard implements CanActivate {
         return true;
       }),
       catchError(() => {
-        this.router.navigate(['']);
-        this.toastr.error('Your are not authorized', '401', {
+        const toastStyles = {
           toastClass: 'ngx-toastr server-error-toastr'
-        });
+        };
+
+        this.router.navigate(['']);
+
+        zip(
+          this.localeService.get('AUTH.ERROR-TOASTR.NOT-AUTHORIZED'),
+          this.localeService.get('AUTH.ERROR-TOASTR.HEADER')
+        ).toPromise().then(([message, header]) => this.toastr.error(message, header, toastStyles));
+
         return of(false);
       })
     );

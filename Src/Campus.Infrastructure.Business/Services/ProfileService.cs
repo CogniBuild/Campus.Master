@@ -25,7 +25,7 @@ namespace Campus.Infrastructure.Business.Services
         public async Task CreateProfileAsync(ProfileRegistrationDto registrationDto)
         {
             if (registrationDto.Password != registrationDto.ConfirmPassword)
-                throw new ApplicationException("Wrong email or password.");
+                throw new ApplicationException("Passwords don't match.");
             
             var appUser = await _appUserRepository.GetAppUserByEmailAsync(registrationDto.Email);
             

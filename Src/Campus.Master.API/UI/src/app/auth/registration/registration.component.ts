@@ -9,9 +9,11 @@ import { ConfirmPasswordValidator } from '../confirmed.validator';
 import { RegistrationService } from '../shared/services/registration.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Subscription, zip } from 'rxjs';
 import { RegisterUser } from '../shared/models/register-user';
 import { StateTransfer } from '@shared/models/state-transfer';
+import { LocaleService } from '../../shared/services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration-page',
@@ -22,13 +24,23 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   submitted = false;
   spinner: boolean;
-  errorMessage: string;
   param = { minlength: 8, maxlength: 100 };
 
   private registerUser$: Subscription = new Subscription();
 
+  private toastStyles = {
+    toastClass: 'ngx-toastr server-error-toastr'
+  };
+
+  private responseLocaleMap = {
+    'User already exists.': 'AUTH.ERROR-TOASTR.USER-EXISTS',
+    'Failed to create new user.': 'AUTH.ERROR-TOASTR.NEW-USER'
+  };
+
   constructor(
     private fb: FormBuilder,
+    private toastr: ToastrService,
+    private localeService: LocaleService,
     private registrationService: RegistrationService,
     private router: Router
   ) { }
@@ -87,9 +99,15 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       .subscribe((data: StateTransfer) => {
         localStorage.setItem('token', data.message);
         this.registerForm.reset();
-        this.router.navigate(['/campus/dashboard']);
+        this.router.navigate(['/campus']);
       }, (errorResponse: HttpErrorResponse) => {
-        this.errorMessage = errorResponse.error;
+        const msgLocale$ = errorResponse.status === 400 ?
+                          zip(this.localeService.get(this.responseLocaleMap[errorResponse.error]),
+                              this.localeService.get('AUTH.ERROR-TOASTR.HEADER')) :
+                          zip(this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
+                              this.localeService.get('AUTH.ERROR-TOASTR.HEADER'));
+
+        msgLocale$.toPromise().then(([message, header]) => this.toastr.error(message, header, this.toastStyles));
         this.spinner = false;
       });
   }

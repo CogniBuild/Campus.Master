@@ -2,10 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignInService } from '../../core/sign-in.service';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription, zip } from 'rxjs';
 import { AuthenticatedUser } from '../shared/models/authenticated-user';
 import { StateTransfer } from '@shared/models/state-transfer';
+import { LocaleService } from '@shared/services/locale.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-sing-in',
@@ -15,12 +17,22 @@ import { StateTransfer } from '@shared/models/state-transfer';
 export class SingInComponent implements OnInit, OnDestroy {
   form: FormGroup;
   spinner: boolean;
-  errorMessage: string;
   param = { minlength: 8 };
 
   private signInUser$: Subscription = new Subscription();
 
-  constructor(public auth: SignInService, private router: Router) {
+  private toastStyles = {
+    toastClass: 'ngx-toastr server-error-toastr'
+  };
+
+  private responseLocaleMap = {
+    'Wrong email or password.': 'AUTH.ERROR-TOASTR.WRONG-EMAIL-PASSWORD'
+  };
+
+  constructor(private auth: SignInService,
+              private toastr: ToastrService,
+              private localeService: LocaleService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -49,9 +61,14 @@ export class SingInComponent implements OnInit, OnDestroy {
         localStorage.setItem('token', data.message);
         this.form.reset();
         this.router.navigate(['/campus']);
-      },
-      (errorResponse: HttpErrorResponse) => {
-        this.errorMessage = errorResponse.error;
+      }, (errorResponse: HttpErrorResponse) => {
+        const msgLocale$ = errorResponse.status === 400 ?
+          zip(this.localeService.get(this.responseLocaleMap[errorResponse.error]),
+            this.localeService.get('AUTH.ERROR-TOASTR.HEADER')) :
+          zip(this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
+            this.localeService.get('AUTH.ERROR-TOASTR.HEADER'));
+
+        msgLocale$.toPromise().then(([message, header]) => this.toastr.error(message, header, this.toastStyles));
         this.spinner = false;
         this.form.reset({ email: user.email});
       }

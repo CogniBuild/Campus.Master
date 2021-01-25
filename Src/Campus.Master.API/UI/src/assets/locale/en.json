@@ -64,6 +64,14 @@
             "SIGN-IN": "Sign in",
             "NOT-REGISTERED": "Not registered yet?",
             "SIGN-UP": "Sign Up"
+        },
+        "ERROR-TOASTR": {
+            "HEADER": "Error",
+            "NOT-AUTHORIZED": "You are not authorized",
+            "SERVER-ERROR": "A server error has occurred",
+            "USER-EXISTS": "User already exists",
+            "NEW-USER": "Failed to create new user",
+            "WRONG-EMAIL-PASSWORD": "Wrong email or password"
         }
     }
 }
