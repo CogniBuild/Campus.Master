@@ -8,6 +8,7 @@ import {
 import { ConfirmPasswordValidator } from '../confirmed.validator';
 import { RegistrationService } from '../shared/services/registration.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription, zip } from 'rxjs';
 import { RegisterUser } from '../shared/models/register-user';
 import { StateTransfer } from '@shared/models/state-transfer';
@@ -29,6 +30,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   private toastStyles = {
     toastClass: 'ngx-toastr server-error-toastr'
+  };
+
+  private responseLocaleMap = {
+    'Passwords don\'t match.': 'AUTH.ERROR-TOASTR.MATCH',
+    'User already exists.': 'AUTH.ERROR-TOASTR.USER-EXISTS',
+    'Failed to create new user.': 'AUTH.ERROR-TOASTR.NEW-USER'
   };
 
   constructor(
@@ -94,11 +101,14 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         localStorage.setItem('token', data.message);
         this.registerForm.reset();
         this.router.navigate(['/campus/dashboard']);
-      }, _ => {
-        zip(
-          this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
-          this.localeService.get('AUTH.ERROR-TOASTR.HEADER')
-        ).toPromise().then(([message, header]) => this.toastr.error(message, header, this.toastStyles));
+      }, (errorResponse: HttpErrorResponse) => {
+        const msgLocale$ = errorResponse.status === 400 ?
+                          zip(this.localeService.get(this.responseLocaleMap[errorResponse.error]),
+                              this.localeService.get('AUTH.ERROR-TOASTR.HEADER')) :
+                          zip(this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
+                              this.localeService.get('AUTH.ERROR-TOASTR.HEADER'));
+
+        msgLocale$.toPromise().then(([message, header]) => this.toastr.error(message, header, this.toastStyles));
         this.spinner = false;
       });
   }

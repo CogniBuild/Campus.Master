@@ -7,6 +7,7 @@ import { Subscription, zip } from 'rxjs';
 import { AuthenticatedUser } from '../shared/models/authenticated-user';
 import { StateTransfer } from '@shared/models/state-transfer';
 import { LocaleService } from '@shared/services/locale.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-sing-in',
@@ -22,6 +23,10 @@ export class SingInComponent implements OnInit, OnDestroy {
 
   private toastStyles = {
     toastClass: 'ngx-toastr server-error-toastr'
+  };
+
+  private responseLocaleMap = {
+    'Wrong email or password.': 'AUTH.ERROR-TOASTR.WRONG-EMAIL-PASSWORD'
   };
 
   constructor(private auth: SignInService,
@@ -56,12 +61,14 @@ export class SingInComponent implements OnInit, OnDestroy {
         localStorage.setItem('token', data.message);
         this.form.reset();
         this.router.navigate(['/campus']);
-      },
-      _ => {
-        zip(
-          this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
-          this.localeService.get('AUTH.ERROR-TOASTR.HEADER')
-        ).toPromise().then(([message, header]) => this.toastr.error(message, header, this.toastStyles));
+      }, (errorResponse: HttpErrorResponse) => {
+        const msgLocale$ = errorResponse.status === 400 ?
+          zip(this.localeService.get(this.responseLocaleMap[errorResponse.error]),
+            this.localeService.get('AUTH.ERROR-TOASTR.HEADER')) :
+          zip(this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
+            this.localeService.get('AUTH.ERROR-TOASTR.HEADER'));
+
+        msgLocale$.toPromise().then(([message, header]) => this.toastr.error(message, header, this.toastStyles));
         this.spinner = false;
         this.form.reset({ email: user.email});
       }
