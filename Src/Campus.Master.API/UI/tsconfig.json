@@ -5,7 +5,6 @@
     "outDir": "./dist/out-tsc",
     "paths": {
       "@shared/*": ["app/shared/*"],
-      "@services/*": ["app/services/*"],
       "@core/*": ["app/core/*"]
     },
     "sourceMap": true,
