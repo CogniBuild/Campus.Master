@@ -8,7 +8,11 @@ const routes: Routes = [
   { path: '', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) },
   {
     path: 'campus', component: UserPageLayoutComponent, canActivate: [CanActivateDashboardGuard]
-  }
+    , children: [
+      {
+        path: 'calendar', loadChildren: () => import('./modules/calendar/calendar.module').then(m => m.CalendarModule)
+      }]
+  },
 ];
 
 @NgModule({
