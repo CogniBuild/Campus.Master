@@ -8,6 +8,11 @@ import { CalendarOptions } from '@fullcalendar/angular';
 })
 export class CalendarComponent {
   calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth'
+    initialView: 'dayGridMonth',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    }
   };
 }

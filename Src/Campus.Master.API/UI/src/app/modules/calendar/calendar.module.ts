@@ -5,10 +5,12 @@ import { CalendarRoutingModule } from './calendar-routing.module';
 import { CalendarComponent } from './calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
+  timeGridPlugin,
   interactionPlugin
 ]);
 
@@ -20,4 +22,5 @@ FullCalendarModule.registerPlugins([
     FullCalendarModule
   ]
 })
-export class CalendarModule { }
+export class CalendarModule {
+}
