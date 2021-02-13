@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
 
 
 const MaterialComponents = [
@@ -26,7 +27,8 @@ const MaterialComponents = [
   MatOptionModule,
   MatNativeDateModule,
   MatCheckboxModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatCardModule
 ];
 
 @NgModule({

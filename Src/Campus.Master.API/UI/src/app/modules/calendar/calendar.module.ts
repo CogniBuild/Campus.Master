@@ -7,6 +7,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { MaterialModule } from '../../material/material.module';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -19,7 +20,8 @@ FullCalendarModule.registerPlugins([
   imports: [
     CommonModule,
     CalendarRoutingModule,
-    FullCalendarModule
+    FullCalendarModule,
+    MaterialModule
   ]
 })
 export class CalendarModule {
