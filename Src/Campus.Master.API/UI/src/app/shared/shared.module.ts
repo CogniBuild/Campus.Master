@@ -8,15 +8,24 @@ import { TranslateModule, TranslateStore, TranslateLoader } from '@ngx-translate
 import { HttpLoaderFactory } from './factories/locale';
 import { Locales } from './enum/locales.enum';
 import { LocaleService } from './services/locale.service';
+import { MaterialModule } from '../material/material.module';
 
 @NgModule({
   declarations: [FirstErrorPipe],
-  exports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, FirstErrorPipe, TranslateModule],
+  exports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FirstErrorPipe,
+    TranslateModule,
+    MaterialModule],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    MaterialModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
