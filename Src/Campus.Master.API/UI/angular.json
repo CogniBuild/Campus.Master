@@ -34,7 +34,7 @@
               "node_modules/ngx-toastr/toastr.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["src/styles","node_modules/normalize-scss/sass"]
             },
             "scripts": []
           },
