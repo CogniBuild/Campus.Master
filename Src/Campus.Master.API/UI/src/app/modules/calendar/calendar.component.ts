@@ -9,7 +9,7 @@ import { CalendarOptions } from '@fullcalendar/angular';
 export class CalendarComponent {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
-    height: '81vh',
+    height: '80vh',
     nowIndicator: true,
     headerToolbar: {
       left: 'prev,next today',
