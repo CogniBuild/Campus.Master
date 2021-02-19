@@ -6,10 +6,12 @@ import { Locales } from '@core/enum/locales.enum';
 import { LocaleService } from '@core/services';
 import { HttpLoaderFactory } from '@core/factories/locale';
 import { HttpTokenInterceptor } from '@core/http.token.interceptor';
+import { CanActivateDashboardGuard } from '@core/guards/can-activate-dashboard.guard';
 
 @NgModule({
   providers:
     [
+      CanActivateDashboardGuard,
       SignInService,
       LocaleService,
       TranslateStore,
