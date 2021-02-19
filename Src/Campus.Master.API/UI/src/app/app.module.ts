@@ -9,8 +9,7 @@ import { AppComponent } from './app.component';
 import { UserPageLayoutComponent } from './views/user-page-layout/user-page-layout.component';
 import { ConfirmDialogComponent } from '@shared/dialogs/confirm-dialog/confirm-dialog.component';
 import { EditProjectDialogComponent } from '@shared/dialogs/edit-project-dialog/edit-project-dialog.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpTokenInterceptor } from '@core/http.token.interceptor';
+import { HttpClientModule } from '@angular/common/http';
 import { LeftSidebarComponent } from '@core/left-sidebar/left-sidebar.component';
 import { ToastrModule } from 'ngx-toastr';
 import { CoreModule } from '@core/core.module';
@@ -32,9 +31,6 @@ import { CoreModule } from '@core/core.module';
     MaterialModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true }
   ],
   entryComponents: [EditProjectDialogComponent, ConfirmDialogComponent],
   bootstrap: [AppComponent],
