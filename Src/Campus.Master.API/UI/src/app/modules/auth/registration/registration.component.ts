@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription, zip } from 'rxjs';
 import { RegisterUser } from '../shared/models/register-user';
 import { StateTransfer } from '@shared/models/state-transfer';
-import { LocaleService } from '@core/services/locale.service';
+import { LocaleService } from '../../../core/services/locale.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

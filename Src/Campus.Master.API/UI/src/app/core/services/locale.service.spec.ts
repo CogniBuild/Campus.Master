@@ -1,6 +1,6 @@
 import { LocaleService } from './locale.service';
 import { Subscription, of } from 'rxjs';
-import { Locales } from '@core/enum/locales.enum';
+import { Locales } from '../enum/locales.enum';
 
 describe('LocaleService', () => {
   let valueLocale$ = new Subscription();
