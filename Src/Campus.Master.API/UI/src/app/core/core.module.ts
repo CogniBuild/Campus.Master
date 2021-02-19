@@ -21,7 +21,7 @@ import { CanActivateDashboardGuard } from '@core/guards/can-activate-dashboard.g
         multi: true
       }],
   imports: [
-    TranslateModule.forChild({
+    TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
