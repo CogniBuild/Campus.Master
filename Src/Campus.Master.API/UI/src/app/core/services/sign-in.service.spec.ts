@@ -1,10 +1,9 @@
 import { SignInService } from './sign-in.service';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { AuthenticatedUser } from '../../modules/auth/shared/models/authenticated-user';
+import { AuthenticatedUser, ProfileInformation } from '../../modules/auth/shared/models';
 import { StateTransfer } from '@shared/models/state-transfer';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProfileInformation } from '../../modules/auth/shared/models/profile-information';
 
 describe('SignInService', () => {
 
