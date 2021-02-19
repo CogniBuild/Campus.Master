@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { CalendarComponent } from './calendar.component';
@@ -7,7 +6,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { MaterialModule } from '../../material/material.module';
+import { SharedModule } from '@shared/shared.module';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -18,10 +17,9 @@ FullCalendarModule.registerPlugins([
 @NgModule({
   declarations: [CalendarComponent],
   imports: [
-    CommonModule,
+    SharedModule,
     CalendarRoutingModule,
     FullCalendarModule,
-    MaterialModule
   ]
 })
 export class CalendarModule {

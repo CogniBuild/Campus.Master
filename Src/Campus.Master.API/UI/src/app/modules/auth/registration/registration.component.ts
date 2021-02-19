@@ -10,9 +10,9 @@ import { RegistrationService } from '../shared/services/registration.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription, zip } from 'rxjs';
-import { RegisterUser } from '../shared/models/register-user';
+import { RegisterUser } from '../shared/models';
 import { StateTransfer } from '@shared/models/state-transfer';
-import { LocaleService } from '../../../shared/services';
+import { LocaleService } from '../../../core/services/locale.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
