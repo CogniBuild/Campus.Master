@@ -7,13 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from '@shared/shared.module';
 import { AppComponent } from './app.component';
 import { UserPageLayoutComponent } from './views/user-page-layout/user-page-layout.component';
-import { ConfirmDialogComponent } from './shared/dialogs/confirm-dialog/confirm-dialog.component';
-import { EditProjectDialogComponent } from './shared/dialogs/edit-project-dialog/edit-project-dialog.component';
+import { ConfirmDialogComponent } from '@shared/dialogs/confirm-dialog/confirm-dialog.component';
+import { EditProjectDialogComponent } from '@shared/dialogs/edit-project-dialog/edit-project-dialog.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from '@core/http.token.interceptor';
 import { LeftSidebarComponent } from '@core/left-sidebar/left-sidebar.component';
-import { SignInService } from '@core/sign-in.service';
 import { ToastrModule } from 'ngx-toastr';
+import { CoreModule } from '@core/core.module';
 
 @NgModule({
   declarations: [
@@ -24,16 +24,16 @@ import { ToastrModule } from 'ngx-toastr';
     EditProjectDialogComponent,
   ],
   imports: [
+    CoreModule,
+    SharedModule,
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    SharedModule
+    ToastrModule.forRoot()
   ],
   providers: [
-    SignInService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true }
   ],
   entryComponents: [EditProjectDialogComponent, ConfirmDialogComponent],

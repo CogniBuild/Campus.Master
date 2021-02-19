@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthenticatedUser } from '../modules/auth/shared/models/authenticated-user';
+import { AuthenticatedUser } from '../../modules/auth/shared/models/authenticated-user';
 import { HttpClient } from '@angular/common/http';
 import { StateTransfer } from '@shared/models/state-transfer';
-import { ProfileInformation } from '../modules/auth/shared/models/profile-information';
+import { ProfileInformation } from '../../modules/auth/shared/models/profile-information';
 import { environment } from 'environments/environment';
 
 @Injectable()

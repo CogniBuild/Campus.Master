@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { Locales } from '../enum/locales.enum';
+import { Locales } from '@core/enum/locales.enum';
 
 @Injectable({
   providedIn: 'root'

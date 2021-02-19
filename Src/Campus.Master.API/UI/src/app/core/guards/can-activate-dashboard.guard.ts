@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { SignInService } from '../sign-in.service';
+import { SignInService } from '../services/sign-in.service';
 import { Observable, of, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
-import { LocaleService } from '@shared/services/locale.service';
+import { LocaleService } from '@core/services/locale.service';
 
 @Injectable({
   providedIn: 'root'
