@@ -1,6 +1,10 @@
+@import "src/styles/styles"
+
 .calendar
   &__container
     margin: 15px
+    +ms
+      margin: 10px
 
   &__header
     display: flex
@@ -8,4 +12,69 @@
     align-items: center
     padding: 10px
     margin-bottom: 25px
+    +sm
+      margin-top: 10px !important
+      margin-bottom: 10px
+    +ms
+      padding: 0
 
+.mat-card
+  +ms
+    padding: 10px !important
+
+.fc-toolbar-chunk
+  +sm
+    width: 106px
+  +ms
+    width: 85px
+
+.fc .fc-button-primary
+  background-color: #7E57C2 !important
+  border-color: #9b88b0 !important
+
+.mat-raised-button
+  background-color: #7E57C2
+  color: #a97cda
+  border-radius: 5px
+
+.fc .fc-button-primary:focus, .fc .fc-button-primary:not(:disabled).fc-button-active:focus, .fc .fc-button-primary:not(:disabled):active:focus
+  box-shadow: 0 0 0 0.2rem rgb(136 112 193 / 50%) !important
+
+.fc .fc-button-group
+  +sm
+    flex-wrap: wrap
+    width: 100%
+
+.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child)
+  +sm
+    margin-left: 0 !important
+    border-radius: .25em !important
+
+.fc-direction-ltr .fc-button-group > .fc-button:not(:last-child)
+  +sm
+    border-radius: .25em !important
+
+.fc-button-group button
+  +sm
+    margin-bottom: 2px !important
+
+.fc .fc-toolbar.fc-header-toolbar
+  +sm
+    margin-bottom: 0.7em
+
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child)
+  +sm
+    display: block !important
+    margin: 0 auto !important
+
+.fc .fc-toolbar-title
+  +sm
+    text-align: center
+  +ms
+    font-size: 1.3em !important
+  +ss
+    font-size: 1em !important
+
+.fc-prev-button, .fc-next-button
+  +ms
+    width: 50% !important

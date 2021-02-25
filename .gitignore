@@ -15,3 +15,5 @@
 debug.log
 
 logs/
+/Src/Campus.Master.API/UI/angular.json
+/Src/Campus.Master.API/UI/tslint.json
