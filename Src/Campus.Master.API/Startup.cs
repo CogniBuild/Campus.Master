@@ -17,12 +17,10 @@ using Microsoft.IdentityModel.Tokens;
 using Campus.Master.API.Filters;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
-using Campus.Master.API.Logging.File;
 using Campus.Master.API.Validators.Profile;
 using Campus.Services.Interfaces.DTO.Profile;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.Extensions.Logging;
 using ICampusConfigurationProvider = Campus.Master.API.Helpers.Contracts.IConfigurationProvider;
 
 namespace Campus.Master.API
