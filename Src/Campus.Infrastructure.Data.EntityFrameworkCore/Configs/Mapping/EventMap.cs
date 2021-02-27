@@ -20,6 +20,12 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
                 .IsRequired()
                 .HasMaxLength(2000);
 
+            builder.Property(p => p.CreatedById)
+                .IsRequired();
+            
+            builder.Property(p => p.ModifiedById)
+                .IsRequired();
+
             builder.HasOne(cl => cl.CreatedByUser)
                 .WithMany(u => u.EventsCreated)
                 .HasForeignKey(cl => cl.CreatedById)

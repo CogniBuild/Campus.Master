@@ -19,6 +19,8 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            
             modelBuilder.ApplyConfiguration(new ClassroomMap());
             modelBuilder.ApplyConfiguration(new EventLabelMap());
             modelBuilder.ApplyConfiguration(new EventMap());

@@ -28,6 +28,12 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
 
             builder.Property(p => p.IsOnline)
                 .IsRequired();
+            
+            builder.Property(p => p.CreatedById)
+                .IsRequired();
+            
+            builder.Property(p => p.ModifiedById)
+                .IsRequired();
 
             builder.HasOne(cl => cl.CreatedByUser)
                 .WithMany(u => u.ClassroomsCreated)

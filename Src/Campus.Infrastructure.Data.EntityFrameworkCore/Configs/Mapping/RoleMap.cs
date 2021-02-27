@@ -9,9 +9,6 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.Property(p => p.Id)
-                .ValueGeneratedOnAdd();
-
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(100);

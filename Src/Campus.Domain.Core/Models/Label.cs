@@ -4,7 +4,7 @@ using Campus.Domain.Core.Templates;
 
 namespace Campus.Domain.Core.Models
 {
-    public class Label : INullableUserReference
+    public class Label : IUserReference
     {
         public int Id { get; set; }
         
@@ -15,11 +15,11 @@ namespace Campus.Domain.Core.Models
         public int? ClassroomId { get; set; }
         public Classroom Classroom { get; set; }
 
-        public int? CreatedById { get; set; }
+        public string CreatedById { get; set; }
         public User CreatedByUser { get; set; }
         public DateTime CreatedOn { get; set; }
 
-        public int? ModifiedById { get; set; }
+        public string ModifiedById { get; set; }
         public User ModifiedByUser { get; set; }
         public DateTime ModifiedOn { get; set; }
 
