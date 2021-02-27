@@ -1,4 +1,6 @@
 using Campus.Domain.Core.Models;
+using Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping;
+using Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Populating;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +19,17 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new ClassroomMap());
+            modelBuilder.ApplyConfiguration(new EventLabelMap());
+            modelBuilder.ApplyConfiguration(new EventMap());
+            modelBuilder.ApplyConfiguration(new LabelMap());
+            modelBuilder.ApplyConfiguration(new ParticipantMap());
+            modelBuilder.ApplyConfiguration(new PrivilegeMap());
+            modelBuilder.ApplyConfiguration(new RoleMap());
+            modelBuilder.ApplyConfiguration(new RolePrivilegeMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
+            
+            modelBuilder.ApplyConfiguration(new PrivilegePopulation());
         }
     }
 }
