@@ -10,7 +10,9 @@ namespace Campus.Domain.Core.Models
         public string Name { get; set; }
         public string ColorHex { get; set; }
         public bool IsDefault { get; set; }
+
         public int ClassroomId { get; set; }
+        public Classroom Classroom { get; set; }
 
         public int? CreatedById { get; set; }
         public User CreatedByUser { get; set; }

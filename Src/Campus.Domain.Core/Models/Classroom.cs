@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Campus.Domain.Core.Templates;
 
 namespace Campus.Domain.Core.Models
@@ -20,5 +21,10 @@ namespace Campus.Domain.Core.Models
         public int ModifiedById { get; set; }
         public User ModifiedByUser { get; set; }
         public DateTime ModifiedOn { get; set; }
+
+        public ICollection<Role> Roles { get; set; }
+        public ICollection<Event> Events { get; set; }
+        public ICollection<Label> Labels { get; set; }
+        public ICollection<Participant> Participants { get; set; }
     }
 }
