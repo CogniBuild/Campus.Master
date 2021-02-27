@@ -9,6 +9,6 @@ namespace Campus.Domain.Core.Models
         public string Name { get; set; }
         public string Alias { get; set; }
         
-        public ICollection<RolePrivilege> Privileges { get; set; }
+        public ICollection<RolePrivilege> Roles { get; set; }
     }
 }

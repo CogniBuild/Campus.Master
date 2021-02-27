@@ -9,7 +9,7 @@ namespace Campus.Domain.Core.Models
     {
         public bool IsDefault { get; set; }
 
-        public int ClassroomId { get; set; }
+        public int? ClassroomId { get; set; }
         public Classroom Classroom { get; set; }
 
         public int? CreatedById { get; set; }

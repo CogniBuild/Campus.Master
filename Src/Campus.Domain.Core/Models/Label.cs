@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Campus.Domain.Core.Templates;
 
 namespace Campus.Domain.Core.Models
@@ -11,7 +12,7 @@ namespace Campus.Domain.Core.Models
         public string ColorHex { get; set; }
         public bool IsDefault { get; set; }
 
-        public int ClassroomId { get; set; }
+        public int? ClassroomId { get; set; }
         public Classroom Classroom { get; set; }
 
         public int? CreatedById { get; set; }
@@ -21,5 +22,7 @@ namespace Campus.Domain.Core.Models
         public int? ModifiedById { get; set; }
         public User ModifiedByUser { get; set; }
         public DateTime ModifiedOn { get; set; }
+
+        public ICollection<EventLabel> Events { get; set; }
     }
 }
