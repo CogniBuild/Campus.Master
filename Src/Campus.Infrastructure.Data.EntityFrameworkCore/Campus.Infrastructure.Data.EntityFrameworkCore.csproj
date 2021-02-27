@@ -18,8 +18,4 @@
       <ProjectReference Include="..\Campus.Domain.Interfaces\Campus.Domain.Interfaces.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Configs\Populating" />
-    </ItemGroup>
-
 </Project>

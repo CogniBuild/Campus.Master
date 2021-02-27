@@ -2,8 +2,6 @@ using System;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc.Filters;
-
-using Campus.Master.API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Campus.Master.API.Filters
@@ -25,13 +23,7 @@ namespace Campus.Master.API.Filters
 
             if (requestedItemsValue > _limiterValue)
             {
-                var responseState = new StateTransfer
-                {
-                    Message = FailureResponseMessage,
-                    Payload = "/"
-                };
-                
-                context.Result = new ObjectResult(responseState) { StatusCode = 403 };
+                context.Result = new ObjectResult(FailureResponseMessage) { StatusCode = 403 };
             }
             else
             {
