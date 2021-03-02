@@ -15,7 +15,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Campus.Domain.Core\Campus.Domain.Core.csproj" />
-      <ProjectReference Include="..\Campus.Domain.Interfaces\Campus.Domain.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

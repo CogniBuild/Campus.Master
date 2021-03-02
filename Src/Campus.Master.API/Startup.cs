@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 using Campus.Infrastructure.Data.EntityFrameworkCore.Dependencies;
+using Campus.Services.Dependencies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -113,6 +114,8 @@ namespace Campus.Master.API
                     services.AddSqlServerStorage(connectionString);
                     break;
             }
+
+            services.AddServices();
 
             services.AddTransient<ITokenBuilder>(builder => 
                 new JwtTokenBuilder(

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Infrastructure" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Campus.Infrastructure.Data.EntityFrameworkCore\Campus.Infrastructure.Data.EntityFrameworkCore.csproj" />
+      <ProjectReference Include="..\Campus.Services.Interfaces\Campus.Services.Interfaces.csproj" />
+    </ItemGroup>
+
+</Project>
