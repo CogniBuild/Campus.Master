@@ -128,7 +128,8 @@ namespace Campus.Master.API
                     SettingsProvider.GetConfigurationValue("Endpoints:QueryLimiter", Convert.ToInt32)
                 )
             );
- 
+
+            services.AddScoped<IClaimExtractionService, ClaimExtractionService>();
             services.AddHttpContextAccessor();
         }
         
