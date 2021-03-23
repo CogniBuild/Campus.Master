@@ -26,12 +26,12 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
             builder.HasOne(cl => cl.CreatedByUser)
                 .WithMany(u => u.LabelsCreated)
                 .HasForeignKey(cl => cl.CreatedById)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
             
             builder.HasOne(cl => cl.ModifiedByUser)
                 .WithMany(u => u.LabelsModified)
                 .HasForeignKey(cl => cl.ModifiedById)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(p => p.CreatedOn)
                 .HasConversion(
