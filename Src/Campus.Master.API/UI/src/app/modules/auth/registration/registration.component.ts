@@ -67,13 +67,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         ]),
         confirmPassword: new FormControl(null, [
           Validators.required,
-        ]),
-        gender: new FormControl(null),
+        ])
       },
       { validator: ConfirmPasswordValidator.MatchPassword }
     );
-
-    this.registerForm.patchValue({ gender: '2', tc: true });
   }
 
   ngOnDestroy(): void {
@@ -91,8 +88,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       confirmPassword: this.registerForm.value.confirmPassword,
       email: this.registerForm.value.email,
       firstName: this.registerForm.value.first_name,
-      lastName: this.registerForm.value.last_name,
-      gender: Number(this.registerForm.value.gender)
+      lastName: this.registerForm.value.last_name
     };
     this.registerUser$ = this.registrationService
       .registerUser(registerUser)

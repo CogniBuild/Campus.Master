@@ -15,8 +15,7 @@ describe('registerUser()', () => {
     confirmPassword: 'Campus321',
     email: 'example@example.com',
     firstName: 'firstName',
-    lastName: 'lastName',
-    gender: 1
+    lastName: 'lastName'
   };
 
   beforeEach(() => {
