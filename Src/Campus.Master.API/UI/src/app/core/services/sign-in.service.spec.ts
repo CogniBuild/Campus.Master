@@ -74,8 +74,9 @@ describe('SignInService', () => {
     test('should return profile information when user exists', () => {
       const registeredUserMock: ProfileInformation = {
         email: 'exmple@example.com',
-        firstName: 'firstName',
-        lastName: 'lastName'
+        userName: 'userName',
+        fullName: 'fullName',
+        createdOn: new Date()
       };
 
       signInService.getProfileInformation()

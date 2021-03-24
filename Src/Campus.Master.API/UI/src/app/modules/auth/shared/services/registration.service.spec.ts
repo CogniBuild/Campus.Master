@@ -1,5 +1,5 @@
 import { RegistrationService } from './registration.service';
-import { RegisterUser } from '../models/register-user';
+import { RegisterUser } from '../models';
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
