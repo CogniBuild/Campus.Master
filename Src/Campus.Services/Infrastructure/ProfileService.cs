@@ -2,19 +2,23 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
+using Campus.Infrastructure.Data.EntityFrameworkCore.Context;
 using Campus.Services.Interfaces.DTO.User;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Campus.Services.Infrastructure
 {
     public class ProfileService : IProfileService
     {
         private readonly UserManager<User> _userManager;
+        private readonly CampusContext _context;
 
-        public ProfileService(UserManager<User> userManager)
+        public ProfileService(UserManager<User> userManager, CampusContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
         
         public async Task CreateUserAsync(UserRegistrationDto registrationDto, CancellationToken token)
@@ -74,7 +78,13 @@ namespace Campus.Services.Infrastructure
 
         public async Task DeleteUserAsync(string id, CancellationToken token)
         {
-            await _userManager.DeleteAsync(new User {Id = id});
+            var user = await _userManager.FindByIdAsync(id);
+            
+            if (user == null)
+                throw new ApplicationException("User with this ID doesn't exist");
+
+            _context.Entry(user).State = EntityState.Detached;
+            await _userManager.DeleteAsync(user);
         }
 
         public async Task EditUserAsync(string id, UserEditDto editingDto, CancellationToken token)

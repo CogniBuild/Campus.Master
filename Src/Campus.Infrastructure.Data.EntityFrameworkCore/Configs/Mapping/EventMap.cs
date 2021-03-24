@@ -20,32 +20,6 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
                 .IsRequired()
                 .HasMaxLength(2000);
 
-            builder.Property(p => p.CreatedById)
-                .IsRequired();
-            
-            builder.Property(p => p.ModifiedById)
-                .IsRequired();
-
-            builder.HasOne(cl => cl.CreatedByUser)
-                .WithMany(u => u.EventsCreated)
-                .HasForeignKey(cl => cl.CreatedById)
-                .OnDelete(DeleteBehavior.Restrict);
-            
-            builder.HasOne(cl => cl.ModifiedByUser)
-                .WithMany(u => u.EventsModified)
-                .HasForeignKey(cl => cl.ModifiedById)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Property(p => p.CreatedOn)
-                .HasConversion(
-                    cl => cl.ToString("o"),
-                    cl => Convert.ToDateTime(cl));
-            
-            builder.Property(p => p.ModifiedOn)
-                .HasConversion(
-                    cl => cl.ToString("o"),
-                    cl => Convert.ToDateTime(cl));
-
             builder.HasOne(e => e.Classroom)
                 .WithMany(cl => cl.Events)
                 .HasForeignKey(e => e.ClassroomId)

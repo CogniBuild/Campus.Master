@@ -26,20 +26,11 @@ namespace Campus.Services.Core
             if (classroom == null)
                 return null;
 
-            await Task.WhenAll(
-                _context.Entry(classroom).Reference(c => c.CreatedByUser).LoadAsync(token),
-                _context.Entry(classroom).Reference(c => c.ModifiedByUser).LoadAsync(token)
-            );
-
             return new ClassroomPreviewDto
             {
                 Name = classroom.Name,
                 Description = classroom.Description,
-                Institution = classroom.Institution,
-                CreatorName = classroom.CreatedByUser?.FullName,
-                CreatedOn = classroom.CreatedOn,
-                EditorName = classroom.ModifiedByUser?.FullName,
-                EditedOn = classroom.ModifiedOn
+                Institution = classroom.Institution
             };
         }
 
@@ -51,21 +42,12 @@ namespace Campus.Services.Core
             if (classroom == null)
                 return null;
 
-            await Task.WhenAll(
-                _context.Entry(classroom).Reference(c => c.CreatedByUser).LoadAsync(token),
-                _context.Entry(classroom).Reference(c => c.ModifiedByUser).LoadAsync(token)
-            );
-
             return new ClassroomViewDto
             {
                 Name = classroom.Name,
                 Institution = classroom.Institution,
                 Location = classroom.Location,
-                IsOnline = classroom.IsOnline,
-                CreatorName = classroom.CreatedByUser?.FullName,
-                CreatedOn = classroom.CreatedOn,
-                EditorName = classroom.ModifiedByUser?.FullName,
-                EditedOn = classroom.ModifiedOn
+                IsOnline = classroom.IsOnline
             };
         }
 
@@ -77,11 +59,7 @@ namespace Campus.Services.Core
                 Description = classroom.Description,
                 Institution = classroom.Institution,
                 Location = classroom.Location,
-                IsOnline = classroom.IsOnline,
-                CreatedById = userId,
-                CreatedOn = DateTime.Now,
-                ModifiedById = userId,
-                ModifiedOn = DateTime.Now
+                IsOnline = classroom.IsOnline
             }, token);
 
             await _context.SaveChangesAsync(token);
@@ -96,9 +74,7 @@ namespace Campus.Services.Core
                 Description = classroom.Description,
                 Institution = classroom.Institution,
                 Location = classroom.Location,
-                IsOnline = classroom.IsOnline,
-                ModifiedById = userId,
-                ModifiedOn = DateTime.Now
+                IsOnline = classroom.IsOnline
             });
 
             await _context.SaveChangesAsync(token);

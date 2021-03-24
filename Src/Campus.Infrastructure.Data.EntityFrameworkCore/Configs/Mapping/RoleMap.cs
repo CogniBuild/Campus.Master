@@ -16,26 +16,6 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
             builder.Property(p => p.IsDefault)
                 .IsRequired();
             
-            builder.HasOne(cl => cl.CreatedByUser)
-                .WithMany(u => u.RolesCreated)
-                .HasForeignKey(cl => cl.CreatedById)
-                .OnDelete(DeleteBehavior.Restrict);
-            
-            builder.HasOne(cl => cl.ModifiedByUser)
-                .WithMany(u => u.RolesModified)
-                .HasForeignKey(cl => cl.ModifiedById)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Property(p => p.CreatedOn)
-                .HasConversion(
-                    cl => cl.ToString("o"),
-                    cl => Convert.ToDateTime(cl));
-            
-            builder.Property(p => p.ModifiedOn)
-                .HasConversion(
-                    cl => cl.ToString("o"),
-                    cl => Convert.ToDateTime(cl));
-            
             builder.HasOne(e => e.Classroom)
                 .WithMany(cl => cl.Roles)
                 .HasForeignKey(e => e.ClassroomId)

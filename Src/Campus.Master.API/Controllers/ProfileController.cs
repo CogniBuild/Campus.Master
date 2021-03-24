@@ -62,12 +62,11 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         "Password": "...",
-        ///         "ConfirmPassword": "...",
         ///         "Email": "...",
-        ///         "FirstName": "...",
-        ///         "LastName": "...",
-        ///         "Gender": "..."
+        ///         "UserName": "...",
+        ///         "FullName": "...",
+        ///         "Password": "...",
+        ///         "ConfirmPassword": "..."
         ///     }
         /// 
         /// </remarks>
