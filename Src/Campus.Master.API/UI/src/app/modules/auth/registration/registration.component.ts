@@ -33,8 +33,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   };
 
   private responseLocaleMap = {
-    'User already exists.': 'AUTH.ERROR-TOASTR.USER-EXISTS',
-    'Failed to create new user.': 'AUTH.ERROR-TOASTR.NEW-USER'
+    'User already exists': 'AUTH.ERROR-TOASTR.USER-EXISTS',
+    'Failed to create new user': 'AUTH.ERROR-TOASTR.NEW-USER'
   };
 
   constructor(
@@ -43,7 +43,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     private localeService: LocaleService,
     private registrationService: RegistrationService,
     private router: Router
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
@@ -57,6 +58,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.maxLength(50),
           Validators.pattern('[a-zA-Z]*')
+        ]),
+        nickname: new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(250)
         ]),
         email: new FormControl(null, [Validators.required, Validators.email]),
         password: new FormControl(null, [
@@ -84,24 +89,24 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       return;
     }
     const registerUser: RegisterUser = {
-      password: this.registerForm.value.password,
-      confirmPassword: this.registerForm.value.confirmPassword,
+      FullName: this.registerForm.value.first_name + ' ' + this.registerForm.value.last_name,
+      UserName: this.registerForm.value.nickname,
       email: this.registerForm.value.email,
-      firstName: this.registerForm.value.first_name,
-      lastName: this.registerForm.value.last_name
+      password: this.registerForm.value.password,
+      confirmPassword: this.registerForm.value.confirmPassword
     };
     this.registerUser$ = this.registrationService
       .registerUser(registerUser)
-      .subscribe((data: StateTransfer) => {
-        localStorage.setItem('token', data.message);
+      .subscribe((data) => {
+        localStorage.setItem('token', data);
         this.registerForm.reset();
         this.router.navigate(['/campus']);
       }, (errorResponse: HttpErrorResponse) => {
         const msgLocale$ = errorResponse.status === 400 ?
-                          zip(this.localeService.get(this.responseLocaleMap[errorResponse.error]),
-                              this.localeService.get('AUTH.ERROR-TOASTR.HEADER')) :
-                          zip(this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
-                              this.localeService.get('AUTH.ERROR-TOASTR.HEADER'));
+          zip(this.localeService.get(this.responseLocaleMap[errorResponse.error]),
+            this.localeService.get('AUTH.ERROR-TOASTR.HEADER')) :
+          zip(this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
+            this.localeService.get('AUTH.ERROR-TOASTR.HEADER'));
 
         msgLocale$.toPromise().then(([message, header]) => this.toastr.error(message, header, this.toastStyles));
         this.spinner = false;

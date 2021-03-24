@@ -49,6 +49,21 @@
           </div>
           </div>
           <div class="form-control"
+               [ngClass]="{ invalid: registerForm.get('nickname').touched && registerForm.get('nickname').invalid }">
+            <label for="nickname" class="user-nickname"></label>
+            <input id="nickname" type="text" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.NICKNAME' | translate }}" formControlName="nickname">
+            <div
+              *ngIf="registerForm.get('nickname').touched && registerForm.get('nickname').invalid"
+              class="validation">
+              <small *ngIf="registerForm.get('nickname').errors.required">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.NICKNAME.REQUIRED' | translate }}
+              </small>
+              <small *ngIf="registerForm.get('nickname').errors.maxlength">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.NICKNAME.MAXLENGTH' | translate }}
+              </small>
+            </div>
+          </div>
+          <div class="form-control"
                [ngClass]="{ invalid: registerForm.get('email').touched && registerForm.get('email').invalid }">
             <label for="email" class="email"></label>
             <input id="email" type="email" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.EMAIL' | translate }}" formControlName="email">
