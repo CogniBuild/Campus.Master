@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription, zip } from 'rxjs';
 import { AuthenticatedUser } from '../shared/models';
-import { StateTransfer } from '@shared/models/state-transfer';
 import { LocaleService } from '@core/services';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -26,7 +25,7 @@ export class SingInComponent implements OnInit, OnDestroy {
   };
 
   private responseLocaleMap = {
-    'Wrong email or password.': 'AUTH.ERROR-TOASTR.WRONG-EMAIL-PASSWORD'
+    'Wrong email or password': 'AUTH.ERROR-TOASTR.WRONG-EMAIL-PASSWORD'
   };
 
   constructor(private auth: SignInService,
@@ -57,8 +56,8 @@ export class SingInComponent implements OnInit, OnDestroy {
     };
 
     this.signInUser$ = this.auth.login(user).subscribe(
-      (data: StateTransfer) => {
-        localStorage.setItem('token', data.message);
+      (token: string) => {
+        localStorage.setItem('token', token);
         this.form.reset();
         this.router.navigate(['/campus']);
       }, (errorResponse: HttpErrorResponse) => {

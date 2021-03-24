@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription, zip } from 'rxjs';
 import { RegisterUser } from '../shared/models';
-import { StateTransfer } from '@shared/models/state-transfer';
 import { LocaleService } from '../../../core/services/locale.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -89,16 +88,16 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       return;
     }
     const registerUser: RegisterUser = {
-      FullName: this.registerForm.value.first_name + ' ' + this.registerForm.value.last_name,
-      UserName: this.registerForm.value.nickname,
+      fullName: this.registerForm.value.first_name + ' ' + this.registerForm.value.last_name,
+      userName: this.registerForm.value.nickname,
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
       confirmPassword: this.registerForm.value.confirmPassword
     };
     this.registerUser$ = this.registrationService
       .registerUser(registerUser)
-      .subscribe((data) => {
-        localStorage.setItem('token', data);
+      .subscribe((token) => {
+        localStorage.setItem('token', token);
         this.registerForm.reset();
         this.router.navigate(['/campus']);
       }, (errorResponse: HttpErrorResponse) => {

@@ -1,6 +1,6 @@
 export interface RegisterUser {
-    FullName: string;
-    UserName: string;
+    fullName: string;
+    userName: string;
     email: string;
     password: string;
     confirmPassword: string;
