@@ -132,8 +132,7 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         "FirstName": "...",
-        ///         "LastName": "..."
+        ///         "FullName": "..."
         ///     }
         /// 
         /// </remarks>
