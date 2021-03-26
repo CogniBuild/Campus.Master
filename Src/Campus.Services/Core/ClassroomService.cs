@@ -67,17 +67,20 @@ namespace Campus.Services.Core
 
         public async Task EditClassroom(string userId, int classroomId, ClassroomContentDto classroom, CancellationToken token)
         {
-            _context.Classrooms.Update(new Classroom
-            {
-                Id = classroomId,
-                Name = classroom.Name,
-                Description = classroom.Description,
-                Institution = classroom.Institution,
-                Location = classroom.Location,
-                IsOnline = classroom.IsOnline
-            });
+            var classroomRecorded = await _context.Classrooms
+                .FirstOrDefaultAsync(c => c.Id == classroomId, token);
 
-            await _context.SaveChangesAsync(token);
+            if (classroomRecorded != null)
+            {
+                classroomRecorded.Name = classroom.Name;
+                classroomRecorded.Description = classroom.Description;
+                classroomRecorded.Institution = classroom.Institution;
+                classroomRecorded.Location = classroom.Location;
+                classroomRecorded.IsOnline = classroom.IsOnline;
+                
+                _context.Classrooms.Update(classroomRecorded);
+                await _context.SaveChangesAsync(token);
+            }
         }
 
         public async Task DeleteClassroom(int classroomId, CancellationToken token)
@@ -86,9 +89,10 @@ namespace Campus.Services.Core
                 .FirstOrDefaultAsync(c => c.Id == classroomId, token);
 
             if (classroom != null)
+            {
                 _context.Classrooms.Remove(classroom);
-            
-            await _context.SaveChangesAsync(token);
+                await _context.SaveChangesAsync(token);
+            }
         }
     }
 }
