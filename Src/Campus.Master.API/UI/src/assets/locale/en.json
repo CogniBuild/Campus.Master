@@ -11,6 +11,7 @@
             "FORM-TEXTBOX": {
                 "FIRST-NAME": "First Name",
                 "LAST-NAME": "Last Name",
+                "NICKNAME": "Nickname",
                 "EMAIL": "Email",
                 "PASSWORD": "Password",
                 "MATCH": "Matching password"
@@ -25,6 +26,10 @@
                     "REQUIRED": "Last name is required",
                     "MAXLENGTH": "Last name > 50 symbols",
                     "LATINONLY": "Only Latin characters"
+                },
+                "NICKNAME": {
+                "REQUIRED": "Nickname is required",
+                "MAXLENGTH": "Nickname > 250 symbols"
                 },
                 "EMAIL": {
                     "REQUIRED": "Email is required",

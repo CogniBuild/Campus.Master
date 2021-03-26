@@ -1,13 +1,11 @@
-using System;
 using System.Threading.Tasks;
 using System.Security.Claims;
-using System.Linq;
+using System.Threading;
 using Campus.Master.API.Filters;
-using Campus.Services.Interfaces.DTO.Profile;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Campus.Master.API.Helpers.Contracts;
-using Campus.Master.API.Models;
+using Campus.Services.Interfaces.DTO.User;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
@@ -20,15 +18,15 @@ namespace Campus.Master.API.Controllers
     [Route("api/[controller]")]
     public class ProfileController : ControllerBase
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IClaimExtractionService _claimExtractionService;
         private readonly IProfileService _profileService;
         private readonly ITokenBuilder _jwtBuilder;
 
-        public ProfileController(IHttpContextAccessor httpContextAccessor,
-                                 IProfileService profileService,
-                                 ITokenBuilder jwtBuilder)
+        public ProfileController(IClaimExtractionService claimExtractionService,
+            IProfileService profileService,
+            ITokenBuilder jwtBuilder)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _claimExtractionService = claimExtractionService;
             _profileService = profileService;
             _jwtBuilder = jwtBuilder;
         }
@@ -51,8 +49,8 @@ namespace Campus.Master.API.Controllers
         [EntryPointLogging(ActionName = "[Profile] Get Profile Information", SenderName = "ProfileController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ProfileViewDto> GetProfileInformation() =>
-            await _profileService.GetAppUserProfileByIdAsync(GetUserIdFromClaims());
+        public async Task<UserViewDto> GetProfileInformation() =>
+            await _profileService.GetUserByIdAsync(_claimExtractionService.GetUserIdFromClaims());
 
         /// <summary>
         /// Create profile.
@@ -64,12 +62,11 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         "Password": "...",
-        ///         "ConfirmPassword": "...",
         ///         "Email": "...",
-        ///         "FirstName": "...",
-        ///         "LastName": "...",
-        ///         "Gender": "..."
+        ///         "UserName": "...",
+        ///         "FullName": "...",
+        ///         "Password": "...",
+        ///         "ConfirmPassword": "..."
         ///     }
         /// 
         /// </remarks>
@@ -83,10 +80,11 @@ namespace Campus.Master.API.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<StateTransfer> CreateProfile(ProfileRegistrationDto profile)
+        public async Task<string> CreateProfile(UserRegistrationDto profile)
         {
-            await _profileService.CreateProfileAsync(profile);
-            return await VerifyAppUserAndBuildToken(new ProfileAuthenticationDto
+            await _profileService.CreateUserAsync(profile);
+
+            return await VerifyUserAndBuildToken(new UserAuthenticationDto
             {
                 Email = profile.Email,
                 Password = profile.Password
@@ -118,8 +116,8 @@ namespace Campus.Master.API.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<StateTransfer> AuthenticateProfile(ProfileAuthenticationDto profile) =>
-            await VerifyAppUserAndBuildToken(profile);
+        public async Task<string> AuthenticateProfile(UserAuthenticationDto profile) =>
+            await VerifyUserAndBuildToken(profile);
 
         /// <summary>
         /// Edit profile.
@@ -132,8 +130,7 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         "FirstName": "...",
-        ///         "LastName": "..."
+        ///         "FullName": "..."
         ///     }
         /// 
         /// </remarks>
@@ -148,8 +145,8 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task EditProfile(ProfileEditingDto profile) =>
-            await _profileService.EditAppUserProfileByIdAsync(GetUserIdFromClaims(), profile);
+        public async Task EditProfile(UserEditDto profile) =>
+            await _profileService.EditUserAsync(_claimExtractionService.GetUserIdFromClaims(), profile);
 
         /// <summary>
         /// Delete profile.
@@ -171,42 +168,15 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task DeleteProfile() =>
-            await _profileService.DeleteAppUserProfileByIdAsync(GetUserIdFromClaims());
+            await _profileService.DeleteUserAsync(_claimExtractionService.GetUserIdFromClaims());
 
-        private async Task<StateTransfer> VerifyAppUserAndBuildToken(ProfileAuthenticationDto profile)
+        private async Task<string> VerifyUserAndBuildToken(UserAuthenticationDto profile)
         {
-            var claims = await _profileService.VerifyAppUserProfile(profile);
+            var claims = await _profileService.VerifyUserAsync(profile);
             
-            return new StateTransfer
-            {
-                Message = BuildToken(new ProfileClaimsDto
-                {
-                    ProfileId = claims.ProfileId,
-                    RoleId = claims.RoleId
-                }),
-                Payload = "api/profile"
-            };
-        }
-
-        private string BuildToken(ProfileClaimsDto model) => 
-            _jwtBuilder.ResetClaims()
-                .AddClaim(ClaimTypes.NameIdentifier, model.ProfileId.ToString())
-                .AddClaim(ClaimTypes.Role, model.RoleId.ToString())
+            return _jwtBuilder.ResetClaims()
+                .AddClaim(ClaimTypes.NameIdentifier, claims.ProfileId)
                 .Build();
-
-        private int GetUserIdFromClaims()
-        {
-            var identity = _httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
-            
-            if (identity == null)
-                throw new ApplicationException("Failed to identify user.");
-            
-            var idClaim = identity.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
-            
-            if (idClaim == null)
-                throw new ApplicationException("Failed to identify user.");
-
-            return Convert.ToInt32(idClaim.Value);
         }
     }
 }

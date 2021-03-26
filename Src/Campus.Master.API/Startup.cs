@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Reflection;
-using Campus.Infrastructure.Business.Dependencies;
 using Campus.Infrastructure.Data.EntityFrameworkCore.Dependencies;
+using Campus.Services.Dependencies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,12 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Campus.Master.API.Filters;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
-using Campus.Master.API.Logging.File;
-using Campus.Master.API.Validators.Profile;
-using Campus.Services.Interfaces.DTO.Profile;
-using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.Extensions.Logging;
 using ICampusConfigurationProvider = Campus.Master.API.Helpers.Contracts.IConfigurationProvider;
 
 namespace Campus.Master.API
@@ -99,7 +94,7 @@ namespace Campus.Master.API
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                            SettingsProvider.GetConfigurationValue("Security:EncryptionSecret", Convert.ToString)
+                            SettingsProvider.GetConfigurationValue("Security:EncryptionSecret", Convert.ToString) ?? ""
                         )),
                         ValidateIssuer = false,
                         ValidateAudience = false
@@ -121,7 +116,7 @@ namespace Campus.Master.API
             }
 
             services.AddServices();
-            
+
             services.AddTransient<ITokenBuilder>(builder => 
                 new JwtTokenBuilder(
                     SettingsProvider.GetConfigurationValue("Security:EncryptionSecret", Convert.ToString)
@@ -134,8 +129,7 @@ namespace Campus.Master.API
                 )
             );
 
-            services.AddTransient<IValidator<ProfileRegistrationDto>, ProfileRegistrationValidator>();
-            services.AddTransient<IValidator<ProfileEditingDto>, ProfileEditingValidator>();
+            services.AddScoped<IClaimExtractionService, ClaimExtractionService>();
             services.AddHttpContextAccessor();
         }
         

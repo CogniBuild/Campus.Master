@@ -2,7 +2,6 @@ import { SignInService } from './sign-in.service';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthenticatedUser, ProfileInformation } from '../../modules/auth/shared/models';
-import { StateTransfer } from '@shared/models/state-transfer';
 import { HttpErrorResponse } from '@angular/common/http';
 
 describe('SignInService', () => {
@@ -26,11 +25,8 @@ describe('SignInService', () => {
 
   describe('login()', () => {
 
-    test('should return state transfer when user logged in', () => {
-      const mockResponse: StateTransfer = {
-        message: 'token',
-        payload: 'api/profile'
-      };
+    test('should return token when user logged in', () => {
+      const mockToken: string = 'token';
 
       const authenticatedUserMock: AuthenticatedUser = {
         email: 'exmple@example.com',
@@ -38,12 +34,12 @@ describe('SignInService', () => {
       };
 
       signInService.login(authenticatedUserMock).subscribe(response =>
-        expect(response).toEqual(mockResponse));
+        expect(response).toEqual(mockToken));
 
       const req = httpTestingController.expectOne('/api/profile/auth');
       expect(req.request.method).toMatch('POST');
 
-      req.flush(mockResponse);
+      req.flush(mockToken);
     });
 
     test('should respond with 400 error when wrong email or password', (done) => {
@@ -78,8 +74,9 @@ describe('SignInService', () => {
     test('should return profile information when user exists', () => {
       const registeredUserMock: ProfileInformation = {
         email: 'exmple@example.com',
-        firstName: 'firstName',
-        lastName: 'lastName'
+        userName: 'userName',
+        fullName: 'fullName',
+        createdOn: new Date()
       };
 
       signInService.getProfileInformation()

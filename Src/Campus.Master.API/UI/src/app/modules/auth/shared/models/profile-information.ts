@@ -1,5 +1,6 @@
 export interface ProfileInformation {
   email: string;
-  firstName: string;
-  lastName: string;
+  userName: string;
+  fullName: string;
+  createdOn: Date;
 }

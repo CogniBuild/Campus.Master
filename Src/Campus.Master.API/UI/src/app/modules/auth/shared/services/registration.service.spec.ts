@@ -1,6 +1,5 @@
 import { RegistrationService } from './registration.service';
-import { RegisterUser } from '../models/register-user';
-import { StateTransfer } from '@shared/models/state-transfer';
+import { RegisterUser } from '../models';
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
@@ -11,12 +10,11 @@ describe('registerUser()', () => {
   let registrationService: RegistrationService;
 
   const mockUser: RegisterUser = {
-    password: 'Campus321',
-    confirmPassword: 'Campus321',
+    fullName: 'fullName',
+    userName: 'userName',
     email: 'example@example.com',
-    firstName: 'firstName',
-    lastName: 'lastName',
-    gender: 1
+    password: 'Campus321',
+    confirmPassword: 'Campus321'
   };
 
   beforeEach(() => {
@@ -33,19 +31,19 @@ describe('registerUser()', () => {
     httpTestingController.verify();
   });
 
-  test('should return state transfer when user created', () => {
-    const mockStateTransfer: StateTransfer = { message: 'state', payload: 'api/profile' };
+  test('should return token when user created', () => {
+    const mockToken: string = 'token';
 
     registrationService.registerUser(mockUser)
-      .subscribe(stateTransfer => {
-          expect(stateTransfer).toEqual(mockStateTransfer);
+      .subscribe(token => {
+          expect(token).toEqual(mockToken);
         }
       );
 
     const req = httpTestingController.expectOne('/api/profile/create');
     expect(req.request.method).toMatch('POST');
 
-    req.flush(mockStateTransfer);
+    req.flush(mockToken);
   });
 
   test('should failed with 400 error when user exists', (done) => {
