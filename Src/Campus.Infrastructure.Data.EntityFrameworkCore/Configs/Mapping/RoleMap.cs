@@ -15,7 +15,7 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
             
             builder.Property(p => p.IsDefault)
                 .IsRequired();
-            
+
             builder.HasOne(e => e.Classroom)
                 .WithMany(cl => cl.Roles)
                 .HasForeignKey(e => e.ClassroomId)
