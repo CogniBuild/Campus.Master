@@ -21,7 +21,7 @@ namespace Campus.Services.Infrastructure
             _context = context;
         }
         
-        public async Task CreateUserAsync(UserRegistrationDto registrationDto, CancellationToken token)
+        public async Task CreateUserAsync(UserRegistrationDto registrationDto)
         {
             if (registrationDto.Password != registrationDto.ConfirmPassword)
                 throw new ApplicationException("Passwords don't match");
@@ -44,7 +44,7 @@ namespace Campus.Services.Infrastructure
                 throw new ApplicationException("Failed to create new user");
         }
 
-        public async Task<UserViewDto> GetUserByIdAsync(string id, CancellationToken token)
+        public async Task<UserViewDto> GetUserByIdAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             
@@ -60,7 +60,7 @@ namespace Campus.Services.Infrastructure
             };
         }
 
-        public async Task<UserClaimsDto> VerifyUserAsync(UserAuthenticationDto model, CancellationToken token)
+        public async Task<UserClaimsDto> VerifyUserAsync(UserAuthenticationDto model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
 
@@ -76,7 +76,7 @@ namespace Campus.Services.Infrastructure
             };
         }
 
-        public async Task DeleteUserAsync(string id, CancellationToken token)
+        public async Task DeleteUserAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             
@@ -87,7 +87,7 @@ namespace Campus.Services.Infrastructure
             await _userManager.DeleteAsync(user);
         }
 
-        public async Task EditUserAsync(string id, UserEditDto editingDto, CancellationToken token)
+        public async Task EditUserAsync(string id, UserEditDto editingDto)
         {
             var user = await _userManager.FindByIdAsync(id);
             

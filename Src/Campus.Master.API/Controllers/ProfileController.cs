@@ -49,8 +49,8 @@ namespace Campus.Master.API.Controllers
         [EntryPointLogging(ActionName = "[Profile] Get Profile Information", SenderName = "ProfileController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<UserViewDto> GetProfileInformation(CancellationToken token) =>
-            await _profileService.GetUserByIdAsync(_claimExtractionService.GetUserIdFromClaims(), token);
+        public async Task<UserViewDto> GetProfileInformation() =>
+            await _profileService.GetUserByIdAsync(_claimExtractionService.GetUserIdFromClaims());
 
         /// <summary>
         /// Create profile.
@@ -71,7 +71,6 @@ namespace Campus.Master.API.Controllers
         /// 
         /// </remarks>
         /// <param name="profile">Register form data.</param>
-        /// <param name="token"></param>
         /// <returns>JWT token.</returns>
         /// <response code="201">New profile created.</response>
         /// <response code="400">Form data is invalid.</response>
@@ -81,15 +80,15 @@ namespace Campus.Master.API.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<string> CreateProfile(UserRegistrationDto profile, CancellationToken token)
+        public async Task<string> CreateProfile(UserRegistrationDto profile)
         {
-            await _profileService.CreateUserAsync(profile, token);
+            await _profileService.CreateUserAsync(profile);
 
             return await VerifyUserAndBuildToken(new UserAuthenticationDto
             {
                 Email = profile.Email,
                 Password = profile.Password
-            }, token);
+            });
         }
 
         /// <summary>
@@ -108,7 +107,6 @@ namespace Campus.Master.API.Controllers
         /// 
         /// </remarks>
         /// <param name="profile">Log in form data.</param>
-        /// <param name="token"></param>
         /// <returns>JWT token.</returns>
         /// <response code="200">New profile created.</response>
         /// <response code="400">Form data is invalid.</response>
@@ -118,8 +116,8 @@ namespace Campus.Master.API.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<string> AuthenticateProfile(UserAuthenticationDto profile, CancellationToken token) =>
-            await VerifyUserAndBuildToken(profile, token);
+        public async Task<string> AuthenticateProfile(UserAuthenticationDto profile) =>
+            await VerifyUserAndBuildToken(profile);
 
         /// <summary>
         /// Edit profile.
@@ -137,7 +135,6 @@ namespace Campus.Master.API.Controllers
         /// 
         /// </remarks>
         /// <param name="profile">Edit profile form data.</param>
-        /// <param name="token"></param>
         /// <returns>State transfer model.</returns>
         /// <response code="200">Profile data is updated.</response>
         /// <response code="400">Edit profile form data is invalid.</response>
@@ -148,8 +145,8 @@ namespace Campus.Master.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task EditProfile(UserEditDto profile, CancellationToken token) =>
-            await _profileService.EditUserAsync(_claimExtractionService.GetUserIdFromClaims(), profile, token);
+        public async Task EditProfile(UserEditDto profile) =>
+            await _profileService.EditUserAsync(_claimExtractionService.GetUserIdFromClaims(), profile);
 
         /// <summary>
         /// Delete profile.
@@ -170,13 +167,12 @@ namespace Campus.Master.API.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task DeleteProfile(CancellationToken token) =>
-            await _profileService.DeleteUserAsync(_claimExtractionService.GetUserIdFromClaims(), token);
+        public async Task DeleteProfile() =>
+            await _profileService.DeleteUserAsync(_claimExtractionService.GetUserIdFromClaims());
 
-        private async Task<string> VerifyUserAndBuildToken(UserAuthenticationDto profile,
-            CancellationToken token)
+        private async Task<string> VerifyUserAndBuildToken(UserAuthenticationDto profile)
         {
-            var claims = await _profileService.VerifyUserAsync(profile, token);
+            var claims = await _profileService.VerifyUserAsync(profile);
             
             return _jwtBuilder.ResetClaims()
                 .AddClaim(ClaimTypes.NameIdentifier, claims.ProfileId)

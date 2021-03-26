@@ -6,10 +6,10 @@ namespace Campus.Services.Interfaces.Interfaces
 {
     public interface IProfileService
     {
-        Task CreateUserAsync(UserRegistrationDto registrationDto, CancellationToken token);
-        Task<UserViewDto> GetUserByIdAsync(string id, CancellationToken token);
-        Task<UserClaimsDto> VerifyUserAsync(UserAuthenticationDto model, CancellationToken token);
-        Task DeleteUserAsync(string id, CancellationToken token);
-        Task EditUserAsync(string id, UserEditDto editingDto, CancellationToken token);
+        Task CreateUserAsync(UserRegistrationDto registrationDto);
+        Task<UserViewDto> GetUserByIdAsync(string id);
+        Task<UserClaimsDto> VerifyUserAsync(UserAuthenticationDto model);
+        Task DeleteUserAsync(string id);
+        Task EditUserAsync(string id, UserEditDto editingDto);
     }
 }
