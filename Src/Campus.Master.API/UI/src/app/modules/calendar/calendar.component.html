@@ -2,10 +2,10 @@
   <mat-card>
     <div class="calendar__header">
       <h1>Calendar</h1>
-      <button class="mat-raised-button">+ New event</button>
+      <button class="mat-raised-button" (click)="openDialog()">+ New event</button>
     </div>
     <div>
-      <full-calendar [options]="calendarOptions"></full-calendar>
+      <full-calendar [options]="calendarOptions" #calendar></full-calendar>
     </div>
   </mat-card>
 </div>
