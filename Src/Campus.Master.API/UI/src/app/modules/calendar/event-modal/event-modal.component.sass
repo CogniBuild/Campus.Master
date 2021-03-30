@@ -64,6 +64,9 @@
       position: absolute
       right: 0
 
+    .mat-datepicker-toggle-active
+      color: #7E57C2
+
   &__control_wrap
     margin-bottom: 28px
 
@@ -110,7 +113,7 @@
   &__input
     position: relative
     width: calc(100% - 24px)
-    padding-right: 8px
+    padding: 9.5px 8px 9.5px 12px
 
   input:after
     content: url("/assets/img/modal/icon_date_time.png")
@@ -142,6 +145,38 @@
   .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element, .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element
     background-color: #7E57C2
 
+.dateRange
+  &__header
+    display: flex
+    justify-content: space-between
+    margin-bottom: 2px
+
+  &__header_calendars
+    margin-bottom: 12px
+
+  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background
+    background-color: #7E57C2
+
+  .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element, .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element
+    background-color: #7E57C2
+
 .actionBtn
   display: flex
   justify-content: space-between
+
+.rangeCalendar
+  display: flex
+  justify-content: space-between
+
+  &__input
+    position: relative
+
+  &__input_from
+    width: 100%
+    padding-right: 10px
+
+
+  &__input_to
+    width: 100%
+    padding-left: 10px
+

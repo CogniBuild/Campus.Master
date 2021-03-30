@@ -1,32 +1,42 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateFormats } from '@shared/date-formats/date';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-event-modal',
   templateUrl: './event-modal.component.html',
   styleUrls: ['./event-modal.component.sass'],
-  providers: [
-    {
-      provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]
-    },
-    {
-      provide: MAT_DATE_FORMATS, useValue: DateFormats
-    }
-  ],
   encapsulation: ViewEncapsulation.None
 })
 
 export class EventModalComponent implements OnInit {
+  public dialogForm: FormGroup;
   public onCheckedRemote = false;
+  public onCheckedRange = false;
 
-  constructor(public dialogRef: MatDialogRef<EventModalComponent>,
+  constructor(private fb: FormBuilder,
+              public dialogRef: MatDialogRef<EventModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: object) {
   }
 
   ngOnInit(): void {
+    this.dialogForm = this.fb.group(
+      {
+        summary: new FormControl(null, [
+          Validators.required,
+          // Validators.maxLength(50),
+          // Validators.pattern('[a-zA-Z]*')
+        ]),
+        // desc: new FormControl(null, [
+        //   Validators.required,
+        // ]),
+        date: new FormControl(null, [
+          Validators.required
+        ]),
+        location: new FormControl(null, [
+          Validators.required
+        ]),
+      });
   }
 
   onNoClick(): void {
@@ -35,5 +45,13 @@ export class EventModalComponent implements OnInit {
 
   onRemote() {
     this.onCheckedRemote = !this.onCheckedRemote;
+  }
+
+  onRange() {
+    this.onCheckedRange = !this.onCheckedRange;
+  }
+
+  createEvent() {
+    console.log(this.dialogForm);
   }
 }
