@@ -1,0 +1,185 @@
+@import "src/styles/styles"
+
+.mat-dialog-container
+  padding: 20px 32px
+  overflow: initial
+
+.mat-calendar-body-selected
+  background-color: #7E57C2
+
+.dialog .mat-form-field-infix
+  border: none
+  padding: 0
+
+.dialog .mat-form-field
+  width: 100%
+
+.dialog
+  font-family: 'FuturaLT', serif
+  min-width: 363px
+
+  &__header
+    display: flex
+    justify-content: space-between
+    margin-bottom: 27px
+
+  &__header_wrapper
+    display: flex
+    align-items: center
+
+  &__title
+    margin: 0 0 6px
+    font-size: 18px
+    font-weight: 600
+    color: #000000
+
+  &__subtitle
+    font-size: 12px
+    margin: 0
+
+  &__ico
+    position: relative
+    width: 55px
+    height: 55px
+    border-radius: 50%
+    background-color: #7E57C2
+    margin-right: 20px
+
+    &:before
+      content: url("/assets/img/modal/create-ico.png")
+      position: absolute
+      left: 50%
+      top: 50%
+      width: 22px
+      height: 29px
+      transform: translate(-50%, -50%)
+
+  &__close_ico
+    cursor: pointer
+
+  &__control
+    position: relative
+
+    mat-datepicker-toggle
+      position: absolute
+      right: 0
+
+    .validation
+      top: 67px
+
+    .mat-datepicker-toggle-active
+      color: #7E57C2
+
+  &__control_wrap
+    margin-bottom: 28px
+
+  &__control_mainDate
+    margin-bottom: 8px
+
+  &__label
+    display: block
+    font-size: 16px
+    margin-bottom: 6px
+
+  &__input
+    width: calc(100% - 16px)
+    padding: 12px 0 12px 12px
+    font-size: 12px
+    border: 2px solid #535353
+    border-radius: 8px
+    outline: none
+
+    &:focus
+      border: 2px solid #7E57C2
+
+  &__btn
+    font-size: 16px
+    padding: 10px 60px
+    border: none
+    outline: none
+    border-radius: 8px
+    cursor: pointer
+
+  &__btn_cancel
+    background-color: transparent
+    color: #7E57C2
+
+  &__btn_create
+    background-color: #7E57C2
+    color: #FFFFFF
+
+
+.date
+  display: flex
+  justify-content: center
+
+  &__input
+    position: relative
+    width: calc(100% - 24px)
+    padding: 9.5px 8px 9.5px 12px
+
+  input:after
+    content: url("/assets/img/modal/icon_date_time.png")
+    position: absolute
+    right: 12px
+    cursor: pointer
+
+  input[type="time"]::-webkit-calendar-picker-indicator
+    background: none
+    z-index: 1
+
+  &__control_from
+    width: 100%
+    padding-right: 10px
+
+  &__control_to
+    width: 100%
+    padding-left: 10px
+
+.location
+  &__header
+    display: flex
+    justify-content: space-between
+    margin-bottom: 2px
+
+  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background
+    background-color: #7E57C2
+
+  .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element, .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element
+    background-color: #7E57C2
+
+.dateRange
+  &__header
+    display: flex
+    justify-content: space-between
+    margin-bottom: 2px
+
+  &__header_calendars
+    margin-bottom: 12px
+
+  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background
+    background-color: #7E57C2
+
+  .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element, .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element
+    background-color: #7E57C2
+
+.actionBtn
+  display: flex
+  justify-content: space-between
+
+.rangeCalendar
+  display: flex
+  justify-content: space-between
+
+  &__input
+    position: relative
+
+  &__input_from
+    width: 100%
+    padding-right: 10px
+
+
+  &__input_to
+    width: 100%
+    padding-left: 10px
+

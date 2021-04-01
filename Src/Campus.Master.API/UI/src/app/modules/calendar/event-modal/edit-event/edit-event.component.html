@@ -1,0 +1,103 @@
+<form class="dialog" [formGroup]="dialogForm" (ngSubmit)="createEvent()">
+  <div class="dialog__header">
+    <div class="dialog__header_wrapper">
+      <div class="dialog__ico"></div>
+      <div>
+        <h1 class="dialog__title">Edit Event</h1>
+        <p class="dialog__subtitle">Edit some information about event</p>
+      </div>
+    </div>
+    <div>
+      <mat-icon class="dialog__close_ico" (click)="onNoClick()">close</mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content>
+
+    <div class="dialog__control dialog__control_wrap"
+         [ngClass]="{ invalid: dialogForm.get('summary').touched}">
+      <label for="summary" class="dialog__label">Summary</label>
+      <input id="summary" placeholder="Some summary info" class="dialog__input" formControlName="summary">
+      <div *ngIf="dialogForm.get('summary').touched && dialogForm.get('summary').invalid"
+           class="validation">
+        <small>
+          required
+        </small>
+      </div>
+    </div>
+
+    <div class="dialog__control dialog__control_wrap">
+      <label for="description" class="dialog__label">Description</label>
+      <input id="description" placeholder="Description" class="dialog__input">
+    </div>
+
+    <div class="dateRange dialog__control dialog__control_mainDate dialog__control_wrap">
+      <div class="dateRange__header"
+           [ngClass]="{dateRange__header_calendars: onCheckedRange}">
+        <label for="date" class="dialog__label">Date</label>
+        <mat-checkbox (click)="onRange()">Range</mat-checkbox>
+      </div>
+      <div *ngIf="!onCheckedRange; else range" appDateFormat1>
+        <input id="date" class="dialog__input" [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+
+      <ng-template #range>
+        <div class="rangeCalendar">
+          <div class="rangeCalendar__input_from" appDateFormat2>
+            <label for="calendarOne" class="dialog__label">Start</label>
+            <div class="rangeCalendar__input">
+              <input id="calendarOne" class="dialog__input" [matDatepicker]="pickerFrom">
+              <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFrom></mat-datepicker>
+            </div>
+          </div>
+          <div class="rangeCalendar__input_to">
+            <label for="calendarTwo" class="dialog__label">End</label>
+            <div class="rangeCalendar__input" appDateFormat2>
+              <input id="calendarTwo" class="dialog__input" [matDatepicker]="pickerTo">
+              <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+              <mat-datepicker #pickerTo></mat-datepicker>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+    </div>
+
+    <div class="date dialog__control_wrap">
+      <div class="date__control_from dialog__control">
+        <!--      <label for="timeStart" class="dialog__label">Date</label>-->
+        <input id="timeStart" class="dialog__input date__input" placeholder="Ex. Pizza" type="time">
+      </div>
+
+      <div class="date__control_to dialog__control">
+        <!--      <label for="timeEnd" class="dialog__label">Date</label>-->
+        <input id="timeEnd" class="dialog__input date__input" placeholder="Ex. Pizza" type="time">
+      </div>
+    </div>
+
+    <div class="location dialog__control dialog__control_wrap">
+      <div class="location__header">
+        <label for="room" class="dialog__label">Location</label>
+        <mat-checkbox (click)="onRemote()">Remote</mat-checkbox>
+      </div>
+
+      <input id="room" placeholder="Location" class="dialog__input" [disabled]="onCheckedRemote">
+    </div>
+
+  </div>
+
+  <div class="actionBtn">
+    <button class="dialog__btn dialog__btn_cancel"
+            (click)="onNoClick()">Cancel
+    </button>
+    <button class="dialog__btn dialog__btn_create"
+            type="submit"
+            [disabled]="dialogForm.invalid">Save
+    </button>
+    <!--    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>-->
+  </div>
+
+</form>
+

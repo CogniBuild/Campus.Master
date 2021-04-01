@@ -37,7 +37,7 @@
         <mat-checkbox (click)="onRange()">Range</mat-checkbox>
       </div>
       <div *ngIf="!onCheckedRange; else range" appDateFormat1>
-        <input id="date" class="dialog__input" [matDatepicker]="picker">
+        <input id="date" class="dialog__input" [matDatepicker]="picker" formControlName="date">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </div>
@@ -93,7 +93,8 @@
             (click)="onNoClick()">Cancel
     </button>
     <button class="dialog__btn dialog__btn_create"
-            type="submit">Create
+            type="submit"
+            [disabled]="dialogForm.invalid">Create
     </button>
     <!--    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>-->
   </div>
