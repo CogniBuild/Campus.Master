@@ -11,14 +11,17 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
         {
             builder.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
-            
+
             builder.Property(p => p.Title)
                 .IsRequired()
                 .HasMaxLength(250);
-            
+
             builder.Property(p => p.Description)
                 .IsRequired()
                 .HasMaxLength(2000);
+
+            builder.Property(p => p.StartDate)
+                .IsRequired();
 
             builder.HasOne(e => e.Classroom)
                 .WithMany(cl => cl.Events)
