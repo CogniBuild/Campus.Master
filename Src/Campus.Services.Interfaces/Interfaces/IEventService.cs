@@ -7,5 +7,6 @@ namespace Campus.Services.Interfaces.Interfaces
     public interface IEventService
     {
         Task<IEnumerable<EventViewDto>> GetClassroomEventsByUserId(string userId);
+        Task<int> AddEvent(string userId, EventAddDto eventDto);
     }
 }

@@ -23,6 +23,50 @@ namespace Campus.Services.Core
 
         public async Task<IEnumerable<EventViewDto>> GetClassroomEventsByUserId(string userId)
         {
+            Classroom classroom = await GetDefaultClassroomByUserId(userId);
+
+            ICollection<Event> events = classroom?.Events;
+
+            if (events == null)
+                throw new ApplicationException("There are no events for given user");
+
+            var eventViews = new List<EventViewDto>();
+
+            foreach (Event calendarEvent in events)
+            {
+                eventViews.Add(new EventViewDto
+                {
+                    Id = calendarEvent.Id.ToString(),
+                    Title = calendarEvent.Title,
+                    Start = calendarEvent.StartDate,
+                    End = calendarEvent.EndDate
+                });
+            }
+
+            return eventViews;
+        }
+
+        public async Task<int> AddEvent(string userId, EventAddDto eventDto)
+        {
+            Classroom classroom = await GetDefaultClassroomByUserId(userId);
+
+            var newEvent = new Event
+            {
+                Title = eventDto.Title,
+                Description = string.Empty,
+                StartDate = eventDto.Start,
+                EndDate = eventDto.End
+            };
+
+            classroom.Events.Add(newEvent);
+
+            await _context.SaveChangesAsync();
+
+            return newEvent.Id;
+        }
+
+        private async Task<Classroom> GetDefaultClassroomByUserId(string userId)
+        {
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
@@ -37,24 +81,15 @@ namespace Campus.Services.Core
             if (defaultParticipation == null)
                 throw new ApplicationException("Given user doesn't participate in any classroom");
 
-            var eventViews = new List<EventViewDto>();
-            ICollection<Event> events = defaultParticipation.Classroom?.Events;
+            await _context.Entry(defaultParticipation)
+                .Reference(c => c.Classroom)
+                .LoadAsync();
 
-            if (events == null)
-                throw new ApplicationException("There are no events for given user");
+            await _context.Entry(defaultParticipation.Classroom)
+                .Collection(c => c.Events)
+                .LoadAsync();
 
-            foreach (Event calendarEvent in events)
-            {
-                eventViews.Add(new EventViewDto
-                {
-                    Id = calendarEvent.Id.ToString(),
-                    Title = calendarEvent.Title,
-                    Start = calendarEvent.StartDate,
-                    End = calendarEvent.EndDate
-                });
-            }
-
-            return eventViews;
+            return defaultParticipation.Classroom;
         }
     }
 }
