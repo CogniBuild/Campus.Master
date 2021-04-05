@@ -8,6 +8,7 @@ export const environment = {
   getProfileInformation: '/api/profile',
   createProfilePath: '/api/profile/create',
   authenticateProfile: '/api/profile/auth',
+  createEvent: '/api/event',
   projects: '/api/project'
 };
 

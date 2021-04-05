@@ -14,7 +14,7 @@
   <div mat-dialog-content>
 
     <div class="dialog__control dialog__control_wrap"
-         [ngClass]="{ invalid: dialogForm.get('summary').touched}">
+         [ngClass]="{ invalid: dialogForm.get('summary').touched && dialogForm.get('summary').invalid}">
       <label for="summary" class="dialog__label">Summary</label>
       <input id="summary" placeholder="Some summary info" class="dialog__input" formControlName="summary">
       <div *ngIf="dialogForm.get('summary').touched && dialogForm.get('summary').invalid"

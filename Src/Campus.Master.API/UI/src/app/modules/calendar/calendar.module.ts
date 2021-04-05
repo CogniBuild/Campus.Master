@@ -25,7 +25,7 @@ FullCalendarModule.registerPlugins([
     CalendarRoutingModule,
     FullCalendarModule,
     DateFormat1Module,
-    DateFormat2Module,
+    DateFormat2Module
   ],
   entryComponents: [
     EventModalComponent,

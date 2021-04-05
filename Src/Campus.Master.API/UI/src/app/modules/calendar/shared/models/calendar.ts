@@ -1,4 +1,4 @@
-export interface Event {
+export interface CalendarEvent {
   allDay?: boolean;
   allow?: any;
   backgroundColor?: string;
@@ -20,4 +20,12 @@ export interface Event {
   textColor?: string;
   title: string;
   url?: string;
+}
+
+export interface DialogDataControls {
+  date: any;
+}
+
+export interface DialogRefComponentInstance {
+  date?: any;
 }
