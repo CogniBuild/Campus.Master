@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CalendarService } from '../../shared/services/calendar.service';
 import { Moment } from 'moment';
-import { CalendarEvent, DialogDataControls, DialogRefComponentInstance } from '../../shared/models/calendar';
+import { CalendarEventForm, DialogDataControls, DialogRefComponentInstance } from '../../shared/models/calendar';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -85,7 +85,9 @@ export class EventModalComponent implements OnInit {
       endDate = startDate + 'T' + timeTo;
     }
 
-    if (!!timeFrom) {
+    if (!!timeFrom && !!startDate) {
+      startDate = startDate + 'T' + timeFrom;
+    } else {
       startDate = allDay + 'T' + timeFrom;
     }
 
@@ -95,15 +97,12 @@ export class EventModalComponent implements OnInit {
       endDate = allDay + 'T' + timeTo;
     }
 
-    const event: CalendarEvent = {
+    const event: CalendarEventForm = {
       title: this.dialogForm.value.summary,
       start: startDate,
-      startStr: startDate,
       end: endDate,
-      endStr: endDate,
-      extendedProps: {
-        location: this.dialogForm.value.location
-      }
+      location: this.dialogForm.value.location,
+      desc: this.dialogForm.value.desc
     };
 
     this.calendarService.addEvent(event)

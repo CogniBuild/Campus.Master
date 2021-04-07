@@ -18,7 +18,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   private calendarComponentApi;
   calendarOptions: CalendarOptions = {
-    eventAdd: this.addEventFromDialog.bind(this),
     dateClick: this.dateClick.bind(this),
     eventClick: this.editEvent.bind(this),
     eventChange: this.editEventFromDialog.bind(this),
@@ -60,49 +59,33 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       console.log('The dialog by btn  +New event was closed');
       if (result) {
         console.log(result);
-        let g = this.calendarComponentApi.addEvent(result);
-        // this.calendarService.addEvent(result)
-        //   .subscribe(res => {
-        //     console.log(res);
-        //
-        //   });
-        // this.addEventFromDialog(result);
+        this.calendarComponentApi.addEvent(result);
       }
     });
   }
 
   dateClick(calendarEvent) {
-    // const dialogRef = this.dialog.open(EventModalComponent, {
-    //   data: {
-    //     date: calendarEvent.dateStr
-    //   }
-    // });
-    //
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog by dateClick was closed');
-    //   if (result) {
-    //     this.addEventFromDialog(result);
-    //   }
-    // });
+    const dialogRef = this.dialog.open(EventModalComponent, {
+      data: {
+        date: calendarEvent.dateStr
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog by dateClick was closed');
+      if (result) {
+        this.calendarComponentApi.addEvent(result);
+      }
+    });
   }
 
-  addEventFromDialog(a) {
-    console.log('add event from btn or date click');
-    // this.calendarService.addEvent(a)
-    //   .subscribe(res => {
-    //     console.log(res);
-    //     let g = this.calendarComponentApi.addEvent(a);
-    //   });
-  }
-
-  editEventFromDialog(a) {
-    console.log(a);
-    let s: CalendarEvent = this.calendarComponentApi.getEventById(a.event.id);
-    console.log(s);
-
-    // s.setProp('title', a.title);
-    // s.setStart(a.date);
-    // console.log(s, a);
+  editEventFromDialog(calendarEvent: CalendarEvent) {
+    const event = this.calendarComponentApi.getEventById(calendarEvent.id);
+    console.log(event);
+    if (event) {
+      event.setProp('title', calendarEvent.title);
+      event.setStart(calendarEvent.start);
+    }
   }
 
   editEvent(info) {
@@ -113,8 +96,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     dialogEditRef.afterClosed().subscribe(result => {
       console.log('The edit dialog was closed');
-      console.log(result);
-      this.editEventFromDialog(result);
+      if (result) {
+        console.log(result);
+        this.editEventFromDialog(result);
+      }
+
     });
   }
 

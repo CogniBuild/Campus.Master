@@ -9,17 +9,32 @@ export interface CalendarEvent {
   durationEditable?: any;
   end?: any;
   endStr?: string;
-  extendedProps?: object;
+  extendedProps?: ExtendedProps;
   groupId?: string;
   id?: string;
   overlap?: any;
   source?: any;
-  start: any;
+  start?: any;
   startEditable?: any;
   startStr: string;
   textColor?: string;
   title: string;
   url?: string;
+}
+
+export interface CalendarEventForm {
+  id?: string;
+  title: string;
+  start: string;
+  end: string;
+  allDay?: boolean;
+  location: string | null;
+  desc: string;
+}
+
+export interface ExtendedProps {
+  location?: string | null;
+  desc?: string;
 }
 
 export interface DialogDataControls {
