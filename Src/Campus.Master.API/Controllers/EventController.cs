@@ -40,6 +40,7 @@ namespace Campus.Master.API.Controllers
         /// <summary>
         /// Add event
         /// </summary>
+        /// <param name="eventDto"></param>
         /// <returns>Id of newly created event</returns>
         [HttpPost]
         [EntryPointLogging(ActionName = "[Event] Add event", SenderName = "EventController")]
@@ -51,11 +52,23 @@ namespace Campus.Master.API.Controllers
         /// <summary>
         /// Edit event
         /// </summary>
+        /// <param name="eventDto"></param>
         [HttpPut]
         [EntryPointLogging(ActionName = "[Event] Edit event", SenderName = "EventController")]
         public async Task EditEvent(EventEditDto eventDto)
         {
             await _eventService.EditEventById(_claimExtractionService.GetUserIdFromClaims(), eventDto);
+        }
+
+        /// <summary>
+        /// Delete event
+        /// </summary>
+        /// <param name="eventId"></param>
+        [HttpDelete]
+        [EntryPointLogging(ActionName = "[Event] Delete event", SenderName = "EventController")]
+        public async Task DeleteEvent(string eventId)
+        {
+            await _eventService.DeleteEventById(_claimExtractionService.GetUserIdFromClaims(), eventId);
         }
     }
 }

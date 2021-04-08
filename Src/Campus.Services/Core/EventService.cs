@@ -101,6 +101,21 @@ namespace Campus.Services.Core
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteEventById(string userId, string eventId)
+        {
+            Classroom defaultClassroom = await GetDefaultClassroomByUserId(userId);
+
+            Event eventToDelete = defaultClassroom.Events
+                .FirstOrDefault(e => e.Id.ToString() == eventId);
+
+            if (eventToDelete == null)
+                throw new ApplicationException("Event not found for given user");
+
+            _context.Events.Remove(eventToDelete);
+
+            await _context.SaveChangesAsync();
+        }
+
         private async Task<Classroom> GetDefaultClassroomByUserId(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
