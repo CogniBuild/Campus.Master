@@ -26,6 +26,10 @@ namespace Campus.Master.API.Controllers
             _claimExtractionService = claimExtractionService;
         }
 
+        /// <summary>
+        /// Get calendar events
+        /// </summary>
+        /// <returns>Collection of events for default classroom</returns>
         [HttpGet]
         [EntryPointLogging(ActionName = "[Event] Get calendar events", SenderName = "EventController")]
         public async Task<IEnumerable<EventViewDto>> GetEvents()
@@ -33,6 +37,10 @@ namespace Campus.Master.API.Controllers
             return await _eventService.GetClassroomEventsByUserId(_claimExtractionService.GetUserIdFromClaims());
         }
 
+        /// <summary>
+        /// Add event
+        /// </summary>
+        /// <returns>Id of newly created event</returns>
         [HttpPost]
         [EntryPointLogging(ActionName = "[Event] Add event", SenderName = "EventController")]
         public async Task<int> AddEvent(EventAddDto eventDto)
@@ -40,6 +48,9 @@ namespace Campus.Master.API.Controllers
             return await _eventService.AddEvent(_claimExtractionService.GetUserIdFromClaims(), eventDto);
         }
 
+        /// <summary>
+        /// Edit event
+        /// </summary>
         [HttpPut]
         [EntryPointLogging(ActionName = "[Event] Edit event", SenderName = "EventController")]
         public async Task EditEvent(EventEditDto eventDto)
