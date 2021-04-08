@@ -46,13 +46,13 @@ namespace Campus.Services.Core
 
                 if (calendarEvent.AllDay)
                 {
-                    eventViewDto.Start = calendarEvent.StartDate.ToShortDateString();
-                    eventViewDto.End = calendarEvent.EndDate?.ToShortDateString();
+                    eventViewDto.Start = calendarEvent.StartDate.ToString("yyyy-MM-dd");
+                    eventViewDto.End = calendarEvent.EndDate?.ToString("yyyy-MM-dd");
                 }
                 else
                 {
-                    eventViewDto.Start = calendarEvent.StartDate.ToString(CultureInfo.CurrentCulture);
-                    eventViewDto.End = calendarEvent.EndDate?.ToString(CultureInfo.CurrentCulture);
+                    eventViewDto.Start = calendarEvent.StartDate.ToString("yyyy-MM-ddTHH:mm");
+                    eventViewDto.End = calendarEvent.EndDate?.ToString("yyyy-MM-ddTHH:mm");
                 }
 
                 eventViews.Add(eventViewDto);
