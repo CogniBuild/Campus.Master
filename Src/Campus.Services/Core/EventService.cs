@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
@@ -50,8 +51,8 @@ namespace Campus.Services.Core
                 }
                 else
                 {
-                    eventViewDto.Start = calendarEvent.StartDate.ToLongTimeString();
-                    eventViewDto.End = calendarEvent.EndDate?.ToLongTimeString();
+                    eventViewDto.Start = calendarEvent.StartDate.ToString(CultureInfo.CurrentCulture);
+                    eventViewDto.End = calendarEvent.EndDate?.ToString(CultureInfo.CurrentCulture);
                 }
 
                 eventViews.Add(eventViewDto);
