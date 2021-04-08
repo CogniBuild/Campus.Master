@@ -20,6 +20,13 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
                 .IsRequired()
                 .HasMaxLength(2000);
 
+            builder.Property(p => p.ActualLocation)
+                .IsRequired()
+                .HasMaxLength(2048);
+
+            builder.Property(p => p.AllDay)
+                .IsRequired();
+
             builder.Property(p => p.StartDate)
                 .IsRequired();
 

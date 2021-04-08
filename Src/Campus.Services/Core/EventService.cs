@@ -34,13 +34,27 @@ namespace Campus.Services.Core
 
             foreach (Event calendarEvent in events)
             {
-                eventViews.Add(new EventViewDto
+                var eventViewDto = new EventViewDto
                 {
                     Id = calendarEvent.Id.ToString(),
                     Title = calendarEvent.Title,
-                    Start = calendarEvent.StartDate,
-                    End = calendarEvent.EndDate
-                });
+                    Description = calendarEvent.Description,
+                    AllDay = calendarEvent.AllDay,
+                    Location = calendarEvent.ActualLocation,
+                };
+
+                if (calendarEvent.AllDay)
+                {
+                    eventViewDto.Start = calendarEvent.StartDate.ToShortDateString();
+                    eventViewDto.End = calendarEvent.EndDate?.ToShortDateString();
+                }
+                else
+                {
+                    eventViewDto.Start = calendarEvent.StartDate.ToLongTimeString();
+                    eventViewDto.End = calendarEvent.EndDate?.ToLongTimeString();
+                }
+
+                eventViews.Add(eventViewDto);
             }
 
             return eventViews;
@@ -48,21 +62,43 @@ namespace Campus.Services.Core
 
         public async Task<int> AddEvent(string userId, EventAddDto eventDto)
         {
-            Classroom classroom = await GetDefaultClassroomByUserId(userId);
+            Classroom defaultClassroom = await GetDefaultClassroomByUserId(userId);
 
             var newEvent = new Event
             {
                 Title = eventDto.Title,
-                Description = string.Empty,
+                Description = eventDto.Description,
                 StartDate = eventDto.Start,
-                EndDate = eventDto.End
+                EndDate = eventDto.End,
+                ActualLocation = eventDto.Location,
+                AllDay = eventDto.AllDay
             };
 
-            classroom.Events.Add(newEvent);
+            defaultClassroom.Events.Add(newEvent);
 
             await _context.SaveChangesAsync();
 
             return newEvent.Id;
+        }
+
+        public async Task EditEventById(string userId, EventEditDto eventDto)
+        {
+            Classroom defaultClassroom = await GetDefaultClassroomByUserId(userId);
+
+            Event eventToEdit = defaultClassroom.Events
+                .FirstOrDefault(e => e.Id.ToString() == eventDto.Id);
+
+            if (eventToEdit == null)
+                throw new ApplicationException("Event not found for given user");
+
+            eventToEdit.Title = eventDto.Title;
+            eventToEdit.Description = eventDto.Description;
+            eventToEdit.StartDate = eventDto.Start;
+            eventToEdit.EndDate = eventDto.End;
+            eventToEdit.ActualLocation = eventDto.Location;
+            eventToEdit.AllDay = eventDto.AllDay;
+
+            await _context.SaveChangesAsync();
         }
 
         private async Task<Classroom> GetDefaultClassroomByUserId(string userId)

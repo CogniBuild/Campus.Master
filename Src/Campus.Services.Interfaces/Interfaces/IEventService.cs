@@ -8,5 +8,6 @@ namespace Campus.Services.Interfaces.Interfaces
     {
         Task<IEnumerable<EventViewDto>> GetClassroomEventsByUserId(string userId);
         Task<int> AddEvent(string userId, EventAddDto eventDto);
+        Task EditEventById(string userId, EventEditDto eventDto);
     }
 }

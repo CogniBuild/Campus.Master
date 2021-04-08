@@ -9,8 +9,8 @@ namespace Campus.Domain.Core.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string Institution { get; set; }
-        public string Location { get; set; }
-        public bool IsOnline { get; set; }
+        public string DefaultLocation { get; set; }
+        public bool IsRemote { get; set; }
 
         public ICollection<Role> Roles { get; set; }
         public ICollection<Event> Events { get; set; }

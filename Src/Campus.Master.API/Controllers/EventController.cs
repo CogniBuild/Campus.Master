@@ -39,5 +39,12 @@ namespace Campus.Master.API.Controllers
         {
             return await _eventService.AddEvent(_claimExtractionService.GetUserIdFromClaims(), eventDto);
         }
+
+        [HttpPut]
+        [EntryPointLogging(ActionName = "[Event] Edit event", SenderName = "EventController")]
+        public async Task EditEvent(EventEditDto eventDto)
+        {
+            await _eventService.EditEventById(_claimExtractionService.GetUserIdFromClaims(), eventDto);
+        }
     }
 }

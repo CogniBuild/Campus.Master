@@ -46,8 +46,8 @@ namespace Campus.Services.Infrastructure
                         Classroom = new Classroom
                         {
                             Name = "MyEvents",
-                            Location = "Remote",
-                            IsOnline = true
+                            DefaultLocation = "Remote",
+                            IsRemote = true
                         }
                     }
                 }

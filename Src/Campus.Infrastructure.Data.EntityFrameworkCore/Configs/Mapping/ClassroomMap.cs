@@ -21,11 +21,11 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
             builder.Property(p => p.Institution)
                 .HasMaxLength(250);
             
-            builder.Property(p => p.Location)
+            builder.Property(p => p.DefaultLocation)
                 .IsRequired()
                 .HasMaxLength(2048);
 
-            builder.Property(p => p.IsOnline)
+            builder.Property(p => p.IsRemote)
                 .IsRequired();
         }
     }
