@@ -89,7 +89,7 @@ namespace Campus.Services.Core
                 .FirstOrDefault(e => e.Id.ToString() == eventDto.Id);
 
             if (eventToEdit == null)
-                throw new ApplicationException("Event not found for given user");
+                throw new ApplicationException($"Event with {eventDto.Id} id not found for given user");
 
             eventToEdit.Title = eventDto.Title;
             eventToEdit.Description = eventDto.Description;
@@ -109,7 +109,7 @@ namespace Campus.Services.Core
                 .FirstOrDefault(e => e.Id.ToString() == eventId);
 
             if (eventToDelete == null)
-                throw new ApplicationException("Event not found for given user");
+                throw new ApplicationException($"Event with {eventId} id not found for given user");
 
             _context.Events.Remove(eventToDelete);
 

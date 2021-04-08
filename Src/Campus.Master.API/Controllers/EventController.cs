@@ -50,7 +50,7 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// Edit event
+        /// Edit event by id
         /// </summary>
         /// <param name="eventDto"></param>
         [HttpPut]
@@ -61,7 +61,7 @@ namespace Campus.Master.API.Controllers
         }
 
         /// <summary>
-        /// Delete event
+        /// Delete event by id
         /// </summary>
         /// <param name="eventId"></param>
         [HttpDelete]
