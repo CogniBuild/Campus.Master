@@ -4,7 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CalendarService } from './shared/services/calendar.service';
 import { EventModalComponent } from './event-modal/create-event/event-modal.component';
 import { EditEventComponent } from './event-modal/edit-event/edit-event.component';
-import { CalendarEvent } from './shared/models/calendar';
+import { CalendarEvent, CalendarEventForm, EventApi } from './shared/models/calendar';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-calendar',
@@ -15,12 +16,13 @@ import { CalendarEvent } from './shared/models/calendar';
 export class CalendarComponent implements OnInit, AfterViewInit {
   public events: CalendarEvent[];
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+  public isUpdatedEvent = false;
 
   private calendarComponentApi;
   calendarOptions: CalendarOptions = {
     dateClick: this.dateClick.bind(this),
     eventClick: this.editEvent.bind(this),
-    eventChange: this.editEventFromDialog.bind(this),
+    eventChange: this.editEventFromCalendar.bind(this),
     events: this.events,
     locale: 'uk',
     editable: true,
@@ -36,13 +38,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   };
 
 
-  constructor(public dialog: MatDialog, private calendarService: CalendarService) {
+  constructor(public dialog: MatDialog,
+              private toastr: ToastrService,
+              private calendarService: CalendarService) {
   }
 
   ngOnInit() {
     this.calendarService.getEvents()
       .subscribe(events => {
-        console.log(events);
         this.events = events;
         this.calendarOptions.events = this.events;
       });
@@ -56,9 +59,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(EventModalComponent, {});
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog by btn  +New event was closed');
       if (result) {
-        console.log(result);
         this.calendarComponentApi.addEvent(result);
       }
     });
@@ -72,36 +73,74 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog by dateClick was closed');
       if (result) {
         this.calendarComponentApi.addEvent(result);
       }
     });
   }
 
-  editEventFromDialog(calendarEvent: CalendarEvent) {
+  editEventFromDialog(calendarEvent) {
     const event = this.calendarComponentApi.getEventById(calendarEvent.id);
-    console.log(event);
+
     if (event) {
+      console.log(event);
       event.setProp('title', calendarEvent.title);
+      event.setAllDay(calendarEvent.allDay);
+      event.setExtendedProp('description', calendarEvent.description);
+      event.setExtendedProp('location', calendarEvent.location);
       event.setStart(calendarEvent.start);
+      event.setEnd(calendarEvent.end);
     }
+
+  }
+
+  editEventFromCalendar(event: EventApi) {
+    const updatedEventStartStr = event.event.startStr;
+    const oldEventStartStr = event.oldEvent.startStr;
+    const updatedEventEndStr = event.event.endStr;
+    const oldEventEndStr = event.oldEvent.endStr;
+    if (updatedEventStartStr !== oldEventStartStr || updatedEventEndStr !== oldEventEndStr) {
+
+      const eventChange: CalendarEventForm = {
+        id: event.event.id,
+        title: event.event.title,
+        start: event.event.startStr,
+        end: event.event.endStr === '' ? null : event.event.endStr,
+        location: event.event.extendedProps.location,
+        description: event.event.extendedProps.description,
+        allDay: event.event.allDay
+      };
+
+      console.log(eventChange);
+
+
+      this.calendarService.editEvent(eventChange)
+        .subscribe(result => {
+        });
+    }
+
   }
 
   editEvent(info) {
-    console.log(info);
     const dialogEditRef = this.dialog.open(EditEventComponent, {
       data: info.event
     });
 
     dialogEditRef.afterClosed().subscribe(result => {
-      console.log('The edit dialog was closed');
       if (result) {
-        console.log(result);
+        // TODO: crash events
+        // if (result.deleteEvent) {
+        //   this.deleteEvent(result.id);
+        //   return;
+        // }
         this.editEventFromDialog(result);
       }
-
     });
+  }
+
+  deleteEvent(id) {
+    const event = this.calendarComponentApi.getEventById(id);
+    event.remove();
   }
 
 }

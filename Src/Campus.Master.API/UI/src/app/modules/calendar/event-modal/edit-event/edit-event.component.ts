@@ -21,6 +21,8 @@ export class EditEventComponent implements OnInit {
   public dialogTitle;
   public onCheckedRemote = false;
   public onCheckedRange = false;
+  public spinner: boolean;
+  public spinnerDelete: boolean;
 
   constructor(private fb: FormBuilder,
               private toastr: ToastrService,
@@ -30,7 +32,6 @@ export class EditEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     const dataControls = this.onFormDataControl(this.dialogRef);
     this.formValidation(dataControls);
   }
@@ -47,18 +48,37 @@ export class EditEventComponent implements OnInit {
     this.onCheckedRange = !this.onCheckedRange;
   }
 
+  deleteEvent(id): void {
+    // this.spinnerDelete = true;
+    // this.calendarService.deleteEvent(id)
+    //   .subscribe(result => {
+    //     this.dialogRef.close({
+    //       id,
+    //       deleteEvent: true
+    //     });
+    //     console.log(result);
+    //     this.toastr.success('Event deleted!');
+    //     this.spinnerDelete = false;
+    //   }, error => {
+    //     this.toastr.error('Error!', error.title);
+    //     this.spinnerDelete = false;
+    //   });
+  }
+
   createEvent() {
     if (this.dialogForm.invalid) {
       return;
     }
-    // this.spinner = true;
-    const id = this.dialogForm.value.id;
-    const timeFrom = this.dialogForm.value.timeFrom;
-    const timeTo = this.dialogForm.value.timeTo;
+    this.spinner = true;
+
     let allDay: Moment;
     let allDayTo: Moment;
     let startDate = null;
     let endDate = null;
+    const id = this.dialogForm.value.id;
+    const timeFrom = this.dialogForm.value.timeFrom;
+    const timeTo = this.dialogForm.value.timeTo;
+    const dateActualClick = this.dialogForm.value.date;
 
     if (typeof this.dialogForm.value.dateTo === 'object' && this.dialogForm.value.dateTo !== null) {
       allDayTo = this.dialogRef.componentInstance.dialogForm.value.dateTo.format('YYYY-MM-DD');
@@ -72,19 +92,22 @@ export class EditEventComponent implements OnInit {
       startDate = this.dialogForm.value.date;
     }
 
-    if (timeTo && endDate === null) {
+    if (!!timeFrom && !!startDate) {
+      startDate = startDate + 'T' + timeFrom;
+    }
+
+    if (timeTo && endDate === null && typeof dateActualClick === 'string') {
+      endDate = dateActualClick + 'T' + timeTo;
+    } else if (timeTo && endDate === null) {
+      endDate = allDay + 'T' + timeTo;
+    } else if (timeTo && endDate !== null) {
+      endDate = allDayTo + 'T' + timeTo;
+    } else if (typeof allDay === 'undefined' && timeTo !== null) {
       endDate = startDate + 'T' + timeTo;
     }
 
-    if (!!timeFrom) {
-      startDate = allDay + 'T' + timeFrom;
-    }
-
-    if (!!timeFrom && !!timeTo && !!allDayTo) {
-      endDate = allDayTo + 'T' + timeTo;
-    } else if (!timeFrom && !!timeTo) {
-      endDate = allDay + 'T' + timeTo;
-    }
+    // TODO: перевірити правильність роботи з allDay (з часами, є баги)
+    const allDayCheck = !!startDate && !!endDate ? !startDate.includes('T') && !endDate.includes('T') : false;
 
     const event: CalendarEventForm = {
       id,
@@ -92,29 +115,23 @@ export class EditEventComponent implements OnInit {
       start: startDate,
       end: endDate,
       location: this.dialogForm.value.location,
-      desc: this.dialogForm.value.desc
+      description: this.dialogForm.value.desc,
+      allDay: allDayCheck
     };
 
-    const mockService = true;
-
-    if (mockService) {
-      this.dialogRef.close({
-        ...event
+    console.log(event);
+    this.calendarService.editEvent(event)
+      .subscribe(result => {
+        console.log(result);
+        this.dialogRef.close({
+          ...event
+        });
+        this.toastr.success('Подію змінено!');
+        this.spinner = false;
+      }, error => {
+        this.toastr.error('Помилка серверу!', error.title);
+        this.spinner = false;
       });
-      this.toastr.success('Event changes!');
-    }
-    // this.calendarService.addEvent(event)
-    //   .subscribe(resId => {
-    //     this.dialogRef.close({
-    //       ...event,
-    //       id: String(resId)
-    //     });
-    //     this.toastr.success('Event changes!');
-    //     // this.spinner = false;
-    //   }, error => {
-    //     this.toastr.error('Error!', error);
-    //     // this.spinner = false;
-    //   });
   }
 
   onFormDataControl(dialogRef): CalendarEventForm {
@@ -125,7 +142,7 @@ export class EditEventComponent implements OnInit {
     const title = dialogRefComponentInstance ? dialogRefComponentInstance.title : null;
     const allDay = dialogRefComponentInstance ? dialogRefComponentInstance.allDay : null;
     const location = dialogRefComponentInstance ? dialogRefComponentInstance.extendedProps.location : null;
-    const desc = dialogRefComponentInstance ? dialogRefComponentInstance.extendedProps.desc : null;
+    const description = dialogRefComponentInstance ? dialogRefComponentInstance.extendedProps.description : null;
     return {
       id,
       title,
@@ -133,7 +150,7 @@ export class EditEventComponent implements OnInit {
       start,
       allDay,
       location,
-      desc
+      description
     };
   }
 
@@ -145,14 +162,16 @@ export class EditEventComponent implements OnInit {
         summary: new FormControl(formControlData.title, [
           Validators.required,
         ]),
-        desc: new FormControl(formControlData.desc),
+        desc: new FormControl(formControlData.description),
         date: new FormControl(formControlData.start, [
           Validators.required
         ]),
         dateTo: new FormControl(formControlData.end),
         timeFrom: new FormControl(null),
         timeTo: new FormControl(null),
-        location: new FormControl(formControlData.location)
+        location: new FormControl(formControlData.location, [
+          Validators.required
+        ])
       });
   }
 

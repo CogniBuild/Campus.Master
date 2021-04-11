@@ -29,12 +29,12 @@ export interface CalendarEventForm {
   end: string;
   allDay?: boolean;
   location: string | null;
-  desc: string;
+  description: string;
 }
 
 export interface ExtendedProps {
   location?: string | null;
-  desc?: string;
+  description?: string;
 }
 
 export interface DialogDataControls {
@@ -43,4 +43,9 @@ export interface DialogDataControls {
 
 export interface DialogRefComponentInstance {
   date?: any;
+}
+
+export interface EventApi {
+  event: CalendarEvent;
+  oldEvent: CalendarEvent;
 }

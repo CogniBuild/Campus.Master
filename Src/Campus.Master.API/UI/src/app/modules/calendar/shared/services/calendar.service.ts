@@ -19,4 +19,13 @@ export class CalendarService {
   addEvent(event) {
     return this.http.post<string>(environment.createEvent, event);
   }
+
+  editEvent(event) {
+    return this.http.put<string>(environment.createEvent, event);
+  }
+
+  deleteEvent(id) {
+    return this.http.delete(`${environment.deleteEvent}${id}`);
+  }
+
 }

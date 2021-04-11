@@ -38,14 +38,16 @@ export class EventModalComponent implements OnInit {
         summary: new FormControl(null, [
           Validators.required,
         ]),
-        desc: new FormControl(null),
+        desc: new FormControl(''),
         date: new FormControl(formControlData.date, [
           Validators.required
         ]),
         dateTo: new FormControl(null),
         timeFrom: new FormControl(null),
         timeTo: new FormControl(null),
-        location: new FormControl(null)
+        location: new FormControl(null, [
+          Validators.required
+        ])
       });
   }
 
@@ -68,6 +70,7 @@ export class EventModalComponent implements OnInit {
     let endDate = null;
     const timeFrom = this.dialogForm.value.timeFrom;
     const timeTo = this.dialogForm.value.timeTo;
+    const dateActualClick = this.dialogForm.value.date;
 
     if (typeof this.dialogForm.value.dateTo === 'object' && this.dialogForm.value.dateTo !== null) {
       allDayTo = this.dialogRef.componentInstance.dialogForm.value.dateTo.format('YYYY-MM-DD');
@@ -81,28 +84,30 @@ export class EventModalComponent implements OnInit {
       startDate = this.dialogForm.value.date;
     }
 
-    if (timeTo && endDate === null) {
+    if (!!timeFrom && !!startDate) {
+      startDate = startDate + 'T' + timeFrom;
+    }
+
+    if (timeTo && endDate === null && typeof dateActualClick === 'string') {
+      endDate = dateActualClick + 'T' + timeTo;
+    } else if (timeTo && endDate === null) {
+      endDate = allDay + 'T' + timeTo;
+    } else if (timeTo && endDate !== null) {
+      endDate = allDayTo + 'T' + timeTo;
+    } else if (typeof allDay === 'undefined' && timeTo !== null) {
       endDate = startDate + 'T' + timeTo;
     }
 
-    if (!!timeFrom && !!startDate) {
-      startDate = startDate + 'T' + timeFrom;
-    } else {
-      startDate = allDay + 'T' + timeFrom;
-    }
 
-    if (!!timeFrom && !!timeTo && !!allDayTo) {
-      endDate = allDayTo + 'T' + timeTo;
-    } else if (!timeFrom && !!timeTo) {
-      endDate = allDay + 'T' + timeTo;
-    }
+    const allDayCheck = !!startDate && !!endDate ? !startDate.includes('T') && !endDate.includes('T') : true;
 
     const event: CalendarEventForm = {
       title: this.dialogForm.value.summary,
       start: startDate,
       end: endDate,
       location: this.dialogForm.value.location,
-      desc: this.dialogForm.value.desc
+      description: this.dialogForm.value.desc,
+      allDay: allDayCheck
     };
 
     this.calendarService.addEvent(event)
@@ -111,12 +116,13 @@ export class EventModalComponent implements OnInit {
           ...event,
           id: String(resId)
         });
-        this.toastr.success('Event added!');
+        this.toastr.success('Подію створено!');
         this.spinner = false;
       }, error => {
-        this.toastr.error('Error!', error);
+        this.toastr.error('Помилка серверу!', error.title);
         this.spinner = false;
       });
+
   }
 
   onNoClick(): void {
