@@ -70,20 +70,11 @@ export class EditEventComponent implements OnInit {
     }
     this.spinner = true;
 
-    console.log(this.dialogForm.value);
     let startDate = this.dialogForm.value.date;
     let endDate = this.dialogForm.value.dateTo;
     const id = this.dialogForm.value.id;
     const timeFrom = this.dialogForm.value.timeFrom;
     const timeTo = this.dialogForm.value.timeTo;
-
-    if (startDate.includes('T')) {
-      startDate = startDate.replace(/T.*/, '');
-    }
-
-    if (endDate.includes('T')) {
-      endDate = endDate.replace(/T.*/, '');
-    }
 
     if (startDate._isAMomentObject) {
       startDate = startDate.format('YYYY-MM-DD');
@@ -91,6 +82,14 @@ export class EditEventComponent implements OnInit {
 
     if (endDate._isAMomentObject) {
       endDate = endDate.format('YYYY-MM-DD');
+    }
+
+    if (startDate.includes('T')) {
+      startDate = startDate.replace(/T.*/, '');
+    }
+
+    if (endDate.includes('T')) {
+      endDate = endDate.replace(/T.*/, '');
     }
 
     if (timeFrom) {
