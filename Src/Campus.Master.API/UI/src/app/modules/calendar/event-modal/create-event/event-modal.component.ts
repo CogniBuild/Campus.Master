@@ -99,7 +99,9 @@ export class EventModalComponent implements OnInit {
     }
 
 
-    const allDayCheck = !!startDate && !!endDate ? !startDate.includes('T') && !endDate.includes('T') : true;
+    const allDayCheckStart = !startDate.includes('T');
+    const allDayCheckEnd = endDate === null ? true : !endDate.includes('T');
+    const allDayCheck = allDayCheckStart && allDayCheckEnd;
 
     const event: CalendarEventForm = {
       title: this.dialogForm.value.summary,

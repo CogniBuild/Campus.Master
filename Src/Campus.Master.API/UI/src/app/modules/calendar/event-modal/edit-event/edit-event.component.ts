@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CalendarService } from '../../shared/services/calendar.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Moment } from 'moment';
 import {
   CalendarEvent,
   CalendarEventForm
@@ -71,44 +70,47 @@ export class EditEventComponent implements OnInit {
     }
     this.spinner = true;
 
-    let allDay: Moment;
-    let allDayTo: Moment;
-    let startDate = null;
-    let endDate = null;
+    console.log(this.dialogForm.value);
+    let startDate = this.dialogForm.value.date;
+    let endDate = this.dialogForm.value.dateTo;
     const id = this.dialogForm.value.id;
     const timeFrom = this.dialogForm.value.timeFrom;
     const timeTo = this.dialogForm.value.timeTo;
-    const dateActualClick = this.dialogForm.value.date;
 
-    if (typeof this.dialogForm.value.dateTo === 'object' && this.dialogForm.value.dateTo !== null) {
-      allDayTo = this.dialogRef.componentInstance.dialogForm.value.dateTo.format('YYYY-MM-DD');
-      endDate = allDayTo;
+    if (startDate.includes('T')) {
+      startDate = startDate.replace(/T.*/, '');
     }
 
-    if (typeof this.dialogForm.value.date === 'object') {
-      allDay = this.dialogRef.componentInstance.dialogForm.value.date.format('YYYY-MM-DD');
-      startDate = allDay;
-    } else {
-      startDate = this.dialogForm.value.date;
+    if (endDate.includes('T')) {
+      endDate = endDate.replace(/T.*/, '');
     }
 
-    if (!!timeFrom && !!startDate) {
+    if (startDate._isAMomentObject) {
+      startDate = startDate.format('YYYY-MM-DD');
+    }
+
+    if (endDate._isAMomentObject) {
+      endDate = endDate.format('YYYY-MM-DD');
+    }
+
+    if (timeFrom) {
       startDate = startDate + 'T' + timeFrom;
     }
 
-    if (timeTo && endDate === null && typeof dateActualClick === 'string') {
-      endDate = dateActualClick + 'T' + timeTo;
-    } else if (timeTo && endDate === null) {
-      endDate = allDay + 'T' + timeTo;
-    } else if (timeTo && endDate !== null) {
-      endDate = allDayTo + 'T' + timeTo;
-    } else if (typeof allDay === 'undefined' && timeTo !== null) {
-      endDate = startDate + 'T' + timeTo;
+    if (timeTo && endDate === '') {
+      endDate = startDate.replace(/T.*/, '') + 'T' + timeTo;
+    } else if (timeTo) {
+      endDate = endDate + 'T' + timeTo;
     }
 
-    // TODO: перевірити правильність роботи з allDay (з часами, є баги)
-    const allDayCheck = !!startDate && !!endDate ? !startDate.includes('T') && !endDate.includes('T') : false;
+    const allDayCheckStart = startDate === null ? true : !startDate.includes('T');
+    const allDayCheckEnd = endDate === null ? true : !endDate.includes('T');
+    const allDayCheck = allDayCheckStart && allDayCheckEnd;
 
+    if (endDate === '') {
+      endDate = null;
+    }
+    console.log('allDayCheckEnd', allDayCheckEnd, 'allDayCheckStart', allDayCheckStart, 'allDayCheck', allDayCheck);
     const event: CalendarEventForm = {
       id,
       title: this.dialogForm.value.summary,
@@ -119,10 +121,8 @@ export class EditEventComponent implements OnInit {
       allDay: allDayCheck
     };
 
-    console.log(event);
     this.calendarService.editEvent(event)
       .subscribe(result => {
-        console.log(result);
         this.dialogRef.close({
           ...event
         });
@@ -132,6 +132,7 @@ export class EditEventComponent implements OnInit {
         this.toastr.error('Помилка серверу!', error.title);
         this.spinner = false;
       });
+
   }
 
   onFormDataControl(dialogRef): CalendarEventForm {
@@ -155,7 +156,9 @@ export class EditEventComponent implements OnInit {
   }
 
   formValidation(formControlData: CalendarEventForm) {
-    console.log(formControlData);
+    const timeFromState = !!formControlData.start.match(/\d\d:\d\d/) ? formControlData.start.match(/\d\d:\d\d/)[0] : null;
+    const timeToState = !!formControlData.end.match(/\d\d:\d\d/) ? formControlData.end.match(/\d\d:\d\d/)[0] : null;
+
     this.dialogForm = this.fb.group(
       {
         id: new FormControl(formControlData.id),
@@ -167,8 +170,8 @@ export class EditEventComponent implements OnInit {
           Validators.required
         ]),
         dateTo: new FormControl(formControlData.end),
-        timeFrom: new FormControl(null),
-        timeTo: new FormControl(null),
+        timeFrom: new FormControl(timeFromState),
+        timeTo: new FormControl(timeToState),
         location: new FormControl(formControlData.location, [
           Validators.required
         ])
