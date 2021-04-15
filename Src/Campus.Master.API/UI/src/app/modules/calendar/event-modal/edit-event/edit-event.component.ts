@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CalendarService } from '../../shared/services/calendar.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {
   CalendarEvent,
   CalendarEventForm
 } from '../../shared/models/calendar';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteEventComponent } from '../delete-event/delete-event.component';
 
 @Component({
   selector: 'app-edit-event',
@@ -21,11 +22,11 @@ export class EditEventComponent implements OnInit {
   public onCheckedRemote = false;
   public onCheckedRange = false;
   public spinner: boolean;
-  public spinnerDelete: boolean;
 
   constructor(private fb: FormBuilder,
               private toastr: ToastrService,
               private calendarService: CalendarService,
+              private dialog: MatDialog,
               public dialogRef: MatDialogRef<EditEventComponent>,
               @Inject(MAT_DIALOG_DATA) public data: object) {
   }
@@ -45,23 +46,6 @@ export class EditEventComponent implements OnInit {
 
   onRange() {
     this.onCheckedRange = !this.onCheckedRange;
-  }
-
-  deleteEvent(id): void {
-    // this.spinnerDelete = true;
-    // this.calendarService.deleteEvent(id)
-    //   .subscribe(result => {
-    //     this.dialogRef.close({
-    //       id,
-    //       deleteEvent: true
-    //     });
-    //     console.log(result);
-    //     this.toastr.success('Event deleted!');
-    //     this.spinnerDelete = false;
-    //   }, error => {
-    //     this.toastr.error('Error!', error.title);
-    //     this.spinnerDelete = false;
-    //   });
   }
 
   createEvent() {
@@ -109,7 +93,7 @@ export class EditEventComponent implements OnInit {
     if (endDate === '') {
       endDate = null;
     }
-    console.log('allDayCheckEnd', allDayCheckEnd, 'allDayCheckStart', allDayCheckStart, 'allDayCheck', allDayCheck);
+
     const event: CalendarEventForm = {
       id,
       title: this.dialogForm.value.summary,
@@ -176,5 +160,18 @@ export class EditEventComponent implements OnInit {
         ])
       });
   }
+
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(DeleteEventComponent, {
+      id: this.dialogForm.value.id
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dialogRef.close(result);
+      }
+    });
+  }
+
 
 }

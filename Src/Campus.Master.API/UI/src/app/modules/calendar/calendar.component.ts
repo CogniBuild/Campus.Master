@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
   encapsulation: ViewEncapsulation.None
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
-  public events: CalendarEvent[];
+  public events;
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
   public isUpdatedEvent = false;
 
@@ -45,7 +45,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.calendarService.getEvents()
-      .subscribe(events => {
+      .subscribe(events  => {
         this.events = events;
         this.calendarOptions.events = this.events;
       });
@@ -80,10 +80,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   editEventFromDialog(calendarEvent) {
+    const isDeleteEvent = calendarEvent.deleteEvent;
     const event = this.calendarComponentApi.getEventById(calendarEvent.id);
 
-    if (event) {
-      console.log(event);
+    if (event && !isDeleteEvent) {
       event.setProp('title', calendarEvent.title);
       event.setAllDay(calendarEvent.allDay);
       event.setExtendedProp('description', calendarEvent.description);
@@ -111,9 +111,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         allDay: event.event.allDay
       };
 
-      console.log(eventChange);
-
-
       this.calendarService.editEvent(eventChange)
         .subscribe(result => {
         });
@@ -128,11 +125,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
     dialogEditRef.afterClosed().subscribe(result => {
       if (result) {
-        // TODO: crash events
-        // if (result.deleteEvent) {
-        //   this.deleteEvent(result.id);
-        //   return;
-        // }
+        if (result.deleteEvent) {
+          this.deleteEvent(result.id);
+          return;
+        }
         this.editEventFromDialog(result);
       }
     });

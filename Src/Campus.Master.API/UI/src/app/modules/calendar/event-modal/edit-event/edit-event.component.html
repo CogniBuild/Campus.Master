@@ -105,11 +105,9 @@
   </div>
 
   <div class="actionBtn">
-    <!--    <button class="dialog__btn dialog__btn_delete"-->
-    <!--            (click)="deleteEvent(dialogForm.value.id)">-->
-    <!--      <span [ngClass]="{'none-block': spinnerDelete}">Delete</span>-->
-    <!--      <div [ngClass]="{'box loader-02': spinnerDelete}"></div>-->
-    <!--    </button>-->
+    <mat-icon class="dialog__btn_delete"
+              (click)="openDeleteDialog()">delete
+    </mat-icon>
     <button class="dialog__btn dialog__btn_cancel"
             (click)="onNoClick()">Cancel
     </button>

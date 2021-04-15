@@ -1,4 +1,4 @@
-@import "src/styles/styles"
+@import "styles"
 
 .mat-dialog-container
   padding: 20px 32px
@@ -101,12 +101,16 @@
     cursor: pointer
 
   &__btn_cancel
-    background-color: transparent
+    width: auto
+    padding: 10px 30px
+    background-color: #ffffff
     color: #7E57C2
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
 
   &__btn_create
     background-color: #7E57C2
     color: #FFFFFF
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
 
 
 .date
@@ -166,6 +170,7 @@
 .actionBtn
   display: flex
   justify-content: space-between
+  align-items: center
 
 .rangeCalendar
   display: flex
@@ -185,6 +190,8 @@
 
 
 .dialog__btn_delete
-  padding: 10px 30px
+  cursor: pointer
+  border-radius: 3px
   background-color: #ED5C46
   color: #FFFFFF
+

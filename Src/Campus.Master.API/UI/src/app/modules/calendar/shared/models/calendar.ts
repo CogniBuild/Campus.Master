@@ -1,22 +1,22 @@
 export interface CalendarEvent {
   allDay?: boolean;
-  allow?: any;
+  allow?: boolean | null;
   backgroundColor?: string;
   borderColor?: string;
   classNames?: [];
-  constraint?: any;
+  constraint?: object | null;
   display?: string;
-  durationEditable?: any;
-  end?: any;
+  durationEditable?: boolean | null;
+  end?: object | string;
   endStr?: string;
   extendedProps?: ExtendedProps;
   groupId?: string;
   id?: string;
-  overlap?: any;
-  source?: any;
-  start?: any;
-  startEditable?: any;
-  startStr: string;
+  overlap?: boolean | null;
+  source?: object | null;
+  start?: object | string;
+  startEditable?: boolean | null;
+  startStr?: string;
   textColor?: string;
   title: string;
   url?: string;
@@ -28,8 +28,8 @@ export interface CalendarEventForm {
   start: string;
   end: string;
   allDay?: boolean;
-  location: string | null;
-  description: string;
+  location?: string | null;
+  description?: string;
 }
 
 export interface ExtendedProps {
@@ -38,11 +38,11 @@ export interface ExtendedProps {
 }
 
 export interface DialogDataControls {
-  date: any;
+  date: object;
 }
 
 export interface DialogRefComponentInstance {
-  date?: any;
+  date?: object;
 }
 
 export interface EventApi {
