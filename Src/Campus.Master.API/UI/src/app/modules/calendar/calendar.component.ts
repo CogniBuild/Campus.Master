@@ -56,7 +56,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   onOpenDialog(): void {
-    const dialogRef = this.dialog.open(EventModalComponent, {});
+    const dialogRef = this.dialog.open(EventModalComponent, {
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
