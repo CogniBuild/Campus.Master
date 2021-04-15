@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CalendarService } from '../../shared/services/calendar.service';
 import { Moment } from 'moment';
 import { CalendarEventForm, DialogDataControls, DialogRefComponentInstance } from '../../shared/models/calendar';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-event-modal',
@@ -13,12 +14,13 @@ import { ToastrService } from 'ngx-toastr';
   encapsulation: ViewEncapsulation.None
 })
 
-export class EventModalComponent implements OnInit {
+export class EventModalComponent implements OnInit, OnDestroy {
   public dialogForm: FormGroup;
   public formControlsData: DialogDataControls;
   public onCheckedRemote = false;
   public onCheckedRange = false;
   public spinner: boolean;
+  public addEventSub: Subscription;
 
   constructor(private fb: FormBuilder,
               private toastr: ToastrService,
@@ -30,6 +32,12 @@ export class EventModalComponent implements OnInit {
   ngOnInit(): void {
     const dataControls = this.onFormDataControl(this.dialogRef);
     this.formValidation(dataControls);
+  }
+
+  ngOnDestroy() {
+    if (this.addEventSub) {
+      this.addEventSub.unsubscribe();
+    }
   }
 
   formValidation(formControlData: DialogDataControls) {
@@ -112,7 +120,7 @@ export class EventModalComponent implements OnInit {
       allDay: allDayCheck
     };
 
-    this.calendarService.addEvent(event)
+    this.addEventSub = this.calendarService.addEvent(event)
       .subscribe(resId => {
         this.dialogRef.close({
           ...event,

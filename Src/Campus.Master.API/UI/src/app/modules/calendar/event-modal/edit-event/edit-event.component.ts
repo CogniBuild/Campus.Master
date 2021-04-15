@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CalendarService } from '../../shared/services/calendar.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -8,6 +8,7 @@ import {
 } from '../../shared/models/calendar';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteEventComponent } from '../delete-event/delete-event.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-event',
@@ -15,13 +16,16 @@ import { DeleteEventComponent } from '../delete-event/delete-event.component';
   styleUrls: ['./edit-event.component.sass'],
   encapsulation: ViewEncapsulation.None
 })
-export class EditEventComponent implements OnInit {
+export class EditEventComponent implements OnInit, OnDestroy {
   public dialogForm: FormGroup;
   public dialogDate;
   public dialogTitle;
   public onCheckedRemote = false;
   public onCheckedRange = false;
   public spinner: boolean;
+  public editEventSub: Subscription;
+  public closeDialogSub: Subscription;
+
 
   constructor(private fb: FormBuilder,
               private toastr: ToastrService,
@@ -34,6 +38,16 @@ export class EditEventComponent implements OnInit {
   ngOnInit(): void {
     const dataControls = this.onFormDataControl(this.dialogRef);
     this.formValidation(dataControls);
+  }
+
+  ngOnDestroy() {
+    if (this.editEventSub) {
+      this.editEventSub.unsubscribe();
+    }
+
+    if (this.closeDialogSub) {
+      this.closeDialogSub.unsubscribe();
+    }
   }
 
   onNoClick(): void {
@@ -104,7 +118,7 @@ export class EditEventComponent implements OnInit {
       allDay: allDayCheck
     };
 
-    this.calendarService.editEvent(event)
+    this.editEventSub = this.calendarService.editEvent(event)
       .subscribe(result => {
         this.dialogRef.close({
           ...event
@@ -166,7 +180,7 @@ export class EditEventComponent implements OnInit {
       id: this.dialogForm.value.id
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.closeDialogSub = dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.dialogRef.close(result);
       }
