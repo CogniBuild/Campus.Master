@@ -4,9 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { CalendarService } from './shared/services/calendar.service';
 import { EventModalComponent } from './event-modal/create-event/event-modal.component';
 import { EditEventComponent } from './event-modal/edit-event/edit-event.component';
-import { CalendarEvent, CalendarEventForm, EventApi } from './shared/models/calendar';
+import { CalendarEventForm, EventApi } from './shared/models/calendar';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-calendar',
@@ -30,7 +31,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     eventClick: this.editEvent.bind(this),
     eventChange: this.editEventFromCalendar.bind(this),
     events: this.events,
-    locale: 'uk',
+    locale: this.translateService.defaultLang,
     editable: true,
     expandRows: true,
     height: '80vh',
@@ -46,7 +47,8 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(public dialog: MatDialog,
               private toastr: ToastrService,
-              private calendarService: CalendarService) {
+              private calendarService: CalendarService,
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
