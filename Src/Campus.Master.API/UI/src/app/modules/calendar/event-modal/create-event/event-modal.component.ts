@@ -4,8 +4,10 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { CalendarService } from '../../shared/services/calendar.service';
 import { Moment } from 'moment';
 import { CalendarEventForm, DialogDataControls, DialogRefComponentInstance } from '../../shared/models/calendar';
+import { LocaleService } from '../../../../core/services/locale.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-modal',
@@ -25,6 +27,7 @@ export class EventModalComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private toastr: ToastrService,
               private calendarService: CalendarService,
+              private localeService: LocaleService,
               public dialogRef: MatDialogRef<EventModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: object) {
   }
@@ -126,10 +129,14 @@ export class EventModalComponent implements OnInit, OnDestroy {
           ...event,
           id: String(resId)
         });
-        this.toastr.success('Подію створено!');
+        this.localeService.get('CALENDAR.CREATE-EVENT.DIALOG.SERVER-RESPONSES.SUCCESS').toPromise()
+          .then(x => this.toastr.success(x));
+
         this.spinner = false;
       }, error => {
-        this.toastr.error('Помилка серверу!', error.title);
+        this.localeService.get('CALENDAR.CREATE-EVENT.DIALOG.SERVER-RESPONSES.ERROR').toPromise()
+          .then(x => this.toastr.error(x, error.title));
+
         this.spinner = false;
       });
 
@@ -155,4 +162,9 @@ export class EventModalComponent implements OnInit, OnDestroy {
     this.onCheckedRange = !this.onCheckedRange;
   }
 
+  isRemote$() {
+    return this.localeService.get('CALENDAR.CREATE-EVENT.DIALOG.CONTROL.LOCATION.IS-REMOTE').pipe(
+      map(x => this.onCheckedRemote ? x: null)
+    );
+  }
 }

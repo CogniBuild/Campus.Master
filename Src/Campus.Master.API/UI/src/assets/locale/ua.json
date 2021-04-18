@@ -78,5 +78,43 @@
             "NEW-USER": "Помилка при створенні нового користувача",
             "WRONG-EMAIL-PASSWORD": "Невірна адреса або пароль"
         }
+    },
+    "CALENDAR": {
+        "CREATE-EVENT": {
+            "DIALOG": {
+                "TITLE": "Створити подію",
+                "SUBTITLE": "Додати будь-яку інформацію про вашу подію",
+                "CONTROL": {
+                    "SUMMARY": "Назва",
+                    "SUMMARY-PLACEHOLDER": "Назва події",
+                    "DESCRIPTION": "Опис",
+                    "DESCRIPTION-PLACEHOLDER": "Опис події",
+                    "DATE": "Дата",
+                    "RANGE": {
+                        "NAME": "Проміжок",
+                        "BEGIN": "Початок",
+                        "END": "Кінець"
+                    },
+                    "LOCATION": {
+                        "NAME": "Локація",
+                        "IS-REMOTE": "Віддалено"
+                    },
+                    "LOCATION-PLACEHOLDER": "Локація"
+                },
+                "BUTTON-PANEL": {
+                    "CREATE": "Створити",
+                    "CANCEL": "Відмінити"
+                },
+                "ERROR-MESSAGE": {
+                    "REQUIRED-SUMMARY": "Назва події обов'язкова.",
+                    "REQUIRED-DATE": "Дата події обов'язкова.",
+                    "REQUIRED-LOCATION": "Поле локація є обов'язковим."
+                },
+                "SERVER-RESPONSES": {
+                    "SUCCESS": "Подію успішно створено.",
+                    "ERROR": "Помилка на сервері."
+                }
+            }
+        }
     }
 }
