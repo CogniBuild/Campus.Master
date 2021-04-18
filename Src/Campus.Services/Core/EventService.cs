@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
@@ -24,9 +23,9 @@ namespace Campus.Services.Core
 
         public async Task<IEnumerable<EventViewDto>> GetClassroomEventsByUserId(string userId)
         {
-            Classroom classroom = await GetDefaultClassroomByUserId(userId);
+            var classroom = await GetDefaultClassroomByUserId(userId);
 
-            ICollection<Event> events = classroom?.Events;
+            var events = classroom?.Events;
 
             if (events == null)
                 throw new ApplicationException("There are no events for given user");
@@ -63,7 +62,7 @@ namespace Campus.Services.Core
 
         public async Task<int> AddEvent(string userId, EventAddDto eventDto)
         {
-            Classroom defaultClassroom = await GetDefaultClassroomByUserId(userId);
+            var defaultClassroom = await GetDefaultClassroomByUserId(userId);
 
             var newEvent = new Event
             {
@@ -84,9 +83,9 @@ namespace Campus.Services.Core
 
         public async Task EditEventById(string userId, EventEditDto eventDto)
         {
-            Classroom defaultClassroom = await GetDefaultClassroomByUserId(userId);
+            var defaultClassroom = await GetDefaultClassroomByUserId(userId);
 
-            Event eventToEdit = defaultClassroom.Events
+            var eventToEdit = defaultClassroom.Events
                 .FirstOrDefault(e => e.Id.ToString() == eventDto.Id);
 
             if (eventToEdit == null)
@@ -104,9 +103,9 @@ namespace Campus.Services.Core
 
         public async Task DeleteEventById(string userId, string eventId)
         {
-            Classroom defaultClassroom = await GetDefaultClassroomByUserId(userId);
+            var defaultClassroom = await GetDefaultClassroomByUserId(userId);
 
-            Event eventToDelete = defaultClassroom.Events
+            var eventToDelete = defaultClassroom.Events
                 .FirstOrDefault(e => e.Id.ToString() == eventId);
 
             if (eventToDelete == null)
@@ -128,7 +127,7 @@ namespace Campus.Services.Core
                 .Collection(u => u.Participation)
                 .LoadAsync();
 
-            Participant defaultParticipation = user.Participation.FirstOrDefault();
+            var defaultParticipation = user.Participation.FirstOrDefault();
 
             if (defaultParticipation == null)
                 throw new ApplicationException("Given user doesn't participate in any classroom");
