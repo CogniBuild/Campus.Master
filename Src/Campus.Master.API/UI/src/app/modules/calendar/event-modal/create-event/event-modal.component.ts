@@ -164,7 +164,7 @@ export class EventModalComponent implements OnInit, OnDestroy {
 
   isRemote$() {
     return this.localeService.get('CALENDAR.CREATE-EVENT.DIALOG.CONTROL.LOCATION.IS-REMOTE').pipe(
-      map(x => this.onCheckedRemote ? x: null)
+      map(x => this.onCheckedRemote ? x : null)
     );
   }
 }
