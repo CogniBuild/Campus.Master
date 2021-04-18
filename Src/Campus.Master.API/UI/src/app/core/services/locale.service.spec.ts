@@ -30,7 +30,7 @@ describe('LocaleService', () => {
 
   it('should return all available locales', () => {
     // arrange
-    const expectedAvailableLocales = ['en', 'ru', 'ua'];
+    const expectedAvailableLocales = ['en', 'ru', 'uk'];
 
     // act
     const actualAvailableLocales = service.getAvailableLocales();

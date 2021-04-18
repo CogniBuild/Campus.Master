@@ -78,5 +78,43 @@
             "NEW-USER": "Failed to create new user",
             "WRONG-EMAIL-PASSWORD": "Wrong email or password"
         }
+    },
+    "CALENDAR": {
+        "CREATE-EVENT": {
+            "DIALOG": {
+                "TITLE": "Create an event",
+                "SUBTITLE": "Add summary to the event",
+                "CONTROL": {
+                    "SUMMARY": "Name",
+                    "SUMMARY-PLACEHOLDER": "Event name",
+                    "DESCRIPTION": "Description",
+                    "DESCRIPTION-PLACEHOLDER": "Event description",
+                    "DATE": "Date",
+                    "RANGE": {
+                        "NAME": "Range",
+                        "BEGIN": "Begin",
+                        "END": "End"
+                    },
+                    "LOCATION": {
+                        "NAME": "Location",
+                        "IS-REMOTE": "Remote"
+                    },
+                    "LOCATION-PLACEHOLDER": "Location"
+                },
+                "BUTTON-PANEL": {
+                    "CREATE": "Create",
+                    "CANCEL": "Cancel"
+                },
+                "ERROR-MESSAGE": {
+                    "REQUIRED-SUMMARY": "Event name is required.",
+                    "REQUIRED-DATE": "Event date is required.",
+                    "REQUIRED-LOCATION": "Location is required."
+                },
+                "SERVER-RESPONSES": {
+                    "SUCCESS": "Event is successfully created.",
+                    "ERROR": "A server error has occurred."
+                }
+            }
+        }
     }
 }
