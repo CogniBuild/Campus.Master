@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { DateFormat2 } from '@shared/date-formats/date';
+import { DateFormat2 } from '../../date';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
 @Directive({
