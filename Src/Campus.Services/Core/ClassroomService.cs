@@ -46,8 +46,8 @@ namespace Campus.Services.Core
             {
                 Name = classroom.Name,
                 Institution = classroom.Institution,
-                Location = classroom.Location,
-                IsOnline = classroom.IsOnline
+                Location = classroom.DefaultLocation,
+                IsOnline = classroom.IsRemote
             };
         }
 
@@ -58,8 +58,8 @@ namespace Campus.Services.Core
                 Name = classroom.Name,
                 Description = classroom.Description,
                 Institution = classroom.Institution,
-                Location = classroom.Location,
-                IsOnline = classroom.IsOnline
+                DefaultLocation = classroom.Location,
+                IsRemote = classroom.IsOnline
             }, token);
 
             await _context.SaveChangesAsync(token);
@@ -75,8 +75,8 @@ namespace Campus.Services.Core
                 classroomRecorded.Name = classroom.Name;
                 classroomRecorded.Description = classroom.Description;
                 classroomRecorded.Institution = classroom.Institution;
-                classroomRecorded.Location = classroom.Location;
-                classroomRecorded.IsOnline = classroom.IsOnline;
+                classroomRecorded.DefaultLocation = classroom.Location;
+                classroomRecorded.IsRemote = classroom.IsOnline;
                 
                 _context.Classrooms.Update(classroomRecorded);
                 await _context.SaveChangesAsync(token);

@@ -3,6 +3,8 @@ export interface Classroom {
   title: string;
   students: Student[];
   lectures: Teacher[];
+  modules?: Modules[];
+  grades?: Grades[];
 }
 
 export interface Teacher {
@@ -24,4 +26,50 @@ export interface Student {
 
 export interface RouteState {
   id?: string;
+}
+
+export interface Lectures {
+  id?: string;
+  title: string;
+  subTitle: string;
+  date: string;
+  status: string;
+}
+
+export interface Labs {
+  id?: string;
+  title: string;
+  subTitle: string;
+  date: string;
+  status: string;
+}
+
+export interface Practs {
+  id?: string;
+  title: string;
+  subTitle: string;
+  date: string;
+  status: string;
+}
+
+export interface Modules {
+  id?: string;
+  title: string;
+  lectures?: Lectures[];
+  labs?: Labs[];
+  practs?: Practs[];
+}
+
+export interface Grades {
+  id?: string;
+  student?: string;
+  picture?: string;
+  lab1?: number;
+  pract1?: number;
+  lab2?: number;
+  pract2?: number;
+  lab3?: number;
+  pract3?: number;
+  finalTest?: number;
+  TotalScore?: number;
 }

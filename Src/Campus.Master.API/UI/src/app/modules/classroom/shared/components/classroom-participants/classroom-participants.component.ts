@@ -38,7 +38,6 @@ export class ClassroomParticipantsComponent implements OnInit, AfterViewInit, On
     this.classroom = this.classroomService.getClassroom(this.routeState.id);
     this.teachers = this.classroom.lectures;
     this.students = this.classroom.students;
-    console.log(this.classroom);
     this.dataSourceTeacher = new MatTableDataSource(this.teachers);
     this.dataSourceStudents = new MatTableDataSource(this.students);
   }
@@ -50,6 +49,9 @@ export class ClassroomParticipantsComponent implements OnInit, AfterViewInit, On
   }
 
   ngOnDestroy() {
+    if (this.routeParentParamsSub) {
+      this.routeParentParamsSub.unsubscribe();
+    }
   }
 
   getRouterState(): RouteState {

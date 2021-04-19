@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
@@ -20,7 +21,7 @@ namespace Campus.Services.Infrastructure
             _userManager = userManager;
             _context = context;
         }
-        
+
         public async Task CreateUserAsync(UserRegistrationDto registrationDto)
         {
             if (registrationDto.Password != registrationDto.ConfirmPassword)
@@ -28,18 +29,30 @@ namespace Campus.Services.Infrastructure
 
             var userWithSameEmail = await _userManager.FindByEmailAsync(registrationDto.Email);
             var userWithSameUserName = await _userManager.FindByEmailAsync(registrationDto.UserName);
-            
+
             if (userWithSameEmail != null || userWithSameUserName != null)
                 throw new ApplicationException("User already exists");
-            
+
             var registrationResult = await _userManager.CreateAsync(new User
             {
                 Email = registrationDto.Email,
                 UserName = registrationDto.UserName,
                 FullName = registrationDto.FullName,
                 CreatedOn = DateTime.Now,
+                Participation = new List<Participant>
+                {
+                    new Participant
+                    {
+                        Classroom = new Classroom
+                        {
+                            Name = "MyEvents",
+                            DefaultLocation = "Remote",
+                            IsRemote = true
+                        }
+                    }
+                }
             }, registrationDto.Password);
-            
+
             if (!registrationResult.Succeeded)
                 throw new ApplicationException("Failed to create new user");
         }
@@ -47,7 +60,7 @@ namespace Campus.Services.Infrastructure
         public async Task<UserViewDto> GetUserByIdAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            
+
             if (user == null)
                 throw new ApplicationException("User with this ID doesn't exist");
 
@@ -79,7 +92,7 @@ namespace Campus.Services.Infrastructure
         public async Task DeleteUserAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            
+
             if (user == null)
                 throw new ApplicationException("User with this ID doesn't exist");
 
@@ -90,10 +103,10 @@ namespace Campus.Services.Infrastructure
         public async Task EditUserAsync(string id, UserEditDto editingDto)
         {
             var user = await _userManager.FindByIdAsync(id);
-            
+
             if (user == null)
                 throw new ApplicationException("User with this ID doesn't exist");
-            
+
             user.FullName = editingDto.FullName;
             await _userManager.UpdateAsync(user);
         }

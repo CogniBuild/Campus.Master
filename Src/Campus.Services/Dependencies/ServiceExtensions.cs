@@ -13,6 +13,7 @@ namespace Campus.Services.Dependencies
         {
             services.AddScoped<IClassroomService, ClassroomService>();
             services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IEventService, EventService>();
             
             services.Configure<IdentityOptions>(options =>
             {

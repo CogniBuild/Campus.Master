@@ -1,4 +1,4 @@
-import { Classroom, Student, Teacher } from './classrooms';
+import { Classroom, Grades, Modules, Student, Teacher } from './classrooms';
 
 export let students: Student[] = [
   {
@@ -390,29 +390,453 @@ export let lectures2: Teacher[] = [
   }
 ];
 
+export let modules: Modules[] = [
+  {
+    id: '1',
+    title: 'Module 1 - Data types',
+    lectures: [
+      {
+        id: '607d55c1ea66192e4bf67ef1',
+        title: 'Lecture 1',
+        subTitle: 'Lists',
+        date: 'Wednesday, January 20, 2021 7:33 PM',
+        status: 'Pending'
+      },
+      {
+        id: '607d55c1f859e8875220bdc5',
+        title: 'Lecture 2',
+        subTitle: 'Linked List',
+        date: 'Monday, February 15, 2021 1:30 AM',
+        status: 'Pending'
+      },
+      {
+        id: '607d55c19782c4e40a7c3520',
+        title: 'Lecture 3',
+        subTitle: 'Module 1 Summary',
+        date: 'Friday, March 19, 2021 10:52 AM',
+        status: 'Pending'
+      }
+    ],
+    labs: [
+      {
+        id: '607d55c1ea66192e4bf67ef1',
+        title: 'Lab 1',
+        subTitle: 'List',
+        date: 'Wednesday, January 20, 2021 7:33 PM',
+        status: 'Pending'
+      },
+      {
+        id: '607d55c1f859e8875220bdc5',
+        title: 'Lab 2',
+        subTitle: 'Linked List',
+        date: 'Monday, February 15, 2021 1:30 AM',
+        status: 'Pending'
+      }
+    ],
+    practs: [
+      {
+        id: '607d55c1ea66192e4bf67ef1',
+        title: 'Pract 1',
+        subTitle: 'List',
+        date: 'Wednesday, January 20, 2021 7:33 PM',
+        status: 'Pending'
+      },
+      {
+        id: '607d55c1f859e8875220bdc5',
+        title: 'Pract 2',
+        subTitle: 'Linked List',
+        date: 'Monday, February 15, 2021 1:30 AM',
+        status: 'Pending'
+      }
+    ]
+  }
+];
+
+export let grades: Grades[] = [
+  {
+    id: '607d8959235b00ca8a8f9612',
+    student: 'Huber Faulkner',
+    picture: 'http://placehold.it/32x32',
+    lab1: 83,
+    pract1: 60,
+    lab2: 98,
+    pract2: 78,
+    lab3: 3,
+    pract3: 88,
+    finalTest: 82,
+    TotalScore: 44
+  },
+  {
+    id: '607d8959395d9bd914f00870',
+    student: 'Bertie Ramos',
+    picture: 'http://placehold.it/32x32',
+    lab1: 1,
+    pract1: 0,
+    lab2: 66,
+    pract2: 41,
+    lab3: 40,
+    pract3: 4,
+    finalTest: 10,
+    TotalScore: 59
+  },
+  {
+    id: '607d8959fafffd6c3e71f970',
+    student: 'Zimmerman Farrell',
+    picture: 'http://placehold.it/32x32',
+    lab1: 46,
+    pract1: 11,
+    lab2: 88,
+    pract2: 87,
+    lab3: 23,
+    pract3: 86,
+    finalTest: 52,
+    TotalScore: 73
+  },
+  {
+    id: '607d8959ff566d31a241974a',
+    student: 'Deleon Whitfield',
+    picture: 'http://placehold.it/32x32',
+    lab1: 76,
+    pract1: 21,
+    lab2: 81,
+    pract2: 12,
+    lab3: 35,
+    pract3: 34,
+    finalTest: 61,
+    TotalScore: 81
+  },
+  {
+    id: '607d895942dc4e7c6a91fa93',
+    student: 'Farrell Simon',
+    picture: 'http://placehold.it/32x32',
+    lab1: 78,
+    pract1: 39,
+    lab2: 75,
+    pract2: 94,
+    lab3: 2,
+    pract3: 26,
+    finalTest: 56,
+    TotalScore: 99
+  },
+  {
+    id: '607d89596be885bfadc4e1ff',
+    student: 'Tonya Herrera',
+    picture: 'http://placehold.it/32x32',
+    lab1: 63,
+    pract1: 86,
+    lab2: 36,
+    pract2: 15,
+    lab3: 38,
+    pract3: 64,
+    finalTest: 35,
+    TotalScore: 88
+  },
+  {
+    id: '607d8959dc49f5a5ca2d6ec9',
+    student: 'Judith Weaver',
+    picture: 'http://placehold.it/32x32',
+    lab1: 14,
+    pract1: 77,
+    lab2: 78,
+    pract2: 29,
+    lab3: 43,
+    pract3: 59,
+    finalTest: 83,
+    TotalScore: 37
+  },
+  {
+    id: '607d89598d19be11486b0086',
+    student: 'Mathis Baird',
+    picture: 'http://placehold.it/32x32',
+    lab1: 86,
+    pract1: 19,
+    lab2: 8,
+    pract2: 92,
+    lab3: 19,
+    pract3: 50,
+    finalTest: 32,
+    TotalScore: 44
+  },
+  {
+    id: '607d8959e8a560f391590702',
+    student: 'Kirkland Reynolds',
+    picture: 'http://placehold.it/32x32',
+    lab1: 68,
+    pract1: 97,
+    lab2: 96,
+    pract2: 1,
+    lab3: 31,
+    pract3: 63,
+    finalTest: 68,
+    TotalScore: 29
+  },
+  {
+    id: '607d8959c7456f9a578bd965',
+    student: 'Santana Head',
+    picture: 'http://placehold.it/32x32',
+    lab1: 42,
+    pract1: 34,
+    lab2: 77,
+    pract2: 61,
+    lab3: 38,
+    pract3: 49,
+    finalTest: 64,
+    TotalScore: 17
+  },
+  {
+    id: '607d89595a14dc77ace42a9a',
+    student: 'Tisha Pratt',
+    picture: 'http://placehold.it/32x32',
+    lab1: 70,
+    pract1: 35,
+    lab2: 39,
+    pract2: 16,
+    lab3: 31,
+    pract3: 27,
+    finalTest: 77,
+    TotalScore: 86
+  },
+  {
+    id: '607d8959fa84d12480e1edf4',
+    student: 'Foster Nolan',
+    picture: 'http://placehold.it/32x32',
+    lab1: 87,
+    pract1: 83,
+    lab2: 1,
+    pract2: 2,
+    lab3: 18,
+    pract3: 69,
+    finalTest: 67,
+    TotalScore: 64
+  },
+  {
+    id: '607d8959c903c710ee5a64bd',
+    student: 'Lessie Gentry',
+    picture: 'http://placehold.it/32x32',
+    lab1: 55,
+    pract1: 34,
+    lab2: 89,
+    pract2: 60,
+    lab3: 73,
+    pract3: 71,
+    finalTest: 19,
+    TotalScore: 12
+  },
+  {
+    id: '607d89590ebbd10108b1b191',
+    student: 'Bullock Schmidt',
+    picture: 'http://placehold.it/32x32',
+    lab1: 9,
+    pract1: 72,
+    lab2: 31,
+    pract2: 20,
+    lab3: 92,
+    pract3: 6,
+    finalTest: 53,
+    TotalScore: 29
+  },
+  {
+    id: '607d8959eb41e31465e1e995',
+    student: 'Dillard Mcfadden',
+    picture: 'http://placehold.it/32x32',
+    lab1: 7,
+    pract1: 28,
+    lab2: 13,
+    pract2: 75,
+    lab3: 22,
+    pract3: 44,
+    finalTest: 3,
+    TotalScore: 76
+  },
+  {
+    id: '607d8959a635543ed66d74b7',
+    student: 'Rollins Fitzpatrick',
+    picture: 'http://placehold.it/32x32',
+    lab1: 60,
+    pract1: 87,
+    lab2: 41,
+    pract2: 6,
+    lab3: 50,
+    pract3: 55,
+    finalTest: 16,
+    TotalScore: 19
+  },
+  {
+    id: '607d8959da782d1257fa1bbb',
+    student: 'Collins Wheeler',
+    picture: 'http://placehold.it/32x32',
+    lab1: 20,
+    pract1: 36,
+    lab2: 86,
+    pract2: 95,
+    lab3: 73,
+    pract3: 22,
+    finalTest: 13,
+    TotalScore: 75
+  },
+  {
+    id: '607d895998f5ecf21008d735',
+    student: 'Reva Eaton',
+    picture: 'http://placehold.it/32x32',
+    lab1: 98,
+    pract1: 82,
+    lab2: 97,
+    pract2: 18,
+    lab3: 93,
+    pract3: 50,
+    finalTest: 100,
+    TotalScore: 90
+  },
+  {
+    id: '607d8959e19440a82428f3ef',
+    student: 'Michelle Knapp',
+    picture: 'http://placehold.it/32x32',
+    lab1: 29,
+    pract1: 50,
+    lab2: 86,
+    pract2: 88,
+    lab3: 35,
+    pract3: 77,
+    finalTest: 27,
+    TotalScore: 3
+  },
+  {
+    id: '607d8959e46b3ae2c2f6b135',
+    student: 'Eddie Hess',
+    picture: 'http://placehold.it/32x32',
+    lab1: 49,
+    pract1: 26,
+    lab2: 71,
+    pract2: 52,
+    lab3: 80,
+    pract3: 33,
+    finalTest: 95,
+    TotalScore: 64
+  },
+  {
+    id: '607d8959ff9fc366875b5aa6',
+    student: 'Garner Kinney',
+    picture: 'http://placehold.it/32x32',
+    lab1: 88,
+    pract1: 43,
+    lab2: 38,
+    pract2: 39,
+    lab3: 28,
+    pract3: 2,
+    finalTest: 20,
+    TotalScore: 15
+  },
+  {
+    id: '607d8959c295cfd15a33ba8a',
+    student: 'Dennis Carter',
+    picture: 'http://placehold.it/32x32',
+    lab1: 26,
+    pract1: 21,
+    lab2: 71,
+    pract2: 60,
+    lab3: 37,
+    pract3: 37,
+    finalTest: 98,
+    TotalScore: 39
+  },
+  {
+    id: '607d89596b114aeea3952f21',
+    student: 'Small Whitney',
+    picture: 'http://placehold.it/32x32',
+    lab1: 7,
+    pract1: 89,
+    lab2: 55,
+    pract2: 91,
+    lab3: 29,
+    pract3: 0,
+    finalTest: 70,
+    TotalScore: 34
+  },
+  {
+    id: '607d8959fc0814255f398113',
+    student: 'Celina Hester',
+    picture: 'http://placehold.it/32x32',
+    lab1: 98,
+    pract1: 76,
+    lab2: 82,
+    pract2: 3,
+    lab3: 55,
+    pract3: 21,
+    finalTest: 8,
+    TotalScore: 16
+  },
+  {
+    id: '607d89594b3dce6af6a54fcd',
+    student: 'Jordan Long',
+    picture: 'http://placehold.it/32x32',
+    lab1: 49,
+    pract1: 33,
+    lab2: 95,
+    pract2: 99,
+    lab3: 29,
+    pract3: 54,
+    finalTest: 17,
+    TotalScore: 61
+  },
+  {
+    id: '607d8959ab55174cafb8b8ca',
+    student: 'Marsh Merritt',
+    picture: 'http://placehold.it/32x32',
+    lab1: 50,
+    pract1: 62,
+    lab2: 34,
+    pract2: 10,
+    lab3: 93,
+    pract3: 98,
+    finalTest: 67,
+    TotalScore: 90
+  },
+  {
+    id: '607d895947950d96aa580801',
+    student: 'Kelly Rich',
+    picture: 'http://placehold.it/32x32',
+    lab1: 32,
+    pract1: 94,
+    lab2: 7,
+    pract2: 59,
+    lab3: 78,
+    pract3: 1,
+    finalTest: 56,
+    TotalScore: 100
+  }
+];
+
 export let classrooms: Classroom[] = [
   {
     id: '1',
     title: 'Math',
     students,
-    lectures
+    lectures,
+    modules,
+    grades
   },
   {
     id: '2',
     title: 'History',
     students: students2,
-    lectures: lectures2
+    lectures: lectures2,
+    modules,
+    grades
   },
   {
     id: '3',
     title: 'ADS',
     students,
-    lectures
+    lectures,
+    modules,
+    grades
   },
   {
     id: '4',
     title: 'C++',
     students: students2,
-    lectures: lectures2
+    lectures: lectures2,
+    modules,
+    grades
   }
 ];
