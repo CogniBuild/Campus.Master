@@ -27,7 +27,7 @@ import { CanActivateDashboardGuard } from '@core/guards/can-activate-dashboard.g
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       },
-      defaultLanguage: Locales.UA
+      defaultLanguage: Locales.UK
     })
   ]
 })
