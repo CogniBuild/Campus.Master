@@ -5,10 +5,15 @@ import { CanActivateDashboardGuard } from '@core/guards/can-activate-dashboard.g
 
 
 const routes: Routes = [
-  {path: '', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)},
   {
-    path: 'campus', component: UserPageLayoutComponent, canActivate: [CanActivateDashboardGuard]
-    , children: [
+    path: '', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: 'campus', component: UserPageLayoutComponent, canActivate: [CanActivateDashboardGuard],
+    children: [
+      {
+        path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
       {
         path: 'calendar', loadChildren: () => import('./modules/calendar/calendar.module').then(m => m.CalendarModule)
       },

@@ -9,15 +9,20 @@
 
   <div class="main_wrap">
     <mat-card>
-      <div class="main">
-        <div class="main-header">
-          <h2 class="main-header__name">Software Engineering [PD-42]</h2>
-          <h2 class="main-header__user">{{userName}}</h2>
+      <div class="view_wrap">
+        <div class="main">
+          <div class="main-header">
+            <h2 class="main-header__name">Software Engineering [PD-42]</h2>
+            <h2 class="main-header__user">{{userName}}</h2>
+          </div>
+          <div class="classrooms">
+            <ng-container *ngFor="let classroom of classrooms">
+              <app-classroom-item [classroomItem]="classroom"></app-classroom-item>
+            </ng-container>
+          </div>
         </div>
-        <div class="classrooms">
-          <ng-container *ngFor="let classroom of classrooms">
-            <app-classroom-item [classroomItem]="classroom"></app-classroom-item>
-          </ng-container>
+        <div class="addClassroom">
+          <button (click)="openDialog()"><span>+</span> Add new Classroom</button>
         </div>
       </div>
     </mat-card>
