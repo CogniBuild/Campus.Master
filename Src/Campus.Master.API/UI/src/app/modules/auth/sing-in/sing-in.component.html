@@ -7,14 +7,16 @@
       </div>
       <div class="sign-in__form">
         <h1 class="sign-in__title">
-          {{ 'AUTH.SIGN-IN.FORM-TITLE-LEFT' | translate }}<br class="sign-in__title_br"/>{{ 'AUTH.SIGN-IN.FORM-TITLE-RIGHT' | translate }}<span>Campus</span>
+          {{ 'AUTH.SIGN-IN.FORM-TITLE-LEFT' | translate }}<br
+          class="sign-in__title_br"/>{{ 'AUTH.SIGN-IN.FORM-TITLE-RIGHT' | translate }}<span>Campus</span>
         </h1>
         <form action="#" [formGroup]="form" (ngSubmit)="submit()">
           <div class="form-control" [ngClass]="{
               invalid: form.get('email').touched && form.get('email').invalid
             }">
             <label for="email" class="email"></label>
-            <input id="email" type="email" placeholder="{{ 'AUTH.SIGN-IN.FORM-TEXTBOX.EMAIL' | translate }}" formControlName="email"/>
+            <input id="email" type="email" placeholder="{{ 'AUTH.SIGN-IN.FORM-TEXTBOX.EMAIL' | translate }}"
+                   formControlName="email"/>
             <div *ngIf="form.get('email').touched && form.get('email').invalid" class="validation">
               <small *ngIf="form.get('email').errors.required">
                 {{ 'AUTH.SIGN-IN.ERROR-MESSAGES.EMAIL.REQUIRED' | translate }}
@@ -29,7 +31,8 @@
                 form.get('password').touched && form.get('password').invalid
             }">
             <label for="password" class="password"></label>
-            <input id="password" type="password" placeholder="{{ 'AUTH.SIGN-IN.FORM-TEXTBOX.PASSWORD' | translate }}" formControlName="password"/>
+            <input id="password" type="password" placeholder="{{ 'AUTH.SIGN-IN.FORM-TEXTBOX.PASSWORD' | translate }}"
+                   formControlName="password"/>
             <div *ngIf="
                 form.get('password').touched && form.get('password').invalid
               " class="validation">
@@ -43,7 +46,7 @@
             <span class="forgot-pass"><a href="#">{{ 'AUTH.SIGN-IN.FORGOT-PASSWORD' | translate }}</a></span>
           </div>
           <button type="submit" class="sign-in__btn"
-                  [disabled]="form.invalid && form.touched">
+                  [disabled]="form.invalid">
             <span [ngClass]="{'none-block': spinner}">{{ 'AUTH.SIGN-IN.SIGN-IN' | translate }}</span>
             <div [ngClass]="{'box loader-02': spinner}"></div>
           </button>
