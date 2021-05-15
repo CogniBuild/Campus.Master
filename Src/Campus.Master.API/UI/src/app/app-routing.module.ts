@@ -19,8 +19,11 @@ const routes: Routes = [
       },
       {
         path: 'classroom', loadChildren: () => import('./modules/classroom/classroom.module').then(m => m.ClassroomModule)
-      }]
-  },
+      },
+      {
+        path: '**', redirectTo: 'dashboard', pathMatch: 'full'
+      }],
+  }
 ];
 
 @NgModule({

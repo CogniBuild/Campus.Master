@@ -1,9 +1,9 @@
-<div class="classroom-item">
-  <mat-icon class="classroom-item__delete">clear</mat-icon>
+<div class="classroom-item" [routerLink]="['classroom-view', classroomItem.id]">
+  <mat-icon class="classroom-item__delete" (click)="onDeleteDialog($event)">clear</mat-icon>
   <div class="classroom-item__img">
     <img src="../assets/img/classrooms/classroomItem.png" alt="classroom-item-img">
   </div>
-  <div class="classroom-item__info" [routerLink]="['classroom-view', classroomItem.id]">
+  <div class="classroom-item__info">
     <h3>{{classroomItem.title}} Classroom</h3>
     <p>Contains {{classroomItem.students.length}} students</p>
     <p>{{classroomItem.lectures.length}} Lecturers</p>

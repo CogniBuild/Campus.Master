@@ -2,8 +2,7 @@
   <div class="header">
     <h1 class="header__title">Classrooms</h1>
     <div class="header__leftBar">
-      <div class="search"></div>
-      <div class="user"></div>
+      <app-header-user-info (searchValue)="onSearchValue($event)"></app-header-user-info>
     </div>
   </div>
 
@@ -16,9 +15,13 @@
             <h2 class="main-header__user">{{userName}}</h2>
           </div>
           <div class="classrooms">
-            <ng-container *ngFor="let classroom of classrooms">
-              <app-classroom-item [classroomItem]="classroom"></app-classroom-item>
+            <ng-container *ngIf="classrooms.length !== 0; else classroomDeleted">
+              <ng-container *ngFor="let classroom of classrooms |  search: searchValue">
+                <app-classroom-item [classroomItem]="classroom"
+                                    (deleteClassroom)="onDeleteClassroom($event)"></app-classroom-item>
+              </ng-container>
             </ng-container>
+            <ng-template #classroomDeleted>Classrooms are missing...</ng-template>
           </div>
         </div>
         <div class="addClassroom">

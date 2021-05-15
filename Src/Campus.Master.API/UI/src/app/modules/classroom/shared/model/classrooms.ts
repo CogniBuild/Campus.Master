@@ -1,5 +1,5 @@
 export interface Classroom {
-  id: string;
+  id: string | number;
   title: string;
   students: Student[];
   lectures: Teacher[];
