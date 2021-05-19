@@ -10,7 +10,11 @@ const routes: Routes = [
     path: 'campus', component: UserPageLayoutComponent, canActivate: [CanActivateDashboardGuard]
     , children: [
       {
-        path: 'calendar', loadChildren: () => import('./modules/calendar/calendar.module').then(m => m.CalendarModule)
+        path: 'calendar', loadChildren: () => import('./modules/calendar/calendar.module').then(m => m.CalendarModule),
+      },
+      {
+        path: 'profile-settings',
+        loadChildren: () => import('./modules/profile-settings/profile-settings.module').then(m => m.ProfileSettingsModule)
       }]
   },
 ];

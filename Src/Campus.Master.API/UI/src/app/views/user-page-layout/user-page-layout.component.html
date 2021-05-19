@@ -10,13 +10,13 @@
           <div class="sidebar__item sidebar_dashboard outline">Dashboard</div>
           <div class="sidebar__item sidebar_calendar outline" routerLink="calendar">Calendar</div>
           <div class="sidebar__item sidebar_notebooks">My notebooks</div>
-          <div class="sidebar__item sidebar_settings">Settings</div>
+          <div class="sidebar__item sidebar_settings" routerLink="profile-settings">Settings</div>
         </div>
       </mat-drawer>
 
       <mat-drawer-content>
         <button mat-raised-button (click)="drawer.toggle()" class="mobile-menu"><img src="assets/img/user/menu.png"
-                                                                                     alt="menu"></button>
+            alt="menu"></button>
         <router-outlet></router-outlet>
       </mat-drawer-content>
 
