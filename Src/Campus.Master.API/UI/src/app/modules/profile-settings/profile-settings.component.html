@@ -1,5 +1,15 @@
-<ul>
-  <li routerLink="general">general</li>
-  <li routerLink="edit-profile">Edit profile</li>
-  <router-outlet></router-outlet>
-</ul>
+<div class="container">
+  <div class="settings__bar settings__card">
+    <mat-card>
+      <ul>
+        <li routerLink="general">general</li>
+        <li routerLink="edit-profile">Edit profile</li>
+      </ul>
+    </mat-card>
+  </div>
+  <div class="settings__group settings__card">
+    <mat-card>
+      <router-outlet></router-outlet>
+    </mat-card>
+  </div>
+</div>
