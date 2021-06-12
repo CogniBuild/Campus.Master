@@ -64,6 +64,7 @@ namespace Campus.Master.API.Controllers
         ///         "Email": "...",
         ///         "UserName": "...",
         ///         "FullName": "...",
+        ///         "PreferredLocale": "...", [OPTIONAL]
         ///         "Password": "...",
         ///         "ConfirmPassword": "..."
         ///     }
@@ -129,7 +130,8 @@ namespace Campus.Master.API.Controllers
         ///     Content-Type: application/json
         /// 
         ///     {
-        ///         "FullName": "..."
+        ///         "FullName": "...",
+        ///         "PreferredLocale": "..."
         ///     }
         /// 
         /// </remarks>
