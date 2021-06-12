@@ -33,6 +33,11 @@ namespace Campus.Infrastructure.Data.EntityFrameworkCore.Configs.Mapping
                 .HasConversion(
                     cl => cl.ToString("o"),
                     cl => Convert.ToDateTime(cl));
+
+            builder.Property(p => p.PreferredLocale)
+                .HasConversion(
+                    locale => locale.ToString(),
+                    locale => (Locale)Enum.Parse(typeof(Locale), locale));
         }
     }
 }
