@@ -33,12 +33,18 @@ namespace Campus.Services.Infrastructure
             if (userWithSameEmail != null || userWithSameUserName != null)
                 throw new ApplicationException("User already exists");
 
+            var rawLocale = registrationDto.PreferredLocale ?? Locale.English.ToString();
+
+            if (!Enum.TryParse(rawLocale, out Locale locale))
+                throw new ApplicationException("Failed to parse preferred user locale");
+
             var registrationResult = await _userManager.CreateAsync(new User
             {
                 Email = registrationDto.Email,
                 UserName = registrationDto.UserName,
                 FullName = registrationDto.FullName,
                 CreatedOn = DateTime.Now,
+                PreferredLocale = locale,
                 Participation = new List<Participant>
                 {
                     new Participant
@@ -107,7 +113,12 @@ namespace Campus.Services.Infrastructure
             if (user == null)
                 throw new ApplicationException("User with this ID doesn't exist");
 
+            if (!Enum.TryParse(editingDto.PreferredLocale, out Locale locale))
+                throw new ApplicationException("Failed to parse preferred user locale");
+
             user.FullName = editingDto.FullName;
+            user.PreferredLocale = locale;
+
             await _userManager.UpdateAsync(user);
         }
     }
