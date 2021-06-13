@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Classroom, Modules, RouteState } from '../../model/classrooms';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ClassroomService } from '../../services/classroom.service';
 
 @Component({
@@ -16,7 +16,6 @@ export class ClassroomModulesComponent implements OnInit, OnDestroy {
   public routeParentParamsSub: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private router: Router,
               private classroomService: ClassroomService) {
   }
 
@@ -24,7 +23,6 @@ export class ClassroomModulesComponent implements OnInit, OnDestroy {
     this.routeState = this.getRouterState();
     this.classroom = this.classroomService.getClassroom(this.routeState.id);
     this.modules = this.classroom.modules[0];
-    console.log(this.classroom);
   }
 
   ngOnDestroy() {
@@ -41,5 +39,4 @@ export class ClassroomModulesComponent implements OnInit, OnDestroy {
       });
     return resultRouterState;
   }
-
 }

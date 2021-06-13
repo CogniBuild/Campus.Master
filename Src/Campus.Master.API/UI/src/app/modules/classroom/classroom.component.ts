@@ -42,7 +42,7 @@ export class ClassroomComponent implements OnInit, OnDestroy {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(ChooseCreateComponent, {});
+    const dialogRef = this.dialog.open(ChooseCreateComponent, { });
   }
 
   onSearchValue(search: string) {

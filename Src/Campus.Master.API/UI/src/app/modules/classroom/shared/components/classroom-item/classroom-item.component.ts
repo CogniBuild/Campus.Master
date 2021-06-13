@@ -7,20 +7,14 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './classroom-item.component.html',
   styleUrls: ['./classroom-item.component.sass']
 })
-export class ClassroomItemComponent implements OnInit {
+export class ClassroomItemComponent {
   @Input() classroomItem: Classroom;
   @Output() deleteClassroom: EventEmitter<Classroom> = new EventEmitter<Classroom>();
 
   constructor(public dialog: MatDialog) {
   }
-
-  ngOnInit(): void {
-    console.log(this.classroomItem);
-  }
-
   onDeleteDialog(event) {
     event.stopPropagation();
     this.deleteClassroom.emit(this.classroomItem);
   }
-
 }

@@ -23,12 +23,12 @@ export class ChooseCreateComponent implements OnInit {
   }
 
   createClassroomDialog() {
-    const dialogRef = this.dialog.open(CreateClassroomComponent, {});
+    const dialogRef = this.dialog.open(CreateClassroomComponent, { });
 
   }
 
   connectToClassroomDialog() {
-    const dialogRef = this.dialog.open(ConnectClassroomComponent, {});
+    const dialogRef = this.dialog.open(ConnectClassroomComponent, { });
 
   }
 }
