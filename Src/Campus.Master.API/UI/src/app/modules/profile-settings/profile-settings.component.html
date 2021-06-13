@@ -1,10 +1,14 @@
 <div class="container">
-  <div class="settings__bar settings__card">
+  <div class="settings__menu settings__card">
     <mat-card class="adapt-height">
-      <ul>
-        <li routerLink="general">general</li>
-        <li routerLink="edit-profile">Edit profile</li>
-      </ul>
+      <div class="menu__buttons">
+        <div class="menu__item" routerLink="general" routerLinkActive="menu__general menu__item__text"><img
+            src="/assets/img/profile-settings/menu-items/gear-inactive.svg" alt="General settings icon">General settings
+        </div>
+        <div class="menu__item" routerLink="edit-profile" routerLinkActive="menu__edit-profile menu__item__text"><img
+            src="/assets/img/profile-settings/menu-items/edit-user-inactive.svg" alt="Edit profile icon">Edit profile
+        </div>
+      </div>
     </mat-card>
   </div>
   <div class="settings__group settings__card">
