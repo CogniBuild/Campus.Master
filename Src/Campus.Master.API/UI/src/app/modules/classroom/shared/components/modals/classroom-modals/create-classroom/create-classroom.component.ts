@@ -1,13 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CalendarEventForm, DialogDataControls, DialogRefComponentInstance } from '../../../../../../calendar/shared/models/calendar';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DialogDataControls } from '../../../../../../calendar/shared/models/calendar';
 import { Subscription } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-import { CalendarService } from '../../../../../../calendar/shared/services/calendar.service';
-import { LocaleService } from '@core/services';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Moment } from 'moment';
 import { map } from 'rxjs/operators';
+import { LocaleService } from '../../../../../../../core/services/locale.service';
 
 @Component({
   selector: 'app-create-classroom',
@@ -24,8 +21,6 @@ export class CreateClassroomComponent implements OnInit, OnDestroy {
   public addEventSub: Subscription;
 
   constructor(private fb: FormBuilder,
-              private toastr: ToastrService,
-              private calendarService: CalendarService,
               private localeService: LocaleService,
               public dialogRef: MatDialogRef<CreateClassroomComponent>,
               @Inject(MAT_DIALOG_DATA) public data: object) {
