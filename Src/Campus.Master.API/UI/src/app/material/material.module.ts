@@ -12,6 +12,9 @@ import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 const MaterialComponents = [
@@ -28,7 +31,10 @@ const MaterialComponents = [
   MatNativeDateModule,
   MatCheckboxModule,
   MatSidenavModule,
-  MatCardModule
+  MatCardModule,
+  MatTableModule,
+  MatSortModule,
+  MatPaginatorModule
 ];
 
 @NgModule({

@@ -1,0 +1,35 @@
+<div class="classrooms_wrap">
+  <div class="header">
+    <h1 class="header__title">Classrooms</h1>
+    <div class="header__leftBar">
+      <app-header-user-info (searchValue)="onSearchValue($event)"></app-header-user-info>
+    </div>
+  </div>
+
+  <div class="main_wrap">
+    <mat-card>
+      <div class="view_wrap">
+        <div class="main">
+          <div class="main-header">
+            <h2 class="main-header__name">Software Engineering [PD-42]</h2>
+            <h2 class="main-header__user">{{userName}}</h2>
+          </div>
+          <div class="classrooms">
+            <ng-container *ngIf="classrooms.length !== 0; else classroomDeleted">
+              <ng-container *ngFor="let classroom of classrooms |  search: searchValue">
+                <app-classroom-item [classroomItem]="classroom"
+                                    (deleteClassroom)="onDeleteClassroom($event)"></app-classroom-item>
+              </ng-container>
+            </ng-container>
+            <ng-template #classroomDeleted>
+              <h2>Classrooms are missing.</h2>
+            </ng-template>
+          </div>
+        </div>
+        <div class="addClassroom">
+          <button (click)="openDialog()"><span>+</span> Add new Classroom</button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

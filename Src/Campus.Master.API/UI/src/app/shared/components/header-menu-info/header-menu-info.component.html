@@ -1,0 +1,26 @@
+<div class="user-menu">
+
+  <div class="search-block">
+    <form action="" class="search">
+      <input type="search"
+             class="search__input"
+             (input)="search(query.value)"
+             (mouseleave)="onMouseLeave($event)"
+             #query>
+      <mat-icon class="search__icon">search</mat-icon>
+    </form>
+  </div>
+
+  <div class="user">
+    <div class="user__add">
+      <img src="assets/img/user-menu/add_item.png" alt="add item">
+    </div>
+    <div class="user__notifications">
+      <mat-icon>notifications</mat-icon>
+    </div>
+    <div class="user__img">
+      <img src="assets/img/user-menu/user_img.png" alt="user image">
+    </div>
+  </div>
+
+</div>

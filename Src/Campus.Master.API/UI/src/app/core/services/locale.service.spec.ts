@@ -19,13 +19,13 @@ describe('LocaleService', () => {
 
   it('should return browser locale', () => {
     // arrange
-    translateMock.getBrowserLang.mockReturnValue(Locales.UK);
+    translateMock.getBrowserLang.mockReturnValue(Locales.UA);
 
     // act
     const actualLocale = service.getBrowserLocale();
 
     // assert
-    expect(actualLocale).toEqual(Locales.UK);
+    expect(actualLocale).toEqual(Locales.UA);
   });
 
   it('should return all available locales', () => {
@@ -41,13 +41,13 @@ describe('LocaleService', () => {
 
   it('should use detected locale when detected locale is available', () => {
     // arrange
-    translateMock.getBrowserLang.mockReturnValue(Locales.UK);
+    translateMock.getBrowserLang.mockReturnValue(Locales.UA);
 
     // act
     service.useDetectedLocale();
 
     // assert
-    expect(translateMock.use).toHaveBeenCalledWith(Locales.UK);
+    expect(translateMock.use).toHaveBeenCalledWith(Locales.UA);
   })
 
   it('should use default locale when detected locale is not available', () => {
@@ -63,7 +63,7 @@ describe('LocaleService', () => {
 
   it('should use custom locale when "useLocale" method is called', () => {
     // arrange
-    const customLocale = Locales.UK
+    const customLocale = Locales.UA
 
     // act
     service.useLocale(customLocale);

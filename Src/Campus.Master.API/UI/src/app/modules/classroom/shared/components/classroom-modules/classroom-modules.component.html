@@ -1,0 +1,38 @@
+<div class="modules">
+  <h2>{{modules.title}}</h2>
+  <div class="modules__block">
+    <div class="modules_wrap">
+      <ng-container *ngFor="let lecture of modules.lectures">
+        <div class="modules-lectures modules_item">
+          <span class="modules_item__title">{{lecture.title}}</span>
+          <h3 class="modules_item__subtitle">{{lecture.subTitle}}</h3>
+          <span class="modules_item__date">Created: {{lecture.date | date: 'dd/MM/yyyy'}}</span>
+          <span class="modules_item__status">Status: {{lecture.status}}</span>
+        </div>
+      </ng-container>
+      <div class="modules_item modules_item_addBtn"><span>+</span>Add new task</div>
+    </div>
+    <div class="modules_wrap">
+      <ng-container *ngFor="let lab of modules.labs">
+        <div class="modules-labs modules_item">
+          <span class="modules_item__title">{{lab.title}}</span>
+          <h3 class="modules_item__subtitle">{{lab.subTitle}}</h3>
+          <span class="modules_item__date">Created: {{lab.date | date: 'dd/MM/yyyy'}}</span>
+          <span class="modules_item__status">Status: {{lab.status}}</span>
+        </div>
+      </ng-container>
+      <div class="modules_item modules_item_addBtn"><span>+</span>Add new task</div>
+    </div>
+    <div class="modules_wrap">
+      <ng-container *ngFor="let pract of modules.practs">
+        <div class="modules-practs modules_item">
+          <span class="modules_item__title">{{pract.title}}</span>
+          <h3 class="modules_item__subtitle">{{pract.subTitle}}</h3>
+          <span class="modules_item__date">Created: {{pract.date | date: 'dd/MM/yyyy'}}</span>
+          <span class="modules_item__status">Status: {{pract.status}}</span>
+        </div>
+      </ng-container>
+      <div class="modules_item modules_item_addBtn"><span>+</span>Add new task</div>
+    </div>
+  </div>
+</div>

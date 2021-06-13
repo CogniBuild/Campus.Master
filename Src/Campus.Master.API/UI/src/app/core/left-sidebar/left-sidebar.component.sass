@@ -42,7 +42,7 @@
     outline: none !important
 
 
-  &__item:hover
+  &__item:hover, .router-link-active
     color: #7E57C2
     background: rgba(196, 196, 196, 0.3)
     border-radius: 49px
@@ -60,16 +60,25 @@
   &_dashboard:hover:before
     content: url("/assets/img/user/dashboard_active.svg")
 
+  &_dashboard.router-link-active:before
+    content: url("/assets/img/user/dashboard_active.svg")
+
   &_calendar:before
     content: url("/assets/img/user/calendar_inactive.svg")
 
   &_calendar:hover:before
     content: url("/assets/img/user/calendar_active.svg")
 
+  &_calendar.router-link-active:before
+    content: url("/assets/img/user/calendar_active.svg")
+
   &_notebooks:before
     content: url("/assets/img/user/notebooks_inactive.svg")
 
   &_notebooks:hover:before
+    content: url("/assets/img/user/notebooks_active.svg")
+
+  &_notebooks.router-link-active:before
     content: url("/assets/img/user/notebooks_active.svg")
 
   &_settings
