@@ -1,0 +1,98 @@
+<div class="classroom-participants">
+  <div class="classroom-participants__header">
+    <h2>Room Participants</h2>
+    <div class="classroom-participants__addBtn">
+      <button>+ Add participant</button>
+    </div>
+  </div>
+  <div class="classroom-participants__teachers">
+    <h2>Teachers ({{teachers.length}})</h2>
+    <table
+      mat-table
+      [dataSource]="dataSourceTeacher"
+      matSort
+      #TableFirstSort="matSort"
+      class="table-teachers table-style">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="table-style__name">
+            <div class="table-style__name_img"><img src="{{element.picture}}" alt="user picture"></div>
+            {{element.name}}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Position</th>
+        <td mat-cell *matCellDef="let element"> Teacher</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastTimeOnline">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last time online</th>
+        <td mat-cell *matCellDef="let element"> {{element.lastTimeOnline | date: 'MMMM dd, yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon class="delete_icon">delete_outline</mat-icon>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <div class="classroom-participants__students">
+    <h2>Students ({{students.length}})</h2>
+    <table
+      mat-table
+      [dataSource]="dataSourceStudents"
+      matSort
+      class="table-students table-style"
+      #TableTwoSort="matSort">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="table-style__name">
+            <div class="table-style__name_img"><img src="{{element.picture}}" alt="user picture"></div>
+            {{element.name}}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Position</th>
+        <td mat-cell *matCellDef="let element"> Student</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastPublish">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Publish</th>
+        <td mat-cell *matCellDef="let element"> {{element.lastPublish | date: 'MMMM dd, yyyy'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="avgGrade">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Avg Grade</th>
+        <td mat-cell *matCellDef="let element"><span
+          class="avgGrade"
+          [ngStyle]="{'background-color': onAvgGradeColor(element.avgGrade)}">{{element.avgGrade}}</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon class="delete_icon">delete_outline</mat-icon>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsStudents"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsStudents;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div class="main-wrap">
+  <div class="classroom-view">
+    <div class="classroom-view__links">
+      <h2 [routerLink]="['participants']"
+          routerLinkActive="router-link-active">participants</h2>
+      <h2 [routerLink]="['modules']"
+          routerLinkActive="router-link-active">modules</h2>
+      <h2 [routerLink]="['grades']"
+          routerLinkActive="router-link-active">grades</h2>
+    </div>
+    <div class="classroom-view__title"><h2>{{classroom.title}}</h2></div>
+    <div class="classroom-view__close">
+      <mat-icon [routerLink]="['/campus/classroom']">clear</mat-icon>
+    </div>
+  </div>
+
+  <mat-card>
+    <router-outlet></router-outlet>
+  </mat-card>
+</div>

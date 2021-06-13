@@ -1,0 +1,27 @@
+<form class="dialog">
+  <div class="dialog__header">
+    <div class="dialog__header_wrapper">
+      <div class="dialog__ico"></div>
+      <div>
+        <h1 class="dialog__title">Видалити подію</h1>
+        <p class="dialog__subtitle">Обрати дію</p>
+      </div>
+    </div>
+    <div>
+      <mat-icon class="dialog__close_ico" (click)="onNoClick()">close</mat-icon>
+    </div>
+  </div>
+  <div mat-card-content>
+    <p>Ви дійсно хочете видалити дану подію?</p>
+  </div>
+  <div class="actionBtn">
+    <button class="dialog__btn dialog__btn_cancel"
+            (click)="onNoClick()">Скасувати
+    </button>
+    <button class="dialog__btn dialog__btn_create" (click)="deleteEvent()">
+      <span [ngClass]="{'none-block': spinner}">Видалити</span>
+      <div [ngClass]="{'box loader-02': spinner}"></div>
+    </button>
+  </div>
+
+</form>

@@ -1,0 +1,73 @@
+<form class="dialog dialog_create" [formGroup]="dialogForm" (ngSubmit)="createEvent()">
+  <div class="dialog__header">
+    <div class="dialog__header_wrapper">
+      <div class="dialog__ico"></div>
+      <div>
+        <h1 class="dialog__title">Create a Classroom</h1>
+        <p class="dialog__subtitle">Please fill in the fields below</p>
+      </div>
+    </div>
+    <div>
+      <mat-icon class="dialog__close_ico" (click)="onNoClick()">close</mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content>
+
+    <div class="dialog__control dialog__control_wrap">
+      <label for="institution" class="dialog__label">Institution</label>
+      <input id="institution" placeholder="Name of educational center" class="dialog__input"
+             formControlName="institution">
+    </div>
+
+
+    <div class="dialog__control dialog__control_wrap">
+      <label for="name" class="dialog__label">Name</label>
+      <input id="name" placeholder="Name of classroom" class="dialog__input" formControlName="name">
+    </div>
+
+    <div class="location dialog__control dialog__control_wrap"
+         [ngClass]="{ invalid: dialogForm.get('location').touched}">
+      <div class="location__header">
+        <label for="room"
+               class="dialog__label">{{ 'CALENDAR.CREATE-EVENT.DIALOG.CONTROL.LOCATION.NAME' | translate }}</label>
+        <mat-checkbox
+          (click)="onRemote()">{{ 'CALENDAR.CREATE-EVENT.DIALOG.CONTROL.LOCATION.IS-REMOTE' | translate }}</mat-checkbox>
+      </div>
+
+      <input id="room"
+             placeholder="{{ 'CALENDAR.CREATE-EVENT.DIALOG.CONTROL.LOCATION-PLACEHOLDER' | translate }}"
+             class="dialog__input"
+             formControlName="location"
+             [value]="isRemote$() | async"
+             [attr.disabled]="onCheckedRemote ? onCheckedRemote : null">
+      <div *ngIf="dialogForm.get('location').touched && dialogForm.get('location').invalid"
+           class="validation validation_location">
+        <small>
+          {{ 'CALENDAR.CREATE-EVENT.DIALOG.ERROR-MESSAGE.REQUIRED-LOCATION' | translate }}
+        </small>
+      </div>
+    </div>
+
+    <div class="dialog__control dialog__control_wrap">
+      <label for="description"
+             class="dialog__label">{{ 'CALENDAR.CREATE-EVENT.DIALOG.CONTROL.DESCRIPTION' | translate }}</label>
+      <textarea id="description"
+                placeholder="{{ 'CALENDAR.CREATE-EVENT.DIALOG.CONTROL.DESCRIPTION-PLACEHOLDER' | translate }}"
+                class="dialog__input  dialog__textarea" formControlName="desc"></textarea>
+    </div>
+
+    <div class="actionBtn">
+      <button class="dialog__btn dialog__btn_cancel"
+              (click)="onNoClick()">{{ 'CALENDAR.CREATE-EVENT.DIALOG.BUTTON-PANEL.CANCEL' | translate }}
+      </button>
+      <button class="dialog__btn dialog__btn_create"
+              type="submit"
+              [ngClass]="{disabledBtn: dialogForm.invalid}"
+              [disabled]="dialogForm.invalid">
+      <span
+        [ngClass]="{'none-block': spinner}">{{ 'CALENDAR.CREATE-EVENT.DIALOG.BUTTON-PANEL.CREATE' | translate }}</span>
+        <div [ngClass]="{'box loader-02': spinner}"></div>
+      </button>
+    </div>
+  </div>
+</form>

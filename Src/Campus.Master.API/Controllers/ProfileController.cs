@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using System.Security.Claims;
-using System.Threading;
 using Campus.Master.API.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;

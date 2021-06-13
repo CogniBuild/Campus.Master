@@ -1,25 +1,8 @@
 <div class="user-page-layout">
   <app-left-sidebar></app-left-sidebar>
   <div class="sidebar-mobile">
-    <mat-drawer-container class="example-container" hasBackdrop="true">
-      <mat-drawer #drawer mode="over" class="mat-drawer">
-        <div class="sidebar-mobile__logo">
-          <img src="assets/img/user/logo.png" alt="logo">
-        </div>
-        <div class="sidebar__btn">
-          <div class="sidebar__item sidebar_dashboard outline">Dashboard</div>
-          <div class="sidebar__item sidebar_calendar outline" routerLink="calendar">Calendar</div>
-          <div class="sidebar__item sidebar_notebooks">My notebooks</div>
-          <div class="sidebar__item sidebar_settings">Settings</div>
-        </div>
-      </mat-drawer>
-
-      <mat-drawer-content>
-        <button mat-raised-button (click)="drawer.toggle()" class="mobile-menu"><img src="assets/img/user/menu.png"
-                                                                                     alt="menu"></button>
-        <router-outlet></router-outlet>
-      </mat-drawer-content>
-
-    </mat-drawer-container>
+    <div class="sidebar-mobile_wrap">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

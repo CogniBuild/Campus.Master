@@ -34,7 +34,7 @@
 
 .mat-raised-button
   background-color: #7E57C2
-  color: #a97cda
+  color: #FFFFFF
   border-radius: 5px
 
 .fc .fc-button-primary:focus, .fc .fc-button-primary:not(:disabled).fc-button-active:focus, .fc .fc-button-primary:not(:disabled):active:focus
@@ -78,3 +78,30 @@
 .fc-prev-button, .fc-next-button
   +ms
     width: 50% !important
+
+
+.fc-daygrid-event.fc-daygrid-block-event.fc-h-event.fc-event.fc-event-draggable.fc-event-start.fc-event-end.fc-event-past, .fc-daygrid-event.fc-daygrid-block-event.fc-h-event.fc-event.fc-event-draggable.fc-event-start.fc-event-end
+  background-color: #7e57c2
+  border-color: #7e57c2
+
+.fc-daygrid-event.fc-daygrid-block-event.fc-h-event.fc-event.fc-event-draggable.fc-event-start, .fc-daygrid-event.fc-daygrid-block-event.fc-h-event.fc-event.fc-event-draggable
+  background-color: #7e57c2
+  border-color: #7e57c2
+
+.fc-daygrid-event-dot
+  border: 4px solid #7e57c2 !important
+  border: calc(var(--fc-daygrid-event-dot-width, 8px) / 2) solid var(--fc-event-border-color, #7e57c2) !important
+
+.fc .fc-daygrid-day.fc-day-today
+  background-color: #ba9dea !important
+
+.fc-timegrid-event.fc-v-event.fc-event.fc-event-draggable.fc-event-start.fc-event-today, .fc-timegrid-event.fc-v-event.fc-event.fc-event-draggable.fc-event-today
+  background-color: #7e57c2
+  border-color: #7e57c2
+
+.fc-timegrid-event.fc-v-event.fc-event.fc-event-draggable.fc-event-resizable.fc-event-start.fc-event-end.fc-event-past
+  background-color: #7e57c2
+  border-color: #7e57c2
+
+.fc-timegrid-slot.fc-timegrid-slot-lane
+  background-color: #ba9dea !important

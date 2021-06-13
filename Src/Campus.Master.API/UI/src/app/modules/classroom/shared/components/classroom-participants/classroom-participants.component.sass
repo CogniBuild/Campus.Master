@@ -1,0 +1,67 @@
+@import "styles"
+
+table
+  width: 100%
+
+.classroom-participants__teachers .table-style, .classroom-participants__students .table-style
+  box-shadow: none
+
+.table-style .mat-cell
+  padding-top: 10px
+  padding-bottom: 10px
+
+.avgGrade
+  color: #FFFFFF
+  font-weight: 700
+  padding: 4px 19px
+  border-radius: 12px
+
+.classroom-participants
+  padding: 12px 6px
+
+  &__header
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 42px
+
+  &__header h2
+    margin: 0
+
+  &__addBtn button
+    outline: none
+    border: none
+    background-color: #7E57C2
+    color: #FFFFFF
+    padding: 7px 10px
+    border-radius: 5px
+    font-size: 14px
+    font-weight: 500
+    cursor: pointer
+
+  &__teachers
+    margin-bottom: 50px
+
+  &__teachers h2, &__students h2
+    margin: 0
+    font-size: 18px
+    font-weight: 600
+
+  .delete_icon
+    cursor: pointer
+    color: #C5C7CD
+
+
+.table-style
+  &__name
+    display: flex
+    align-items: center
+
+    &_img
+      margin-right: 15px
+
+    &_img img
+      border-radius: 50%
+      width: 44px
+      height: 44px
+

@@ -1,0 +1,26 @@
+<form class="dialog">
+  <div class="dialog__header">
+    <div class="dialog__header_wrapper">
+      <div class="dialog__ico"></div>
+      <div>
+        <h1 class="dialog__title">Create a Classroom</h1>
+        <p class="dialog__subtitle">Choose what you need to do</p>
+      </div>
+    </div>
+    <div>
+      <mat-icon class="dialog__close_ico" (click)="onNoClick()">close</mat-icon>
+    </div>
+  </div>
+  <div mat-dialog-content>
+    <div class="actionBtn">
+      <button class="dialog__btn dialog__btn_cancel"
+              (click)="connectToClassroomDialog()">Connect to classroom
+      </button>
+      <button class="dialog__btn dialog__btn_create"
+              type="submit"
+      (click)="createClassroomDialog()">
+        Create new
+      </button>
+    </div>
+  </div>
+</form>

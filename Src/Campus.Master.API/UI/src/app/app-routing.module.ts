@@ -5,14 +5,29 @@ import { CanActivateDashboardGuard } from '@core/guards/can-activate-dashboard.g
 
 
 const routes: Routes = [
-  { path: '', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule) },
   {
-    path: 'campus', component: UserPageLayoutComponent, canActivate: [CanActivateDashboardGuard]
-    , children: [
-      {
-        path: 'calendar', loadChildren: () => import('./modules/calendar/calendar.module').then(m => m.CalendarModule)
-      }]
+    path: '', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
+  {
+    path: 'campus', component: UserPageLayoutComponent, canActivate: [CanActivateDashboardGuard],
+    children: [
+      {
+        path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
+        path: 'calendar', loadChildren: () => import('./modules/calendar/calendar.module').then(m => m.CalendarModule),
+      },
+      {
+        path: 'classroom', loadChildren: () => import('./modules/classroom/classroom.module').then(m => m.ClassroomModule)
+      },
+      {
+        path: 'profile-settings',
+        loadChildren: () => import('./modules/profile-settings/profile-settings.module').then(m => m.ProfileSettingsModule)
+      },
+      {
+        path: '**', redirectTo: 'dashboard', pathMatch: 'full'
+      }]
+  }
 ];
 
 @NgModule({
