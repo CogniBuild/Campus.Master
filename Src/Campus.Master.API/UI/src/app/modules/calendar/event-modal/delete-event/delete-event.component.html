@@ -3,8 +3,8 @@
     <div class="dialog__header_wrapper">
       <div class="dialog__ico"></div>
       <div>
-        <h1 class="dialog__title">Видалити подію</h1>
-        <p class="dialog__subtitle">Обрати дію</p>
+        <h1 class="dialog__title">{{ 'CALENDAR.DELETE-EVENT.DIALOG.DELETE-EVENT-TITLE' | translate}}</h1>
+        <p class="dialog__subtitle">{{ 'CALENDAR.DELETE-EVENT.DIALOG.CHOOSE-ACTION' | translate}}</p>
       </div>
     </div>
     <div>
@@ -12,14 +12,14 @@
     </div>
   </div>
   <div mat-card-content>
-    <p>Ви дійсно хочете видалити дану подію?</p>
+    <p>{{ 'CALENDAR.DELETE-EVENT.DIALOG.CONFIRM-DELETE' | translate}}</p>
   </div>
   <div class="actionBtn">
     <button class="dialog__btn dialog__btn_cancel"
-            (click)="onNoClick()">Скасувати
+            (click)="onNoClick()">{{ 'CALENDAR.DELETE-EVENT.DIALOG.BUTTON-PANEL.CANCEL' | translate}}
     </button>
     <button class="dialog__btn dialog__btn_create" (click)="deleteEvent()">
-      <span [ngClass]="{'none-block': spinner}">Видалити</span>
+      <span [ngClass]="{'none-block': spinner}">{{ 'CALENDAR.DELETE-EVENT.DIALOG.BUTTON-PANEL.DELETE' | translate}}</span>
       <div [ngClass]="{'box loader-02': spinner}"></div>
     </button>
   </div>

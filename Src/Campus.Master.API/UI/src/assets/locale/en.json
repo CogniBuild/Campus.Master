@@ -1,4 +1,10 @@
 {
+    "APP": {
+        "ACTION": {
+            "SAVE-TITLE": "Save",
+            "CANCEL-TITLE": "Cancel"
+        }
+    },
     "AUTH": {
         "REGISTRATION": {
             "TEXT-IMG": "Your time has come",
@@ -28,8 +34,8 @@
                     "LATINONLY": "Only Latin characters"
                 },
                 "NICKNAME": {
-                "REQUIRED": "Nickname is required",
-                "MAXLENGTH": "Nickname > 250 symbols"
+                    "REQUIRED": "Nickname is required",
+                    "MAXLENGTH": "Nickname > 250 symbols"
                 },
                 "EMAIL": {
                     "REQUIRED": "Email is required",
@@ -115,6 +121,61 @@
                     "ERROR": "A server error has occurred."
                 }
             }
+        },
+        "EDIT-EVENT": {
+            "DIALOG": {
+                "TITLE": "Edit event",
+                "SUBTITLE": "Edit any info about event",
+                "CONTROL": {
+                    "SUMMARY": "Summary",
+                    "SUMMARY-PLACEHOLDER": "Some summary info",
+                    "DESCRIPTION": "Description",
+                    "DESCRIPTION-PLACEHOLDER": "Event description",
+                    "DATE": "Date",
+                    "RANGE": {
+                        "NAME": "Range",
+                        "BEGIN": "Begin",
+                        "END": "End"
+                    },
+                    "LOCATION": {
+                        "NAME": "Location",
+                        "IS-REMOTE": "Remote"
+                    },
+                    "LOCATION-PLACEHOLDER": "Location"
+                },
+                "BUTTON-PANEL": {
+                    "CANCEL": "Cancel"
+                },
+                "ERROR-MESSAGE": {
+                    "REQUIRED-SUMMARY": "Event name is required.",
+                    "REQUIRED-DATE": "Event date is required.",
+                    "REQUIRED-LOCATION": "Location is required."
+                },
+                "SERVER-RESPONSES": {
+                    "EVENT-CHANGED": "Event changed!",
+                    "ERROR": "A server error has occurred."
+                }
+            }
+        },
+        "DELETE-EVENT": {
+            "DIALOG": {
+                "DELETE-EVENT-TITLE": "Delete event",
+                "CHOOSE-ACTION": "Choose an action",
+                "CONFIRM-DELETE": "Are you sure you want to delete this event?",
+                "SERVER-RESPONSES": {
+                    "SUCCESS-CREATE": "Event is successfully created.",
+                    "SUCCESS-DELETE": "Event is successfully deleted.",
+                    "ERROR": "A server error has occurred."
+                },
+                "BUTTON-PANEL": {
+                    "DELETE": "Delete",
+                    "CANCEL": "Cancel"
+                }
+            }
+        },
+        "PAGE": {
+            "TITLE": "Calendar",
+            "NEW-EVENT-TITLE": "+ New event"
         }
     }
 }

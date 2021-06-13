@@ -3,8 +3,8 @@
     <div class="dialog__header_wrapper">
       <div class="dialog__ico"></div>
       <div>
-        <h1 class="dialog__title">Редагувати подію</h1>
-        <p class="dialog__subtitle">Редагувати будь-яку інформацію про подію.</p>
+        <h1 class="dialog__title">{{ 'CALENDAR.EDIT-EVENT.DIALOG.TITLE' | translate }}</h1>
+        <p class="dialog__subtitle">{{ 'CALENDAR.EDIT-EVENT.DIALOG.SUBTITLE' | translate }}</p>
       </div>
     </div>
     <div>
@@ -13,29 +13,30 @@
   </div>
   <div mat-dialog-content>
 
-    <div class="dialog__control dialog__control_wrap"
-         [ngClass]="{ invalid: dialogForm.get('summary').touched}">
-      <label for="summary" class="dialog__label">Назва*</label>
-      <input id="summary" placeholder="Some summary info" class="dialog__input" formControlName="summary">
-      <div *ngIf="dialogForm.get('summary').touched && dialogForm.get('summary').invalid"
-           class="validation">
+    <div class="dialog__control dialog__control_wrap" [ngClass]="{ invalid: dialogForm.get('summary').touched}">
+      <label for="summary" class="dialog__label">{{ 'CALENDAR.EDIT-EVENT.DIALOG.CONTROL.SUMMARY' | translate }}*</label>
+      <input id="summary" placeholder="{{ 'CALENDAR.EDIT-EVENT.DIALOG.CONTROL.SUMMARY-PLACEHOLDER' | translate }}"
+        class=" dialog__input" formControlName="summary">
+      <div *ngIf="dialogForm.get('summary').touched && dialogForm.get('summary').invalid" class="validation">
         <small>
-          Назва події обов'язкова.
+          {{ 'CALENDAR.EDIT-EVENT.DIALOG.ERROR-MESSAGE.REQUIRED-SUMMARY' | translate }}
         </small>
       </div>
     </div>
 
     <div class="dialog__control dialog__control_wrap">
-      <label for="description" class="dialog__label">Опис</label>
-      <input id="description" placeholder="Description" class="dialog__input" formControlName="desc">
+      <label for="description" class="dialog__label">{{ 'CALENDAR.EDIT-EVENT.DIALOG.CONTROL.DESCRIPTION' | translate
+        }}</label>
+      <input id="description" placeholder="{{ 'CALENDAR.EDIT-EVENT.DIALOG.CONTROL.SUMMARY-PLACEHOLDER' | translate }}"
+        class="dialog__input" formControlName="desc">
     </div>
 
     <div class="dateRange dialog__control dialog__control_mainDate dialog__control_wrap"
-         [ngClass]="{invalid: dialogForm.get('date').touched && dialogForm.get('date').invalid}">
-      <div class="dateRange__header"
-           [ngClass]="{dateRange__header_calendars: onCheckedRange}">
-        <label for="date" class="dialog__label">Дата*</label>
-        <mat-checkbox (click)="onRange()">Проміжок</mat-checkbox>
+      [ngClass]="{invalid: dialogForm.get('date').touched && dialogForm.get('date').invalid}">
+      <div class="dateRange__header" [ngClass]="{dateRange__header_calendars: onCheckedRange}">
+        <label for="date" class="dialog__label">{{ 'CALENDAR.EDIT-EVENT.DIALOG.CONTROL.DATE' | translate }}*</label>
+        <mat-checkbox (click)="onRange()">{{ 'CALENDAR.EDIT-EVENT.DIALOG.CONTROL.RANGE.NAME' | translate }}
+        </mat-checkbox>
       </div>
       <div *ngIf="!onCheckedRange; else range" appDateFormat1>
         <input id="date" class="dialog__input" [matDatepicker]="picker" formControlName="date">
@@ -46,21 +47,19 @@
       <ng-template #range>
         <div class="rangeCalendar">
           <div class="rangeCalendar__input_from" appDateFormat2>
-            <label for="calendarOne" class="dialog__label">Початок</label>
+            <label for="calendarOne" class="dialog__label">{{ 'CALENDAR.EDIT-EVENT.DIALOG.CONTROL.RANGE.BEGIN' |
+              translate }}</label>
             <div class="rangeCalendar__input">
-              <input id="calendarOne" class="dialog__input"
-                     formControlName="date"
-                     [matDatepicker]="pickerFrom">
+              <input id="calendarOne" class="dialog__input" formControlName="date" [matDatepicker]="pickerFrom">
               <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
               <mat-datepicker #pickerFrom></mat-datepicker>
             </div>
           </div>
           <div class="rangeCalendar__input_to">
-            <label for="calendarTwo" class="dialog__label">Кінець</label>
+            <label for="calendarTwo" class="dialog__label">{{ 'CALENDAR.EDIT-EVENT.DIALOG.CONTROL.RANGE.END' | translate
+              }}</label>
             <div class="rangeCalendar__input" appDateFormat2>
-              <input id="calendarTwo" class="dialog__input"
-                     formControlName="dateTo"
-                     [matDatepicker]="pickerTo">
+              <input id="calendarTwo" class="dialog__input" formControlName="dateTo" [matDatepicker]="pickerTo">
               <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
               <mat-datepicker #pickerTo></mat-datepicker>
             </div>
@@ -68,10 +67,9 @@
         </div>
       </ng-template>
 
-      <div *ngIf="dialogForm.get('date').touched && dialogForm.get('date').invalid"
-           class="validation validation_date">
+      <div *ngIf="dialogForm.get('date').touched && dialogForm.get('date').invalid" class="validation validation_date">
         <small>
-          Дата події обов'язкова.
+          {{ 'CALENDAR.EDIT-EVENT.DIALOG.ERROR-MESSAGE.REQUIRED-DATE' | translate }}
         </small>
       </div>
 
@@ -79,43 +77,36 @@
 
     <div class="date dialog__control_wrap">
       <div class="date__control_from dialog__control">
-        <input id="timeStart" class="dialog__input date__input" type="time"
-               formControlName="timeFrom">
+        <input id="timeStart" class="dialog__input date__input" type="time" formControlName="timeFrom">
       </div>
 
       <div class="date__control_to dialog__control">
-        <input id="timeEnd" class="dialog__input date__input" type="time"
-               formControlName="timeTo">
+        <input id="timeEnd" class="dialog__input date__input" type="time" formControlName="timeTo">
       </div>
     </div>
 
     <div class="location dialog__control dialog__control_wrap">
       <div class="location__header">
-        <label for="room" class="dialog__label">Локація</label>
-        <mat-checkbox (click)="onRemote()">Віддалено</mat-checkbox>
+        <label for="room" class="dialog__label">{{ 'CALENDAR.EDIT-EVENT.DIALOG.CONTROL.LOCATION.NAME' | translate
+          }}</label>
+        <mat-checkbox (click)="onRemote()">{{ 'CALENDAR.EDIT-EVENT.DIALOG.CONTROL.LOCATION.IS-REMOTE' | translate }}
+        </mat-checkbox>
       </div>
 
-      <input id="room"
-             placeholder="Location"
-             class="dialog__input"
-             formControlName="location"
-             [attr.disabled]="onCheckedRemote ? onCheckedRemote : null">
+      <input id="room" placeholder="Location" class="dialog__input" formControlName="location"
+        [attr.disabled]="onCheckedRemote ? onCheckedRemote : null">
     </div>
 
   </div>
 
   <div class="actionBtn">
-    <mat-icon class="dialog__btn_delete"
-              (click)="openDeleteDialog()">delete
+    <mat-icon class="dialog__btn_delete" (click)="openDeleteDialog()">delete
     </mat-icon>
-    <button class="dialog__btn dialog__btn_cancel"
-            (click)="onNoClick()">Cancel
+    <button class="dialog__btn dialog__btn_cancel" (click)="onNoClick()">{{ 'APP.ACTION.CANCEL-TITLE' | translate }}
     </button>
-    <button class="dialog__btn dialog__btn_create"
-            type="submit"
-            [ngClass]="{disabledBtn: dialogForm.invalid}"
-            [disabled]="dialogForm.invalid">
-      <span [ngClass]="{'none-block': spinner}">Save</span>
+    <button class="dialog__btn dialog__btn_create" type="submit" [ngClass]="{disabledBtn: dialogForm.invalid}"
+      [disabled]="dialogForm.invalid">
+      <span [ngClass]="{'none-block': spinner}">{{ 'APP.ACTION.SAVE-TITLE' | translate }}</span>
       <div [ngClass]="{'box loader-02': spinner}"></div>
     </button>
   </div>
