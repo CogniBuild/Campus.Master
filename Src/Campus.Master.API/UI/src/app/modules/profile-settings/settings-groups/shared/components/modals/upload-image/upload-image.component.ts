@@ -13,7 +13,7 @@ export class UploadImageComponent implements OnInit {
   public readThis;
 
   constructor(public dialogRef: MatDialogRef<UploadImageComponent>,
-    private fakeDetectorService: FakeDetectorService) {
+              private fakeDetectorService: FakeDetectorService) {
   }
 
   ngOnInit(): void {
