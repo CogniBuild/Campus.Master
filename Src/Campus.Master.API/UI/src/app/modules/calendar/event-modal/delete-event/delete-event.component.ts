@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { CalendarService } from '../../shared/services/calendar.service';
 import { Subscription } from 'rxjs';
+import { LocaleService } from '../../../../core/services/locale.service';
 
 @Component({
   selector: 'app-delete-event',
@@ -16,6 +17,7 @@ export class DeleteEventComponent implements OnInit, OnDestroy {
 
   constructor(private toastr: ToastrService,
               private calendarService: CalendarService,
+              private localeService: LocaleService,
               public dialogRef: MatDialogRef<DeleteEventComponent>,
               @Inject(MAT_DIALOG_DATA) public data: object) {
   }
@@ -43,10 +45,12 @@ export class DeleteEventComponent implements OnInit, OnDestroy {
           id: this.idEvent,
           deleteEvent: true
         });
-        this.toastr.success('Event deleted!');
+        this.localeService.get('CALENDAR.DELETE-EVENT.DIALOG.SERVER-RESPONSES.SUCCESS-DELETE').toPromise()
+          .then(x => this.toastr.success(x));
         this.spinner = false;
       }, error => {
-        this.toastr.error('Error!', error.title);
+        this.localeService.get('CALENDAR.DELETE-EVENT.DIALOG.SERVER-RESPONSES.ERROR').toPromise()
+          .then(x => this.toastr.error(x, error.title));
         this.spinner = false;
       });
   }

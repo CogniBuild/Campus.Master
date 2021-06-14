@@ -1,4 +1,10 @@
 {
+    "APP": {
+        "ACTION": {
+            "SAVE-TITLE": "Зберегти",
+            "CANCEL-TITLE": "Відмінити"
+        }
+    },
     "AUTH": {
         "REGISTRATION": {
             "TEXT-IMG": "Ваш час настав",
@@ -28,8 +34,8 @@
                     "LATINONLY": "Дозволена лише латиниця"
                 },
                 "NICKNAME": {
-                  "REQUIRED": "Поле нікнейму не може бути порожнім",
-                  "MAXLENGTH": "Макс. довжина - 250 символів"
+                    "REQUIRED": "Поле нікнейму не може бути порожнім",
+                    "MAXLENGTH": "Макс. довжина - 250 символів"
                 },
                 "EMAIL": {
                     "REQUIRED": "Поле адреси не може бути порожнім",
@@ -115,6 +121,61 @@
                     "ERROR": "Помилка на сервері."
                 }
             }
+        },
+        "EDIT-EVENT": {
+            "DIALOG": {
+                "TITLE": "Редагувати подію",
+                "SUBTITLE": "Редагувати інформацію про подію",
+                "CONTROL": {
+                    "SUMMARY": "Назва",
+                    "SUMMARY-PLACEHOLDER": "Назва події",
+                    "DESCRIPTION": "Опис",
+                    "DESCRIPTION-PLACEHOLDER": "Опис події",
+                    "DATE": "Дата",
+                    "RANGE": {
+                        "NAME": "Проміжок",
+                        "BEGIN": "Початок",
+                        "END": "Кінець"
+                    },
+                    "LOCATION": {
+                        "NAME": "Локація",
+                        "IS-REMOTE": "Віддалено"
+                    },
+                    "LOCATION-PLACEHOLDER": "Локація"
+                },
+                "BUTTON-PANEL": {
+                    "CANCEL": "Відмінити"
+                },
+                "ERROR-MESSAGE": {
+                    "REQUIRED-SUMMARY": "Назва події обов'язкова.",
+                    "REQUIRED-DATE": "Дата події обов'язкова.",
+                    "REQUIRED-LOCATION": "Поле локація є обов'язковим."
+                },
+                "SERVER-RESPONSES": {
+                    "EVENT-CHANGED": "Подію змінено!",
+                    "ERROR": "Помилка на сервері."
+                }
+            }
+        },
+        "DELETE-EVENT": {
+            "DIALOG": {
+                "DELETE-EVENT-TITLE": "Видалити подію",
+                "CHOOSE-ACTION": "Обрати дію",
+                "CONFIRM-DELETE": "Ви дійсно хочете видалити дану подію?",
+                "SERVER-RESPONSES": {
+                    "SUCCESS-CREATE": "Подію успішно створено.",
+                    "SUCCESS-DELETE": "Подію успішно видалено.",
+                    "ERROR": "Помилка на сервері."
+                },
+                "BUTTON-PANEL": {
+                    "DELETE": "Видалити",
+                    "CANCEL": "Відмінити"
+                }
+            }
+        },
+        "PAGE": {
+            "TITLE": "Календар",
+            "NEW-EVENT-TITLE": "+ Нова подія"
         }
     }
 }
