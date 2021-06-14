@@ -16,9 +16,12 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public userName: string[] = ['First Name', 'Last Name'];
   public spinner: boolean;
+  public userImage;
+  public isUserImage = false;
 
   private userSub: Subscription;
   private changeFullNameSub: Subscription;
+  private afterCloseModalSub: Subscription;
 
 
   constructor(private fb: FormBuilder,
@@ -28,6 +31,10 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.userImage = localStorage.getItem('userImage');
+    if (!!this.userImage) {
+      this.isUserImage = true;
+    }
     this.formValidation();
     this.getUserName();
   }
@@ -42,6 +49,12 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       this.changeFullNameSub.unsubscribe();
       this.changeFullNameSub = null;
     }
+
+    if (this.afterCloseModalSub) {
+      this.afterCloseModalSub.unsubscribe();
+      this.afterCloseModalSub = null;
+    }
+
   }
 
   getUserName() {
@@ -64,7 +77,6 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       this.form.value.firstName === '' || this.form.value.lastName === '') {
       return;
     }
-    console.log(this.form);
     this.spinner = true;
     const firstName = this.form.value.firstName.trim();
     const lastName = this.form.value.lastName.trim();
@@ -84,6 +96,16 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 
   openDialog() {
     const dialogRef = this.dialog.open(UploadImageComponent, {});
+
+    this.afterCloseModalSub = dialogRef.afterClosed()
+      .subscribe(res => {
+        this.userImage = localStorage.getItem('userImage');
+        this.isUserImage = true;
+      });
   }
 
+  removeImage() {
+    this.isUserImage = false;
+    localStorage.removeItem('userImage');
+  }
 }

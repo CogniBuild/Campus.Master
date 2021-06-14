@@ -1,1 +1,11 @@
-<p>success works!</p>
+<div class="success">
+  <div class="success__close">
+    <mat-icon (click)="onNoClick()">close</mat-icon>
+  </div>
+  <div class="success__img">
+    <img src="assets/img/profile-settings/modals/success.svg" alt="success">
+  </div>
+  <h2 class="success__title">Success!</h2>
+  <p class="success__text">Photo passed all preliminary checks</p>
+  <button class="success__btn" (click)="onNoClick()">Back to settings</button>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-success',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SuccessComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<SuccessComponent>) { }
 
   ngOnInit(): void {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

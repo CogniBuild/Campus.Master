@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-fail',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fail.component.sass']
 })
 export class FailComponent implements OnInit {
+  message;
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<FailComponent>) {
+  }
 
   ngOnInit(): void {
+    this.message = this.dialogRef.componentInstance.message;
+    console.log(this.dialogRef);
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

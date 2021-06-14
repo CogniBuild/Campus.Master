@@ -13,7 +13,12 @@
   <div class="edit-profile-photo">
     <div class="edit-profile-photo_block">
       <div class="edit-profile-photo__img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="user photo">
+        <ng-container *ngIf="isUserImage;else resetImage">
+          <img src="{{userImage}}" alt="user photo">
+        </ng-container>
+        <ng-template #resetImage>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="user photo">
+        </ng-template>
       </div>
       <div class="edit-profile-photo_blockBtn">
         <div>
@@ -21,7 +26,7 @@
         </div>
         <div class="edit-profile-photo__btn">
           <button class="edit-profile-photo__change edit-profile_saveBtn" (click)="openDialog()">Change</button>
-          <button class="edit-profile-photo__remove edit-profile_resetBtn">Remove</button>
+          <button class="edit-profile-photo__remove edit-profile_resetBtn" (click)="removeImage()">Remove</button>
         </div>
       </div>
     </div>
