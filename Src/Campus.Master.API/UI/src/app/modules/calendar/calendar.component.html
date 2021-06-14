@@ -1,8 +1,10 @@
 <div class="calendar__container">
   <mat-card>
     <div class="calendar__header">
-      <h1>Календар</h1>
-      <button class="mat-raised-button" (click)="onOpenDialog()">+ Нова подія</button>
+      <h1>{{ 'CALENDAR.PAGE.TITLE' | translate }}</h1>
+      <button class="mat-raised-button" (click)="onOpenDialog()">
+        {{ 'CALENDAR.PAGE.NEW-EVENT-TITLE' | translate}}
+      </button>
     </div>
     <div>
       <full-calendar [options]="calendarOptions" #calendar></full-calendar>

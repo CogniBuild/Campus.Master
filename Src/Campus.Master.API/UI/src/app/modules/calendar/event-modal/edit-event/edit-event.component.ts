@@ -9,6 +9,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { DeleteEventComponent } from '../delete-event/delete-event.component';
 import { Subscription } from 'rxjs';
+import { LocaleService } from '../../../../core/services';
 
 @Component({
   selector: 'app-edit-event',
@@ -30,6 +31,7 @@ export class EditEventComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private toastr: ToastrService,
               private calendarService: CalendarService,
+              private localeService: LocaleService,
               private dialog: MatDialog,
               public dialogRef: MatDialogRef<EditEventComponent>,
               @Inject(MAT_DIALOG_DATA) public data: object) {
@@ -123,10 +125,12 @@ export class EditEventComponent implements OnInit, OnDestroy {
         this.dialogRef.close({
           ...event
         });
-        this.toastr.success('Подію змінено!');
+        this.localeService.get('CALENDAR.EDIT-EVENT.DIALOG.SERVER-RESPONSES.EVENT-CHANGED').toPromise()
+          .then(x => this.toastr.success(x));
         this.spinner = false;
       }, error => {
-        this.toastr.error('Помилка серверу!', error.title);
+        this.localeService.get('CALENDAR.EDIT-EVENT.DIALOG.SERVER-RESPONSES.ERROR').toPromise()
+          .then(x => this.toastr.error(x, error.title));
         this.spinner = false;
       });
 
