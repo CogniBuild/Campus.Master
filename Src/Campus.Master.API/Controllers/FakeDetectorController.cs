@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Campus.Master.API.Filters;
+using Campus.Services.Interfaces.DTO.Auxiliary;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 
 namespace Campus.Master.API.Controllers
 {
@@ -36,7 +32,11 @@ namespace Campus.Master.API.Controllers
             await image.CopyToAsync(ms);
             var fileBytes = ms.ToArray();
 
-            return await _detectorService.PostImageToValidate(fileBytes, image.FileName);
+            return await _detectorService.PostImageToValidate(fileBytes, new ImageAttributes
+            {
+                FileName = image.FileName,
+                ContentType = image.ContentType
+            });
         }
     }
 }

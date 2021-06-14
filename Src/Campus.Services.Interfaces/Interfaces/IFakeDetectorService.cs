@@ -1,10 +1,10 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Campus.Services.Interfaces.DTO.Auxiliary;
 
 namespace Campus.Services.Interfaces.Interfaces
 {
     public interface IFakeDetectorService
     {
-        public Task<string> PostImageToValidate(byte[] imageData, string imageName);
+        public Task<string> PostImageToValidate(byte[] imageData, ImageAttributes attributes);
     }
 }
