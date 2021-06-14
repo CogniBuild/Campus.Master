@@ -32,11 +32,11 @@ namespace Campus.Master.API.Controllers
         {
             var image = HttpContext.Request.Form.Files["Image"];
 
-            using var ms = new MemoryStream();
-            image.CopyTo(ms);
+            await using var ms = new MemoryStream();
+            await image.CopyToAsync(ms);
             var fileBytes = ms.ToArray();
 
-            return  await _detectorService.PostImageToValidate(fileBytes);
+            return await _detectorService.PostImageToValidate(fileBytes, image.FileName);
         }
     }
 }

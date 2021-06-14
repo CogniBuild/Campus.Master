@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +15,7 @@ namespace Campus.Services.Core
             _configuration = configuration;
         }
 
-        public async Task<string> PostImageToValidate(byte[] imageData)
+        public async Task<string> PostImageToValidate(byte[] imageData, string imageName)
         {
             var fakeDetectorRequest = new HttpClient();
 
@@ -28,10 +26,15 @@ namespace Campus.Services.Core
                 .DefaultRequestHeaders
                 .Add("x-functions-key", fakeDetectorSettings.GetValue<string>("ApiKey"));
 
+            
+            var byteArrayContent = new ByteArrayContent(imageData);
+            byteArrayContent.Headers.ContentType = MediaTypeHeaderValue.Parse("multipart/form-data");
+
             var response = await fakeDetectorRequest.PostAsync(
-                fakeDetectorSettings.GetValue<string>("Uri"),
-                new MultipartFormDataContent
-                {{new StreamContent(imageData),"file"}});
+                fakeDetectorSettings.GetValue<string>("Uri"), new MultipartFormDataContent
+                {
+                    { byteArrayContent, "\"file\"", imageName }
+                });
 
             return await response.Content.ReadAsStringAsync();
         }

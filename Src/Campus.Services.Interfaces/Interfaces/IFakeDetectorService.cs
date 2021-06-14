@@ -5,6 +5,6 @@ namespace Campus.Services.Interfaces.Interfaces
 {
     public interface IFakeDetectorService
     {
-        public Task<string> PostImageToValidate(byte[] imageData);
+        public Task<string> PostImageToValidate(byte[] imageData, string imageName);
     }
 }
