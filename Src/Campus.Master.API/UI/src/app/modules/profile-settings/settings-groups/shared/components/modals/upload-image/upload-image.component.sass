@@ -1,0 +1,72 @@
+@import "styles"
+
+.upload-image
+  width: 692px
+  position: relative
+  font-family: FuturaLT, serif
+  padding: 15px
+
+  &__close
+    position: absolute
+    right: 0
+
+    mat-icon
+      font-size: 30px
+      color: #C4C4C4
+
+  &__header
+    margin-bottom: 30px
+
+    h3
+      margin: 0 0 4px
+      font-weight: 600
+      font-size: 24px
+      text-align: center
+      color: #000000
+
+    p
+      font-size: 14px
+      text-align: center
+      color: #BBBBBB
+
+  &__block
+    display: flex
+    align-items: center
+    justify-content: center
+    border-radius: 15px
+    height: 380px
+    background: rgba(126, 87, 194, 0.05) url("~assets/img/profile-settings/modals/bg-upload-border.svg") no-repeat
+
+  .drag-file
+    max-width: 115px
+    text-align: center
+    margin-right: 13px
+
+  .drag-file, .upload-block
+    p
+      font-size: 16px
+      line-height: 19px
+      color: #BBBBBB
+
+  .upload-block
+    padding-top: 15px
+    text-align: center
+    margin-left: 43px
+
+    &__btn
+      cursor: pointer
+      border: none
+      font-size: 14px
+      color: #FFFFFF
+      background: #7E57C2
+      padding: 7px 30px
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04), 0 0 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04)
+      border-radius: 5px
+
+    &__title
+      width: 132px
+
+  .text-or
+    font-size: 16px
+    text-align: center
+    color: #BBBBBB

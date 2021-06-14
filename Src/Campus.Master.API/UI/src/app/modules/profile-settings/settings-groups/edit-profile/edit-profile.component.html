@@ -1,1 +1,41 @@
-<p>edit-profile works!</p>
+<form class="edit-profile" [formGroup]="form" (ngSubmit)="saveSettings()">
+  <div class="edit-profile__header">
+    <h2>Edit Profile</h2>
+    <div class="edit-profile__btn">
+      <button class="edit-profile__save-btn edit-profile_saveBtn"
+              [disabled]="(form.controls.firstName.value === null && form.controls.lastName.value === null)
+              || form.controls.firstName.value === '' && form.controls.lastName.value === ''">
+        Save settings
+      </button>
+      <button class="edit-profile__rest-btn edit-profile_resetBtn" (click)="reset()">Reset changes</button>
+    </div>
+  </div>
+  <div class="edit-profile-photo">
+    <div class="edit-profile-photo_block">
+      <div class="edit-profile-photo__img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="user photo">
+      </div>
+      <div class="edit-profile-photo_blockBtn">
+        <div>
+          <span class="edit-profile-photo__title">Profile Photo</span>
+        </div>
+        <div class="edit-profile-photo__btn">
+          <button class="edit-profile-photo__change edit-profile_saveBtn" (click)="openDialog()">Change</button>
+          <button class="edit-profile-photo__remove edit-profile_resetBtn">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="edit-profile-input">
+    <div class="dialog__control dialog__control_wrap edit-profile-input__firstName">
+      <label for="firstName" class="dialog__label">First Name</label>
+      <input id="firstName" placeholder="{{userName[0]}}" class="dialog__input"
+             formControlName="firstName">
+    </div>
+    <div class="dialog__control dialog__control_wrap edit-profile-input__lastName">
+      <label for="lastName" class="dialog__label">Last Name</label>
+      <input id="lastName" placeholder="{{userName[1]}}" class="dialog__input"
+             formControlName="lastName">
+    </div>
+  </div>
+</form>
