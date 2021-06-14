@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { FakeDetectorService } from '../../../services/fake-detector.service';
 
 @Component({
   selector: 'app-upload-image',
@@ -11,7 +12,8 @@ export class UploadImageComponent implements OnInit {
   public image;
   public readThis;
 
-  constructor(public dialogRef: MatDialogRef<UploadImageComponent>) {
+  constructor(public dialogRef: MatDialogRef<UploadImageComponent>,
+    private fakeDetectorService: FakeDetectorService) {
   }
 
   ngOnInit(): void {
@@ -22,25 +24,12 @@ export class UploadImageComponent implements OnInit {
   }
 
   onFileChanged(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function() {
-      // me.modelvalue = reader.result;
-      console.log(reader.result);
-
-    };
-    reader.onerror = function(error) {
-      console.log('Error: ', error);
-    };
-    // this.selectedFile = event.target.files[0];
-    // const myReader: FileReader = new FileReader();
-    //
-    // myReader.onloadend = (e) => {
-    //   this.image = myReader.result;
-    // };
-    // myReader.readAsDataURL(this.selectedFile);
-    // console.log(this.selectedFile, myReader.result, this.image);
+    const image = event.target.files[0];
+    this.fakeDetectorService.uploadImage(image).subscribe(
+      response => { console.log(response); }, (error) => {
+        console.log(error);
+      }
+    );
   }
 
   onNoClick(): void {

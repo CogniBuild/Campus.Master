@@ -9,6 +9,7 @@ import { EditProfileComponent } from './settings-groups/edit-profile/edit-profil
 import { UploadImageComponent } from './settings-groups/shared/components/modals/upload-image/upload-image.component';
 import { SuccessComponent } from './settings-groups/shared/components/modals/success/success.component';
 import { FailComponent } from './settings-groups/shared/components/modals/fail/fail.component';
+import { FakeDetectorService } from './settings-groups/shared/services/fake-detector.service';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { FailComponent } from './settings-groups/shared/components/modals/fail/f
     UploadImageComponent,
     SuccessComponent,
     FailComponent
-  ]
+  ],
+  providers: [FakeDetectorService]
 })
 export class ProfileSettingsModule {
 }

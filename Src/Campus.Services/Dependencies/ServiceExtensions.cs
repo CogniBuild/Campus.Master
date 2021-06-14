@@ -14,6 +14,7 @@ namespace Campus.Services.Dependencies
             services.AddScoped<IClassroomService, ClassroomService>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IFakeDetectorService, FakeDetectorService>();
             
             services.Configure<IdentityOptions>(options =>
             {

@@ -15,7 +15,9 @@
     <div class="upload-block">
       <input
         style="display: none"
-        type="file" (change)="onFileChanged($event)"
+        type="file"
+        accept="image/*"
+        (change)="onFileChanged($event)"
         #fileInput>
       <button class="upload-block__btn" (click)="fileInput.click()" (change)="changeListener($event)">Upload Image
       </button>
