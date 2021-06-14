@@ -1,0 +1,38 @@
+<div class="upload-image">
+  <div class="upload-image__close">
+    <mat-icon (click)="onNoClick()">close</mat-icon>
+  </div>
+  <div class="upload-image__header">
+    <h3>Upload your image</h3>
+    <p>Image should be .jpeg, .png</p>
+  </div>
+  <div class="upload-image__block">
+    <div class="drag-file">
+      <div class="drag-file__img"><img src="assets/img/profile-settings/modals/drag-icon.svg" alt="files"></div>
+      <p class="drag-file__title">Drag & Drop your files here</p>
+    </div>
+    <div class="text-or">OR</div>
+    <div class="upload-block">
+      <input
+        style="display: none"
+        type="file"
+        accept="image/*"
+        (change)="onFileChanged($event)"
+        #fileInput>
+      <button class="upload-block__btn" (click)="fileInput.click()" (change)="changeListener($event)">Upload Image
+      </button>
+      <p class="upload-block__title">Select images from file explorer</p>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="isLoaded">
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</ng-container>
+
+
+

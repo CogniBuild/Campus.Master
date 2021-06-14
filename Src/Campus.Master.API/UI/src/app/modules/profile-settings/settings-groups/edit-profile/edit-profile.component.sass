@@ -1,0 +1,79 @@
+.edit-profile
+  padding: 16px
+
+  &__header
+    display: flex
+    justify-content: space-between
+    align-items: flex-end
+    margin-bottom: 40px
+
+    h2
+      margin: 0
+      font-weight: 600
+      font-size: 36px
+      color: #000000
+
+  &__save-btn
+    margin-right: 25px
+
+  &_saveBtn
+    background: #7E57C2
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04), 0 0 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04)
+    border-radius: 5px
+    font-weight: 500
+    font-size: 14px
+    color: #FFFFFF
+    padding: 7px 12px
+    border: none
+    cursor: pointer
+
+    &:disabled
+      cursor: not-allowed
+      background: #bbbbbb
+      color: #666666
+
+  &_resetBtn
+    font-weight: 500
+    font-size: 14px
+    color: #7E57C2
+    padding: 7px 12px
+    border: none
+    background-color: transparent
+    cursor: pointer
+    margin-right: 12px
+
+.edit-profile-photo
+  margin-bottom: 30px
+
+  &_block
+    display: flex
+    align-items: center
+
+  &__img
+    margin-right: 10px
+
+    img
+      display: block
+      width: 60px
+      height: 60px
+
+  &__title
+    display: block
+    margin-bottom: 10px
+    font-weight: 500
+    font-size: 16px
+    line-height: 19px
+    color: #000000
+
+.edit-profile-input
+  display: flex
+  justify-content: space-between
+
+  .dialog__control
+    width: 50%
+
+  &__firstName
+    margin-right: 15px
+
+  &__lastName
+    margin-left: 15px

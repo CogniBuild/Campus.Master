@@ -22,7 +22,8 @@ namespace Campus.Master.API.Filters
         
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            _logger.LogInformation(JsonSerializer.Serialize(new EntryPointLoggingMessage
+            _logger.LogInformation(JsonSerializer.Serialize(
+                new EntryPointLoggingMessage
             {
                 Date = DateTime.Now,
                 Header = LoggingHeader.Info.ToString(),
@@ -34,7 +35,8 @@ namespace Campus.Master.API.Filters
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            _logger.LogInformation(JsonSerializer.Serialize(new EntryPointLoggingMessage
+            _logger.LogInformation(JsonSerializer.Serialize(
+                new EntryPointLoggingMessage
             {
                 Date = DateTime.Now,
                 Header = LoggingHeader.Info.ToString(),
