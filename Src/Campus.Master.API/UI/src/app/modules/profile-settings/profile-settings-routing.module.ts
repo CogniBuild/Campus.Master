@@ -8,7 +8,7 @@ import { EditProfileComponent } from './settings-groups/edit-profile/edit-profil
 const routes: Routes = [{
   path: '', component: ProfileSettingsComponent, children: [
     {
-      path: '', redirectTo: 'general', pathMatch: 'full'
+      path: '', redirectTo: 'edit-profile', pathMatch: 'full'
     },
     {
       path: 'general', component: GeneralSettingsComponent,

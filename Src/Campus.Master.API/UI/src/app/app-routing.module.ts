@@ -25,7 +25,7 @@ const routes: Routes = [
         loadChildren: () => import('./modules/profile-settings/profile-settings.module').then(m => m.ProfileSettingsModule)
       },
       {
-        path: '**', redirectTo: 'dashboard', pathMatch: 'full'
+        path: '**', redirectTo: 'calendar', pathMatch: 'full'
       }]
   }
 ];
