@@ -14,7 +14,6 @@ export class FailComponent implements OnInit {
 
   ngOnInit(): void {
     this.message = this.dialogRef.componentInstance.message;
-    console.log(this.dialogRef);
   }
 
   onNoClick(): void {

@@ -95,7 +95,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(UploadImageComponent, {});
+    const dialogRef = this.dialog.open(UploadImageComponent, { });
 
     this.afterCloseModalSub = dialogRef.afterClosed()
       .subscribe(res => {

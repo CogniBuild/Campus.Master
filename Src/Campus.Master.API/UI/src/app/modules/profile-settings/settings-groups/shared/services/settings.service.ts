@@ -16,6 +16,7 @@ export class SettingsService {
     return this.http.get<ProfileInformation>(environment.getProfileInformation);
   }
 
+  // tslint:disable-next-line: no-any
   setUserName(fullName): Observable<any> {
     return this.http.put(environment.getProfileInformation, {
       FullName: fullName
