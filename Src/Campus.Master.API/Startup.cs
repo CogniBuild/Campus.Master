@@ -18,7 +18,7 @@ using Campus.Master.API.Filters;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
 using FluentValidation.AspNetCore;
-using ICampusConfigurationProvider = Campus.Master.API.Helpers.Contracts.IConfigurationProvider;
+using ICampusConfigurationProvider = Campus.Domain.Core.Interfaces.IConfigurationProvider;
 
 namespace Campus.Master.API
 {

@@ -15,7 +15,7 @@ namespace Campus.Services.Dependencies
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IFakeDetectorService, FakeDetectorService>();
-            
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;

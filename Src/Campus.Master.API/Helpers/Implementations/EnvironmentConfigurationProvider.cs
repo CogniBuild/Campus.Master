@@ -1,10 +1,10 @@
 using System;
 using Microsoft.Extensions.Configuration;
-using CampusProvider = Campus.Master.API.Helpers.Contracts.IConfigurationProvider;
+using ICampusConfigurationProvider = Campus.Domain.Core.Interfaces.IConfigurationProvider;
 
 namespace Campus.Master.API.Helpers.Implementations
 {
-    public class EnvironmentConfigurationProvider : CampusProvider
+    public class EnvironmentConfigurationProvider : ICampusConfigurationProvider
     {        
         private IConfiguration Configuration { get; }
         
