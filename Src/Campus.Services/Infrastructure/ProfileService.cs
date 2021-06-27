@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
 using Campus.Infrastructure.Data.EntityFrameworkCore.Context;
@@ -8,7 +9,7 @@ using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Campus.Services.Implementation.Infrastructure
+namespace Campus.Services.Infrastructure
 {
     public class ProfileService : IProfileService
     {
