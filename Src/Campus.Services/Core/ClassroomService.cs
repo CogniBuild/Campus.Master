@@ -1,4 +1,3 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Campus.Domain.Core.Models;
@@ -7,7 +6,7 @@ using Campus.Services.Interfaces.DTO.Classroom;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Campus.Services.Core
+namespace Campus.Services.Implementation.Core
 {
     public class ClassroomService : IClassroomService
     {

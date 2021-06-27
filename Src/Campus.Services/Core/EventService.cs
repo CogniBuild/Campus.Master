@@ -8,7 +8,7 @@ using Campus.Services.Interfaces.DTO.Event;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace Campus.Services.Core
+namespace Campus.Services.Implementation.Core
 {
     public class EventService : IEventService
     {

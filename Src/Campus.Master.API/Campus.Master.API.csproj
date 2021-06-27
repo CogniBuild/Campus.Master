@@ -31,9 +31,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Campus.Infrastructure.Configuration\Campus.Infrastructure.Configuration.csproj" />
       <ProjectReference Include="..\Campus.Infrastructure.Data.EntityFrameworkCore\Campus.Infrastructure.Data.EntityFrameworkCore.csproj" />
       <ProjectReference Include="..\Campus.Services.Interfaces\Campus.Services.Interfaces.csproj" />
-      <ProjectReference Include="..\Campus.Services\Campus.Services.csproj" />
+      <ProjectReference Include="..\Campus.Services\Campus.Services.Implementation.csproj" />
     </ItemGroup>
 
     <ItemGroup>
