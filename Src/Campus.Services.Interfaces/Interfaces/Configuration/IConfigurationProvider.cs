@@ -1,6 +1,6 @@
 using System;
 
-namespace Campus.Domain.Core.Interfaces
+namespace Campus.Services.Interfaces.Interfaces.Configuration
 {
     public interface IConfigurationProvider
     {

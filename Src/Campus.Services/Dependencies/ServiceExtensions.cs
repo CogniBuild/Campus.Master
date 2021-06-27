@@ -1,11 +1,11 @@
 using System;
-using Campus.Services.Core;
-using Campus.Services.Infrastructure;
+using Campus.Services.Implementation.Core;
+using Campus.Services.Implementation.Infrastructure;
 using Campus.Services.Interfaces.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Campus.Services.Dependencies
+namespace Campus.Services.Implementation.Dependencies
 {
     public static class ServiceExtensions
     {

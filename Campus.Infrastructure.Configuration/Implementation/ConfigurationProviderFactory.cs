@@ -1,8 +1,8 @@
-using Campus.Domain.Core.Interfaces;
+using Campus.Services.Interfaces.Interfaces.Configuration;
 using Microsoft.Extensions.Configuration;
-using ICampusConfigurationProvider = Campus.Domain.Core.Interfaces.IConfigurationProvider;
+using ICampusConfigurationProvider = Campus.Services.Interfaces.Interfaces.Configuration.IConfigurationProvider;
 
-namespace Campus.Master.API.Helpers.Implementations
+namespace Campus.Infrastructure.Configuration.Implementation
 {
     public class ConfigurationProviderFactory : IConfigurationProviderFactory
     {

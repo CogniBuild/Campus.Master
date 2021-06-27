@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 using Campus.Infrastructure.Data.EntityFrameworkCore.Dependencies;
-using Campus.Services.Dependencies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,8 +16,10 @@ using Microsoft.IdentityModel.Tokens;
 using Campus.Master.API.Filters;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
+using Campus.Services.Implementation.Dependencies;
+using Campus.Infrastructure.Configuration.Implementation;
 using FluentValidation.AspNetCore;
-using ICampusConfigurationProvider = Campus.Domain.Core.Interfaces.IConfigurationProvider;
+using ICampusConfigurationProvider = Campus.Services.Interfaces.Interfaces.Configuration.IConfigurationProvider;
 
 namespace Campus.Master.API
 {
@@ -39,20 +40,20 @@ namespace Campus.Master.API
 
         private const string ApiTitle = "Campus.Master Development mode API";
         private const string ApiVersion = "v1.2";
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             string xmlDocFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             string xmlDocPath = Path.Combine(AppContext.BaseDirectory, xmlDocFile);
-            
-            services.AddControllers(options =>
-            {
-                options.Filters.Add<GlobalExceptionFilterAttribute>();
-            }).AddFluentValidation();
+
+            services.AddControllers(options => { options.Filters.Add<GlobalExceptionFilterAttribute>(); })
+                .AddFluentValidation();
 
             services.AddScoped<EntryPointLoggingFilter>();
             services.AddScoped<ApplicationExceptionFilter>();
-            
+
+            services.AddSingleton(SettingsProvider);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(ApiVersion, new OpenApiInfo {Title = ApiTitle, Version = ApiVersion});
@@ -66,7 +67,7 @@ namespace Campus.Master.API
                         Type = SecuritySchemeType.ApiKey,
                         Scheme = "Bearer"
                     });
-                
+
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -80,7 +81,7 @@ namespace Campus.Master.API
                             Scheme = "oauth2",
                             Name = "Bearer",
                             In = ParameterLocation.Header,
-                        }, 
+                        },
                         new List<string>()
                     },
                 });
@@ -89,7 +90,8 @@ namespace Campus.Master.API
             });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(bearer => {
+                .AddJwtBearer(bearer =>
+                {
                     bearer.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuerSigningKey = true,
@@ -103,7 +105,8 @@ namespace Campus.Master.API
 
             var connectionProviderName =
                 SettingsProvider.GetConfigurationValue("ConnectionStrings:Provider", Convert.ToString);
-            var connectionString = SettingsProvider.GetConfigurationValue("ConnectionStrings:Default", Convert.ToString);
+            var connectionString =
+                SettingsProvider.GetConfigurationValue("ConnectionStrings:Default", Convert.ToString);
 
             switch (connectionProviderName)
             {
@@ -117,12 +120,12 @@ namespace Campus.Master.API
 
             services.AddServices();
 
-            services.AddTransient<ITokenBuilder>(builder => 
+            services.AddTransient<ITokenBuilder>(builder =>
                 new JwtTokenBuilder(
                     SettingsProvider.GetConfigurationValue("Security:EncryptionSecret", Convert.ToString)
                 )
             );
-            
+
             services.AddScoped(limiter =>
                 new QueryItemsLimiter(
                     SettingsProvider.GetConfigurationValue("Endpoints:QueryLimiter", Convert.ToInt32)
@@ -132,7 +135,7 @@ namespace Campus.Master.API
             services.AddScoped<IClaimExtractionService, ClaimExtractionService>();
             services.AddHttpContextAccessor();
         }
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -142,7 +145,7 @@ namespace Campus.Master.API
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint(
-                        SettingsProvider.GetConfigurationValue("Swagger:StaticRoute", Convert.ToString), 
+                        SettingsProvider.GetConfigurationValue("Swagger:StaticRoute", Convert.ToString),
                         ApiTitle
                     );
                 });
@@ -155,11 +158,8 @@ namespace Campus.Master.API
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-            
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
