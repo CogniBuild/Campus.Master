@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Campus.Master.IntegrationTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Campus.Services.Implementation", "Src\Campus.Services\Campus.Services.Implementation.csproj", "{6725C9B8-3804-4B4F-8314-0C9EE4CC5829}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Campus.Infrastructure.Configuration", "Campus.Infrastructure.Configuration\Campus.Infrastructure.Configuration.csproj", "{725710CA-3340-4718-9FA0-0E6825E50F0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Campus.Infrastructure.Configuration", "Src\Campus.Infrastructure.Configuration\Campus.Infrastructure.Configuration.csproj", "{447D2983-40CB-4C11-B797-A69E39A348D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +55,10 @@ Global
 		{6725C9B8-3804-4B4F-8314-0C9EE4CC5829}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6725C9B8-3804-4B4F-8314-0C9EE4CC5829}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6725C9B8-3804-4B4F-8314-0C9EE4CC5829}.Release|Any CPU.Build.0 = Release|Any CPU
-		{725710CA-3340-4718-9FA0-0E6825E50F0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{725710CA-3340-4718-9FA0-0E6825E50F0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{725710CA-3340-4718-9FA0-0E6825E50F0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{725710CA-3340-4718-9FA0-0E6825E50F0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{447D2983-40CB-4C11-B797-A69E39A348D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{447D2983-40CB-4C11-B797-A69E39A348D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{447D2983-40CB-4C11-B797-A69E39A348D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{447D2983-40CB-4C11-B797-A69E39A348D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,7 +69,7 @@ Global
 		{0E3C28A9-E86F-4265-964C-626288CE4A2E} = {6DF4B688-FF8F-4CFD-961F-9AA989BD03BD}
 		{DA9E68CB-AF98-4921-88EC-FB5E038EB5FE} = {0FB95748-D31C-47E8-8B93-DBC1796234CA}
 		{6725C9B8-3804-4B4F-8314-0C9EE4CC5829} = {6DF4B688-FF8F-4CFD-961F-9AA989BD03BD}
-		{725710CA-3340-4718-9FA0-0E6825E50F0E} = {6DF4B688-FF8F-4CFD-961F-9AA989BD03BD}
+		{447D2983-40CB-4C11-B797-A69E39A348D8} = {6DF4B688-FF8F-4CFD-961F-9AA989BD03BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BEE640B1-4E3D-4EF7-9E2F-6B7E186BFCC2}

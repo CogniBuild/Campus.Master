@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Reflection;
+using Campus.Infrastructure.Configuration.Implementation;
 using Campus.Infrastructure.Data.EntityFrameworkCore.Dependencies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,7 +18,6 @@ using Campus.Master.API.Filters;
 using Campus.Master.API.Helpers.Contracts;
 using Campus.Master.API.Helpers.Implementations;
 using Campus.Services.Implementation.Dependencies;
-using Campus.Infrastructure.Configuration.Implementation;
 using FluentValidation.AspNetCore;
 using ICampusConfigurationProvider = Campus.Services.Interfaces.Interfaces.Configuration.IConfigurationProvider;
 

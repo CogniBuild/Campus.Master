@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Src\Campus.Services.Interfaces\Campus.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Campus.Services.Interfaces\Campus.Services.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
