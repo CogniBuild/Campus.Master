@@ -1,17 +1,18 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Campus.Services.Interfaces.DTO.Auxiliary;
 using Campus.Services.Interfaces.Interfaces;
-using Microsoft.Extensions.Configuration;
+using ICampusConfigurationProvider = Campus.Services.Interfaces.Interfaces.Configuration.IConfigurationProvider;
 
-namespace Campus.Services.Core
+namespace Campus.Services.Implementation.Core
 {
     class FakeDetectorService : IFakeDetectorService
     {
-        private readonly IConfiguration _configuration;
+        private readonly ICampusConfigurationProvider _configuration;
 
-        public FakeDetectorService(IConfiguration configuration)
+        public FakeDetectorService(ICampusConfigurationProvider configuration)
         {
             _configuration = configuration;
         }
@@ -20,21 +21,18 @@ namespace Campus.Services.Core
         {
             var fakeDetectorRequest = new HttpClient();
 
-            var fakeDetectorSettings = _configuration
-                .GetSection("FakeDetector");
+            fakeDetectorRequest.DefaultRequestHeaders.Add("x-functions-key",
+                _configuration.GetConfigurationValue("FakeDetector:ApiKey", Convert.ToString));
 
-            fakeDetectorRequest
-                .DefaultRequestHeaders
-                .Add("x-functions-key", fakeDetectorSettings.GetValue<string>("ApiKey"));
 
-            
             var byteArrayContent = new ByteArrayContent(imageData);
             byteArrayContent.Headers.ContentType = MediaTypeHeaderValue.Parse(attributes.ContentType);
 
             var response = await fakeDetectorRequest.PostAsync(
-                fakeDetectorSettings.GetValue<string>("Uri"), new MultipartFormDataContent
+                _configuration.GetConfigurationValue("FakeDetector:Uri", Convert.ToString),
+                new MultipartFormDataContent
                 {
-                    { byteArrayContent, "\"file\"", attributes.FileName }
+                    {byteArrayContent, "\"file\"", attributes.FileName}
                 });
 
             return await response.Content.ReadAsStringAsync();

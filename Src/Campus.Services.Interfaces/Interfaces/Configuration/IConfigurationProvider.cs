@@ -1,6 +1,6 @@
 using System;
 
-namespace Campus.Master.API.Helpers.Contracts
+namespace Campus.Services.Interfaces.Interfaces.Configuration
 {
     public interface IConfigurationProvider
     {

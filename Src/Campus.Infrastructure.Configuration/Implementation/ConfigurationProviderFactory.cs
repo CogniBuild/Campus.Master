@@ -1,8 +1,8 @@
-using Campus.Master.API.Helpers.Contracts;
+using Campus.Services.Interfaces.Interfaces.Configuration;
 using Microsoft.Extensions.Configuration;
-using IConfigurationProvider = Campus.Master.API.Helpers.Contracts.IConfigurationProvider;
+using ICampusConfigurationProvider = Campus.Services.Interfaces.Interfaces.Configuration.IConfigurationProvider;
 
-namespace Campus.Master.API.Helpers.Implementations
+namespace Campus.Infrastructure.Configuration.Implementation
 {
     public class ConfigurationProviderFactory : IConfigurationProviderFactory
     {
@@ -15,7 +15,7 @@ namespace Campus.Master.API.Helpers.Implementations
             InDevelopmentMode = inDevelopmentMode;
         }
         
-        public IConfigurationProvider CreateProvider()
+        public ICampusConfigurationProvider CreateProvider()
         {
             if (InDevelopmentMode)
                 return new AppSettingsConfigurationProvider(Configuration);
