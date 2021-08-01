@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { LeftSidebarComponent } from '@core/left-sidebar/left-sidebar.component';
 import { ToastrModule } from 'ngx-toastr';
 import { CoreModule } from '@core/core.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { CoreModule } from '@core/core.module';
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot()
   ],
   entryComponents: [EditProjectDialogComponent, ConfirmDialogComponent],
   bootstrap: [AppComponent],
