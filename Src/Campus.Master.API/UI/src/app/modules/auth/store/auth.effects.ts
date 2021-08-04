@@ -56,7 +56,7 @@ export class AuthEffects {
                 zip(this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
                     this.localeService.get('AUTH.ERROR-TOASTR.HEADER'));
 
-            msgLocale$.toPromise().then(([message, header]) => this.toastrService.error(message, header, this.toastStyles));            
+            msgLocale$.toPromise().then(([message, header]) => this.toastrService.error(message, header, this.toastStyles));
 
             return EMPTY;
         })
