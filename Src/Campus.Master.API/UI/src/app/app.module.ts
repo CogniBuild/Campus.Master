@@ -35,7 +35,7 @@ import { environment } from '../environments/environment';
     MaterialModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({ }),
     EffectsModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],

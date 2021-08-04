@@ -40,7 +40,7 @@ export class AuthEffects {
         ofType(AuthActions.registrationSuccess),
         mergeMap((action) => {
             localStorage.setItem('token', action.token);
-            //this.registerForm.reset();
+            // this.registerForm.reset();
             this.router.navigate(['/campus']);
 
             return EMPTY;

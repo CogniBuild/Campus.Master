@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { createAction, props } from "@ngrx/store";
-import { RegisterUser } from "../../shared/models";
+import { createAction, props } from '@ngrx/store';
+import { RegisterUser } from '../../shared/models';
 
 
 export const submitRegistrationForm = createAction('[Auth] Submit Registration Form', props<RegisterUser>());

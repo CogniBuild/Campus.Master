@@ -9,8 +9,8 @@ import { ConfirmPasswordValidator } from '../confirmed.validator';
 import { Subscription } from 'rxjs';
 import { RegisterUser } from '../shared/models';
 import { select, Store } from '@ngrx/store';
-import { submitRegistrationForm } from "../store/actions/auth.actions";
-import { selectSpinnerState } from "../store/auth.selectors";
+import { submitRegistrationForm } from '../store/actions/auth.actions';
+import { selectSpinnerState } from '../store/auth.selectors';
 
 @Component({
   selector: 'app-registration-page',
