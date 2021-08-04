@@ -25,13 +25,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   private registerUser$: Subscription = new Subscription();
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private store: Store
   ) {
   }
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group(
+    this.registerForm = this.formBuilder.group(
       {
         first_name: new FormControl(null, [
           Validators.required,
