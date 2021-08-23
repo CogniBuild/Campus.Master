@@ -1,25 +1,37 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { TranslateService } from '@ngx-translate/core';
+import { SharedModule } from '../../../shared/shared.module';
 import { RegistrationComponent } from './registration.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RegistrationComponent', () => {
     let component: RegistrationComponent;
+    let fixture: ComponentFixture<RegistrationComponent>;
 
-    const formBuilder = {
-        group: jest.fn()
-    } as any;
+    let formBuilderStub: Partial<FormBuilder>;
+    let storeStub: Partial<Store>;
+    let translateServiceStub: Partial<TranslateService>;
 
-    const store = {
-        dispatch: jest.fn(),
+    storeStub = {
         pipe: jest.fn()
-    } as any;
+    }
 
-    beforeAll(() => {
-        component = new RegistrationComponent(
-            formBuilder,
-            store,
-        );
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [RegistrationComponent],
+            imports: [SharedModule, RouterTestingModule],
+            providers: [
+                { provide: FormBuilder, useValue: formBuilderStub },
+                { provide: Store, useValue: storeStub },
+                { provide: TranslateService, useValue: translateServiceStub }
+            ]
+        });
+
+        fixture = TestBed.createComponent(RegistrationComponent);
+        component = fixture.componentInstance;
     });
-
-    beforeEach(() => { });
 
     it('should create', () => {
         expect(component).toBeTruthy();

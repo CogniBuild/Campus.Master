@@ -39,9 +39,8 @@ export class AuthEffects {
     $registrationSuccess = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.registrationSuccess),
         mergeMap((action) => {
-            localStorage.setItem('token', action.token);
-            // this.registerForm.reset();
-            this.router.navigate(['/campus']);
+            localStorage.setItem('token', action.token); // TODO: Where to store token in ang apps
+            this.router.navigate(['/campus']); // TODO: Move to component
 
             return EMPTY;
         })
