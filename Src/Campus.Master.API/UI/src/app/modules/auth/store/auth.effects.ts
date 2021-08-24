@@ -25,7 +25,7 @@ export class AuthEffects {
 
 
     $submitRegistrationForm = createEffect(() => this.actions$.pipe(
-        ofType(AuthActions.submitRegistrationForm),
+        ofType(AuthActions.submitRegistration),
         mergeMap((userForm: RegisterUser) => this.registrationService
             .registerUser(userForm).pipe(
                 map((token: string) => {
