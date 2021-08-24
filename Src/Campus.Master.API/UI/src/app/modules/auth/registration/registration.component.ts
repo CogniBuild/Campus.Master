@@ -67,6 +67,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    if (this.registerForm.invalid) {
+      return;
+    }
+
     const registerUser: RegisterUser = {
       fullName: this.registerForm.value.first_name + ' ' + this.registerForm.value.last_name,
       userName: this.registerForm.value.nickname,
@@ -75,9 +79,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       confirmPassword: this.registerForm.value.confirmPassword
     };
 
-    if (this.registerForm.invalid) {
-      return;
-    }
 
     this.store.dispatch(submitRegistrationForm(registerUser));
   }
