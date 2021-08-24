@@ -9,7 +9,7 @@ import { ConfirmPasswordValidator } from '../confirmed.validator';
 import { Subscription } from 'rxjs';
 import { RegisterUser } from '../shared/models';
 import { select, Store } from '@ngrx/store';
-import { submitRegistrationForm } from '../store/actions/auth.actions';
+import { submitRegistration } from '../store/actions/auth.actions';
 import { selectSpinnerState } from '../store/auth.selectors';
 
 @Component({
@@ -80,6 +80,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     };
 
 
-    this.store.dispatch(submitRegistrationForm(registerUser));
+    this.store.dispatch(submitRegistration(registerUser));
   }
 }

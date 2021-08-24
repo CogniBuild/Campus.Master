@@ -13,7 +13,7 @@ export const initialState: RegistrationState = {
 
 const reducer = createReducer(
     initialState,
-    on(AuthActions.submitRegistrationForm, () => ({ isSpinnerOn: true })),
+    on(AuthActions.submitRegistration, () => ({ isSpinnerOn: true })),
     on(AuthActions.registrationSuccess, () => ({ isSpinnerOn: false })),
     on(AuthActions.registrationFailed, () => ({ isSpinnerOn: false }))
 );
