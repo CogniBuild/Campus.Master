@@ -10,9 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LocaleService } from '../../../core/services/locale.service';
 import { ToastrService } from 'ngx-toastr';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class AuthEffects {
     private toastStyles = {
         toastClass: 'ngx-toastr server-error-toastr'
