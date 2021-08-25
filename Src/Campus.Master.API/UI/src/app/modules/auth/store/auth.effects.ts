@@ -16,10 +16,10 @@ export class AuthEffects {
         toastClass: 'ngx-toastr server-error-toastr'
     };
 
-    private responseLocaleMap = {
-        'User already exists': 'AUTH.ERROR-TOASTR.USER-EXISTS',
-        'Failed to create new user': 'AUTH.ERROR-TOASTR.NEW-USER'
-    };
+    private responseLocaleMap = new Map<string, string>([
+        ['User already exists', 'AUTH.ERROR-TOASTR.USER-EXISTS'],
+        ['Failed to create new user', 'AUTH.ERROR-TOASTR.NEW-USER']
+    ]);
 
 
     $submitRegistrationForm = createEffect(() => this.actions$.pipe(
