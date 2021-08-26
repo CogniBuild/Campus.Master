@@ -1,36 +1,39 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
-import { SharedModule } from '../../../shared/shared.module';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RegistrationComponent } from './registration.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FirstErrorPipe } from '../../../shared/pipes/first-error.pipe';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { RegistrationState } from '../store/auth.reducer';
 
 describe('RegistrationComponent', () => {
     let component: RegistrationComponent;
     let fixture: ComponentFixture<RegistrationComponent>;
 
     let formBuilderStub: Partial<FormBuilder>;
-    let storeStub: Partial<Store>;
     let translateServiceStub: Partial<TranslateService>;
+    let mockStore: MockStore;
 
-    storeStub = {
-        pipe: jest.fn()
-    }
+    const initialState = {
+        isSpinnerOn: false
+    } as RegistrationState
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [RegistrationComponent],
-            imports: [SharedModule, RouterTestingModule],
+            declarations: [RegistrationComponent, FirstErrorPipe],
+            imports: [TranslateModule, ReactiveFormsModule, RouterTestingModule],
             providers: [
                 { provide: FormBuilder, useValue: formBuilderStub },
-                { provide: Store, useValue: storeStub },
-                { provide: TranslateService, useValue: translateServiceStub }
+                provideMockStore({ initialState }),
+                { provide: TranslateService, useValue: translateServiceStub },
             ]
         });
 
         fixture = TestBed.createComponent(RegistrationComponent);
         component = fixture.componentInstance;
+        
+        mockStore = TestBed.inject(MockStore);
     });
 
     it('should create', () => {
