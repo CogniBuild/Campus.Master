@@ -16,11 +16,10 @@ export class AuthEffects {
         toastClass: 'ngx-toastr server-error-toastr'
     };
 
-    private responseLocaleMap = new Map<string, string>([
+    private localeMap = new Map<string, string>([
         ['User already exists', 'AUTH.ERROR-TOASTR.USER-EXISTS'],
         ['Failed to create new user', 'AUTH.ERROR-TOASTR.NEW-USER']
     ]);
-
 
     $submitRegistrationForm = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.submitRegistration),
@@ -47,13 +46,13 @@ export class AuthEffects {
     $registrationFailed = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.registrationFailed),
         mergeMap((action) => {
-            const msgLocale$ = action.httpError.status === 400 ?
-                zip(this.localeService.get(this.responseLocaleMap[action.httpError.error]),
-                    this.localeService.get('AUTH.ERROR-TOASTR.HEADER')) :
-                zip(this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
-                    this.localeService.get('AUTH.ERROR-TOASTR.HEADER'));
+            const toastrHeader = this.localeService.get('AUTH.ERROR-TOASTR.HEADER');
 
-            return msgLocale$.pipe(
+            const localizedMsg$ = action.httpError.status === 400 ?
+                zip(this.localeService.get(this.localeMap.get(action.httpError.error)), toastrHeader) :
+                zip(this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'), toastrHeader);
+
+            return localizedMsg$.pipe(
                 tap(([message, header]) =>
                     this.toastrService.error(message, header, this.toastStyles))); // TODO: check if msgLocale returns cold observable
         })
