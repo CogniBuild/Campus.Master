@@ -12,18 +12,18 @@ import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AuthEffects {
-    private toastStyles = {
+    private readonly toastStyles = {
         toastClass: 'ngx-toastr server-error-toastr'
     };
 
-    private localeMap = new Map<string, string>([
+    private readonly localeMap = new Map<string, string>([
         ['User already exists', 'AUTH.ERROR-TOASTR.USER-EXISTS'],
         ['Failed to create new user', 'AUTH.ERROR-TOASTR.NEW-USER']
     ]);
 
     $submitRegistrationForm = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.submitRegistration),
-        mergeMap((userForm: RegisterUser) => this.registrationService// try to specify "type" prop inside of RegisterUser
+        mergeMap((userForm: RegisterUser) => this.registrationService// TODO: try to specify "type" prop inside of RegisterUser
             .registerUser(userForm).pipe(
                 map((token: string) => {
                     return AuthActions.registrationSuccess({ token });
@@ -37,7 +37,7 @@ export class AuthEffects {
         ofType(AuthActions.registrationSuccess),
         mergeMap((action) => {
             localStorage.setItem('token', action.token); // TODO: Where to store token in ang apps
-            this.router.navigate(['/campus']); // TODO: Move to component
+            this.router.navigate(['/campus']); // TODO: Move to component ?
 
             return EMPTY;
         })
@@ -54,7 +54,7 @@ export class AuthEffects {
 
             return localizedMsg$.pipe(
                 tap(([message, header]) =>
-                    this.toastrService.error(message, header, this.toastStyles))); // TODO: check if msgLocale returns cold observable
+                    this.toastrService.error(message, header, this.toastStyles))); // TODO: check if localizedMsg returns cold observable
         })
     ), { dispatch: false });
 
