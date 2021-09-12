@@ -9,7 +9,7 @@ import { selectSignInSpinnerState } from '../store/auth.selectors';
   templateUrl: './sing-in.component.html',
   styleUrls: ['./sing-in.component.sass'],
 })
-export class SingInComponent implements OnInit, OnDestroy {
+export class SingInComponent implements OnInit {
   form: FormGroup;
   isSpinnerOn$ = this.store.pipe(select(selectSignInSpinnerState));
 

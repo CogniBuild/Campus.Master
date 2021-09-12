@@ -1,4 +1,4 @@
-export interface RegisterUser {
+export interface UnregisteredUser {
     fullName: string;
     userName: string;
     email: string;

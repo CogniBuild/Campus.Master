@@ -71,15 +71,15 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const registerUser: RegisterUser = {
+    const unregisteredUser: RegisterUser = {
       fullName: this.registerForm.value.first_name + ' ' + this.registerForm.value.last_name,
       userName: this.registerForm.value.nickname,
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
-      confirmPassword: this.registerForm.value.confirmPassword
+      confirmPassword: this.registerForm.value.confirmPassword,
     };
 
 
-    this.store.dispatch(submitRegistration(registerUser));
+    this.store.dispatch(submitRegistration({ unregisteredUser }));
   }
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of, zip } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { RegisterUser } from '../shared/models';
 import { RegistrationService } from '../shared/services/registration.service';
 import { AuthActions } from './actions';
 import { Router } from '@angular/router';
@@ -25,8 +24,8 @@ export class AuthEffects {
 
     $submitRegistrationForm = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.submitRegistration),
-        mergeMap((userForm: RegisterUser) => this.registrationService// TODO: try to specify "type" prop inside of RegisterUser
-            .registerUser(userForm).pipe(
+        mergeMap((action) => this.registrationService
+            .registerUser(action.unregisteredUser).pipe(
                 map((token: string) => {
                     return AuthActions.registrationSuccess({ token });
                 }),
