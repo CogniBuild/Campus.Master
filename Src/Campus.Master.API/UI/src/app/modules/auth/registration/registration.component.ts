@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 import { RegisterUser } from '../shared/models';
 import { select, Store } from '@ngrx/store';
 import { submitRegistration } from '../store/actions/auth.actions';
-import { selectSpinnerState } from '../store/auth.selectors';
+import { selectRegistrationSpinnerState } from '../store/auth.selectors';
 
 @Component({
   selector: 'app-registration-page',
@@ -19,7 +19,7 @@ import { selectSpinnerState } from '../store/auth.selectors';
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
-  isSpinnerOn$ = this.store.pipe(select(selectSpinnerState));
+  isSpinnerOn$ = this.store.pipe(select(selectRegistrationSpinnerState));
   param = { minlength: 8, maxlength: 100 };
 
   private registerUser$: Subscription = new Subscription();

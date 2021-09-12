@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocaleService } from '../../../core/services/locale.service';
 import { ToastrService } from 'ngx-toastr';
+import { SignInService } from '../../../core/services';
 
 @Injectable()
 export class AuthEffects {
@@ -18,7 +19,8 @@ export class AuthEffects {
 
     private readonly localeMap = new Map<string, string>([
         ['User already exists', 'AUTH.ERROR-TOASTR.USER-EXISTS'],
-        ['Failed to create new user', 'AUTH.ERROR-TOASTR.NEW-USER']
+        ['Failed to create new user', 'AUTH.ERROR-TOASTR.NEW-USER'],
+        ['Wrong email or password', 'AUTH.ERROR-TOASTR.WRONG-EMAIL-PASSWORD']
     ]);
 
     $submitRegistrationForm = createEffect(() => this.actions$.pipe(
@@ -33,18 +35,22 @@ export class AuthEffects {
         )
     ));
 
-    $registrationSuccess = createEffect(() => this.actions$.pipe(
-        ofType(AuthActions.registrationSuccess),
+    $authSuccess = createEffect(() => this.actions$.pipe(
+        ofType(
+            AuthActions.registrationSuccess,
+            AuthActions.signInSuccess),
         mergeMap((action) => {
             localStorage.setItem('token', action.token); // TODO: Where to store token in ang apps
-            this.router.navigate(['/campus']); // TODO: Move to component ?
+            this.router.navigate(['/campus']); // TODO: Move to component ?(consider using separate effect)
 
             return EMPTY;
         })
     ), { dispatch: false });
 
-    $registrationFailed = createEffect(() => this.actions$.pipe(
-        ofType(AuthActions.registrationFailed),
+    $authFailed = createEffect(() => this.actions$.pipe(
+        ofType(
+            AuthActions.registrationFailed,
+            AuthActions.signInFailed),
         mergeMap((action) => {
             const toastrHeader = this.localeService.get('AUTH.ERROR-TOASTR.HEADER');
 
@@ -58,11 +64,25 @@ export class AuthEffects {
         })
     ), { dispatch: false });
 
+
+    $signInUser = createEffect(() => this.actions$.pipe(
+        ofType(AuthActions.signInUser),
+        mergeMap((action) =>
+            this.signInService.login(action.user).pipe(
+                map((token: string) => {
+                    return AuthActions.signInSuccess({ token });
+                }),
+                catchError((httpError: HttpErrorResponse) => of(AuthActions.signInFailed({ httpError })))
+            )
+        )
+    ));
+
     constructor(
         private actions$: Actions,
         private router: Router,
         private localeService: LocaleService,
         private registrationService: RegistrationService,
+        private signInService: SignInService,
         private toastrService: ToastrService,
     ) { }
 }
