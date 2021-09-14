@@ -32,7 +32,7 @@ export class SingInComponent implements OnInit {
     };
 
     this.store.dispatch(AuthActions.signInUser({ user }));
-    //TODO: where to put it ?
-    //this.form.reset({ email: user.email});
+    // TODO: where to put it ?
+    // this.form.reset({ email: user.email});
   }
 }
