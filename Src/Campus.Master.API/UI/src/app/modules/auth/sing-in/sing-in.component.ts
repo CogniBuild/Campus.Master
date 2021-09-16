@@ -12,7 +12,8 @@ import { selectSignInSpinnerState } from '../store/auth.selectors';
 export class SingInComponent implements OnInit {
   form: FormGroup;
   isSpinnerOn$ = this.store.pipe(select(selectSignInSpinnerState));
-
+  param = { minlength: 8 };
+  
   constructor(private store: Store) { }
 
   ngOnInit(): void {
