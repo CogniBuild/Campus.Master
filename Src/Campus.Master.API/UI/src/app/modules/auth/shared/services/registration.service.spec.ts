@@ -1,5 +1,5 @@
 import { RegistrationService } from './registration.service';
-import { RegisterUser } from '../models';
+import { SignUpCredentials } from '../models';
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
@@ -9,7 +9,7 @@ describe('registerUser()', () => {
   let httpTestingController: HttpTestingController;
   let registrationService: RegistrationService;
 
-  const mockUser: RegisterUser = {
+  const mockUser: SignUpCredentials = {
     fullName: 'fullName',
     userName: 'userName',
     email: 'example@example.com',
@@ -36,8 +36,8 @@ describe('registerUser()', () => {
 
     registrationService.registerUser(mockUser)
       .subscribe(token => {
-          expect(token).toEqual(mockToken);
-        }
+        expect(token).toEqual(mockToken);
+      }
       );
 
     const req = httpTestingController.expectOne('/api/profile/create');
@@ -51,9 +51,9 @@ describe('registerUser()', () => {
 
     registrationService.registerUser(mockUser)
       .subscribe((_) => {
-          fail('should have failed with 400 error');
-          done();
-        },
+        fail('should have failed with 400 error');
+        done();
+      },
         (error: HttpErrorResponse) => {
           expect(error.status).toBe(400);
           expect(error.error).toEqual(errorMsg);
