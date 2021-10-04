@@ -1,3 +1,3 @@
-export { AuthenticatedUser } from './authenticated-user';
+export { SignUpCredentials } from './sign-up-credentials.model';
+export { SignInCredentials } from './sign-in-credentials.model';
 export { ProfileInformation } from './profile-information';
-export { UnregisteredUser as RegisterUser } from './unregistered-user';

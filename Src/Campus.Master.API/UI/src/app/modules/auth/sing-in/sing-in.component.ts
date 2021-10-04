@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticatedUser } from '../shared/models';
+import { SignInCredentials } from '../shared/models';
 import { select, Store } from '@ngrx/store';
 import { AuthActions } from '../store/actions';
 import { selectSignInSpinnerState } from '../store/auth.selectors';
@@ -27,12 +27,12 @@ export class SingInComponent implements OnInit {
   }
 
   submit() {
-    const user: AuthenticatedUser = {
+    const user: SignInCredentials = {
       email: this.form.value.email,
       password: this.form.value.password,
     };
 
-    this.store.dispatch(AuthActions.signInUser({ user }));
+    this.store.dispatch(AuthActions.signInUser({ signInModel: user }));
     // TODO: where to put it ?
     // this.form.reset({ email: user.email});
   }

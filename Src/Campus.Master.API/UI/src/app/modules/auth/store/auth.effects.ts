@@ -25,7 +25,7 @@ export class AuthEffects {
     $submitRegistrationForm = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.submitRegistration),
         mergeMap((action) => this.registrationService
-            .registerUser(action.unregisteredUser).pipe(
+            .registerUser(action.signUpModel).pipe(
                 map((token: string) => {
                     return AuthActions.registrationSuccess({ token });
                 }),
@@ -67,7 +67,7 @@ export class AuthEffects {
     $signInUser = createEffect(() => this.actions$.pipe(
         ofType(AuthActions.signInUser),
         mergeMap((action) =>
-            this.signInService.login(action.user).pipe(
+            this.signInService.login(action.signInModel).pipe(
                 map((token: string) => {
                     return AuthActions.signInSuccess({ token });
                 }),

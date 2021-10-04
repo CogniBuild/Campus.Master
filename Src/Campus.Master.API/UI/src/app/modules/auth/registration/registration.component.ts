@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { ConfirmPasswordValidator } from '../confirmed.validator';
 import { Subscription } from 'rxjs';
-import { RegisterUser } from '../shared/models';
+import { SignUpCredentials } from '../shared/models';
 import { select, Store } from '@ngrx/store';
 import { submitRegistration } from '../store/actions/auth.actions';
 import { selectRegistrationSpinnerState } from '../store/auth.selectors';
@@ -71,7 +71,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const unregisteredUser: RegisterUser = {
+    const unregisteredUser: SignUpCredentials = {
       fullName: this.registerForm.value.first_name + ' ' + this.registerForm.value.last_name,
       userName: this.registerForm.value.nickname,
       email: this.registerForm.value.email,
@@ -80,6 +80,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     };
 
 
-    this.store.dispatch(submitRegistration({ unregisteredUser }));
+    this.store.dispatch(submitRegistration({ signUpModel: unregisteredUser }));
   }
 }

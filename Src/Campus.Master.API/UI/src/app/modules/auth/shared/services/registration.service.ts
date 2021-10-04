@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
-import { RegisterUser } from '../models';
+import { SignUpCredentials } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import { RegisterUser } from '../models';
 export class RegistrationService {
   constructor(private httpClient: HttpClient) { }
 
-  registerUser(user: RegisterUser): Observable<string> {
+  registerUser(user: SignUpCredentials): Observable<string> {
     return this.httpClient.post<string>(environment.createProfilePath, user);
   }
 }
