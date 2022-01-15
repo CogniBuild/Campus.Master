@@ -107,5 +107,5 @@ export class AuthEffects {
     private registrationService: RegistrationService,
     private signInService: SignInService,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 }

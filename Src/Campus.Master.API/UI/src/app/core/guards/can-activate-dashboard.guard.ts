@@ -21,7 +21,7 @@ export class CanActivateDashboardGuard implements CanActivate {
     private router: Router,
     private toastrService: ToastrService,
     private localeService: LocaleService
-  ) {}
+  ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
