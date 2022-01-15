@@ -43,8 +43,8 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.registrationSuccess, AuthActions.signInSuccess),
         mergeMap((action) => {
-          localStorage.setItem('token', action.token); // TODO: Where to store token in ang apps
-          this.router.navigate(['/campus']); // TODO: Move to component ?(consider using separate effect)
+          localStorage.setItem('token', action.token); // TODO: Where to store token in ang apps - not urgent
+          this.router.navigate(['/campus']); // TODO: Move to component ?(consider using separate effect) - not urgent
 
           return EMPTY;
         })
@@ -107,5 +107,5 @@ export class AuthEffects {
     private registrationService: RegistrationService,
     private signInService: SignInService,
     private toastrService: ToastrService
-  ) { }
+  ) {}
 }
