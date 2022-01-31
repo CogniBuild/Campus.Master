@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '', loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'campus', component: UserPageLayoutComponent, canActivate: [CanActivateDashboardGuard], // TODO: check how guard works
+    path: 'campus', component: UserPageLayoutComponent, canActivate: [CanActivateDashboardGuard],
     children: [
       {
         path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)

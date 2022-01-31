@@ -43,8 +43,8 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.registrationSuccess, AuthActions.signInSuccess),
         mergeMap((action) => {
-          localStorage.setItem('token', action.token); // TODO: Where to store token in ang apps - not urgent
-          this.router.navigate(['/campus']); // TODO: Move to component ?(consider using separate effect) - not urgent
+          localStorage.setItem('token', action.token);
+          this.router.navigate(['/campus']);
 
           return EMPTY;
         })
@@ -78,7 +78,7 @@ export class AuthEffects {
             tap(([message, header]) =>
               this.toastrService.error(message, header, this.toastStyles)
             )
-          ); // TODO: check if localizedMsg returns cold observable
+          );
         })
       ),
     { dispatch: false }

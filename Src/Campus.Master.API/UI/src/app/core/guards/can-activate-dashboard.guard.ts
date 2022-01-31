@@ -6,16 +6,15 @@ import {
   Router,
 } from '@angular/router';
 import { SignInService } from '../services/sign-in.service';
-import { Observable, of, zip } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, zip } from 'rxjs';
+import { catchError, mapTo, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
-import { LocaleService } from '@core/services/locale.service';
+import { LocaleService } from '../services/locale.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CanActivateDashboardGuard implements CanActivate {
-  // check with OnDestroy
   constructor(
     private signInService: SignInService,
     private router: Router,
@@ -28,10 +27,7 @@ export class CanActivateDashboardGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> {
     return this.signInService.getProfileInformation().pipe(
-      // Consider storing data to store
-      map(() => {
-        return true;
-      }),
+      mapTo(true),
       catchError(() => {
         const toastStyles = {
           toastClass: 'ngx-toastr server-error-toastr',
@@ -39,17 +35,15 @@ export class CanActivateDashboardGuard implements CanActivate {
 
         this.router.navigate(['']);
 
-        zip(
-          // Test scenario with tap
+        return zip(
           this.localeService.get('AUTH.ERROR-TOASTR.NOT-AUTHORIZED'),
           this.localeService.get('AUTH.ERROR-TOASTR.HEADER')
-        ).subscribe(
-          (
-            [message, header] // check for double executions with console.log
-          ) => this.toastrService.error(message, header, toastStyles)
+        ).pipe(
+          tap(([message, header]) =>
+            this.toastrService.error(message, header, toastStyles)
+          ),
+          mapTo(false)
         );
-
-        return of(false);
       })
     );
   }
