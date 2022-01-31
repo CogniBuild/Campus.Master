@@ -1,7 +1,7 @@
 import { SignInService } from './sign-in.service';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { AuthenticatedUser, ProfileInformation } from '../../modules/auth/shared/models';
+import { SignInCredentials, ProfileInformation } from '../../modules/auth/shared/models';
 import { HttpErrorResponse } from '@angular/common/http';
 
 describe('SignInService', () => {
@@ -28,7 +28,7 @@ describe('SignInService', () => {
     test('should return token when user logged in', () => {
       const mockToken: string = 'token';
 
-      const authenticatedUserMock: AuthenticatedUser = {
+      const authenticatedUserMock: SignInCredentials = {
         email: 'exmple@example.com',
         password: 'Password321'
       };
@@ -44,7 +44,7 @@ describe('SignInService', () => {
 
     test('should respond with 400 error when wrong email or password', (done) => {
 
-      const unauthenticatedUserMock: AuthenticatedUser = {
+      const unauthenticatedUserMock: SignInCredentials = {
         email: 'wrong email',
         password: 'wrong password'
       };
@@ -53,9 +53,9 @@ describe('SignInService', () => {
 
       signInService.login(unauthenticatedUserMock)
         .subscribe(_ => {
-            fail('should have failed with 400 error');
-            done();
-          },
+          fail('should have failed with 400 error');
+          done();
+        },
           (error: HttpErrorResponse) => {
             expect(error.status).toBe(400);
             expect(error.error).toEqual(errorMessage);

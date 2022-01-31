@@ -5,7 +5,7 @@ import { RegistrationComponent } from './registration.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FirstErrorPipe } from '../../../shared/pipes/first-error.pipe';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { RegistrationState } from '../store/auth.reducer';
+import { AuthState } from '../store/auth.reducer';
 
 describe('RegistrationComponent', () => {
     let component: RegistrationComponent;
@@ -16,8 +16,8 @@ describe('RegistrationComponent', () => {
     let mockStore: MockStore;
 
     const initialState = {
-        isSpinnerOn: false
-    } as RegistrationState
+        isSignInSpinnerOn: false
+    } as AuthState
 
     beforeEach(() => {
         TestBed.configureTestingModule({

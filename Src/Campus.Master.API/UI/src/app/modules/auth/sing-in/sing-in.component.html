@@ -44,8 +44,8 @@
           </div>
           <button type="submit" class="sign-in__btn"
                   [disabled]="form.invalid && form.touched">
-            <span [ngClass]="{'none-block': spinner}">{{ 'AUTH.SIGN-IN.SIGN-IN' | translate }}</span>
-            <div [ngClass]="{'box loader-02': spinner}"></div>
+            <span [ngClass]="{'none-block': isSpinnerOn$ | async}">{{ 'AUTH.SIGN-IN.SIGN-IN' | translate }}</span>
+            <div [ngClass]="{'box loader-02': isSpinnerOn$ | async}"></div>
           </button>
         </form>
         <div class="sign-in__createAcc">

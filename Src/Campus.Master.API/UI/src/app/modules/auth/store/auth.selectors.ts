@@ -1,9 +1,14 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { authFeatureName, RegistrationState } from './auth.reducer';
+import { authFeatureName, AuthState } from './auth.reducer';
 
-export const selectRegistrationState = createFeatureSelector<RegistrationState>(authFeatureName);
+export const selectAuthState = createFeatureSelector<AuthState>(authFeatureName);
 
-export const selectSpinnerState = createSelector(
-    selectRegistrationState,
-    (state) => state.isSpinnerOn
+export const selectRegistrationSpinnerState = createSelector(
+    selectAuthState,
+    (state) => state.isRegistrationSpinnerOn
+);
+
+export const selectSignInSpinnerState = createSelector(
+    selectAuthState,
+    (state) => state.isSignInSpinnerOn
 );

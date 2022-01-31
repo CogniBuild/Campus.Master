@@ -7,10 +7,10 @@ import {
 } from '@angular/forms';
 import { ConfirmPasswordValidator } from '../confirmed.validator';
 import { Subscription } from 'rxjs';
-import { RegisterUser } from '../shared/models';
+import { SignUpCredentials } from '../shared/models';
 import { select, Store } from '@ngrx/store';
 import { submitRegistration } from '../store/actions/auth.actions';
-import { selectSpinnerState } from '../store/auth.selectors';
+import { selectRegistrationSpinnerState } from '../store/auth.selectors';
 
 @Component({
   selector: 'app-registration-page',
@@ -19,7 +19,7 @@ import { selectSpinnerState } from '../store/auth.selectors';
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
-  isSpinnerOn$ = this.store.pipe(select(selectSpinnerState));
+  isSpinnerOn$ = this.store.pipe(select(selectRegistrationSpinnerState));
   param = { minlength: 8, maxlength: 100 };
 
   private registerUser$: Subscription = new Subscription();
@@ -71,15 +71,15 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const registerUser: RegisterUser = {
+    const unregisteredUser: SignUpCredentials = {
       fullName: this.registerForm.value.first_name + ' ' + this.registerForm.value.last_name,
       userName: this.registerForm.value.nickname,
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
-      confirmPassword: this.registerForm.value.confirmPassword
+      confirmPassword: this.registerForm.value.confirmPassword,
     };
 
 
-    this.store.dispatch(submitRegistration(registerUser));
+    this.store.dispatch(submitRegistration({ signUpModel: unregisteredUser }));
   }
 }

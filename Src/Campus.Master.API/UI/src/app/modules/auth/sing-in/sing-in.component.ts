@@ -1,38 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SignInService } from '../../../core/services';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { Subscription, zip } from 'rxjs';
-import { AuthenticatedUser } from '../shared/models';
-import { LocaleService } from '@core/services';
-import { HttpErrorResponse } from '@angular/common/http';
-
+import { SignInCredentials } from '../shared/models';
+import { select, Store } from '@ngrx/store';
+import { AuthActions } from '../store/actions';
+import { selectSignInSpinnerState } from '../store/auth.selectors';
 @Component({
   selector: 'app-sing-in',
   templateUrl: './sing-in.component.html',
   styleUrls: ['./sing-in.component.sass'],
 })
-export class SingInComponent implements OnInit, OnDestroy {
+export class SingInComponent implements OnInit {
   form: FormGroup;
-  spinner: boolean;
+  isSpinnerOn$ = this.store.pipe(select(selectSignInSpinnerState));
   param = { minlength: 8 };
 
-  private signInUser$: Subscription = new Subscription();
-
-  private toastStyles = {
-    toastClass: 'ngx-toastr server-error-toastr'
-  };
-
-  private responseLocaleMap = {
-    'Wrong email or password': 'AUTH.ERROR-TOASTR.WRONG-EMAIL-PASSWORD'
-  };
-
-  constructor(private signInService: SignInService,
-              private toastr: ToastrService,
-              private localeService: LocaleService,
-              private router: Router) {
-  }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -44,33 +26,12 @@ export class SingInComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.signInUser$.unsubscribe();
-  }
-
   submit() {
-    this.spinner = true;
-    const user: AuthenticatedUser = {
+    const user: SignInCredentials = {
       email: this.form.value.email,
       password: this.form.value.password,
     };
 
-    this.signInUser$ = this.signInService.login(user).subscribe(
-      (token: string) => {
-        localStorage.setItem('token', token);
-        this.form.reset();
-        this.router.navigate(['/campus']);
-      }, (errorResponse: HttpErrorResponse) => {
-        const msgLocale$ = errorResponse.status === 400 ?
-          zip(this.localeService.get(this.responseLocaleMap[errorResponse.error]),
-            this.localeService.get('AUTH.ERROR-TOASTR.HEADER')) :
-          zip(this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
-            this.localeService.get('AUTH.ERROR-TOASTR.HEADER'));
-
-        msgLocale$.toPromise().then(([message, header]) => this.toastr.error(message, header, this.toastStyles));
-        this.spinner = false;
-        this.form.reset({ email: user.email});
-      }
-    );
+    this.store.dispatch(AuthActions.signInUser({ signInModel: user }));
   }
 }
