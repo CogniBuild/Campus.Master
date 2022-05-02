@@ -3,7 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { SignInCredentials, SignUpCredentials } from '../../shared/models';
 
 
-export const submitRegistration = createAction('[Auth] Submit Registration Form', props<{ signUpModel: SignUpCredentials }>()); // just user
+export const submitRegistration = createAction('[Auth] Registration', props<{ signUpModel: SignUpCredentials }>());
 export const registrationSuccess = createAction('[Auth/API] Registration Success', props<{ token: string }>());
 export const registrationFailed = createAction('[Auth/API] Registration Failed', props<{ httpError: HttpErrorResponse }>());
 
