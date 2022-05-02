@@ -10,3 +10,5 @@ export const registrationFailed = createAction('[Auth/API] Registration Failed',
 export const signInUser = createAction('[Auth] Sign In User', props<{ signInModel: SignInCredentials }>());
 export const signInSuccess = createAction('[Auth/API] Sign In User Success', props<{ token: string }>());
 export const signInFailed = createAction('[Auth/API] Sign In User Failed', props<{ httpError: HttpErrorResponse }>());
+
+export const navigateToCampusRoute = createAction('[Auth] Navigate to campus route');

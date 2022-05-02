@@ -38,18 +38,25 @@ export class AuthEffects {
     )
   );
 
-  $authSuccess = createEffect(
+  $navigateToCampusRoute = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthActions.registrationSuccess, AuthActions.signInSuccess),
-        mergeMap((action) => {
-          localStorage.setItem('token', action.token);
+        ofType(AuthActions.navigateToCampusRoute),
+        tap(() => {
           this.router.navigate(['/campus']);
-
-          return EMPTY;
         })
       ),
     { dispatch: false }
+  );
+
+  $authSuccess = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.registrationSuccess, AuthActions.signInSuccess),
+      mergeMap((action) => {
+        localStorage.setItem('token', action.token);
+        return of(AuthActions.navigateToCampusRoute());
+      })
+    )
   );
 
   $authFailed = createEffect(
