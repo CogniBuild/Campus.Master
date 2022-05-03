@@ -10,6 +10,9 @@ import { Observable, zip } from 'rxjs';
 import { catchError, mapTo, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { LocaleService } from '../services/locale.service';
+import { ProfileInfo } from '../../modules/auth/shared/models';
+import { Store } from '@ngrx/store';
+import { loadProfileInformationSuccess as loadProfileInfoSuccess } from '../../modules/auth/store/actions/auth.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +22,8 @@ export class CanActivateDashboardGuard implements CanActivate {
     private signInService: SignInService,
     private router: Router,
     private toastrService: ToastrService,
-    private localeService: LocaleService
+    private localeService: LocaleService,
+    private store: Store
   ) { }
 
   canActivate(
@@ -27,6 +31,9 @@ export class CanActivateDashboardGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> {
     return this.signInService.getProfileInformation().pipe(
+      tap((profile: ProfileInfo) =>
+        this.store.dispatch(loadProfileInfoSuccess({ profile }))
+      ),
       mapTo(true),
       catchError(() => {
         const toastStyles = {

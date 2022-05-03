@@ -1,20 +1,25 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { ProfileInfo } from '../shared/models';
 import { AuthActions } from './actions';
 
 export const authFeatureName = 'auth';
 
 export interface AuthState {
+    profile: ProfileInfo;
     isSignInSpinnerOn: boolean;
     isRegistrationSpinnerOn: boolean;
 }
 
 export const initialState: AuthState = {
+    profile: null,
     isSignInSpinnerOn: false,
-    isRegistrationSpinnerOn: false
+    isRegistrationSpinnerOn: false,
 };
 
 const reducer = createReducer(
     initialState,
+    on(AuthActions.loadProfileInfoSuccess, (state, { profile }) => ({ ...state, profile })),
+
     // Registration
     on(AuthActions.submitRegistration, (state) => ({ ...state, isRegistrationSpinnerOn: true })),
     on(AuthActions.registrationSuccess, (state) => ({ ...state, isRegistrationSpinnerOn: false })),

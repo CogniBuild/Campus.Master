@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SignInCredentials, ProfileInformation } from '../../modules/auth/shared/models';
+import { SignInCredentials, ProfileInfo } from '../../modules/auth/shared/models';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 
@@ -13,7 +13,7 @@ export class SignInService {
     return this.http.post<string>(environment.authenticateProfile, user);
   }
 
-  getProfileInformation(): Observable<ProfileInformation> {
-    return this.http.get<ProfileInformation>(environment.getProfileInformation);
+  getProfileInformation(): Observable<ProfileInfo> {
+    return this.http.get<ProfileInfo>(environment.getProfileInformation);
   }
 }
