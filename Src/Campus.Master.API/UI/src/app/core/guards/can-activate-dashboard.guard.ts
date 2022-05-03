@@ -12,7 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 import { LocaleService } from '../services/locale.service';
 import { ProfileInfo } from '../../modules/auth/shared/models';
 import { Store } from '@ngrx/store';
-import { loadProfileInformationSuccess as loadProfileInfoSuccess } from '../../modules/auth/store/actions/auth.actions';
+import { loadProfileInfoSuccess } from '../../modules/auth/store/actions/auth.actions';
+
 
 @Injectable({
   providedIn: 'root',
