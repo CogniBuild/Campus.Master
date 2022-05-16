@@ -41,7 +41,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "angular-validation-match": "^1.9.0",
     "inquirer": "^6.0.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "ngx-toastr": "^13.2.0",
     "normalize-scss": "^7.0.1",
     "rxjs": "~6.5.4",
