@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 import { SignUpCredentials } from '../shared/models';
 import { select, Store } from '@ngrx/store';
 import { submitRegistration } from '../store/actions/auth.actions';
-import { selectRegistrationSpinnerState } from '../store/auth.selectors';
+import { selectRegistrationSpinnerState } from '../store';
 
 @Component({
   selector: 'app-registration-page',

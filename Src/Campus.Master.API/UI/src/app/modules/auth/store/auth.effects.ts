@@ -53,7 +53,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.registrationSuccess, AuthActions.signInSuccess),
       mergeMap((action) => {
-        localStorage.setItem('token', action.token);
+        localStorage.setItem('token', action.token);// TODO: consider save it in store
         return of(AuthActions.navigateToCampusRoute());
       })
     )
@@ -63,7 +63,7 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.registrationFailed, AuthActions.signInFailed),
-        mergeMap((action) => {
+        mergeMap((action) => {// TODO: use switchMap here
           const toastrHeader = this.localeService.get(
             'AUTH.ERROR-TOASTR.HEADER'
           );
@@ -81,7 +81,7 @@ export class AuthEffects {
                   toastrHeader
                 );
 
-          return localizedMsg$.pipe(
+          return localizedMsg$.pipe(// return action here
             tap(([message, header]) =>
               this.toastrService.error(message, header, this.toastStyles)
             )
@@ -94,7 +94,7 @@ export class AuthEffects {
   $signInUser = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.signInUser),
-      mergeMap((action) =>
+      mergeMap((action) => // TODO: use switchMap here
         this.signInService.login(action.signInModel).pipe(
           map((token: string) => {
             return AuthActions.signInSuccess({ token });
