@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of, zip } from 'rxjs';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { RegistrationService } from '../shared/services/registration.service';
 import { AuthActions } from './actions';
 import { Router } from '@angular/router';
@@ -53,7 +53,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.registrationSuccess, AuthActions.signInSuccess),
       mergeMap((action) => {
-        localStorage.setItem('token', action.token);// TODO: consider save it in store
+        localStorage.setItem('token', action.token); // TODO: consider save it in store
         return of(AuthActions.navigateToCampusRoute());
       })
     )
@@ -63,7 +63,7 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.registrationFailed, AuthActions.signInFailed),
-        mergeMap((action) => {// TODO: use switchMap here
+        switchMap((action) => {
           const toastrHeader = this.localeService.get(
             'AUTH.ERROR-TOASTR.HEADER'
           );
@@ -71,15 +71,15 @@ export class AuthEffects {
           const localizedMsg$ =
             action.httpError.status === 400
               ? zip(
-                  this.localeService.get(
-                    this.localeMap.get(action.httpError.error)
-                  ),
-                  toastrHeader
-                )
+                this.localeService.get(
+                  this.localeMap.get(action.httpError.error)
+                ),
+                toastrHeader
+              )
               : zip(
-                  this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
-                  toastrHeader
-                );
+                this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
+                toastrHeader
+              );
 
           return localizedMsg$.pipe(// return action here
             tap(([message, header]) =>
@@ -94,7 +94,7 @@ export class AuthEffects {
   $signInUser = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.signInUser),
-      mergeMap((action) => // TODO: use switchMap here
+      switchMap((action) =>
         this.signInService.login(action.signInModel).pipe(
           map((token: string) => {
             return AuthActions.signInSuccess({ token });
