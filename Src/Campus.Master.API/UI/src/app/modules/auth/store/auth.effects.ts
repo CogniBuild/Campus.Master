@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, of, zip } from 'rxjs';
+import { of, zip } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { RegistrationService } from '../shared/services/registration.service';
 import { AuthActions } from './actions';
@@ -38,22 +38,11 @@ export class AuthEffects {
     )
   );
 
-  $navigateToCampusRoute = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.navigateToCampusRoute),
-        tap(() => {
-          this.router.navigate(['/campus']);
-        })
-      ),
-    { dispatch: false }
-  );
-
   $authSuccess = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.registrationSuccess, AuthActions.signInSuccess),
       mergeMap((action) => {
-        localStorage.setItem('token', action.token); // TODO: consider save it in store
+        localStorage.setItem('token', action.token);
         return of(AuthActions.navigateToCampusRoute());
       })
     )
@@ -109,7 +98,6 @@ export class AuthEffects {
 
   constructor(
     private actions$: Actions,
-    private router: Router,
     private localeService: LocaleService,
     private registrationService: RegistrationService,
     private signInService: SignInService,
