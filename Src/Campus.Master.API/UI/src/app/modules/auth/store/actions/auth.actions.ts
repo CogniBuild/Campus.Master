@@ -3,11 +3,11 @@ import { createAction, props } from '@ngrx/store';
 import { ProfileInfo, SignInCredentials, SignUpCredentials } from '../../shared/models';
 
 
-export const submitRegistration = createAction('[Auth] Registration', props<{ signUpModel: SignUpCredentials }>());
-export const registrationSuccess = createAction('[Auth/API] Registration Success', props<{ token: string }>());
-export const registrationFailed = createAction('[Auth/API] Registration Failed', props<{ httpError: HttpErrorResponse }>());
+export const signUp = createAction('[Auth] Sign Up', props<{ signUpModel: SignUpCredentials }>());
+export const signUpSuccess = createAction('[Auth/API] Sign Up Success', props<{ token: string }>());
+export const signUpFailed = createAction('[Auth/API] Sign Up Failed', props<{ httpError: HttpErrorResponse }>());
 
-export const signInUser = createAction('[Auth] Sign In User', props<{ signInModel: SignInCredentials }>());
+export const signIn = createAction('[Auth] Sign In', props<{ signInModel: SignInCredentials }>());
 export const signInSuccess = createAction('[Auth/API] Sign In User Success', props<{ token: string }>());
 export const signInFailed = createAction('[Auth/API] Sign In User Failed', props<{ httpError: HttpErrorResponse }>());
 

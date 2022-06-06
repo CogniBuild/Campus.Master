@@ -4,7 +4,6 @@ import { of, zip } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { RegistrationService } from '../shared/services/registration.service';
 import { AuthActions } from './actions';
-import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocaleService } from '../../../core/services/locale.service';
 import { ToastrService } from 'ngx-toastr';
@@ -24,14 +23,13 @@ export class AuthEffects {
 
   $submitRegistrationForm = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.submitRegistration),
+      ofType(AuthActions.signUp), // TODO: consider different name
       mergeMap((action) =>
         this.registrationService.registerUser(action.signUpModel).pipe(
-          map((token: string) => {
-            return AuthActions.registrationSuccess({ token });
-          }),
+          map((token: string) =>
+            AuthActions.signUpSuccess({ token })),
           catchError((httpError: HttpErrorResponse) =>
-            of(AuthActions.registrationFailed({ httpError }))
+            of(AuthActions.signUpFailed({ httpError }))
           )
         )
       )
@@ -40,7 +38,7 @@ export class AuthEffects {
 
   $authSuccess = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.registrationSuccess, AuthActions.signInSuccess),
+      ofType(AuthActions.signUpSuccess, AuthActions.signInSuccess),
       mergeMap((action) => {
         localStorage.setItem('token', action.token);
         return of(AuthActions.navigateToCampusRoute());
@@ -51,7 +49,7 @@ export class AuthEffects {
   $authFailed = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(AuthActions.registrationFailed, AuthActions.signInFailed),
+        ofType(AuthActions.signUpFailed, AuthActions.signInFailed),
         switchMap((action) => {
           const toastrHeader = this.localeService.get(
             'AUTH.ERROR-TOASTR.HEADER'
@@ -82,7 +80,7 @@ export class AuthEffects {
 
   $signInUser = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.signInUser),
+      ofType(AuthActions.signIn),
       switchMap((action) =>
         this.signInService.login(action.signInModel).pipe(
           map((token: string) => {

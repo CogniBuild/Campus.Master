@@ -22,11 +22,11 @@ const reducer = createReducer(
 
     // Registration
     on(AuthActions.submitRegistration, (state) => ({ ...state, isRegistrationSpinnerOn: true })),
-    on(AuthActions.registrationSuccess, (state) => ({ ...state, isRegistrationSpinnerOn: false })),
-    on(AuthActions.registrationFailed, (state) => ({ ...state, isRegistrationSpinnerOn: false })),
+    on(AuthActions.signUpSuccess, (state) => ({ ...state, isRegistrationSpinnerOn: false })),
+    on(AuthActions.signUpFailed, (state) => ({ ...state, isRegistrationSpinnerOn: false })),
 
     // Sign-in
-    on(AuthActions.signInUser, (state) => ({ ...state, isSignInSpinnerOn: true })),
+    on(AuthActions.signIn, (state) => ({ ...state, isSignInSpinnerOn: true })),
     on(AuthActions.signInSuccess, (state) => ({ ...state, isSignInSpinnerOn: false })),
     on(AuthActions.signInFailed, (state) => ({ ...state, isSignInSpinnerOn: false }))
 );
