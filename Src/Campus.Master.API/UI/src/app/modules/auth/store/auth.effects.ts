@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of, zip } from 'rxjs';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { RegistrationService } from '../shared/services/registration.service';
+import { SignUpService } from '../shared/services/registration.service';
 import { AuthActions } from './actions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocaleService } from '../../../core/services/locale.service';
-import { ToastrService } from 'ngx-toastr';
 import { SignInService } from '../../../core/services';
 
 @Injectable()
@@ -23,9 +22,9 @@ export class AuthEffects {
 
   $submitRegistrationForm = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.signUp), // TODO: consider different name
+      ofType(AuthActions.signUp),
       mergeMap((action) =>
-        this.registrationService.registerUser(action.signUpModel).pipe(
+        this.signUpService.signUp(action.signUpModel).pipe(
           map((token: string) =>
             AuthActions.signUpSuccess({ token })),
           catchError((httpError: HttpErrorResponse) =>
@@ -97,8 +96,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private localeService: LocaleService,
-    private registrationService: RegistrationService,
+    private signUpService: SignUpService,
     private signInService: SignInService,
-    private toastrService: ToastrService
   ) { }
 }

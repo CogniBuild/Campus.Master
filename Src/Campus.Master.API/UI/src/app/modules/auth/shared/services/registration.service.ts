@@ -7,10 +7,10 @@ import { SignUpCredentials } from '../models';
 @Injectable({
   providedIn: 'root',
 })
-export class RegistrationService {
+export class SignUpService {
   constructor(private httpClient: HttpClient) { }
 
-  registerUser(user: SignUpCredentials): Observable<string> {
-    return this.httpClient.post<string>(environment.createProfilePath, user);
+  signUp(credentials: SignUpCredentials): Observable<string> {
+    return this.httpClient.post<string>(environment.createProfilePath, credentials);
   }
 }
