@@ -63,7 +63,6 @@
     "jest-preset-angular": "^8.3.2",
     "ts-jest": "^26.3.0",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
     "typescript": "^3.9.7"
   }
 }
