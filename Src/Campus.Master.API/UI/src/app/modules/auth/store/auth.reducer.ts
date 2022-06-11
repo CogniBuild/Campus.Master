@@ -20,8 +20,8 @@ const reducer = createReducer(
     initialState,
     on(AuthActions.loadProfileInfoSuccess, (state, { profile }) => ({ ...state, profile })),
 
-    // Registration
-    on(AuthActions.submitRegistration, (state) => ({ ...state, isRegistrationSpinnerOn: true })),
+    // Sign-up
+    on(AuthActions.signUp, (state) => ({ ...state, isRegistrationSpinnerOn: true })),
     on(AuthActions.signUpSuccess, (state) => ({ ...state, isRegistrationSpinnerOn: false })),
     on(AuthActions.signUpFailed, (state) => ({ ...state, isRegistrationSpinnerOn: false })),
 

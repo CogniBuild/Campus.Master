@@ -32,6 +32,6 @@ export class SingInComponent implements OnInit {
       password: this.form.value.password,
     };
 
-    this.store.dispatch(AuthActions.signInUser({ signInModel: user }));
+    this.store.dispatch(AuthActions.signIn({ signInModel: user }));
   }
 }

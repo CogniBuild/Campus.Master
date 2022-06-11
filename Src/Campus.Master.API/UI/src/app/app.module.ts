@@ -17,6 +17,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { RoutingEffects } from './store/routing-effects';
+import { ToastrEffects } from './store/toastr/toastr-effects';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { RoutingEffects } from './store/routing-effects';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     StoreModule.forRoot({ }),
-    EffectsModule.forRoot([RoutingEffects]),
+    EffectsModule.forRoot([RoutingEffects, ToastrEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   entryComponents: [EditProjectDialogComponent, ConfirmDialogComponent],

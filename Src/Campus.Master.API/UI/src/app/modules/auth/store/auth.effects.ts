@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of, zip } from 'rxjs';
-import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { SignUpService } from '../shared/services/registration.service';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { SignUpService } from '../shared/services/sign-up.service';
 import { AuthActions } from './actions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocaleService } from '../../../core/services/locale.service';
 import { SignInService } from '../../../core/services';
+import { errorToastr } from '../../../store/toastr/toastr.actions';
 
 @Injectable()
 export class AuthEffects {
-  private readonly toastStyles = {
-    toastClass: 'ngx-toastr server-error-toastr',
-  };
-
   private readonly localeMap = new Map<string, string>([
     ['User already exists', 'AUTH.ERROR-TOASTR.USER-EXISTS'],
     ['Failed to create new user', 'AUTH.ERROR-TOASTR.NEW-USER'],
@@ -45,37 +42,28 @@ export class AuthEffects {
     )
   );
 
-  $authFailed = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.signUpFailed, AuthActions.signInFailed),
-        switchMap((action) => {
-          const toastrHeader = this.localeService.get(
-            'AUTH.ERROR-TOASTR.HEADER'
+  $authFailed = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.signUpFailed, AuthActions.signInFailed),
+      switchMap((action) => {
+        const toastrHeader = this.localeService.get(
+          'AUTH.ERROR-TOASTR.HEADER'
+        );
+        return action.httpError.status === 400
+          ? zip(
+            this.localeService.get(
+              this.localeMap.get(action.httpError.error)
+            ),
+            toastrHeader
+          )
+          : zip(
+            this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
+            toastrHeader
           );
-
-          const localizedMsg$ =
-            action.httpError.status === 400
-              ? zip(
-                this.localeService.get(
-                  this.localeMap.get(action.httpError.error)
-                ),
-                toastrHeader
-              )
-              : zip(
-                this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
-                toastrHeader
-              );
-
-          return localizedMsg$.pipe(// return action here
-            tap(([message, header]) =>
-              this.toastrService.error(message, header, this.toastStyles)
-            )
-          );
-        })
-      ),
-    { dispatch: false }
-  );
+      }),
+      switchMap(([message, header]) => of(errorToastr({ message, header })))
+    )
+  ); 
 
   $signInUser = createEffect(() =>
     this.actions$.pipe(

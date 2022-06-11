@@ -9,8 +9,8 @@ import { ConfirmPasswordValidator } from '../confirmed.validator';
 import { Subscription } from 'rxjs';
 import { SignUpCredentials } from '../shared/models';
 import { select, Store } from '@ngrx/store';
-import { submitRegistration } from '../store/actions/auth.actions';
 import { selectRegistrationSpinnerState } from '../store';
+import { signUp } from '../store/actions/auth.actions';
 
 @Component({
   selector: 'app-registration-page',
@@ -80,6 +80,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     };
 
 
-    this.store.dispatch(submitRegistration({ signUpModel: unregisteredUser }));
+    this.store.dispatch(signUp({ signUpModel: unregisteredUser }));
   }
 }
