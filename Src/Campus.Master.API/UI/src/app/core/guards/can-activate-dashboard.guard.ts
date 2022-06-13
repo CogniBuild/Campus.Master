@@ -48,7 +48,7 @@ export class CanActivateDashboardGuard implements CanActivate {
           this.localeService.get('AUTH.ERROR-TOASTR.HEADER')
         ).pipe(
           tap(([message, header]) =>
-            this.toastrService.error(message, header, toastStyles)
+            this.toastrService.error(message, header, toastStyles) // TODO: Can we dispatch errorToastr action here ?
           ),
           mapTo(false)
         );
