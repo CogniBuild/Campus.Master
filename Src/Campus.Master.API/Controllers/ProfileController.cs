@@ -44,12 +44,20 @@ namespace Campus.Master.API.Controllers
         /// <returns>General profile information.</returns>
         /// <response code="200">User exists and is authorized.</response>
         /// <response code="401">User is unauthorized.</response>  
-        [HttpGet]
+        [HttpGet("info")]
         [EntryPointLogging(ActionName = "[Profile] Get Profile Information", SenderName = "ProfileController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<UserViewDto> GetProfileInformation() =>
             await _profileService.GetUserByIdAsync(_claimExtractionService.GetUserIdFromClaims());
+
+        [HttpGet("isAuthenticated")]
+        [AllowAnonymous]
+        [EntryPointLogging(ActionName = "[Profile] Is User Authenticated", SenderName = "ProfileController")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task IsUserAuthenticated() =>
+            await _profileService.IsUserAuthenticatedAsync(_claimExtractionService.GetUserIdFromClaims());
 
         /// <summary>
         /// Create profile.
@@ -172,7 +180,7 @@ namespace Campus.Master.API.Controllers
         private async Task<string> VerifyUserAndBuildToken(UserAuthenticationDto profile)
         {
             var claims = await _profileService.VerifyUserAsync(profile);
-            
+
             return _jwtBuilder.ResetClaims()
                 .AddClaim(ClaimTypes.NameIdentifier, claims.ProfileId)
                 .Build();

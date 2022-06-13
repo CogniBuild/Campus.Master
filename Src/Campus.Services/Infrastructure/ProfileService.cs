@@ -56,6 +56,11 @@ namespace Campus.Services.Implementation.Infrastructure
                 throw new ApplicationException("Failed to create new user");
         }
 
+        public async Task IsUserAuthenticatedAsync(string id)
+        {
+            await GetUserByIdAsync(id);
+        }
+
         public async Task<UserViewDto> GetUserByIdAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
