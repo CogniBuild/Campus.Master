@@ -31,10 +31,10 @@ export class CanActivateDashboardGuard implements CanActivate {
       catchError(() => {
         const toastStyles = {
           toastClass: 'ngx-toastr server-error-toastr',
-        };
+        };// TODO: extract
 
         this.router.navigate(['']);
-
+ 
         return zip(
           this.localeService.get('AUTH.ERROR-TOASTR.NOT-AUTHORIZED'),
           this.localeService.get('AUTH.ERROR-TOASTR.HEADER')

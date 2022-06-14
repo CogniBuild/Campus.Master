@@ -7,13 +7,13 @@ export const authFeatureName = 'auth';
 export interface AuthState {
     profile: ProfileInfo;
     isSignInSpinnerOn: boolean;
-    isRegistrationSpinnerOn: boolean;
+    isSignUpSpinnerOn: boolean;
 }
 
 export const initialState: AuthState = {
     profile: null,
     isSignInSpinnerOn: false,
-    isRegistrationSpinnerOn: false,
+    isSignUpSpinnerOn: false,
 };
 
 const reducer = createReducer(
@@ -22,8 +22,8 @@ const reducer = createReducer(
 
     // Sign-up
     on(AuthActions.signUp, (state) => ({ ...state, isRegistrationSpinnerOn: true })),
-    on(AuthActions.signUpSuccess, (state) => ({ ...state, isRegistrationSpinnerOn: false })),
-    on(AuthActions.signUpFailed, (state) => ({ ...state, isRegistrationSpinnerOn: false })),
+    on(AuthActions.signUpSuccess, (state) => ({ ...state, isSignUpSpinnerOn: false })),
+    on(AuthActions.signUpFailed, (state) => ({ ...state, isSignUpSpinnerOn: false })),
 
     // Sign-in
     on(AuthActions.signIn, (state) => ({ ...state, isSignInSpinnerOn: true })),
