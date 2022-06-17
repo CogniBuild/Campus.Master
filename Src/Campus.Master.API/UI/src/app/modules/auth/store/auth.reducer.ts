@@ -7,13 +7,13 @@ export const authFeatureName = 'auth';
 export interface AuthState {
     profile: ProfileInfo;
     isSignInSpinnerOn: boolean;
-    isRegistrationSpinnerOn: boolean;
+    isSignUpSpinnerOn: boolean;
 }
 
 export const initialState: AuthState = {
     profile: null,
     isSignInSpinnerOn: false,
-    isRegistrationSpinnerOn: false,
+    isSignUpSpinnerOn: false,
 };
 
 const reducer = createReducer(
