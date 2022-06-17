@@ -10,10 +10,6 @@ import { Observable, zip } from 'rxjs';
 import { catchError, mapTo, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { LocaleService } from '../services/locale.service';
-import { ProfileInfo } from '../../modules/auth/shared/models';
-import { Store } from '@ngrx/store';
-import { loadProfileInfoSuccess } from '../../modules/auth/store/actions/auth.actions';
-
 
 @Injectable({
   providedIn: 'root',
@@ -23,26 +19,22 @@ export class CanActivateDashboardGuard implements CanActivate {
     private signInService: SignInService,
     private router: Router,
     private toastrService: ToastrService,
-    private localeService: LocaleService,
-    private store: Store
+    private localeService: LocaleService
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.signInService.getProfileInformation().pipe(
-      tap((profile: ProfileInfo) =>
-        this.store.dispatch(loadProfileInfoSuccess({ profile }))
-      ),
+    return this.signInService.isAuthenticated().pipe(
       mapTo(true),
       catchError(() => {
         const toastStyles = {
           toastClass: 'ngx-toastr server-error-toastr',
-        };
+        };// TODO: extract
 
         this.router.navigate(['']);
-
+ 
         return zip(
           this.localeService.get('AUTH.ERROR-TOASTR.NOT-AUTHORIZED'),
           this.localeService.get('AUTH.ERROR-TOASTR.HEADER')

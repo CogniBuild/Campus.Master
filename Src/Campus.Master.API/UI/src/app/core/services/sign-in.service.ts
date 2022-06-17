@@ -16,4 +16,8 @@ export class SignInService {
   getProfileInformation(): Observable<ProfileInfo> {
     return this.http.get<ProfileInfo>(environment.getProfileInformation);
   }
+
+  isAuthenticated(): Observable<boolean> {
+    return this.http.get<boolean>(environment.isUserAuthenticated);
+  }
 }
