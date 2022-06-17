@@ -52,12 +52,10 @@ namespace Campus.Master.API.Controllers
             await _profileService.GetUserByIdAsync(_claimExtractionService.GetUserIdFromClaims());
 
         [HttpGet("isAuthenticated")]
-        [AllowAnonymous]
         [EntryPointLogging(ActionName = "[Profile] Is User Authenticated", SenderName = "ProfileController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task IsUserAuthenticated() =>
-            await _profileService.IsUserAuthenticatedAsync(_claimExtractionService.GetUserIdFromClaims());
+        public bool IsUserAuthenticated() => User.Identity.IsAuthenticated;
 
         /// <summary>
         /// Create profile.
