@@ -54,7 +54,7 @@ namespace Campus.Master.API.Controllers
         [HttpGet("isAuthenticated")]
         [EntryPointLogging(ActionName = "[Profile] Is User Authenticated", SenderName = "ProfileController")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public bool IsUserAuthenticated() => User.Identity.IsAuthenticated;
 
         /// <summary>
