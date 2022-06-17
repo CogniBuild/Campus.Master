@@ -3,18 +3,15 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 import { errorToastr } from './toastr.actions';
 import { ToastrService } from 'ngx-toastr';
+import { toastStyles } from '../../shared/toastr/toastr-styles';
 
 @Injectable()
 export class ToastrEffects {
-    private readonly toastStyles = {
-        toastClass: 'ngx-toastr server-error-toastr',
-    };
-
     $showErrorToastr = createEffect(() =>
         this.actions$.pipe(
             ofType(errorToastr),
             tap(({ message, header }) =>
-                this.toastrService.error(message, header, this.toastStyles)
+                this.toastrService.error(message, header, toastStyles)
             )
         ), { dispatch: false }
     );

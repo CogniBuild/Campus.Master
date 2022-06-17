@@ -14,6 +14,7 @@ import { ProfileInfo } from '../../modules/auth/shared/models';
 import { Store } from '@ngrx/store';
 import { loadProfileInfoSuccess } from '../../modules/auth/store/actions/auth.actions';
 
+import { toastStyles } from '../../shared/toastr/toastr-styles';
 
 @Injectable({
   providedIn: 'root',
@@ -37,10 +38,6 @@ export class CanActivateDashboardGuard implements CanActivate {
       ),
       mapTo(true),
       catchError(() => {
-        const toastStyles = {
-          toastClass: 'ngx-toastr server-error-toastr',
-        };
-
         this.router.navigate(['']);
 
         return zip(

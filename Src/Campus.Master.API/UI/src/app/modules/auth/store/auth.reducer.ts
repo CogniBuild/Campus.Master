@@ -21,9 +21,9 @@ const reducer = createReducer(
     on(AuthActions.loadProfileInfoSuccess, (state, { profile }) => ({ ...state, profile })),
 
     // Sign-up
-    on(AuthActions.signUp, (state) => ({ ...state, isRegistrationSpinnerOn: true })),
-    on(AuthActions.signUpSuccess, (state) => ({ ...state, isRegistrationSpinnerOn: false })),
-    on(AuthActions.signUpFailed, (state) => ({ ...state, isRegistrationSpinnerOn: false })),
+    on(AuthActions.signUp, (state) => ({ ...state, isSignUpSpinnerOn: true })),
+    on(AuthActions.signUpSuccess, (state) => ({ ...state, isSignUpSpinnerOn: false })),
+    on(AuthActions.signUpFailed, (state) => ({ ...state, isSignUpSpinnerOn: false })),
 
     // Sign-in
     on(AuthActions.signIn, (state) => ({ ...state, isSignInSpinnerOn: true })),
