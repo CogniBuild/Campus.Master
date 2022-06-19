@@ -3,7 +3,7 @@ import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { classrooms } from '../model/mockData';
 import { Classroom } from '../model/classrooms';
-import { ProfileInformation } from '../../../auth/shared/models';
+import { ProfileInfo } from '../../../auth/shared/models';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -15,8 +15,8 @@ export class ClassroomService {
   constructor(private http: HttpClient) {
   }
 
-  getUser(): Observable<ProfileInformation> {
-    return this.http.get<ProfileInformation>(environment.getProfileInformation);
+  getUser(): Observable<ProfileInfo> {
+    return this.http.get<ProfileInfo>(environment.getProfileInformation);
   }
 
   getClassrooms(): Observable<Classroom[]> {

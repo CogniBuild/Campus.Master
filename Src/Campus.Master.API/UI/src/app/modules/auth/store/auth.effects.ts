@@ -1,21 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, of, zip } from 'rxjs';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
-import { RegistrationService } from '../shared/services/registration.service';
+import { of, zip } from 'rxjs';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { SignUpService } from '../shared/services/sign-up.service';
 import { AuthActions } from './actions';
-import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocaleService } from '../../../core/services/locale.service';
-import { ToastrService } from 'ngx-toastr';
 import { SignInService } from '../../../core/services';
+import { errorToastr } from '../../../store/toastr/toastr.actions';
 
 @Injectable()
 export class AuthEffects {
-  private readonly toastStyles = {
-    toastClass: 'ngx-toastr server-error-toastr',
-  };
-
   private readonly localeMap = new Map<string, string>([
     ['User already exists', 'AUTH.ERROR-TOASTR.USER-EXISTS'],
     ['Failed to create new user', 'AUTH.ERROR-TOASTR.NEW-USER'],
@@ -24,70 +19,56 @@ export class AuthEffects {
 
   $submitRegistrationForm = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.submitRegistration),
+      ofType(AuthActions.signUp),
       mergeMap((action) =>
-        this.registrationService.registerUser(action.signUpModel).pipe(
-          map((token: string) => {
-            return AuthActions.registrationSuccess({ token });
-          }),
+        this.signUpService.signUp(action.signUpModel).pipe(
+          map((token: string) =>
+            AuthActions.signUpSuccess({ token })),
           catchError((httpError: HttpErrorResponse) =>
-            of(AuthActions.registrationFailed({ httpError }))
+            of(AuthActions.signUpFailed({ httpError }))
           )
         )
       )
     )
   );
 
-  $authSuccess = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.registrationSuccess, AuthActions.signInSuccess),
-        mergeMap((action) => {
-          localStorage.setItem('token', action.token);
-          this.router.navigate(['/campus']);
-
-          return EMPTY;
-        })
-      ),
-    { dispatch: false }
+  $authSuccess = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.signUpSuccess, AuthActions.signInSuccess),
+      mergeMap((action) => {
+        localStorage.setItem('token', action.token);
+        return of(AuthActions.navigateToCampusRoute());
+      })
+    )
   );
 
-  $authFailed = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.registrationFailed, AuthActions.signInFailed),
-        mergeMap((action) => {
-          const toastrHeader = this.localeService.get(
-            'AUTH.ERROR-TOASTR.HEADER'
+  $authFailed = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.signUpFailed, AuthActions.signInFailed),
+      switchMap((action) => {
+        const toastrHeader = this.localeService.get(
+          'AUTH.ERROR-TOASTR.HEADER'
+        );
+        return action.httpError.status === 400
+          ? zip(
+            this.localeService.get(
+              this.localeMap.get(action.httpError.error)
+            ),
+            toastrHeader
+          )
+          : zip(
+            this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
+            toastrHeader
           );
-
-          const localizedMsg$ =
-            action.httpError.status === 400
-              ? zip(
-                  this.localeService.get(
-                    this.localeMap.get(action.httpError.error)
-                  ),
-                  toastrHeader
-                )
-              : zip(
-                  this.localeService.get('AUTH.ERROR-TOASTR.SERVER-ERROR'),
-                  toastrHeader
-                );
-
-          return localizedMsg$.pipe(
-            tap(([message, header]) =>
-              this.toastrService.error(message, header, this.toastStyles)
-            )
-          );
-        })
-      ),
-    { dispatch: false }
-  );
+      }),
+      switchMap(([message, header]) => of(errorToastr({ message, header })))
+    )
+  ); 
 
   $signInUser = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.signInUser),
-      mergeMap((action) =>
+      ofType(AuthActions.signIn),
+      switchMap((action) =>
         this.signInService.login(action.signInModel).pipe(
           map((token: string) => {
             return AuthActions.signInSuccess({ token });
@@ -102,10 +83,8 @@ export class AuthEffects {
 
   constructor(
     private actions$: Actions,
-    private router: Router,
     private localeService: LocaleService,
-    private registrationService: RegistrationService,
+    private signUpService: SignUpService,
     private signInService: SignInService,
-    private toastrService: ToastrService
   ) { }
 }

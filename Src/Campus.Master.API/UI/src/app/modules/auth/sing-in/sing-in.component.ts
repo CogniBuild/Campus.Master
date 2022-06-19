@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignInCredentials } from '../shared/models';
 import { select, Store } from '@ngrx/store';
 import { AuthActions } from '../store/actions';
-import { selectSignInSpinnerState } from '../store/auth.selectors';
+import { selectSignInSpinnerState } from '../store';
 @Component({
   selector: 'app-sing-in',
   templateUrl: './sing-in.component.html',
@@ -32,6 +32,6 @@ export class SingInComponent implements OnInit {
       password: this.form.value.password,
     };
 
-    this.store.dispatch(AuthActions.signInUser({ signInModel: user }));
+    this.store.dispatch(AuthActions.signIn({ signInModel: user }));
   }
 }

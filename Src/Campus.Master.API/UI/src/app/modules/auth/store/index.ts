@@ -3,9 +3,9 @@ import { authFeatureName, AuthState } from './auth.reducer';
 
 export const selectAuthState = createFeatureSelector<AuthState>(authFeatureName);
 
-export const selectRegistrationSpinnerState = createSelector(
+export const selectSignUpSpinnerState = createSelector(
     selectAuthState,
-    (state) => state.isRegistrationSpinnerOn
+    (state) => state.isSignUpSpinnerOn
 );
 
 export const selectSignInSpinnerState = createSelector(

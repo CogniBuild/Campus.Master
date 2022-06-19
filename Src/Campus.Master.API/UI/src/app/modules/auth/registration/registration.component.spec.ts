@@ -32,7 +32,7 @@ describe('RegistrationComponent', () => {
 
         fixture = TestBed.createComponent(RegistrationComponent);
         component = fixture.componentInstance;
-        
+
         mockStore = TestBed.inject(MockStore);
     });
 

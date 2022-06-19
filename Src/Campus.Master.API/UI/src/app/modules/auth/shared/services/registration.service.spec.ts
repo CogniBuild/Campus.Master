@@ -1,4 +1,4 @@
-import { RegistrationService } from './registration.service';
+import { SignUpService } from './sign-up.service';
 import { SignUpCredentials } from '../models';
 
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 describe('registerUser()', () => {
   let httpTestingController: HttpTestingController;
-  let registrationService: RegistrationService;
+  let registrationService: SignUpService;
 
   const mockUser: SignUpCredentials = {
     fullName: 'fullName',
@@ -19,12 +19,12 @@ describe('registerUser()', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RegistrationService],
+      providers: [SignUpService],
       imports: [HttpClientTestingModule]
     });
 
     httpTestingController = TestBed.inject(HttpTestingController);
-    registrationService = TestBed.inject(RegistrationService);
+    registrationService = TestBed.inject(SignUpService);
   });
 
   afterEach(() => {
@@ -34,7 +34,7 @@ describe('registerUser()', () => {
   test('should return token when user created', () => {
     const mockToken: string = 'token';
 
-    registrationService.registerUser(mockUser)
+    registrationService.signUp(mockUser)
       .subscribe(token => {
         expect(token).toEqual(mockToken);
       }
@@ -49,7 +49,7 @@ describe('registerUser()', () => {
   test('should failed with 400 error when user exists', (done) => {
     const errorMsg = 'User already exists';
 
-    registrationService.registerUser(mockUser)
+    registrationService.signUp(mockUser)
       .subscribe((_) => {
         fail('should have failed with 400 error');
         done();

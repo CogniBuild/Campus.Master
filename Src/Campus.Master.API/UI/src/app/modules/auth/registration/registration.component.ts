@@ -9,8 +9,8 @@ import { ConfirmPasswordValidator } from '../confirmed.validator';
 import { Subscription } from 'rxjs';
 import { SignUpCredentials } from '../shared/models';
 import { select, Store } from '@ngrx/store';
-import { submitRegistration } from '../store/actions/auth.actions';
-import { selectRegistrationSpinnerState } from '../store/auth.selectors';
+import { selectSignUpSpinnerState } from '../store';
+import { signUp } from '../store/actions/auth.actions';
 
 @Component({
   selector: 'app-registration-page',
@@ -19,7 +19,7 @@ import { selectRegistrationSpinnerState } from '../store/auth.selectors';
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
-  isSpinnerOn$ = this.store.pipe(select(selectRegistrationSpinnerState));
+  isSpinnerOn$ = this.store.pipe(select(selectSignUpSpinnerState));
   param = { minlength: 8, maxlength: 100 };
 
   private registerUser$: Subscription = new Subscription();
@@ -80,6 +80,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     };
 
 
-    this.store.dispatch(submitRegistration({ signUpModel: unregisteredUser }));
+    this.store.dispatch(signUp({ signUpModel: unregisteredUser }));
   }
 }

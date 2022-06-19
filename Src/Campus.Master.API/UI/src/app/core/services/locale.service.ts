@@ -27,7 +27,7 @@ export class LocaleService {
     this.translate.use(locale);
   }
 
-  get(key: string, param?: object): Observable<string> {
+  get(key: string | undefined, param?: object): Observable<string> {
     return this.translate.get(key, param);
   }
 }
