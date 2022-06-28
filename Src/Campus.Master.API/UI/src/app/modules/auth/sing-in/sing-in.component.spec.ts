@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 import { MemoizedSelector } from "@ngrx/store";
 import { MockStore, provideMockStore } from "@ngrx/store/testing";
-import { selectSignInSpinnerState } from "../store";
+import { selectSignInSpinnerState as selectIsSignInSpinnerOn } from "../store";
 import { AuthState } from "../store/auth.reducer";
 import { SingInComponent } from './sing-in.component';
 import { TranslateStubsModule } from '../mocks/translate-stubs.module';
@@ -15,7 +15,7 @@ describe('SingInComponent', () => {
     let fixture: ComponentFixture<SingInComponent>;
 
     let store: MockStore;
-    let isSignInSpinnerOnMock: MemoizedSelector<AuthState, boolean>;
+    let mockIsSignInSpinnerOn: MemoizedSelector<AuthState, boolean>;
 
     const initialState = {
         isSignInSpinnerOn: false
@@ -32,13 +32,17 @@ describe('SingInComponent', () => {
         fixture = TestBed.createComponent(SingInComponent);
         component = fixture.componentInstance;
 
-        isSignInSpinnerOnMock = store.overrideSelector(selectSignInSpinnerState, false)
+        mockIsSignInSpinnerOn = store.overrideSelector(selectIsSignInSpinnerOn, false)
 
         store.dispatch = jest.fn();
     });
 
     afterEach(() => {
         TestBed.inject(MockStore)?.resetSelectors();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
     });
 
     it('should dispatch signIn action when submit called', () => {
@@ -54,17 +58,14 @@ describe('SingInComponent', () => {
             AuthActions.signIn({ signInModel: { email, password } }));
     })
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
-
     test.each([
         { isSpinnerOn: true, numberOfSpinners: 1 },
         { isSpinnerOn: false, numberOfSpinners: 0 }])
+        // TODO: rewrite to printf formatting once jest will be updated
         ('should spin or not when isSpinnerOn true or false ',
             ({ isSpinnerOn, numberOfSpinners }) => {
                 // arrange                
-                isSignInSpinnerOnMock.setResult(isSpinnerOn);
+                mockIsSignInSpinnerOn.setResult(isSpinnerOn);
                 // act
                 store.refreshState();
                 fixture.detectChanges();
@@ -73,6 +74,4 @@ describe('SingInComponent', () => {
                     fixture.debugElement.queryAll(By.css(spinnerClass)).length)
                     .toBe(numberOfSpinners);
             });
-    // TODO: 
-    // 1) validate sign-in action dispatch    
 })
