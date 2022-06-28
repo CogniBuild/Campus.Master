@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { AuthRoutingModule } from './auth-routing.module';
-import { RegistrationComponent } from './registration/registration.component';
+import { SignUpComponent } from './sign-up/sign-up.component'
 import { SingInComponent } from './sing-in/sing-in.component';
 import { SharedModule } from '@shared/shared.module';
 import { StoreModule } from '@ngrx/store';
@@ -9,10 +9,9 @@ import { authFeatureName, authReducer } from './store/auth.reducer';
 import { AuthEffects } from './store/auth.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { SignUpService } from './shared/services/sign-up.service';
-import { ToastrEffects } from '../../store/toastr/toastr-effects';
 
 @NgModule({
-  declarations: [SingInComponent, RegistrationComponent],
+  declarations: [SingInComponent, SignUpComponent],
   imports: [
     SharedModule,
     AuthRoutingModule,
