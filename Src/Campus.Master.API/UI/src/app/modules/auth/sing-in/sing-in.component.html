@@ -9,7 +9,7 @@
         <h1 class="sign-in__title">
           {{ 'AUTH.SIGN-IN.FORM-TITLE-LEFT' | translate }}<br class="sign-in__title_br"/>{{ 'AUTH.SIGN-IN.FORM-TITLE-RIGHT' | translate }}<span>Campus</span>
         </h1>
-        <form action="#" [formGroup]="form" (ngSubmit)="submit()">
+        <form action="#" [formGroup]="form" (ngSubmit)="submit(form?.value.email, form?.value.password)">
           <div class="form-control" [ngClass]="{
               invalid: form.get('email').touched && form.get('email').invalid
             }">
@@ -37,7 +37,7 @@
                 {{ 'AUTH.SIGN-IN.ERROR-MESSAGES.PASSWORD.REQUIRED' | translate }}
               </small>
               <small *ngIf="form.get('password').errors.minlength">
-                {{ 'AUTH.SIGN-IN.ERROR-MESSAGES.PASSWORD.MINLENGTH' | translate:param }}
+                {{ 'AUTH.SIGN-IN.ERROR-MESSAGES.PASSWORD.MINLENGTH' | translate:translateParams }}
               </small>
             </div>
             <span class="forgot-pass"><a href="#">{{ 'AUTH.SIGN-IN.FORGOT-PASSWORD' | translate }}</a></span>

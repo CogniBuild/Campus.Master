@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SignInCredentials } from '../shared/models';
 import { select, Store } from '@ngrx/store';
 import { AuthActions } from '../store/actions';
 import { selectSignInSpinnerState } from '../store';
@@ -12,7 +11,7 @@ import { selectSignInSpinnerState } from '../store';
 export class SingInComponent implements OnInit {
   form: FormGroup;
   isSpinnerOn$ = this.store.pipe(select(selectSignInSpinnerState));
-  param = { minlength: 8 };
+  translateParams = { minlength: 8 };
 
   constructor(private store: Store) { }
 
@@ -26,12 +25,9 @@ export class SingInComponent implements OnInit {
     });
   }
 
-  submit() {
-    const user: SignInCredentials = {
-      email: this.form.value.email,
-      password: this.form.value.password,
-    };
-
-    this.store.dispatch(AuthActions.signIn({ signInModel: user }));
+  submit(email: string, password: string) {
+    this.store.dispatch(AuthActions.signIn({
+      signInModel: { email, password }
+    }));
   }
 }
