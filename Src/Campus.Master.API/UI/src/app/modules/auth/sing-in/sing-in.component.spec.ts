@@ -58,11 +58,11 @@ describe('SingInComponent', () => {
             AuthActions.signIn({ signInModel: { email, password } }));
     })
 
-    test.each([
+    it.each([
         { isSpinnerOn: true, numberOfSpinners: 1 },
         { isSpinnerOn: false, numberOfSpinners: 0 }])
         // TODO: rewrite to printf formatting once jest will be updated
-        ('should spin or not when isSpinnerOn true or false ',
+        ('should have spinner or not when isSpinnerOn true or false ',
             ({ isSpinnerOn, numberOfSpinners }) => {
                 // arrange                
                 mockIsSignInSpinnerOn.setResult(isSpinnerOn);
