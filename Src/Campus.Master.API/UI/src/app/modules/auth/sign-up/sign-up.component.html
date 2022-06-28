@@ -1,0 +1,134 @@
+<div class="container">
+  <div class="wrap-center">
+    <div class="registration">
+      <div class="registration__img">
+        <img src="assets/img/registration/reg.png" alt="photo">
+        <span class="registration__text">{{ 'AUTH.REGISTRATION.TEXT-IMG' | translate }}</span>
+      </div>
+      <div class="registration__form">
+        <h1 class="registration__title">{{ 'AUTH.REGISTRATION.FORM-TITLE' | translate }} <span>Campus</span></h1>
+        <form action="#" [formGroup]="registerForm" (ngSubmit)="submit()">
+          <div class="user-name">
+            <div class="form-control"
+                 [ngClass]="{ invalid: registerForm.get('first_name').touched && registerForm.get('first_name').invalid }">
+              <label for="first-name" class="first-name"></label>
+              <input id="first-name" type="text" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.FIRST-NAME' | translate }}" formControlName="first_name">
+              <div *ngIf="registerForm.get('first_name').touched && registerForm.get('first_name').invalid"
+                class="validation">
+                <div [ngSwitch]="registerForm.get('first_name').errors | firstError">
+                  <small *ngSwitchCase="'required'">
+                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.FIRST-NAME.REQUIRED' | translate }}
+                </small>
+                  <small *ngSwitchCase="'maxlength'">
+                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.FIRST-NAME.MAXLENGTH' | translate }}
+                </small>
+                  <small *ngSwitchCase="'pattern'">
+                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.FIRST-NAME.LATINONLY' | translate }}
+                  </small>
+              </div>
+            </div>
+            </div>
+            <div class="form-control"
+                 [ngClass]="{ invalid: registerForm.get('last_name').touched && registerForm.get('last_name').invalid }">
+              <label for="last-name" class="last-name"></label>
+              <input id="last-name" type="text" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.LAST-NAME' | translate }}" formControlName="last_name">
+              <div *ngIf="registerForm.get('last_name').touched && registerForm.get('last_name').invalid"
+                class="validation">
+                <div [ngSwitch]="registerForm.get('last_name').errors | firstError">
+                  <small *ngSwitchCase="'required'">
+                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.LAST-NAME.REQUIRED' | translate }}
+                </small>
+                  <small *ngSwitchCase="'maxlength'">
+                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.LAST-NAME.MAXLENGTH' | translate }}
+                </small>
+                  <small *ngSwitchCase="'pattern'">
+                    {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.LAST-NAME.LATINONLY' | translate }}
+                  </small>
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="form-control"
+               [ngClass]="{ invalid: registerForm.get('nickname').touched && registerForm.get('nickname').invalid }">
+            <label for="nickname" class="user-nickname"></label>
+            <input id="nickname" type="text" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.NICKNAME' | translate }}" formControlName="nickname">
+            <div
+              *ngIf="registerForm.get('nickname').touched && registerForm.get('nickname').invalid"
+              class="validation">
+              <small *ngIf="registerForm.get('nickname').errors.required">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.NICKNAME.REQUIRED' | translate }}
+              </small>
+              <small *ngIf="registerForm.get('nickname').errors.maxlength">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.NICKNAME.MAXLENGTH' | translate }}
+              </small>
+            </div>
+          </div>
+          <div class="form-control"
+               [ngClass]="{ invalid: registerForm.get('email').touched && registerForm.get('email').invalid }">
+            <label for="email" class="email"></label>
+            <input id="email" type="email" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.EMAIL' | translate }}" formControlName="email">
+            <div
+              *ngIf="registerForm.get('email').touched && registerForm.get('email').invalid"
+              class="validation">
+              <small *ngIf="registerForm.get('email').errors.required">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.EMAIL.REQUIRED' | translate }}
+              </small>
+              <small *ngIf="registerForm.get('email').errors.email">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.EMAIL.PATTERN' | translate }}
+              </small>
+            </div>
+          </div>
+          <div class="form-control"
+               [ngClass]="{ invalid: registerForm.get('password').touched && registerForm.get('password').invalid }">
+            <label for="password" class="password"></label>
+            <input id="password" type="password" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.PASSWORD' | translate }}" formControlName="password">
+            <div
+              *ngIf="registerForm.get('password').touched && registerForm.get('password').invalid"
+              class="validation">
+              <div [ngSwitch]="registerForm.get('password').errors | firstError">
+              <small *ngSwitchCase="'required'">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.REQUIRED' | translate }}
+              </small>
+              <small *ngSwitchCase="'minlength'">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.MINLENGTH' | translate:param }}
+              </small>
+              <small *ngSwitchCase="'maxlength'">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.MAXLENGTH' | translate:param }}
+              </small>
+              <small *ngSwitchCase="'pattern'">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.PATTERN' | translate }}
+              </small>
+            </div>
+            </div>
+          </div>
+          <div class="form-control"
+               [ngClass]="{ invalid: registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid }">
+            <label for="match_password" class="math_password"></label>
+            <input id="match_password" type="password" placeholder="{{ 'AUTH.REGISTRATION.FORM-TEXTBOX.MATCH' | translate }}"
+                   formControlName="confirmPassword">
+            <div
+              *ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').invalid"
+              class="validation">
+              <small *ngIf="registerForm.get('confirmPassword').errors.required">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.REQUIRED' | translate }}
+              </small>
+              <small *ngIf="registerForm.get('confirmPassword').errors &&
+                registerForm.get('confirmPassword').errors.ConfirmPassword">
+                {{ 'AUTH.REGISTRATION.ERROR-MESSAGES.PASSWORD.MATCH' | translate }}
+              </small>
+            </div>
+          </div>
+          <button type="submit" class="registration__btn" [disabled]="registerForm.invalid">
+            <span [ngClass]="{'none-block': isSpinnerOn$ | async}">{{ 'AUTH.REGISTRATION.REGISTER' | translate }}</span>
+            <div [ngClass]="{'box loader-02': isSpinnerOn$ | async}"></div>
+          </button>
+        </form>
+
+        <div class="registration__createAcc">
+          <span class="registered">{{ 'AUTH.REGISTRATION.ALREADY-REGISTERED' | translate }} <a routerLink="/">{{ 'AUTH.REGISTRATION.SIGN-IN' | translate }}</a></span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

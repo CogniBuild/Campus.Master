@@ -1,0 +1,285 @@
+@import "src/styles/styles"
+
+.container
+  font-family: 'FuturaLT', serif
+  height: calc(100vh - 16px)
+  max-width: 1440px
+  margin: 0 auto
+
+.registration
+  display: flex
+  align-items: center
+  flex-direction: row-reverse
+  background-color: #FFFFFF
+  border-radius: 30px
+  box-shadow: -10px 15px 70px rgba(0, 0, 0, 0.1)
+  +sm
+    box-shadow: none
+
+  &__form
+    display: flex
+    flex-direction: column
+    align-items: center
+    min-width: 560px
+    +md
+      padding: 40px 0
+    +sm
+      width: 100vw
+      min-width: auto
+      padding: 0 16px
+      box-sizing: border-box
+      align-items: normal
+
+  &__img
+    max-width: 365px
+    position: relative
+    min-width: 365px
+    height: 550px
+    +md
+      display: none
+
+  &__text
+    width: 130px
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    font-size: 50px
+    color: #FFFFFF
+    font-family: "Gilroy-Black-Italic", serif
+    text-align: center
+  //+lg
+  //  font-size: 36px
+
+  &__img img
+    display: block
+    border-radius: 0 30px 30px 0
+    width: 100%
+    height: 100%
+  //object-position: 14% 8%
+  //+xl
+  //  object-position: 14% 13%
+
+  &__title
+    max-width: 230px
+    margin-bottom: 25px
+    text-align: center
+    font-size: 30px
+    color: #393853
+    +md
+      font-size: 30px
+    +sm
+      font-size: 36px
+      text-align: left
+    +ss
+      font-size: 28px
+
+
+    span
+      color: #7E57C2
+
+
+  &__btn
+    min-width: 180px
+    min-height: 40px
+    font-size: 16px
+    color: #ffffff
+    background-color: #7E57C2
+    border: none
+    border-radius: 8px
+    display: block
+    margin: 0 auto
+    cursor: pointer
+    outline: none
+    +sm
+      min-width: 170px
+      min-height: 50px
+      font-size: 20px
+
+  &__btn:disabled
+    cursor: not-allowed
+
+  &__createAcc
+    text-align: center
+    //display: block
+    text-decoration: none
+    font-size: 12px
+    margin-top: 20px
+
+form
+  display: flex
+  flex-direction: column
+
+.form-control
+  //margin: 0 auto
+  position: relative
+  //+ms
+  //  margin: 0 24px
+
+  input
+    width: 100%
+    box-sizing: border-box
+    border: none
+    border-radius: 8px
+    background-color: #F0F0FB
+    padding: 10px 10px 10px 33px
+    font-size: 14px
+    outline: none
+    margin-bottom: 20px
+  //+xl
+  //  width: 250px
+  //+lg
+  //  width: 200px
+  //+ms
+  //  width: calc(100% - 44px)
+
+  input::placeholder
+    color: #C4C4C4
+
+  .email::before
+    content: ''
+    background-image: url('/assets/img/sign-in/email.png')
+    width: 18px
+    height: 18px
+    position: absolute
+    background-size: contain
+    transform: translate(11px, 8px)
+
+  .password
+    content: ''
+    background-image: url("/assets/img/sign-in/password.png")
+    width: 18px
+    height: 18px
+    position: absolute
+    background-size: contain
+    transform: translate(11px, 8px)
+
+  .first-name
+    content: ''
+    background-image: url("/assets/img/registration/first_name.png")
+    width: 18px
+    height: 18px
+    position: absolute
+    background-size: contain
+    transform: translate(11px, 8px)
+
+  .last-name
+    content: ''
+    background-image: url("/assets/img/registration/last_name.png")
+    width: 18px
+    height: 18px
+    position: absolute
+    background-size: contain
+    transform: translate(11px, 8px)
+
+  .math_password
+    content: ''
+    background-image: url("/assets/img/registration/matching_pass.png")
+    width: 18px
+    height: 18px
+    position: absolute
+    background-size: contain
+    transform: translate(11px, 8px)
+
+  .user-nickname::before
+    content: ''
+    background-image: url("/assets/img/registration/nickname.png")
+    width: 18px
+    height: 18px
+    position: absolute
+    background-size: contain
+    transform: translate(11px, 8px)
+
+.user-name
+  position: relative
+  display: flex
+  justify-content: space-between
+  +sm
+    flex-direction: column
+
+  .form-control
+    width: 48%
+    +sm
+      width: 100%
+
+  input
+    max-width: 159px
+    +md
+      max-width: none
+
+.validation
+  top: 35px
+
+  &_error-with-server
+    top: -23px
+
+
+.radio-group
+  display: flex
+  justify-content: space-between
+  margin-bottom: 35px
+  +ss
+    margin-bottom: 20px
+
+.registration-radio
+  width: 30%
+  +sm
+    width: 32%
+
+  &:last-child
+    width: 35%
+
+    +md
+      width: 32%
+
+
+.registration-radio input[type=radio]
+  display: none
+
+.registration-radio input[type=radio]:checked ~ .registration-radio-value
+  background-color: #7E57C2
+  color: #FFFFFF
+
+  &::before
+    background-image: url("/assets/img/registration/ic_radio_button_checked.svg")
+
+
+.registration-radio-value
+  display: block
+  position: relative
+  width: 100%
+  background-color: #F0F0FB
+  color: #C4C4C4
+  padding: 12px 0 12px 30px
+  border-radius: 8px
+  box-sizing: border-box
+  cursor: pointer
+  +ss
+    font-size: 12px
+
+  &::before
+    content: ''
+    background-image: url("/assets/img/registration/ic_radio_btn.svg")
+    width: 14px
+    height: 14px
+    position: absolute
+    background-size: cover
+    transform: translate(-50%, -50%)
+    left: 17px
+    top: 50%
+
+.registered
+  color: #C4C4C4
+  font-size: 12px
+  +sm
+    text-align: center
+  +ss
+    margin-top: 15px
+
+  a
+    color: #7E57C2
+    text-decoration: underline
+    cursor: pointer
+
+
+
