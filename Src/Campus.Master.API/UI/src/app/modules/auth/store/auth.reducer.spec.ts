@@ -29,7 +29,7 @@ describe('authReducer', () => {
             };
 
             const actionSuccess = AuthActions.signUpSuccess({ token: 'token' });
-            const actionFailed = AuthActions.signInFailed({ httpError: null });
+            const actionFailed = AuthActions.signUpFailed({ httpError: null });
             const stateSuccess = authReducer.authReducer(initialState, actionSuccess);
             const stateFailed = authReducer.authReducer(initialState, actionFailed);
 
@@ -37,7 +37,41 @@ describe('authReducer', () => {
             compareStates(stateFailed, newState);
         });
         // TODO: how to reuse it for Sign-in
-    })
+    });
+    describe('Sign in spinner', () => {
+        it('turn on sign in spinner when sign in action dispatched', () => {
+            const { initialState } = authReducer;
+            const newState: AuthState =
+            {
+                isSignUpSpinnerOn: false,
+                isSignInSpinnerOn: true,
+                profile: null
+            };
+
+            const action = AuthActions.signIn({ signInModel: null });
+            const state = authReducer.authReducer(initialState, action);
+
+            compareStates(state, newState);
+        });
+
+        it('turn off spinner when signInSuccess or signInFailed actions dispatched', () => {
+            const { initialState } = authReducer;
+            const newState: AuthState =
+            {
+                isSignUpSpinnerOn: false,
+                isSignInSpinnerOn: false,
+                profile: null
+            };
+
+            const actionSuccess = AuthActions.signInSuccess({ token: 'token' });
+            const actionFailed = AuthActions.signInFailed({ httpError: null });
+            const stateSuccess = authReducer.authReducer(initialState, actionSuccess);
+            const stateFailed = authReducer.authReducer(initialState, actionFailed);
+
+            compareStates(stateSuccess, newState);
+            compareStates(stateFailed, newState);
+        });
+    });
 })
 
 function compareStates(state: AuthState, newState: AuthState) {
