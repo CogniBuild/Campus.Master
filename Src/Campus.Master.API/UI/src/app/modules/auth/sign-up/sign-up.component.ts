@@ -67,19 +67,18 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    if (this.registerForm.invalid) {
-      return;
-    }
+    const signUpModel: SignUpCredentials =
+      this.mapFormValues(this.registerForm);
+    this.store.dispatch(signUp({ signUpModel }));
+  }
 
-    const unregisteredUser: SignUpCredentials = {
-      fullName: this.registerForm.value.first_name + ' ' + this.registerForm.value.last_name,
-      userName: this.registerForm.value.nickname,
-      email: this.registerForm.value.email,
-      password: this.registerForm.value.password,
-      confirmPassword: this.registerForm.value.confirmPassword,
+  public mapFormValues(registerForm: FormGroup): SignUpCredentials {
+    return {
+      fullName: registerForm.value.first_name + ' ' + registerForm.value.last_name,
+      userName: registerForm.value.nickname,
+      email: registerForm.value.email,
+      password: registerForm.value.password,
+      confirmPassword: registerForm.value.confirmPassword,
     };
-
-
-    this.store.dispatch(signUp({ signUpModel: unregisteredUser }));
   }
 }
